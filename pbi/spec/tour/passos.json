@@ -285,14 +285,14 @@
           "pose": "P5",
           "lado": "direita",
           "titulo": "As outras telas",
-          "texto": "Pela barra lateral você chega às outras três telas: a Análise crítica, com o quadradinho de cada obra; o Avanço físico, com a curva S; e o Resultado no tempo, com a evolução da carteira. O mês escolhido vale para todas.",
+          "texto": "Pela barra lateral você chega às outras quatro telas: a Análise crítica, com o quadradinho de cada obra; o Avanço físico, com a curva S; o Resultado no tempo, com a evolução da carteira; e o Canteiro, com segurança, qualidade e suprimentos. O mês escolhido vale para todas.",
           "dica": "Cada tela tem o seu próprio tour no “?” redondo do alto.",
           "foco": {
-            "alvo": "itens de página da sidebar",
+            "alvo": "itens de página da sidebar (01 a 05)",
             "x": 32,
             "y": 234,
             "w": 248,
-            "h": 200
+            "h": 252
           },
           "foco_fonte": "figma",
           "card": {
