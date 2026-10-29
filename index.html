@@ -1,0 +1,9 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Criticidade de Obras · mídias da capa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"><style>body{font-family:'Segoe UI',system-ui,sans-serif;
+color:#0B0B0C;background:#F7F4EE;margin:48px;max-width:760px}a{color:#3B3B3F}li{margin:6px 0}small{color:#6B6B70}</style>
+</head><body><h1>Criticidade de Obras · mídias da capa</h1><p>Ativos servidos pelo GitHub Pages para o visual HTML Content de um
+painel Power BI. Ver <a href="assets/manifest.json">manifest.json</a>.</p><ul id="lista"></ul><small>Cenas de obra em traço
+geradas por IA e animadas; sem dados, texto, marca ou pessoas identificáveis.</small><script>fetch('assets/manifest.json')
+.then(r=>r.json()).then(m=>{const ul=document.getElementById('lista');m.arquivos.forEach(a=>{const li=document.createElement('li');
+const l=document.createElement('a');l.href=a.file;l.textContent=a.file;li.appendChild(l);li.appendChild(document.createTextNode(
+' · '+Math.round(a.bytes/1024)+' KB'));ul.appendChild(li);});}).catch(()=>{});</script></body></html>

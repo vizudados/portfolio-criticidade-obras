@@ -1,0 +1,28 @@
+{
+ "projeto": "criticidade-obras-capa",
+ "gerado_em": "2026-10-28T20:41:53",
+ "base_url": "https://vizudados.github.io/portfolio-criticidade-obras/",
+ "arquivos": [
+  {
+   "file": "assets/capa-filme-2560x854-60fps-cba382839b4c.mp4",
+   "bytes": 8440883,
+   "sha256": "cba382839b4cf13e7255dd176f4ac1e36eb9787121f1675d58b67cbdb960f5b1",
+   "content_type": "video/mp4",
+   "origem": "filme da capa em laço de 33 s: 5 takes e a cena final em traço de caneta desenhado de baixo para cima (cenas de Natal geradas por IA no Codex CLI, vetorizadas em traço localmente), quadros pelo Remotion 4.0.539 (Chrome com a GPU) e codificação H.264 pela NVENC (h264_nvenc, p7, VBR CQ 30); 2560x854, 60 fps, 1.980 quadros, yuv420p, mudo, faststart. Os números do painel entram por cima, no HTML; não estão no vídeo."
+  },
+  {
+   "file": "assets/capa-filme-poster-d0910e567a60.webp",
+   "bytes": 182034,
+   "sha256": "d0910e567a60b031cabc1544bd56fc8c96d998c01c7631801cccb7e4c28c25b8",
+   "content_type": "image/webp",
+   "origem": "pôster do filme: o último quadro (a cena final desenhada), 2560x854, WebP sem perda"
+  },
+  {
+   "file": "assets/panoramica-base-792749d224fb.svg",
+   "bytes": 304202,
+   "sha256": "792749d224fb178b768c59696e599ab68594ad26e96d0cbb98462c5dc907f0ad",
+   "content_type": "image/svg+xml",
+   "origem": "panorâmica da base: horizonte de Natal em traço de caneta (gerado por IA no Codex CLI e vetorizado em traço), limpa para <img> (sem classes e tempos de animação); viewBox 1916x821, traço #0B0B0C"
+  }
+ ]
+}
