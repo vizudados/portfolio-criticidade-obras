@@ -173,7 +173,9 @@ CSS_T3 = (
     ".tt .li .n{font-size:15px;font-weight:600;margin-right:6px}"
     ".tt .li .v{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:16px;margin-right:22px}"
     ".tt .li .v .mk,.tt .st .v .mk{margin-right:6px;vertical-align:0}"
-    f".tt .li .d{{font-size:15px;color:{GRAFITE};overflow:hidden;text-overflow:ellipsis}}"
+    # o detalhe que não cabe ao lado dos valores desce inteiro para a linha de baixo (antes: reticências)
+    ".tt .li{flex-wrap:wrap}"
+    f".tt .li .d{{font-size:15px;color:{GRAFITE}}}"
     ".tt .l1{font-size:15px;line-height:21px;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
     ".tt .corpo .c3+.l1{margin-top:8px}"
     # status da obra: chip, pontos e desde quando

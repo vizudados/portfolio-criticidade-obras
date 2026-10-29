@@ -18,7 +18,9 @@ TOOLTIPS = [  # (página, título, largura, altura, visual, medida, alt)
      "O mês da curva S: acumulado, ritmo do mês, crédito × desembolsado e o que mudou desde o mês anterior"),
     ("ttT3Ppc", "Tooltip · mês do PPC", 560, 330, "TT_T3Ppc_Html", "T3 · Tooltip PPC · HTML",
      "O mês do PPC: PPC e pontos do item, atraso ao fim do mês, ritmo do mês e o PPC do mês anterior"),
-    ("ttT3Linha", "Tooltip · obra na linha do tempo", 560, 430, "TT_T3Linha_Html", "T3 · Tooltip linha · HTML",
+    # 454 (era 430): o detalhe do prazo ("até a entrega: entrega mai/27, com 180 dias nov/27") desce inteiro para a
+    # 2.ª linha em vez de sair com reticências, e o status precisa dos 24 px a mais para não encostar no rodapé
+    ("ttT3Linha", "Tooltip · obra na linha do tempo", 560, 454, "TT_T3Linha_Html", "T3 · Tooltip linha · HTML",
      "A obra na linha do tempo: prazo, término projetado, orçamento, físico × financeiro e status desde quando"),
     ("ttT3Avanco", "Tooltip · obra no avanço", 600, 340, "TT_T3Avanco_Html", "T3 · Tooltip avanço · HTML",
      "A obra no avanço: o mês, o desvio acumulado mês a mês na cor do item prazo da nota e o que mudou desde o mês anterior"),

@@ -4,7 +4,7 @@
   "displayName": "Tooltip · obra na linha do tempo",
   "displayOption": "ActualSize",
   "width": 560,
-  "height": 430,
+  "height": 454,
   "type": "Tooltip",
   "visibility": "HiddenInViewMode",
   "pageBinding": {

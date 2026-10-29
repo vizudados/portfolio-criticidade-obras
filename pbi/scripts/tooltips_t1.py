@@ -329,9 +329,16 @@ CSS_GRADE_LS = (".tt .tab.ls .lin>span{height:auto;line-height:1.3}"
 FONTES_TAB = {".tt .ls .lin .n": 15, ".tt .ls .lin .v": 16, ".tt .ls .lin .p": 16}   # o detalhe (2 linhas de 14) fica
 CASCATA_TAB = TL.entrada(".tt .ls>:nth-child({k})>*", [".tt .corpo>.bh", ".tt .corpo>.vs", ".tt .corpo>.rg",
                                                          ".tt .ser .ms", ".tt .fx"])
+# Os 9 itens são sempre os mesmos (faixa e3): rótulo, valor e pontos ficam no corpo de antes (teto 0) e o vão entre
+# colunas cai de 16 para 12, para a faixa ("85% ≤ conformidade < 95%") caber em duas linhas; com a fonte de e3 ela
+# quebrava em três e invadia o item de baixo, empurrando a nota mês a mês para fora do tooltip. Cada item tem no mínimo
+# a altura do próprio conteúdo, e só a lista encolhe: a série (82 de altura, filhos em posição absoluta) encolhia junto
+# e cortava os meses
+CSS_OBRA_F4 = (".tt .tab.ls{column-gap:12px;grid-auto-rows:minmax(min-content,1fr)}"
+               ".tt .corpo>:not(.ls){flex-shrink:0}")
 desenho("T1 · Tooltip obra · CSS", "CSS do tooltip de obra (F4: lista dos itens com escala e cascata de entrada).",
-        "-- 4 · Marcação\n[T1 · CSS tooltip]\n    & " + dax_lit(CSS_OBRA + TL.css_escala(FONTES_TAB, grade=True)
-                                                       + CSS_GRADE_LS + CASCATA_TAB))
+        "-- 4 · Marcação\n[T1 · CSS tooltip]\n    & " + dax_lit(CSS_OBRA + TL.css_escala(FONTES_TAB, grade=True, teto=0)
+                                                       + CSS_GRADE_LS + CSS_OBRA_F4 + CASCATA_TAB))
 
 desenho(
     "T1 · Tooltip obra · HTML",

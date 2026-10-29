@@ -163,21 +163,27 @@ CSS_FX = (
 # entra em cascata (C5)
 CSS_F4 = (".tt{display:flex;flex-direction:column}.tt .cab{flex:none}"
           ".tt .corpo{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;padding-bottom:16px}"
-          ".tt .corpo.crp{padding-bottom:72px}.tt .corpo>*{flex:none}"
+          # a lista (.ls) fica de fora do flex:none: com a mesma especificidade e vindo depois, a regra zerava o flex 1
+          # do tooltip_lib e a lista (linhas de flex-basis 0) desabava para altura zero, linhas umas sobre as outras
+          ".tt .corpo.crp{padding-bottom:72px}.tt .corpo>:not(.ls){flex:none}"
           ".tt .ls>.lin{height:auto;min-height:0}"
+          # altura de linha proporcional: com a fonte da faixa e1 (~20 px), a de 21 px fixa cortava o alto e o pé das
+          # letras na caixa de overflow escondido do nome
+          ".tt .corpo .ls>.lin>span{line-height:1.3}"
           ".tt .fx.ls{display:grid;grid-auto-rows:minmax(0,1fr);align-content:stretch}.tt .fx.ls .f{height:auto}"
           # conta do mês (página de 620): nome 210 e valor 120 para a escala; o detalhe fica em 14 e cabe inteiro
           ".tt .lin.cf{grid-template-columns:20px 210px 120px 1fr}")
-FONTES_T2 = {".tt .ls .lin .v": 16, ".tt .ls .lin .n": 15, ".tt .ls .lin .sg": 15, ".tt .ls .lin .d2": 15,
-             ".tt .fx.ls .f": 14}
+FONTES_T2 = {".tt .ls .lin .v": 16, ".tt .ls .lin .n": 15, ".tt .ls .lin .sg": 15, ".tt .ls .lin .d2": 15}
+# faixas em duas colunas de 253: só diminuem (a 19 px, "80% ≤ entregas < 90% → 0,25" passava da coluna)
+FONTES_FX = {".tt .fx.ls .f": 14}
 CASCATA_T2 = TL.entrada(".tt .ls>:nth-child({k})", [".tt .corpo>.bh", ".tt .corpo>.sl", ".tt .corpo>.vs",
                                                      ".tt .corpo>.tx", ".tt .corpo>.des", ".tt .corpo>.nt",
                                                      ".tt .corpo>.vz", ".tt .ser .ms"], pe=".tt .rp")
 desenho("T2 · Tooltip · CSS", "CSS dos tooltips v2 da T2 (cartão branco 560, cabeçalho preto com a meta que quebra "
         "de linha, linhas de item, degrau e conta, faixa, série de uma só e rodapé preso ao pé; F4: corpo flexível, lista "
         "com escala e cascata de entrada). Não depende da CSS de tooltip da T1.",
-        "-- 4 · Marcação\n[Comum · CSS base]\n    & " + dax_lit(CSS_TT + CSS_FX + TL.css_escala(FONTES_T2) + CSS_F4
-                                                         + CASCATA_T2))
+        "-- 4 · Marcação\n[Comum · CSS base]\n    & " + dax_lit(CSS_TT + CSS_FX + TL.css_escala(FONTES_T2)
+                                                         + TL.css_fontes(FONTES_FX, teto=0) + CSS_F4 + CASCATA_T2))
 
 
 def serie(var_lista: str, ref: str, modo: str = "neutra") -> list[str]:

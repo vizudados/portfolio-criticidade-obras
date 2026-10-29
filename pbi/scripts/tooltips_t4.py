@@ -264,7 +264,8 @@ CSS_F4_LISTAS = (
     ".tt .ls>.mais{display:flex;align-items:center;line-height:1.25}"
     ".tt .ls .jl>*{line-height:1.3}"
     # justificativa longa quebra em vez de cortar com reticências; a linha não encolhe abaixo do texto
-    ".tt .ls>.jl{min-height:auto}"
+    # (sem a altura fixa de 29 da .jl: com ela, o mínimo automático parava em 29 e a 2ª linha invadia a de baixo)
+    ".tt .ls>.jl{min-height:auto;height:auto}"
     ".tt .ls .jl .t{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}"
 )
 CSS_F4 = CSS_F4_LISTAS + TL.entrada(
