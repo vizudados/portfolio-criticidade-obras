@@ -1,0 +1,20 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: 0
+@descricao: Posição na janela ([Série · posição na janela]) do último mês com aba da obra do contexto antes do mês do eixo; 0 quando não há (o primeiro mês da obra na janela). Diz quantos lugares vazios ficam antes da coluna do mês (TIROL em jun/26 na janela de jan a ago: 0, com cinco meses vazios antes).
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _mes = MAX ( dMes[Mes] )
+VAR _ant = EDATE ( _mes, -1 )
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ant ),
+        "@e", VAR _m = dMes[Mes] RETURN CALCULATE ( [Físico · executado acumulado], REMOVEFILTERS ( dMes ), dMes[Mes] = _m )
+    )
+VAR _prev = MAXX ( FILTER ( _meses, NOT ISBLANK ( [@e] ) ), dMes[Mes] )
+RETURN
+    IF (
+        [T3 · Série · mês na série] = 1,
+        IF ( ISBLANK ( _prev ), 0, DATEDIFF ( _jan, _prev, MONTH ) + 1 )
+    )

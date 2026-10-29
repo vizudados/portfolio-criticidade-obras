@@ -1,0 +1,22 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: Pontos do custo (máx. 3): IDC ≥ 1,00 → 3 · 0,98 ≤ IDC < 1,00 → 2,5 · 0,96 ≤ IDC < 0,98 → 2 · 0,94 ≤ IDC < 0,96 → 1,5 · 0,92 ≤ IDC < 0,94 → 1 · 0,90 ≤ IDC < 0,92 → 0,5 · IDC < 0,90 → 0; vazio sem dado. Uma obra; com várias, soma.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+SUMX (
+    VALUES ( dObra[Obra] ),
+    VAR _x = [Nota · X custo]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), SWITCH (
+            TRUE (),
+            _x >= 1, 3,
+            _x >= 0.98, 2.5,
+            _x >= 0.96, 2,
+            _x >= 0.94, 1.5,
+            _x >= 0.92, 1,
+            _x >= 0.9, 0.5,
+            0
+        ) )
+)

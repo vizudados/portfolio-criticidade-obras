@@ -1,0 +1,376 @@
+/*
+@pasta: T1 Visão geral\Leituras
+@formato: texto
+@descricao: Leitura do "?" da lista de obras, sobre o próprio painel (L065, 1004 × 631, duas colunas): achado pelos estados da nota, explicação pelas obras críticas (ou pela que mais perde pontos) e pelas pendentes, três destaques que contam (pontos da obra que mais perde, pontos perdidos no item que mais pesa, itens sem dado), o que explica, a nota obra por obra com as linhas dos limites de atenção e de estável (pendente em tracejado) e a régua antiga lida das medidas. Ordem só a da nota. Só lê contas.
+@gerado: pbi/scripts/leituras_t1.py
+*/
+-- 1 · Leituras
+VAR _mesN = [Mês de referência · nome]
+VAR _mesL = [Mês de referência · longo]
+VAR _c = [Nota · carteira · obras críticas · ref] + 0
+VAR _a = [Nota · carteira · obras em atenção · ref] + 0
+VAR _e = [Nota · carteira · obras estáveis · ref] + 0
+VAR _p = [Nota · carteira · obras pendentes · ref] + 0
+VAR _nObras = [Recorte · obras no recorte] + 0
+VAR _listaCrit = [Nota · recorte · obras críticas (lista)]
+VAR _listaAten = [Nota · recorte · obras em atenção (lista)]
+VAR _listaEst = [Nota · recorte · obras estáveis (lista)]
+VAR _listaPend = [Nota · recorte · obras pendentes (lista)]
+VAR _ranking = [Nota · recorte · obras por pontos perdidos (lista)]
+VAR _falta = [T1 · Leitura · itens sem dado na carteira]
+VAR _ofB = [T1 · Obras · com item faltando na base (lista) · ref] & ""
+VAR _ofP = [T1 · Obras · com item faltando na planilha (lista) · ref] & ""
+VAR _ofF = [T1 · Obras · com item fora da faixa (lista) · ref] & ""
+VAR _ofNB = IF ( _ofB = "", 0, PATHLENGTH ( _ofB ) )
+VAR _ofNP = IF ( _ofP = "", 0, PATHLENGTH ( _ofP ) )
+VAR _ofNF = IF ( _ofF = "", 0, PATHLENGTH ( _ofF ) )
+VAR _ofP1 = PATHITEM ( _ofP, 1 ) & ""
+VAR _ofF1 = PATHITEM ( _ofF, 1 ) & ""
+VAR _onde =
+    SWITCH (
+        TRUE (),
+        _ofNB > 0 && _ofNP > 0 && _ofB = _ofP, "na base complementar e na planilha",
+        _ofNB > 0 && _ofNP = 1, "na base complementar (na " & _ofP1
+            & IF ( PATHCONTAINS ( _ofB, _ofP1 ), ", também na planilha)", ", só na planilha)" ),
+        _ofNB > 0 && _ofNP > 1, "na base complementar (na planilha, em " & _ofNP & " obras)",
+        _ofNP > 0, "na planilha",
+        "na base complementar"
+    )
+VAR _ondeFora = SWITCH ( TRUE (), _ofNF = 0, "", _ofNF = 1, "; na " & _ofF1 & ", há valor fora da faixa", "; em " & _ofNF & " obras, há valor fora da faixa" )
+VAR _ondeSoFora = _ofNB + _ofNP = 0 && _ofNF > 0
+VAR _max = [Nota · nota · máximo]
+VAR _limA = [Nota · status · nota mínima atenção]
+VAR _limE = [Nota · status · nota mínima estável]
+VAR _fxC = [Nota · status · faixa crítico]
+VAR _fxA = [Nota · status · faixa atenção]
+VAR _fxE = [Nota · status · faixa estável]
+VAR _trvC = [Nota · limite custo · trava]
+VAR _trvP = [Nota · limite prazo · trava]
+VAR _top = [T1 · Leitura · item que mais perde] & ""
+VAR _esp = [T1 · Leitura · item mais espalhado] & ""
+VAR _topPerd = CALCULATE ( [Nota · item · perdidos · ref], dItemNota[Item] = _top )
+VAR _o1 = PATHITEM ( _ranking, 1 )
+VAR _perd1 = CALCULATE ( [Nota · pontos perdidos · ranking · ref], dObra[Obra] = _o1 )
+VAR _pend1 = CALCULATE ( [Nota · pendente · ranking · ref], dObra[Obra] = _o1 )
+VAR _st1 = CALCULATE ( [Nota · status · ranking · ref], dObra[Obra] = _o1 )
+VAR _o1L = CALCULATE ( [T1 · Obras · itens que mais perdem (lista) · ref], dObra[Obra] = _o1 ) & ""
+VAR _tops = [T1 · Leitura · itens que mais perdem (lista)] & ""
+VAR _barras =
+    ADDCOLUMNS (
+        VALUES ( dObra[Obra] ),
+        "@pos", [T1 · Obras · posição],
+        "@s", [Nota · status · ranking · ref],
+        "@pend", [Nota · pendente · ranking · ref],
+        "@nota", [Nota · nota final · ranking · ref],
+        "@obt", [Nota · pontos obtidos · ranking · ref],
+        "@poss", [Nota · pontos possíveis · ranking · ref]
+    )
+VAR _comPos = FILTER ( _barras, NOT ISBLANK ( [@pos] ) ) /* lista */
+VAR _c1 = PATHITEM ( _listaCrit, 1 )
+VAR _c1Nota = CALCULATE ( [Nota · nota final · ranking · ref], dObra[Obra] = _c1 )
+VAR _c1L = CALCULATE ( [T1 · Obras · itens que mais perdem (lista) · ref], dObra[Obra] = _c1 ) & ""
+VAR _c1IN = IF ( _c1L = "", 0, PATHLENGTH ( _c1L ) )
+VAR _c1Ia = PATHITEM ( _c1L, 1 ) & ""
+VAR _c1IaFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _c1Ia )
+VAR _c1IaFr = IF ( _c1Ia = "", "", SWITCH ( TRUE (), LEFT ( _c1IaFrase, 3 ) = "os ", "nos " & MID ( _c1IaFrase, 4, 99 ), LEFT ( _c1IaFrase, 3 ) = "as ", "nas " & MID ( _c1IaFrase, 4, 99 ), LEFT ( _c1IaFrase, 2 ) = "o ", "no " & MID ( _c1IaFrase, 3, 99 ), LEFT ( _c1IaFrase, 2 ) = "a ", "na " & MID ( _c1IaFrase, 3, 99 ), "em " & _c1IaFrase ) )
+VAR _c1Ib = PATHITEM ( _c1L, 2 ) & ""
+VAR _c1IbFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _c1Ib )
+VAR _c1IbFr = IF ( _c1Ib = "", "", SWITCH ( TRUE (), LEFT ( _c1IbFrase, 3 ) = "os ", "nos " & MID ( _c1IbFrase, 4, 99 ), LEFT ( _c1IbFrase, 3 ) = "as ", "nas " & MID ( _c1IbFrase, 4, 99 ), LEFT ( _c1IbFrase, 2 ) = "o ", "no " & MID ( _c1IbFrase, 3, 99 ), LEFT ( _c1IbFrase, 2 ) = "a ", "na " & MID ( _c1IbFrase, 3, 99 ), "em " & _c1IbFrase ) )
+VAR _c1Ic = PATHITEM ( _c1L, 3 ) & ""
+VAR _c1IcFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _c1Ic )
+VAR _c1IcFr = IF ( _c1Ic = "", "", SWITCH ( TRUE (), LEFT ( _c1IcFrase, 3 ) = "os ", "nos " & MID ( _c1IcFrase, 4, 99 ), LEFT ( _c1IcFrase, 3 ) = "as ", "nas " & MID ( _c1IcFrase, 4, 99 ), LEFT ( _c1IcFrase, 2 ) = "o ", "no " & MID ( _c1IcFrase, 3, 99 ), LEFT ( _c1IcFrase, 2 ) = "a ", "na " & MID ( _c1IcFrase, 3, 99 ), "em " & _c1IcFrase ) )
+VAR _c1IFr = SWITCH ( _c1IN, 0, "", 1, _c1IaFr, 2, _c1IaFr & " e " & _c1IbFr, 3, _c1IaFr & ", " & _c1IbFr & " e " & _c1IcFr, "em " & SWITCH ( _c1IN, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _c1IN, "0" ) ) & " itens empatados" )
+VAR _c1Fr = IF ( _c1 = "", "", SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _c1, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & " tem nota " & "⁅" & FORMAT ( _c1Nota, "0.0#", "pt-BR" ) & "⁆" & " e perde mais " & _c1IFr & ". " )
+VAR _c2 = PATHITEM ( _listaCrit, 2 )
+VAR _c2Nota = CALCULATE ( [Nota · nota final · ranking · ref], dObra[Obra] = _c2 )
+VAR _c2L = CALCULATE ( [T1 · Obras · itens que mais perdem (lista) · ref], dObra[Obra] = _c2 ) & ""
+VAR _c2IN = IF ( _c2L = "", 0, PATHLENGTH ( _c2L ) )
+VAR _c2Ia = PATHITEM ( _c2L, 1 ) & ""
+VAR _c2IaFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _c2Ia )
+VAR _c2IaFr = IF ( _c2Ia = "", "", SWITCH ( TRUE (), LEFT ( _c2IaFrase, 3 ) = "os ", "nos " & MID ( _c2IaFrase, 4, 99 ), LEFT ( _c2IaFrase, 3 ) = "as ", "nas " & MID ( _c2IaFrase, 4, 99 ), LEFT ( _c2IaFrase, 2 ) = "o ", "no " & MID ( _c2IaFrase, 3, 99 ), LEFT ( _c2IaFrase, 2 ) = "a ", "na " & MID ( _c2IaFrase, 3, 99 ), "em " & _c2IaFrase ) )
+VAR _c2Ib = PATHITEM ( _c2L, 2 ) & ""
+VAR _c2IbFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _c2Ib )
+VAR _c2IbFr = IF ( _c2Ib = "", "", SWITCH ( TRUE (), LEFT ( _c2IbFrase, 3 ) = "os ", "nos " & MID ( _c2IbFrase, 4, 99 ), LEFT ( _c2IbFrase, 3 ) = "as ", "nas " & MID ( _c2IbFrase, 4, 99 ), LEFT ( _c2IbFrase, 2 ) = "o ", "no " & MID ( _c2IbFrase, 3, 99 ), LEFT ( _c2IbFrase, 2 ) = "a ", "na " & MID ( _c2IbFrase, 3, 99 ), "em " & _c2IbFrase ) )
+VAR _c2Ic = PATHITEM ( _c2L, 3 ) & ""
+VAR _c2IcFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _c2Ic )
+VAR _c2IcFr = IF ( _c2Ic = "", "", SWITCH ( TRUE (), LEFT ( _c2IcFrase, 3 ) = "os ", "nos " & MID ( _c2IcFrase, 4, 99 ), LEFT ( _c2IcFrase, 3 ) = "as ", "nas " & MID ( _c2IcFrase, 4, 99 ), LEFT ( _c2IcFrase, 2 ) = "o ", "no " & MID ( _c2IcFrase, 3, 99 ), LEFT ( _c2IcFrase, 2 ) = "a ", "na " & MID ( _c2IcFrase, 3, 99 ), "em " & _c2IcFrase ) )
+VAR _c2IFr = SWITCH ( _c2IN, 0, "", 1, _c2IaFr, 2, _c2IaFr & " e " & _c2IbFr, 3, _c2IaFr & ", " & _c2IbFr & " e " & _c2IcFr, "em " & SWITCH ( _c2IN, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _c2IN, "0" ) ) & " itens empatados" )
+VAR _c2Fr = IF ( _c2 = "", "", SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _c2, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & " tem nota " & "⁅" & FORMAT ( _c2Nota, "0.0#", "pt-BR" ) & "⁆" & " e perde mais " & _c2IFr & ". " )
+VAR _c3 = PATHITEM ( _listaCrit, 3 )
+VAR _c3Nota = CALCULATE ( [Nota · nota final · ranking · ref], dObra[Obra] = _c3 )
+VAR _c3L = CALCULATE ( [T1 · Obras · itens que mais perdem (lista) · ref], dObra[Obra] = _c3 ) & ""
+VAR _c3IN = IF ( _c3L = "", 0, PATHLENGTH ( _c3L ) )
+VAR _c3Ia = PATHITEM ( _c3L, 1 ) & ""
+VAR _c3IaFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _c3Ia )
+VAR _c3IaFr = IF ( _c3Ia = "", "", SWITCH ( TRUE (), LEFT ( _c3IaFrase, 3 ) = "os ", "nos " & MID ( _c3IaFrase, 4, 99 ), LEFT ( _c3IaFrase, 3 ) = "as ", "nas " & MID ( _c3IaFrase, 4, 99 ), LEFT ( _c3IaFrase, 2 ) = "o ", "no " & MID ( _c3IaFrase, 3, 99 ), LEFT ( _c3IaFrase, 2 ) = "a ", "na " & MID ( _c3IaFrase, 3, 99 ), "em " & _c3IaFrase ) )
+VAR _c3Ib = PATHITEM ( _c3L, 2 ) & ""
+VAR _c3IbFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _c3Ib )
+VAR _c3IbFr = IF ( _c3Ib = "", "", SWITCH ( TRUE (), LEFT ( _c3IbFrase, 3 ) = "os ", "nos " & MID ( _c3IbFrase, 4, 99 ), LEFT ( _c3IbFrase, 3 ) = "as ", "nas " & MID ( _c3IbFrase, 4, 99 ), LEFT ( _c3IbFrase, 2 ) = "o ", "no " & MID ( _c3IbFrase, 3, 99 ), LEFT ( _c3IbFrase, 2 ) = "a ", "na " & MID ( _c3IbFrase, 3, 99 ), "em " & _c3IbFrase ) )
+VAR _c3Ic = PATHITEM ( _c3L, 3 ) & ""
+VAR _c3IcFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _c3Ic )
+VAR _c3IcFr = IF ( _c3Ic = "", "", SWITCH ( TRUE (), LEFT ( _c3IcFrase, 3 ) = "os ", "nos " & MID ( _c3IcFrase, 4, 99 ), LEFT ( _c3IcFrase, 3 ) = "as ", "nas " & MID ( _c3IcFrase, 4, 99 ), LEFT ( _c3IcFrase, 2 ) = "o ", "no " & MID ( _c3IcFrase, 3, 99 ), LEFT ( _c3IcFrase, 2 ) = "a ", "na " & MID ( _c3IcFrase, 3, 99 ), "em " & _c3IcFrase ) )
+VAR _c3IFr = SWITCH ( _c3IN, 0, "", 1, _c3IaFr, 2, _c3IaFr & " e " & _c3IbFr, 3, _c3IaFr & ", " & _c3IbFr & " e " & _c3IcFr, "em " & SWITCH ( _c3IN, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _c3IN, "0" ) ) & " itens empatados" )
+VAR _c3Fr = IF ( _c3 = "", "", SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _c3, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & " tem nota " & "⁅" & FORMAT ( _c3Nota, "0.0#", "pt-BR" ) & "⁆" & " e perde mais " & _c3IFr & ". " )
+VAR _tFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _top )
+VAR _tFr = IF ( _top = "", "", SWITCH ( TRUE (), LEFT ( _tFrase, 3 ) = "os ", "nos " & MID ( _tFrase, 4, 99 ), LEFT ( _tFrase, 3 ) = "as ", "nas " & MID ( _tFrase, 4, 99 ), LEFT ( _tFrase, 2 ) = "o ", "no " & MID ( _tFrase, 3, 99 ), LEFT ( _tFrase, 2 ) = "a ", "na " & MID ( _tFrase, 3, 99 ), "em " & _tFrase ) )
+VAR _sFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _esp )
+VAR _sFr = IF ( _esp = "", "", SWITCH ( TRUE (), LEFT ( _sFrase, 3 ) = "os ", "nos " & MID ( _sFrase, 4, 99 ), LEFT ( _sFrase, 3 ) = "as ", "nas " & MID ( _sFrase, 4, 99 ), LEFT ( _sFrase, 2 ) = "o ", "no " & MID ( _sFrase, 3, 99 ), LEFT ( _sFrase, 2 ) = "a ", "na " & MID ( _sFrase, 3, 99 ), "em " & _sFrase ) )
+VAR _jN = IF ( _o1L = "", 0, PATHLENGTH ( _o1L ) )
+VAR _ja = PATHITEM ( _o1L, 1 ) & ""
+VAR _jaFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _ja )
+VAR _jaFr = IF ( _ja = "", "", SWITCH ( TRUE (), LEFT ( _jaFrase, 3 ) = "os ", "nos " & MID ( _jaFrase, 4, 99 ), LEFT ( _jaFrase, 3 ) = "as ", "nas " & MID ( _jaFrase, 4, 99 ), LEFT ( _jaFrase, 2 ) = "o ", "no " & MID ( _jaFrase, 3, 99 ), LEFT ( _jaFrase, 2 ) = "a ", "na " & MID ( _jaFrase, 3, 99 ), "em " & _jaFrase ) )
+VAR _jb = PATHITEM ( _o1L, 2 ) & ""
+VAR _jbFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _jb )
+VAR _jbFr = IF ( _jb = "", "", SWITCH ( TRUE (), LEFT ( _jbFrase, 3 ) = "os ", "nos " & MID ( _jbFrase, 4, 99 ), LEFT ( _jbFrase, 3 ) = "as ", "nas " & MID ( _jbFrase, 4, 99 ), LEFT ( _jbFrase, 2 ) = "o ", "no " & MID ( _jbFrase, 3, 99 ), LEFT ( _jbFrase, 2 ) = "a ", "na " & MID ( _jbFrase, 3, 99 ), "em " & _jbFrase ) )
+VAR _jc = PATHITEM ( _o1L, 3 ) & ""
+VAR _jcFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _jc )
+VAR _jcFr = IF ( _jc = "", "", SWITCH ( TRUE (), LEFT ( _jcFrase, 3 ) = "os ", "nos " & MID ( _jcFrase, 4, 99 ), LEFT ( _jcFrase, 3 ) = "as ", "nas " & MID ( _jcFrase, 4, 99 ), LEFT ( _jcFrase, 2 ) = "o ", "no " & MID ( _jcFrase, 3, 99 ), LEFT ( _jcFrase, 2 ) = "a ", "na " & MID ( _jcFrase, 3, 99 ), "em " & _jcFrase ) )
+VAR _jFr = SWITCH ( _jN, 0, "", 1, _jaFr, 2, _jaFr & " e " & _jbFr, 3, _jaFr & ", " & _jbFr & " e " & _jcFr, "em " & SWITCH ( _jN, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _jN, "0" ) ) & " itens empatados" )
+VAR _tsN = IF ( _tops = "", 0, PATHLENGTH ( _tops ) )
+VAR _tsa = PATHITEM ( _tops, 1 ) & ""
+VAR _tsaFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _tsa )
+VAR _tsaFr = IF ( _tsa = "", "", SWITCH ( TRUE (), LEFT ( _tsaFrase, 3 ) = "os ", "nos " & MID ( _tsaFrase, 4, 99 ), LEFT ( _tsaFrase, 3 ) = "as ", "nas " & MID ( _tsaFrase, 4, 99 ), LEFT ( _tsaFrase, 2 ) = "o ", "no " & MID ( _tsaFrase, 3, 99 ), LEFT ( _tsaFrase, 2 ) = "a ", "na " & MID ( _tsaFrase, 3, 99 ), "em " & _tsaFrase ) )
+VAR _tsb = PATHITEM ( _tops, 2 ) & ""
+VAR _tsbFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _tsb )
+VAR _tsbFr = IF ( _tsb = "", "", SWITCH ( TRUE (), LEFT ( _tsbFrase, 3 ) = "os ", "nos " & MID ( _tsbFrase, 4, 99 ), LEFT ( _tsbFrase, 3 ) = "as ", "nas " & MID ( _tsbFrase, 4, 99 ), LEFT ( _tsbFrase, 2 ) = "o ", "no " & MID ( _tsbFrase, 3, 99 ), LEFT ( _tsbFrase, 2 ) = "a ", "na " & MID ( _tsbFrase, 3, 99 ), "em " & _tsbFrase ) )
+VAR _tsc = PATHITEM ( _tops, 3 ) & ""
+VAR _tscFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _tsc )
+VAR _tscFr = IF ( _tsc = "", "", SWITCH ( TRUE (), LEFT ( _tscFrase, 3 ) = "os ", "nos " & MID ( _tscFrase, 4, 99 ), LEFT ( _tscFrase, 3 ) = "as ", "nas " & MID ( _tscFrase, 4, 99 ), LEFT ( _tscFrase, 2 ) = "o ", "no " & MID ( _tscFrase, 3, 99 ), LEFT ( _tscFrase, 2 ) = "a ", "na " & MID ( _tscFrase, 3, 99 ), "em " & _tscFrase ) )
+VAR _tsFr = SWITCH ( _tsN, 0, "", 1, _tsaFr, 2, _tsaFr & " e " & _tsbFr, 3, _tsaFr & ", " & _tsbFr & " e " & _tscFr, "em " & SWITCH ( _tsN, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _tsN, "0" ) ) & " itens empatados" )
+-- 2 · Textos
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _lcN = IF ( ISBLANK ( _listaCrit ) || _listaCrit = "", 0, PATHLENGTH ( _listaCrit ) )
+VAR _lcPos = IF ( _lcN >= 2, FIND ( "§", SUBSTITUTE ( _listaCrit, "|", "§", _lcN - 1 ) ) )
+VAR _lcTxt = SWITCH ( TRUE (), _lcN = 0, "", _lcN = 1, _listaCrit, SUBSTITUTE ( LEFT ( _listaCrit, _lcPos - 1 ), "|", ", " ) & " e " & MID ( _listaCrit, _lcPos + 1, 999 ) )
+VAR _laN = IF ( ISBLANK ( _listaAten ) || _listaAten = "", 0, PATHLENGTH ( _listaAten ) )
+VAR _laPos = IF ( _laN >= 2, FIND ( "§", SUBSTITUTE ( _listaAten, "|", "§", _laN - 1 ) ) )
+VAR _laTxt = SWITCH ( TRUE (), _laN = 0, "", _laN = 1, _listaAten, SUBSTITUTE ( LEFT ( _listaAten, _laPos - 1 ), "|", ", " ) & " e " & MID ( _listaAten, _laPos + 1, 999 ) )
+VAR _leN = IF ( ISBLANK ( _listaEst ) || _listaEst = "", 0, PATHLENGTH ( _listaEst ) )
+VAR _lePos = IF ( _leN >= 2, FIND ( "§", SUBSTITUTE ( _listaEst, "|", "§", _leN - 1 ) ) )
+VAR _leTxt = SWITCH ( TRUE (), _leN = 0, "", _leN = 1, _listaEst, SUBSTITUTE ( LEFT ( _listaEst, _lePos - 1 ), "|", ", " ) & " e " & MID ( _listaEst, _lePos + 1, 999 ) )
+VAR _lpN = IF ( ISBLANK ( _listaPend ) || _listaPend = "", 0, PATHLENGTH ( _listaPend ) )
+VAR _lpPos = IF ( _lpN >= 2, FIND ( "§", SUBSTITUTE ( _listaPend, "|", "§", _lpN - 1 ) ) )
+VAR _lpTxt = SWITCH ( TRUE (), _lpN = 0, "", _lpN = 1, _listaPend, SUBSTITUTE ( LEFT ( _listaPend, _lpPos - 1 ), "|", ", " ) & " e " & MID ( _listaPend, _lpPos + 1, 999 ) )
+VAR _txtSob = "LEITURA · OBRAS PELA NOTA · " & UPPER ( _mesL )
+VAR _tA = IF ( _a = 0, "", IF ( _laN <= 3, _laTxt, SWITCH ( _a, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _a, "0" ) ) & " obras" ) & IF ( _a = 1, " pede atenção", " pedem atenção" ) )
+VAR _tE = IF ( _e = 0, "", IF ( _leN <= 3, _leTxt, SWITCH ( _e, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _e, "0" ) ) & " obras" ) & IF ( _e = 1, " segue estável", " seguem estáveis" ) )
+VAR _tP = IF ( _p = 0, "", IF ( _c + _a + _e = 0, "", "as outras " ) & IF ( _p = 1, "uma está pendente", SWITCH ( _p, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _p, "0" ) ) & " estão pendentes" ) )
+VAR _nOut = INT ( _a > 0 ) + INT ( _e > 0 ) + INT ( _p > 0 )
+VAR _txtOut =
+    SWITCH (
+        _nOut,
+        0, "",
+        1, _tA & _tE & _tP,
+        2, IF ( _a > 0, _tA & IF ( _e > 0, " e " & _tE, "; " & _tP ), _tE & "; " & _tP ),
+        _tA & ", " & _tE & "; " & _tP
+    )
+VAR _txtAchado =
+    SWITCH (
+        TRUE (),
+        _c + _a + _e + _p = 0, "Nenhuma obra com planilha em " & _mesN & ".",
+        _c + _a + _e = 0, IF ( _p = 1, "A obra está pendente em ", "As " & SWITCH ( _p, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _p, "0" ) ) & " obras estão pendentes em " ) & _mesN & ": " & IF ( _ondeSoFora, "há valor fora da faixa na base complementar", "falta item " & _onde & _ondeFora ) & ".",
+        _c = 0, "Nenhuma obra crítica em " & _mesN & ": " & _txtOut & ".",
+        _c = 1, "Uma obra crítica em " & _mesN & ": " & _lcTxt & "." & IF ( _txtOut = "", "", " " & UPPER ( LEFT ( _txtOut, 1 ) ) & MID ( _txtOut, 2, LEN ( _txtOut ) ) & "." ),
+        UPPER ( LEFT ( SWITCH ( _c, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _c, "0" ) ), 1 ) ) & MID ( SWITCH ( _c, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _c, "0" ) ), 2, LEN ( SWITCH ( _c, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _c, "0" ) ) ) ) & " obras críticas em " & _mesN & ": " & _lcTxt & "." & IF ( _txtOut = "", "", " " & UPPER ( LEFT ( _txtOut, 1 ) ) & MID ( _txtOut, 2, LEN ( _txtOut ) ) & "." )
+    )
+VAR _txtO1 =
+    SWITCH (
+        TRUE (),
+        _o1 = "" || NOT ( _perd1 > 0 ), "Nenhuma obra perdeu pontos nos itens com dado.",
+        _pend1 = 1, "Nos itens que já têm dado, quem mais perde é a " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _o1, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & ", pendente: perde mais " & _jFr & ".",
+        "Quem mais perde pontos é a " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _o1, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & ", " & SWITCH ( _st1, 2, "crítica", 1, "em atenção", "estável" ) & ": perde mais " & _jFr & "."
+    )
+VAR _txtPend = IF ( _p = 0 || _c + _a + _e = 0, "", " " & IF ( _p = 1, "A pendente, ", "As pendentes, " ) & _lpTxt & IF ( _p = 1, ", ainda não tem nota", ", ainda não têm nota" ) & ": " & IF ( _ondeSoFora, "há valor fora da faixa na base complementar", "falta dado " & _onde & _ondeFora ) & "." )
+VAR _txtExplica =
+    IF (
+        _c > 0,
+        TRIM ( _c1Fr & _c2Fr & _c3Fr & IF ( _c > 3, "Há mais obras críticas na lista. ", "" ) ) & _txtPend,
+        _txtO1 & _txtPend
+    )
+VAR _txtOq =
+    SWITCH (
+        TRUE (),
+        _top = "", "Nenhum item da nota perdeu pontos no mês.",
+        _esp = _top && _tsN = 1, UPPER ( LEFT ( _tFrase, 1 ) ) & MID ( _tFrase, 2, LEN ( _tFrase ) ) & " é onde a carteira mais perde, em pontos e em obras atingidas.",
+        "A carteira perde mais pontos " & _tsFr & IF ( _tsN > 1, ", empatados", "" ) & "; a perda que atinge mais obras está " & _sFr & "."
+    )
+VAR _txtP1 = FORMAT ( _perd1, "0.0#", "pt-BR" )
+VAR _p1KP = LEN ( _txtP1 ) > 0
+VAR _p1KN = IF ( _p1KP, _txtP1 )
+VAR _p1KS = SUBSTITUTE ( SUBSTITUTE ( _p1KN, ".", "" ), ",", "" )
+VAR _p1KT = IFERROR ( VALUE ( _p1KS ), -1 )
+VAR _p1KOk = _p1KP && _p1KT >= 2 && FORMAT ( _p1KT, REPT ( "0", LEN ( _p1KS ) ) ) = _p1KS
+VAR _p1KD = IF ( CONTAINSSTRING ( _p1KN, "," ), LEN ( _p1KN ) - SEARCH ( ",", _p1KN ), 0 )
+VAR _p1KM = IF ( CONTAINSSTRING ( _p1KN, "." ), "#,##0", "0" ) & IF ( _p1KD > 0, "." & REPT ( "0", _p1KD ) )
+VAR _p1KOd =
+    IF (
+        _p1KOk,
+        "<o-d><o-v>" & _p1KN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _p1KN, FORMAT ( ROUND ( _p1KT * [@odf] / 1000, 0 ) / POWER ( 10, _p1KD ), _p1KM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _txtP1
+    )
+VAR _txtTop = FORMAT ( _topPerd, "0.0#", "pt-BR" )
+VAR _tpKP = LEN ( _txtTop ) > 0
+VAR _tpKN = IF ( _tpKP, _txtTop )
+VAR _tpKS = SUBSTITUTE ( SUBSTITUTE ( _tpKN, ".", "" ), ",", "" )
+VAR _tpKT = IFERROR ( VALUE ( _tpKS ), -1 )
+VAR _tpKOk = _tpKP && _tpKT >= 2 && FORMAT ( _tpKT, REPT ( "0", LEN ( _tpKS ) ) ) = _tpKS
+VAR _tpKD = IF ( CONTAINSSTRING ( _tpKN, "," ), LEN ( _tpKN ) - SEARCH ( ",", _tpKN ), 0 )
+VAR _tpKM = IF ( CONTAINSSTRING ( _tpKN, "." ), "#,##0", "0" ) & IF ( _tpKD > 0, "." & REPT ( "0", _tpKD ) )
+VAR _tpKOd =
+    IF (
+        _tpKOk,
+        "<o-d><o-v>" & _tpKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tpKN, FORMAT ( ROUND ( _tpKT * [@odf] / 1000, 0 ) / POWER ( 10, _tpKD ), _tpKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _txtTop
+    )
+VAR _txtFalta = FORMAT ( _falta, "0" )
+VAR _fKP = LEN ( _txtFalta ) > 0
+VAR _fKN = IF ( _fKP, _txtFalta )
+VAR _fKS = SUBSTITUTE ( SUBSTITUTE ( _fKN, ".", "" ), ",", "" )
+VAR _fKT = IFERROR ( VALUE ( _fKS ), -1 )
+VAR _fKOk = _fKP && _fKT >= 2 && FORMAT ( _fKT, REPT ( "0", LEN ( _fKS ) ) ) = _fKS
+VAR _fKD = IF ( CONTAINSSTRING ( _fKN, "," ), LEN ( _fKN ) - SEARCH ( ",", _fKN ), 0 )
+VAR _fKM = IF ( CONTAINSSTRING ( _fKN, "." ), "#,##0", "0" ) & IF ( _fKD > 0, "." & REPT ( "0", _fKD ) )
+VAR _fKOd =
+    IF (
+        _fKOk,
+        "<o-d><o-v>" & _fKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _fKN, FORMAT ( ROUND ( _fKT * [@odf] / 1000, 0 ) / POWER ( 10, _fKD ), _fKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _txtFalta
+    )
+VAR _txtD1 = IF ( NOT ( _perd1 > 0 ), "pontos perdidos: nenhuma obra perdeu", "pontos que a " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _o1, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & " perde, a maior perda da carteira" )
+VAR _txtD2 = IF ( _top = "", "pontos perdidos por item", "pontos perdidos " & _tsFr & IF ( _tsN > 1, ", cada um", "" ) & ", somadas as obras" )
+VAR _txtD3 = IF ( _falta = 1, "item ainda sem dado, somadas as obras", "itens ainda sem dado, somadas as obras" )
+-- 3 · Geometria
+VAR _nLinhas = COUNTROWS ( _comPos ) /* geometria */
+VAR _alt = _nLinhas * 30 -- geometria
+VAR _xA = 108 + ROUND ( _limA / _max * 232, 0 ) -- geometria
+VAR _xE = 108 + ROUND ( _limE / _max * 232, 0 ) -- geometria
+-- 4 · Marcação
+VAR _htmlBarras =
+    CONCATENATEX (
+        _comPos,
+        VAR _pd = [@pend] = 1
+        VAR _lN = MAX ( 2, ROUND ( MIN ( [@nota], _max ) / _max * 232, 0 ) ) -- geometria
+        VAR _lO = MAX ( 2, ROUND ( MIN ( [@obt], _max ) / _max * 232, 0 ) ) -- geometria
+        VAR _lP = ROUND ( MIN ( [@poss], _max ) / _max * 232, 0 ) -- geometria
+        VAR _atraso = 500 + ( [@pos] - 1 ) * 60 -- geometria
+        VAR _barra =
+            IF (
+                _pd,
+                "<u class='a-gx' style='width:" & _lP & "px;animation-delay:" & _atraso & "ms'></u>"
+                    & "<i class='sm' style='width:" & _lO & "px' data-rk='"
+                    & dObra[Obra] & "' data-rd='" & _atraso & "'></i>",
+                "<i class='s" & [@s] & "' style='width:" & _lN & "px' data-rk='" & dObra[Obra] & "' data-rd='"
+                    & _atraso & "'></i>"
+            )
+        RETURN
+            "<div class='r'><b>" & dObra[Obra] & "</b><div class='tr'>" & _barra & "</div></div>",
+        "",
+        [@pos], ASC
+    )
+VAR _htmlDet =
+    "<span class='vs'>Detalhe · nota das " & SWITCH ( _nObras, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _nObras, "0" ) ) & " obras</span>"
+        & "<p class='sub'>as linhas marcam onde começam a atenção e o estável; a pendente vai tracejada até o que já dá para calcular</p>"
+        & "<div class='bp' style='height:" & ( _alt + 22 ) & "px'>" & _htmlBarras
+        & "<i class='lim' style='left:" & _xA & "px;height:" & _alt & "px'></i>"
+        & "<i class='lim' style='left:" & _xE & "px;height:" & _alt & "px'></i>"
+        & "<span class='lr la a-fd' style='left:" & _xA & "px;top:" & ( _alt + 4 ) & "px;animation-delay:400ms'>atenção</span>"
+        & "<span class='lr le a-fd' style='left:" & _xE & "px;top:" & ( _alt + 4 ) & "px;animation-delay:400ms'>estável</span>"
+        & "</div>"
+VAR _htmlDst =
+    "<div class='dst sobre-creme'>"
+        & "<div><b>" & IF ( NOT ( _perd1 > 0 ), "0", _p1KOd ) & "</b><span>" & _txtD1 & "</span></div>"
+        & "<div><b>" & IF ( _top = "", "0", _tpKOd ) & "</b><span>" & _txtD2 & "</span></div>"
+        & "<div><b>" & _fKOd & "</b><span>" & _txtD3 & "</span></div>"
+    & "</div>"
+VAR _txtComoLer =
+    "<p class='cl'>A Nota da obra soma nove itens, de 0 a " & "⁅" & FORMAT ( _max, "0", "pt-BR" ) & "⁆" & " pontos: "
+        & "quatro vêm da Análise Crítica e cinco da base complementar, preenchida a cada mês. Estável com nota " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxE, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "; atenção de " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxA, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "; crítico com " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxC, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & ". IDC abaixo de " & "⁅" & FORMAT ( _trvC, "0.00", "pt-BR" ) & "⁆" & " ou atraso acima de " & "⁅" & FORMAT ( _trvP, "0", "pt-BR" ) & "⁆" & " meses deixam a obra crítica, qualquer que seja a nota. Enquanto falta item, a obra fica pendente: mostra os pontos que já dá para calcular e não recebe status.</p>"
+VAR _esq =
+    "<div class='esq'><span class='vs sob'>" & _txtSob & "</span>"
+        & "<h2 class='ach'>" & _txtAchado & "</h2>"
+        & "<p class='exp'>" & _txtExplica & "</p>"
+        & _htmlDst
+        & "<div class='sec'><span class='vs'>O que explica</span>" & "<p class='oqe'>" & _txtOq & "</p>" & "</div>"
+    & "</div>"
+VAR _dir =
+    "<div class='dir'>" & _htmlDet
+        & "<div class='sec'><span class='vs'>Como ler</span>" & _txtComoLer & "</div>"
+    & "</div>"
+VAR _corpo = "<div class='cols'>" & _esq & "<i class='div'></i>" & _dir & "</div>"
+VAR _saidaHtml =
+    IF ( _nObras > 0, "<div class='u lv' role='dialog' aria-label='" & "Leitura da lista de obras pela Nota da obra" & "'><div class='pn pn-obras'>" & _corpo & "</div><svg class='x' width='26' height='26' viewBox='0 0 26 26' aria-hidden='true'><circle cx='13' cy='13' r='12.375' fill='#FFFFFF' stroke='#3B3B3F' stroke-width='1.25'/><path d='M9 9L17 17M17 9L9 17' fill='none' stroke='#0B0B0C' stroke-width='1.5' stroke-linecap='round'/></svg></div>" & [Comum · JS contador tooltip] & [Comum · JS corrida] )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

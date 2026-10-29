@@ -1,0 +1,478 @@
+/// Uma linha por obra × mês (aba mensal), de pInicioHistorico em diante. Valores do "quadradinho" como a planilha apresenta (área de impressão A132:J157), para bater centavo a centavo com o que a diretoria imprime; o resultado pela regra (recalculado das entradas e das tabelas anexadas) fica ao lado, para a conferência. As colunas *Anterior vêm da aba do mês anterior da mesma obra (lida mesmo antes do histórico), no lugar da referência manual entre abas.
+table fAnaliseCritica
+	lineageTag: 5f7e8221-6b8b-554e-b72f-dbcae4281468
+
+	/// Obra (pelo nome do arquivo da planilha).
+	column Obra
+		dataType: string
+		lineageTag: ecd73bd8-49ae-5b45-8a2a-b6a205a3702f
+		summarizeBy: none
+		sourceColumn: Obra
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Mês de referência (pelo nome da aba).
+	column Mes
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 7806ab0a-5cc7-5cc7-93a5-68e7ad786de5
+		summarizeBy: none
+		sourceColumn: Mes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Nome da aba na planilha (JUN26, MAIO26…).
+	column Aba
+		dataType: string
+		isHidden
+		lineageTag: 5d738be2-d909-5139-b399-eaf1d5f6df33
+		summarizeBy: none
+		sourceColumn: Aba
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Arquivo de origem.
+	column Arquivo
+		dataType: string
+		isHidden
+		lineageTag: 5f3b5f48-dc42-5ab5-aa4a-d1fd1d2e9196
+		summarizeBy: none
+		sourceColumn: Arquivo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Real ou Ilustrativo (planilha fictícia).
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: c26e5c03-fa00-508a-8a5d-2cfe3a1bdf2d
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Tipo do orçamento projetado (alvo, legal, preliminar, executivo, final).
+	column TipoOrcamento
+		dataType: string
+		isHidden
+		lineageTag: 1a569234-0ba7-52b1-9b9c-ac790dd8caf8
+		summarizeBy: none
+		sourceColumn: TipoOrcamento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Orçamento da obra projetado (passo 3, com INCC no a realizar).
+	column Orcamento
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 0485db23-846a-5bf8-a90b-06b6144989a2
+		summarizeBy: none
+		sourceColumn: Orcamento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % previsto do mês (passo 4).
+	column PrevMes
+		dataType: double
+		isHidden
+		formatString: 0.00%
+		lineageTag: d29a16a2-aeaf-5096-a26b-ed1871f63145
+		summarizeBy: none
+		sourceColumn: PrevMes
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % executado do mês (passo 5).
+	column ExecMes
+		dataType: double
+		isHidden
+		formatString: 0.00%
+		lineageTag: 2ca75cdb-7914-5194-a4c6-0ce5ffda16a0
+		summarizeBy: none
+		sourceColumn: ExecMes
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % previsto acumulado (passo 6).
+	column PrevAcum
+		dataType: double
+		isHidden
+		formatString: 0.00%
+		lineageTag: 18346b13-b3e6-5f8f-a02f-d3536c7e2048
+		summarizeBy: none
+		sourceColumn: PrevAcum
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % executado acumulado (passo 7).
+	column ExecAcum
+		dataType: double
+		isHidden
+		formatString: 0.00%
+		lineageTag: 41a408c5-135b-5ad7-b5b0-d5b7ad2e9045
+		summarizeBy: none
+		sourceColumn: ExecAcum
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Item 1 do quadradinho: crédito do orçamento (executado acumulado × orçamento).
+	column Credito
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 32f62245-ca0c-5225-989c-cb3c01eab3a6
+		summarizeBy: none
+		sourceColumn: Credito
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Item 2: saldo de contrato.
+	column SaldoContrato
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: f38d61fd-c956-5cda-9b9e-b538b54dfe34
+		summarizeBy: none
+		sourceColumn: SaldoContrato
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Item 3: adiantamento de serviços não medidos.
+	column AdiantServicos
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: a540073d-fabe-5d24-8d54-fbc3b82c7d95
+		summarizeBy: none
+		sourceColumn: AdiantServicos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Item 4: adiantamento de materiais não estocados.
+	column AdiantMateriais
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: ecd94bd7-db10-5f1b-9b52-64d18288e130
+		summarizeBy: none
+		sourceColumn: AdiantMateriais
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Item 5: estoque de materiais.
+	column Estoque
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 597bbcad-63ff-55bf-b251-43ad9f09239b
+		summarizeBy: none
+		sourceColumn: Estoque
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Item 6: equipamentos (valor de mercado), como apresentado.
+	column Equipamentos
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: fdb6e41f-a6d0-57ec-bd5a-165d6f137e69
+		summarizeBy: none
+		sourceColumn: Equipamentos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Item 7: receita de personalizações.
+	column ReceitaPersonalizacao
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 5c295ad8-75c2-5021-ad49-b7bc2000f654
+		summarizeBy: none
+		sourceColumn: ReceitaPersonalizacao
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Item 8: contas a pagar dos medidos (subtrai).
+	column ContasPagar
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 773f19c9-7151-5837-a675-2d32965ceb20
+		summarizeBy: none
+		sourceColumn: ContasPagar
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Item 9: valor desembolsado pela obra, corrigido dos itens irregulares (subtrai).
+	column Desembolsado
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: b79e9409-53b0-5b88-8b5b-fe5b853916a7
+		summarizeBy: none
+		sourceColumn: Desembolsado
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Item 10: dívida da obra a ser paga (soma, como na fórmula da planilha).
+	column Divida
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 44af54b9-76ac-527a-9d8a-57ab2db38f54
+		summarizeBy: none
+		sourceColumn: Divida
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Resultado mensal da obra, como a planilha apresenta.
+	column Resultado
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: e7210f53-edbb-5596-9703-b34c1f6361c4
+		summarizeBy: none
+		sourceColumn: Resultado
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Resultado pela regra da planilha, recalculado das entradas e da soma das tabelas anexadas (conferência).
+	column ResultadoRegra
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 3352501d-061c-5c81-bf2e-f7c952022d36
+		summarizeBy: none
+		sourceColumn: ResultadoRegra
+
+		annotation SummarizationSetBy = Automatic
+
+	/// "Resultado do mês anterior" como a aba mostra (referência manual; conferência).
+	column ResultadoAnteriorPlanilha
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: e8a26d29-b74f-5523-ad09-f77bcd863b4a
+		summarizeBy: none
+		sourceColumn: ResultadoAnteriorPlanilha
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Valor desembolsado digitado no passo 15 (antes de tirar os itens irregulares).
+	column DesembolsadoBruto
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: eacad3f8-a469-5333-bceb-51740638af18
+		summarizeBy: none
+		sourceColumn: DesembolsadoBruto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Soma dos itens apontados irregularmente.
+	column ItensIrregulares
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 4e69f1bf-57e0-5161-aca0-7f13b59d2c1b
+		summarizeBy: none
+		sourceColumn: ItensIrregulares
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Valor previsto para o mês, em R$ (tabela informativa).
+	column PrevistoMesRS
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: f4397bfa-76b2-5a24-9557-7cdc863e2572
+		summarizeBy: none
+		sourceColumn: PrevistoMesRS
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Valor desembolsado no mês, em R$ (tabela informativa).
+	column DesembolsadoMesRS
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 6dc74abd-9aec-59d4-89fe-6cc6f5fad0bf
+		summarizeBy: none
+		sourceColumn: DesembolsadoMesRS
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Justificativa da diferença entre previsto e desembolsado do mês.
+	column Justificativa
+		dataType: string
+		isHidden
+		lineageTag: a1f4b366-91cd-5f9f-b593-70bc7389a734
+		summarizeBy: none
+		sourceColumn: Justificativa
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Mês da aba anterior da mesma obra (vazio no primeiro mês da planilha).
+	column MesAnterior
+		dataType: dateTime
+		isHidden
+		formatString: dd/mm/yyyy
+		lineageTag: 4c4519eb-d596-5b64-852d-0ff6f031ad6b
+		summarizeBy: none
+		sourceColumn: MesAnterior
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Resultado apresentado na aba anterior.
+	column ResultadoAnterior
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: b9b8d159-26f9-5ec9-a1a4-3108c4d41246
+		summarizeBy: none
+		sourceColumn: ResultadoAnterior
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Orçamento da aba anterior.
+	column OrcamentoAnterior
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: ca34787d-3edd-591d-b0c1-0be6b0b90ebb
+		summarizeBy: none
+		sourceColumn: OrcamentoAnterior
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % previsto acumulado da aba anterior.
+	column PrevAcumAnterior
+		dataType: double
+		isHidden
+		formatString: 0.00%
+		lineageTag: a38bb490-e063-5335-aa8b-00ba88d0a77d
+		summarizeBy: none
+		sourceColumn: PrevAcumAnterior
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % executado acumulado da aba anterior.
+	column ExecAcumAnterior
+		dataType: double
+		isHidden
+		formatString: 0.00%
+		lineageTag: 68d2c99f-1fb1-58f2-9443-ca73b3341686
+		summarizeBy: none
+		sourceColumn: ExecAcumAnterior
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fAnaliseCritica = m
+		mode: import
+		source =
+				let
+				    Origem = stgAbas,
+				    Validas = Table.SelectRows(Origem, each [Leitura][Layout] = true),
+				    // Uma aba por obra e mês: se a planilha tiver duas, a preliminar perde (ABRIL 2026 (RETA FINAL) × (PRELIMINAR));
+				    // entre as demais (ex.: MAI26 e MAIO26), vale a mais à direita
+				    // sem nenhuma aba lida, Table.Combine de lista vazia não tem colunas: a tabela vazia segue com as suas
+				    Unicas = if Table.RowCount(Validas) = 0 then Validas else Table.Combine(Table.Group(Validas, {"Obra", "Mes"},
+				        {{"T", each Table.FirstN(Table.Sort(_, {{"Preliminar", Order.Ascending}, {"OrdemAba", Order.Descending}}), 1),
+				            type table}})[T]),
+				    Campos = {"Projeto", "MesCelula", "TipoOrcamento", "Orcamento", "PrevMes", "ExecMes", "PrevAcum", "ExecAcum",
+				        "DesembolsadoBruto", "SomaSaldoContrato", "SomaAdiantServicos", "SomaAdiantMateriais", "SomaEstoque",
+				        "SomaEquipamentos", "SomaReceitaPersonalizacao", "SomaContasPagar", "SomaItensIrregulares", "SomaDivida",
+				        "QCredito", "QSaldoContrato", "QAdiantServicos", "QAdiantMateriais", "QEstoque", "QEquipamentos",
+				        "QReceitaPersonalizacao", "QContasPagar", "QDesembolsado", "QDivida", "ResultadoPlanilha", "ResultadoAnteriorPlanilha",
+				        "PrevistoMesRS", "DesembolsadoMesRS", "Justificativa"},
+				    Abertos = Table.ExpandRecordColumn(Unicas, "Leitura", Campos),
+				    Ou = (a as nullable number, b as number) as number => if a = null then b else a,
+
+				    // Valores do quadradinho (o que a planilha apresenta); sem valor salvo, cai na regra
+				    Apresentado = Table.AddColumn(Abertos, "Valores", each
+				        let
+				            CreditoRegra = [ExecAcum] * [Orcamento],
+				            DesembolsadoRegra = [DesembolsadoBruto] - [SomaItensIrregulares],
+				            ResultadoRegra = CreditoRegra + [SomaSaldoContrato] + [SomaAdiantServicos] + [SomaAdiantMateriais]
+				                + [SomaEstoque] + [SomaEquipamentos] + [SomaReceitaPersonalizacao] - [SomaContasPagar] - DesembolsadoRegra
+				                - [SomaDivida]    // versão 01 da planilha: a dívida da obra desconta (docs/08, L13)
+				        in
+				            [
+				                Credito = Ou([QCredito], CreditoRegra),
+				                SaldoContrato = Ou([QSaldoContrato], [SomaSaldoContrato]),
+				                AdiantServicos = Ou([QAdiantServicos], [SomaAdiantServicos]),
+				                AdiantMateriais = Ou([QAdiantMateriais], [SomaAdiantMateriais]),
+				                Estoque = Ou([QEstoque], [SomaEstoque]),
+				                Equipamentos = Ou([QEquipamentos], [SomaEquipamentos]),
+				                ReceitaPersonalizacao = Ou([QReceitaPersonalizacao], [SomaReceitaPersonalizacao]),
+				                ContasPagar = Ou([QContasPagar], [SomaContasPagar]),
+				                Desembolsado = Ou([QDesembolsado], DesembolsadoRegra),
+				                Divida = Ou([QDivida], [SomaDivida]),
+				                Resultado = Ou([ResultadoPlanilha], ResultadoRegra),
+				                ResultadoRegra = ResultadoRegra,
+				                ItensIrregulares = [SomaItensIrregulares]
+				            ]),
+				    Valores = Table.ExpandRecordColumn(Apresentado, "Valores", {"Credito", "SaldoContrato", "AdiantServicos",
+				        "AdiantMateriais", "Estoque", "Equipamentos", "ReceitaPersonalizacao", "ContasPagar", "Desembolsado", "Divida",
+				        "Resultado", "ResultadoRegra", "ItensIrregulares"}),
+
+				    // Aba anterior da mesma obra (a planilha liga o "mês anterior" por referência manual; aqui é pela ordem dos meses)
+				    ComAnterior = Table.Combine(Table.Group(Valores, {"Obra"}, {{"T", (t) =>
+				        let
+				            Ordenada = Table.Buffer(Table.Sort(t, {{"Mes", Order.Ascending}})),
+				            ComIndice = Table.AddIndexColumn(Ordenada, "i", 0, 1),
+				            ComAnt = Table.AddColumn(ComIndice, "Ant", each if [i] = 0 then null else Ordenada{[i] - 1})
+				        in
+				            ComAnt, type table}})[T]),
+				    Anterior = (r as nullable record, campo as text) as any => if r = null then null else Record.Field(r, campo),
+				    ComCamposAnteriores = Table.FromRecords(List.Transform(Table.ToRecords(ComAnterior), (r) =>
+				        Record.RemoveFields(r, {"i", "Ant"}) & [
+				            MesAnterior = Anterior(r[Ant], "Mes"),
+				            ResultadoAnterior = Anterior(r[Ant], "Resultado"),
+				            OrcamentoAnterior = Anterior(r[Ant], "Orcamento"),
+				            PrevAcumAnterior = Anterior(r[Ant], "PrevAcum"),
+				            ExecAcumAnterior = Anterior(r[Ant], "ExecAcum")
+				        ])),
+
+				    NoHistorico = Table.SelectRows(ComCamposAnteriores, each [Mes] >= pInicioHistorico),
+				    Colunas = Table.SelectColumns(NoHistorico, {"Obra", "Mes", "Aba", "Arquivo", "Fonte", "TipoOrcamento", "Orcamento",
+				        "PrevMes", "ExecMes", "PrevAcum", "ExecAcum", "Credito", "SaldoContrato", "AdiantServicos", "AdiantMateriais",
+				        "Estoque", "Equipamentos", "ReceitaPersonalizacao", "ContasPagar", "Desembolsado", "Divida", "Resultado",
+				        "ResultadoRegra", "ResultadoAnteriorPlanilha", "DesembolsadoBruto", "ItensIrregulares", "PrevistoMesRS",
+				        "DesembolsadoMesRS", "Justificativa", "MesAnterior", "ResultadoAnterior", "OrcamentoAnterior",
+				        "PrevAcumAnterior", "ExecAcumAnterior"}),
+				    Tipado = Table.TransformColumnTypes(Colunas, {
+				        {"Obra", type text}, {"Mes", type date}, {"Aba", type text}, {"Arquivo", type text}, {"Fonte", type text},
+				        {"TipoOrcamento", type text}, {"Orcamento", type number}, {"PrevMes", type number}, {"ExecMes", type number},
+				        {"PrevAcum", type number}, {"ExecAcum", type number}, {"Credito", type number}, {"SaldoContrato", type number},
+				        {"AdiantServicos", type number}, {"AdiantMateriais", type number}, {"Estoque", type number},
+				        {"Equipamentos", type number}, {"ReceitaPersonalizacao", type number}, {"ContasPagar", type number},
+				        {"Desembolsado", type number}, {"Divida", type number}, {"Resultado", type number},
+				        {"ResultadoRegra", type number}, {"ResultadoAnteriorPlanilha", type number},
+				        {"DesembolsadoBruto", type number}, {"ItensIrregulares", type number}, {"PrevistoMesRS", type number},
+				        {"DesembolsadoMesRS", type number}, {"Justificativa", type text}, {"MesAnterior", type date},
+				        {"ResultadoAnterior", type number}, {"OrcamentoAnterior", type number}, {"PrevAcumAnterior", type number},
+				        {"ExecAcumAnterior", type number}}),
+				    Ordenado = Table.Sort(Tipado, {{"Obra", Order.Ascending}, {"Mes", Order.Ascending}}),
+				    // sem nenhuma aba lida (pasta ausente ou vazia): tabela vazia com as colunas do cabeçalho (@coluna)
+				    Vazia = #table(type table [Obra = nullable text, Mes = nullable date, Aba = nullable text, Arquivo = nullable text,
+				        Fonte = nullable text, TipoOrcamento = nullable text, Orcamento = nullable number, PrevMes = nullable number,
+				        ExecMes = nullable number, PrevAcum = nullable number, ExecAcum = nullable number, Credito = nullable number,
+				        SaldoContrato = nullable number, AdiantServicos = nullable number, AdiantMateriais = nullable number,
+				        Estoque = nullable number, Equipamentos = nullable number, ReceitaPersonalizacao = nullable number,
+				        ContasPagar = nullable number, Desembolsado = nullable number, Divida = nullable number,
+				        Resultado = nullable number, ResultadoRegra = nullable number, ResultadoAnteriorPlanilha = nullable number,
+				        DesembolsadoBruto = nullable number, ItensIrregulares = nullable number, PrevistoMesRS = nullable number,
+				        DesembolsadoMesRS = nullable number, Justificativa = nullable text, MesAnterior = nullable date,
+				        ResultadoAnterior = nullable number, OrcamentoAnterior = nullable number, PrevAcumAnterior = nullable number,
+				        ExecAcumAnterior = nullable number], {})
+				in
+				    if Table.RowCount(stgAbas) = 0 then Vazia else Ordenado
+
+	annotation PBI_ResultType = Table
+

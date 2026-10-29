@@ -1,0 +1,23 @@
+/*
+@pasta: T4 Resultado no tempo\Comum\Contas
+@formato: 0.00%
+@descricao: Desvio do desembolso do mês menos o do mês anterior, em fração (0,01 = 1 p.p.), só das obras com previsto nos dois meses (vazio sem nenhuma).
+@oraculo: carteira.serie[m].desvio_desembolso − serie[m−1], só as obras com previsto nos dois meses
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _mesAnt = EDATE ( MAX ( dMes[Mes] ), -1 )
+VAR _comp =
+    FILTER (
+        VALUES ( fAnaliseCritica[Obra] ),
+        NOT ISBLANK ( [Desembolso · previsto no mês] )
+            && NOT ISBLANK ( CALCULATE ( [Desembolso · previsto no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mesAnt ) )
+    )
+VAR _razaoMes =
+    DIVIDE ( SUMX ( _comp, [Desembolso · realizado no mês] ), SUMX ( _comp, [Desembolso · previsto no mês] ) )
+VAR _razaoAnt =
+    DIVIDE (
+        SUMX ( _comp, CALCULATE ( [Desembolso · realizado no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mesAnt ) ),
+        SUMX ( _comp, CALCULATE ( [Desembolso · previsto no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mesAnt ) )
+    )
+RETURN
+    IF ( NOT ISEMPTY ( _comp ) && NOT ISBLANK ( _razaoMes ) && NOT ISBLANK ( _razaoAnt ), _razaoMes - _razaoAnt )

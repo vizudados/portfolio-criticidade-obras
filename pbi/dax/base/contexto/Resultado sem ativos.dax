@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Obra
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Resultado sem estoque e adiantamentos: resultado − ativos não consumidos.
+@oraculo: obras[].ultimo.resultado_sem_ativos · carteira.resultado_sem_ativos
+@gerado: pbi/scripts/contas_base.py
+*/
+[Resultado da obra] - [Ativos não consumidos]

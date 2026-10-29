@@ -1,0 +1,26 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: Recorte em uso nas telas da carteira (Visão geral, Resultado no tempo): MÊS + OBRAS. Só informa; os seletores ficam no drawer.
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 1 · Leituras
+VAR _mes = [Mês de referência · longo]
+VAR _n = [Recorte · obras no recorte]
+VAR _total = [Recorte · obras no total]
+VAR _lista = [Recorte · obras (lista)]
+-- 2 · Textos
+VAR _txtObras =
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _n ), "nenhuma",
+        _n = _total, "Todas (" & _total & ")",
+        _n <= 2, _lista,
+        _n & " de " & _total
+    )
+-- 4 · Marcação
+RETURN
+    "<div class='u cab'>"
+        & "<div><span class='r'>MÊS</span><span class='v'>" & _mes & "</span></div>"
+        & "<div><span class='r'>OBRAS</span><span class='v nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _txtObras, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "</span></div>"
+    & "</div>"

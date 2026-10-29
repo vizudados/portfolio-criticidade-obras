@@ -1,0 +1,9 @@
+/*
+@pasta: T2 Análise crítica\Como o resultado se forma\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: [A realizar] da obra em foco no mês do eixo.
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    CALCULATE ( [A realizar], dObra[Obra] = _obra )

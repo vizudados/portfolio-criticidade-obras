@@ -1,0 +1,18 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: Pontos da previsão de caixa (máx. 1): desvio < 10% → 1 · 10% ≤ desvio ≤ 20% → 0,5 · desvio > 20% → 0; vazio sem dado. Uma obra; com várias, soma.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+SUMX (
+    VALUES ( dObra[Obra] ),
+    VAR _x = [Nota · X caixa]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), SWITCH (
+            TRUE (),
+            _x < 0.1, 1,
+            _x <= 0.2, 0.5,
+            0
+        ) )
+)

@@ -1,0 +1,60 @@
+/// Degraus da cascata "Como o resultado se forma" (Tela 02, F3 · docs/08 §5): valor agregado (crédito pelo executado), custo aplicado (o que já virou obra, com a dívida), resultado aplicado (VA − custo), a realizar (saldo de contrato e equipamentos: a planilha conta como ganho e ainda não aconteceu) e o resultado da planilha. Desconectada: as contas leem o degrau da linha (tooltip do degrau).
+table dDegrau
+	lineageTag: 4dd89f9a-356d-55ee-841b-72aea2f9753f
+
+	/// Código do degrau.
+	column Degrau
+		dataType: string
+		isKey
+		lineageTag: ace39205-29a5-5904-b0f8-c405c9937efb
+		summarizeBy: none
+		sourceColumn: Degrau
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Posição na cascata.
+	column Ordem
+		dataType: int64
+		formatString: 0
+		lineageTag: ad05318c-8b60-54ce-a02c-368107649a13
+		summarizeBy: none
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome do degrau.
+	column Rotulo
+		dataType: string
+		lineageTag: a373ada9-e9fc-5a6f-bff4-cad57d319477
+		summarizeBy: none
+		sourceColumn: Rotulo
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// +1 soma no resultado; −1 desconta; 0 é um resultado (parcial ou o da planilha).
+	column Sinal
+		dataType: int64
+		formatString: 0
+		lineageTag: b77432bd-2a2e-5fb7-9b6f-b279b12edb96
+		summarizeBy: none
+		sourceColumn: Sinal
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dDegrau = m
+		mode: import
+		source =
+				let
+				    Tabela = #table(type table [Degrau = text, Ordem = Int64.Type, Rotulo = text, Sinal = Int64.Type], {
+				        {"ValorAgregado", 1, "Valor agregado", 1},
+				        {"CustoAplicado", 2, "Custo aplicado", -1},
+				        {"ResultadoAplicado", 3, "Resultado aplicado", 0},
+				        {"ARealizar", 4, "A realizar", 1},
+				        {"Resultado", 5, "Resultado da planilha", 0}
+				    })
+				in
+				    Tabela
+
+	annotation PBI_ResultType = Table
+

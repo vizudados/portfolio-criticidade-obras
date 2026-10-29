@@ -1,0 +1,10 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: 0
+@descricao: Quantas obras perderam pontos na dimensão mais espalhada (mês de referência).
+@oraculo: dados/_gabarito/nota_previa.csv
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _d = [T1 · Leitura · dimensão mais espalhada]
+RETURN
+    CALCULATE ( [Nota · item · obras que perderam pontos · ref], dItemNota[Dimensao] = _d ) + 0

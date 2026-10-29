@@ -1,0 +1,8 @@
+/*
+@pasta: T4 Resultado no tempo\Cartões
+@formato: texto
+@descricao: CSS dos cartões da T4: o do cartão com flip comum (v2: rótulo em caixa normal, número 42, contexto 14 numa linha; verso creme com 'DE ONDE VEM' em y 82 com régua e 106 sem).
+@gerado: pbi/scripts/desenho_t4.py
+*/
+-- 4 · Marcação
+[Comum · CSS cartão]

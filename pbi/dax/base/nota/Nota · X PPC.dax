@@ -1,0 +1,13 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00%
+@descricao: PPC do mês (base), arredondado em 8 casas; vazio fora de 0 a 100%. Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _x = MAX ( fBaseObra[PPC] )
+    RETURN
+        IF ( NOT ISBLANK ( _x ) && _x >= 0 && _x <= 1, ROUND ( _x, 8 ) )
+)

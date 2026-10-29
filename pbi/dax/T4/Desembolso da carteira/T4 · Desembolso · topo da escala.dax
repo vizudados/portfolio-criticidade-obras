@@ -1,0 +1,13 @@
+/*
+@pasta: T4 Resultado no tempo\Desembolso da carteira\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Maior valor entre o previsto e o desembolsado do mês nos meses da janela: o topo da escala das colunas.
+@oraculo: max(carteira.serie[].desembolsado_mes_rs) = 6.206.432,30
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), "@p", [Desembolso · previsto no mês], "@d", [Desembolso · realizado no mês] )
+RETURN
+    MAX ( MAXX ( _meses, [@p] ), MAXX ( _meses, [@d] ) )

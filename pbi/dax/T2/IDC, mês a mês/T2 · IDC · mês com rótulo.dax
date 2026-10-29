@@ -1,0 +1,9 @@
+/*
+@pasta: T2 Análise crítica\IDC, mês a mês\Contas
+@formato: 0
+@descricao: 1 quando o mês do eixo é o do maior ou o do menor IDC da janela (o desenho escreve o valor nesses meses e no de referência); 0 nos demais.
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _m = MAX ( dMes[Mes] )
+RETURN
+    IF ( HASONEVALUE ( dMes[Mes] ), INT ( _m = [T2 · IDC · mês do maior] || _m = [T2 · IDC · mês do menor] ) )

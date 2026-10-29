@@ -1,0 +1,19 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: Recorte em uso nas telas de uma obra (Análise crítica, Avanço físico): OBRA (com selo) + MÊS.
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 1 · Leituras
+VAR _obra = [Nota · obra em foco]
+VAR _selo = [Obra em foco · selo]
+VAR _mes = [Mês de referência · longo]
+-- 2 · Textos
+VAR _clsSelo = IF ( _selo = "REAL", "selo selo-r", "selo selo-i" )
+-- 4 · Marcação
+RETURN
+    "<div class='u cab'>"
+        & "<div><span class='r'>OBRA</span><span class='v nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _obra, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "</span>"
+        & "<span class='" & _clsSelo & "'>" & _selo & "</span></div>"
+        & "<div><span class='r'>MÊS</span><span class='v'>" & _mes & "</span></div>"
+    & "</div>"

@@ -1,0 +1,31 @@
+/*
+@pasta: T5 Canteiro\Leituras
+@formato: texto
+@descricao: CSS das leituras do "?" da Tela 05: a superfície, a completa em duas colunas e a condensada da T4 (leituras_t4.CSS_LEI), o sobretítulo numa linha das condensadas e a lista do detalhe.
+@gerado: pbi/scripts/leituras_t5.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".lv{position:fixed;inset:0}.lv .pn{position:absolute;inset:0;background:#FFFFFF;border:1px solid #0B0B0C;border-radius:16px;overflow:hidden;color:#0B0B0C}.lv .sob{display:block;pad"
+    & "ding-right:44px}.lv .ach{margin-top:7px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:23px;line-height:28px}.lv .exp{margin-top:10px;font-size:17px;line-he"
+    & "ight:26px}.lv .dst{margin-top:12px;display:flex;gap:12px;padding:12px;background:#E9E0CF}.lv .dst>div{flex:1 1 0;min-width:0}.lv .dst>div:empty{display:none}.lv .dst b{display:bloc"
+    & "k;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:34px;line-height:40px;white-space:nowrap;font-variant-numeric:tabular-nums}.lv .dst span{display:block;marg"
+    & "in-top:4px;font-size:14px;line-height:19px}.lv .dst b span,.lv .dst span span{display:inline;margin:0;font-size:inherit;line-height:inherit}.lv .sec{margin-top:12px}.lv .sec>.vs{di"
+    & "splay:block;margin-bottom:4px}.lv .oqe,.lv .cl{font-size:14px;line-height:19px}.pn-2c{padding:22px 24px 24px}.pn-2c .cols{display:grid;grid-template-columns:600px 1px 1fr;column-ga"
+    & "p:24px;height:100%}.pn-2c .div{display:block;background:#E9E0CF;margin-bottom:2px}.pn-2c .esq{display:flex;flex-direction:column;min-height:0}.pn-2c .esq>.sec:last-child{margin-top"
+    & ":auto;padding-top:12px}.pn-2c .dir{padding-top:30px}.pn-2c .dir .sub{margin-top:5px;font-size:14px;line-height:19px;color:#3B3B3F}.pn-2c .dir .sec{margin-top:14px}.lv .mb{position:"
+    & "relative;display:flex;height:104px;margin-top:8px}.lv .mb .c{position:relative;flex:1 1 0}.lv .mb .c i{position:absolute;left:0;right:0;margin:0 auto;width:min(26px,70%);background"
+    & ":#E9E0CF}.lv .mb .c .val{position:absolute;left:-30px;right:-30px;text-align:center;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:14px;line-height:17px;whi"
+    & "te-space:nowrap;color:#3B3B3F}.lv .mb .c .val.ini{left:0;right:auto;text-align:left}.lv .mb .c .val.fim{left:auto;right:0;text-align:right;color:#0B0B0C}.lv .mb .c .val.ini.fim{lef"
+    & "t:0;right:auto;text-align:left}.lv .mb .c .ms{position:absolute;left:0;right:0;text-align:center;font-size:13px;line-height:16px;color:#3B3B3F;white-space:nowrap}.lv .mb .c .ms.ref"
+    & "{font-weight:600;color:#0B0B0C}.lv .mb::after{content:'';position:absolute;left:0;right:0;top:84px;height:1px;background:#6B6B70;animation:cbFd .45s ease-out .5s backwards}.pn-t4p{"
+    & "padding:20px}.pn-t4p .ach{padding-right:0}.lv .gj{margin-top:7px}.lv .gj .h,.lv .gj .r{display:grid;grid-template-columns:100px repeat(8,24px) 1fr;align-items:center}.lv .gj .h spa"
+    & "n{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:12px;line-height:15px;letter-spacing:1.2px;color:#3B3B3F;text-align:center}.lv .gj .h span.rf{color:#0B0B0C"
+    & "}.lv .gj .h .de{text-align:right;white-space:nowrap}.lv .gj .h{margin-bottom:6px}.lv .gj .r{height:21px}.lv .gj .r b{font-weight:400;font-size:14px;line-height:19px;white-space:now"
+    & "rap}.lv .gj .r i{display:block;width:12px;height:12px;justify-self:center;animation:ttFim .2s ease-out backwards}.lv .gj i.p{background:#A9CDB9;box-shadow:inset 0 0 0 1px #6E9F85}."
+    & "lv .gj i.b{background:#FFFFFF;border:1.25px dashed #C43737}.lv .gj i.n{background:#EFEFEF}.lv .gj i.v{visibility:hidden}.lv .gj .r em{font-style:normal;text-align:right;font-size:1"
+    & "4px;line-height:19px;white-space:nowrap}.lv .gj .lg{display:flex;gap:14px;margin-top:4px;font-size:14px;line-height:19px;color:#3B3B3F}.lv .gj .lg span{display:inline-flex;align-it"
+    & "ems:center;gap:5px}.lv .gj .lg i{display:block;width:12px;height:12px}@keyframes ttFim{from{opacity:0}}@media (prefers-reduced-motion:reduce){.lv .gj .r i,.lv .mb::after{animation:"
+    & "none}}.lv svg.x{position:absolute;right:11px;top:7px;width:26px;height:26px;display:block;z-index:5}.pn-t5p .sob{white-space:nowrap}.lv .dl{margin-top:6px}.lv .dl .r{display:flex;j"
+    & "ustify-content:space-between;align-items:center;height:22px;white-space:nowrap}.lv .dl .r b{font-weight:400;font-size:14px;line-height:19px}.lv .dl .r span{display:flex;align-items"
+    & ":center;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:15px;line-height:19px}.lv .dl .r .mk{margin-right:6px}"

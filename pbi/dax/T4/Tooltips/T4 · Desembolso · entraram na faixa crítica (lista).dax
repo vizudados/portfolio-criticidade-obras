@@ -1,0 +1,15 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: texto
+@descricao: Obras do recorte que entraram na faixa crítica da previsão de caixa da nota (sem ponto: desvio fora do limite, para mais ou para menos) no mês do contexto, em relação ao mês anterior; ordem alfabética, separadas por '|'.
+@oraculo: ago/26 (teste)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _obras =
+    ADDCOLUMNS (
+        FILTER ( VALUES ( dObra[Obra] ), [Obras com análise] > 0 ),
+        "@s", [T4 · Desembolso · faixa do fluxo de caixa],
+        "@a", [T4 · Desembolso · status · mês anterior]
+    )
+RETURN
+    CONCATENATEX ( FILTER ( _obras, [@s] = 2 && NOT ISBLANK ( [@a] ) && [@a] < 2 ), dObra[Obra], "|", dObra[Obra], ASC )

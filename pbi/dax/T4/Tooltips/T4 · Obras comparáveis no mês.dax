@@ -1,0 +1,8 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: 0
+@descricao: Obras do recorte com aba no mês do contexto e na aba anterior (a base de 'caiu em cinco das sete').
+@oraculo: 7 em jun/26
+@gerado: pbi/scripts/contas_t4.py
+*/
+COUNTROWS ( FILTER ( VALUES ( fAnaliseCritica[Obra] ), NOT ISBLANK ( [T4 · Resultado aplicado · variação no mês] ) ) ) + 0

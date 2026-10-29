@@ -1,0 +1,10 @@
+/*
+@pasta: Base\Prazo
+@formato: 0
+@descricao: Meses entre o término projetado e a entrega com tolerância (negativo: o término projetado passa da tolerância).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _t = [Prazo · término projetado]
+VAR _l = [Prazo · entrega com tolerância]
+RETURN
+    IF ( NOT ISBLANK ( _t ) && NOT ISBLANK ( _l ), DATEDIFF ( _t, _l, MONTH ) )

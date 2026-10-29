@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: 0%
+@descricao: Entregas no prazo que valem o máximo. Do dicionário NOTA. Constante.
+@oraculo: dicionário NOTA
+@gerado: pbi/scripts/contas_base.py
+*/
+0.9

@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Obra
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: O que a planilha conta como ganho e ainda não aconteceu: saldo de contrato (desconto) + equipamentos (valor de mercado).
+@gerado: pbi/scripts/contas_base.py
+*/
+[Saldo de contrato] + [Equipamentos (valor de mercado)]

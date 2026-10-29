@@ -1,0 +1,44 @@
+/*
+@pasta: T4 Resultado no tempo\Tour
+@formato: texto
+@descricao: Passo 3 de 6 do tour da Resultado no tempo (O resultado, mês a mês): gestor (pose P9) no canto direita, balão de 1068 px, ligação ao anel. Só desenha; lê a medida da pose.
+@gerado: pbi/scripts/tour_lib.py
+*/
+-- 4 · Marcação
+"<div class='u tr'>"
+    & "<div class='rc' style='left:344px;top:265px;width:1084px;height:396px'></div>"
+    & "<svg class='sv' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M362 259H358A20 20 0 0 0 338 279V283M1410 259H1414A20 20 0 0 1 1434 279V283M362 667H358"
+    & "A20 20 0 0 1 338 647V643M1410 667H1414A20 20 0 0 0 1434 647V643' fill='none' stroke='#FFFFFF' stroke"
+    & "-width='3' stroke-linecap='round'/><path d='M886 701L886 661' fill='none' stroke='#E9E0CF' stroke-wi"
+    & "dth='2' stroke-dasharray='2 6' stroke-linecap='round'/><circle cx='886' cy='661' r='3' fill='#E9E0CF"
+    & "' stroke='#0B0B0C' stroke-width='2'/></svg>"
+    & "<div class='nr' style='left:1436px;top:805px;width:378px;height:275px'>"
+    & [Comum · Tour · Pose P9 · HTML]
+    & "</div>"
+    & "<svg class='bq' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M1416 817L1420 817Q1519.61 851.801 1578.73 943.482L1577.27 945.518Q1518.89 867.819 1420"
+    & " 847L1416 847Z' fill='#FFFFFF'/></svg>"
+    & "<section class='bl' role='dialog' aria-label='Tour guiado, passo 3 de 6: O resultado, mês a mês' sty"
+    & "le='left:352px;top:701px;width:1068px;height:348px'>"
+    & "<span class='sl' style='left:32px;top:28px'>Passo 3 de 6</span>"
+    & "<div class='gh' style='left:32px;top:68px;width:480px'><div><h2 class='gt'>O resultado, mês a mês</h"
+    & "2></div><div style='margin-top:12px'><p class='gx'>Cada mês tem uma barra: o resultado aplicado da c"
+    & "arteira (valor agregado − custo aplicado). O traço é o resultado da planilha, que já conta o que ain"
+    & "da vai se realizar.</p></div><div style='margin-top:12px'><p class='gx'>A distância entre a barra e "
+    & "o traço é o que falta realizar. Vermelho indica negativo.</p></div></div>"
+    & "<div class='gi' style='left:544px;top:68px;width:492px'><div><p class='fch'>Na nota, o custo entra p"
+    & "elo IDC (valor agregado ÷ custo aplicado): a partir de 1,00 vale os 3 pontos; abaixo de 0,90, a obra"
+    & " fica crítica.</p></div></div>"
+    & "<div class='dc' style='left:544px;top:188px;width:492px'><svg class='cur' width='16' height='16' vie"
+    & "wBox='0 0 18 18' aria-hidden='true'><path d='M4 2L4 14L7.2 11L9.4 16L11.3 15.2L9.1 10.3L13.6 10.3Z' "
+    & "fill='#0B0B0C'/></svg><p class='dt'>Passe o mouse num mês para ver o aplicado de cada obra e o que f"
+    & "alta realizar.</p></div>"
+    & "<div class='rg' style='left:32px;top:300px;width:186px;gap:6px'><i style='width:26px;background:rgba"
+    & "(11,11,12,.45)'></i><i style='width:26px;background:rgba(11,11,12,.45)'></i><i style='width:26px;bac"
+    & "kground:#0B0B0C'></i><i style='width:26px;background:#E1E1E1'></i><i style='width:26px;background:#E"
+    & "1E1E1'></i><i style='width:26px;background:#E1E1E1'></i></div>"
+    & "<span class='bt pl' style='left:736px;top:274px;width:64px;height:56px'>Pular</span>"
+    & "<span class='bt s' style='left:810px;top:280px;width:92px'>← Voltar</span>"
+    & "<span class='bt p' style='left:912px;top:280px;width:124px'>Seguir →</span>"
+    & "</section></div>"

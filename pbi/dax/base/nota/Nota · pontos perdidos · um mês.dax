@@ -1,0 +1,12 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: [Nota · pontos perdidos] de uma obra num mês, lido de dRankingNota (a mesma medida, guardada no refresh). Uma obra e um mês no contexto; senão, vazio.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _o = SELECTEDVALUE ( dObra[Obra] )
+VAR _m = SELECTEDVALUE ( dMes[Mes] )
+VAR _linha = FILTER ( dRankingNota, dRankingNota[Obra] = _o && dRankingNota[Mes] = _m )
+RETURN
+    IF ( HASONEVALUE ( dObra[Obra] ) && HASONEVALUE ( dMes[Mes] ), MAXX ( _linha, dRankingNota[Perdidos] ) )

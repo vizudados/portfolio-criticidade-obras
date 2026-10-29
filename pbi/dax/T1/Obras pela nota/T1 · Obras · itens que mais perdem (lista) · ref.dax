@@ -1,0 +1,9 @@
+/*
+@pasta: T1 Visão geral\Obras pela nota\Contas
+@formato: texto
+@descricao: [T1 · Obras · itens que mais perdem (lista)] no mês de referência (seletor do drawer; sem escolha, o último mês).
+@gerado: pbi/scripts/contas_t1.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE ( [T1 · Obras · itens que mais perdem (lista)], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

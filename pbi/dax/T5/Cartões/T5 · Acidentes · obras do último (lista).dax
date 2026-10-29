@@ -1,0 +1,19 @@
+/*
+@pasta: T5 Canteiro\Cartões\Contas
+@formato: texto
+@descricao: Obras com acidente com afastamento no último mês com acidente, em ordem alfabética, separadas por '|'. Ex. set/26: REDINHA.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: REDINHA
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _ult = [T5 · Acidentes · último mês]
+RETURN
+    IF (
+        NOT ISBLANK ( _ult ),
+        CONCATENATEX (
+            FILTER (
+                VALUES ( dObra[Obra] ),
+                CALCULATE ( SUM ( fBaseObra[Acidentes] ), REMOVEFILTERS ( dMes ), fBaseObra[Mes] = _ult ) > 0
+            ),
+            dObra[Obra], "|", dObra[Obra], ASC
+        )
+    )

@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Recorte
+@formato: 0
+@descricao: 1 quando a janela das séries escolhida no drawer (dJanela) não é a padrão de 12 meses; 0 com 12 meses ou sem escolha. O contador de filtros do funil soma esta conta.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _janela = [Série · janela (meses)]
+RETURN
+    IF ( _janela <> 12, 1, 0 )

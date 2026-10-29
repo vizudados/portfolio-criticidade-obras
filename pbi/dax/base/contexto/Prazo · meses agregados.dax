@@ -1,0 +1,17 @@
+/*
+@pasta: Base\Prazo
+@formato: 0.00
+@descricao: Cronograma agregado (Earned Schedule, Lipke): o ponto da curva prevista da obra (fCurvaPrevista) em que o previsto acumulado iguala o executado acumulado de hoje, interpolado entre os meses. Uma obra com aba.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _obra = SELECTEDVALUE ( dObra[Obra] )
+VAR _e = [Físico · executado acumulado]
+VAR _curva = FILTER ( ALL ( fCurvaPrevista ), fCurvaPrevista[Obra] = _obra )
+VAR _k = MAXX ( FILTER ( _curva, fCurvaPrevista[PrevAcum] <= _e ), fCurvaPrevista[Indice] )
+VAR _pk = MAXX ( FILTER ( _curva, fCurvaPrevista[Indice] = _k ), fCurvaPrevista[PrevAcum] )
+VAR _pk1 = MAXX ( FILTER ( _curva, fCurvaPrevista[Indice] = _k + 1 ), fCurvaPrevista[PrevAcum] )
+RETURN
+    IF (
+        HASONEVALUE ( dObra[Obra] ) && NOT ISBLANK ( _e ) && NOT ISEMPTY ( fAnaliseCritica ) && NOT ISBLANK ( _k ),
+        IF ( ISBLANK ( _pk1 ) || _pk1 <= _pk, _k, _k + DIVIDE ( _e - _pk, _pk1 - _pk ) )
+    )

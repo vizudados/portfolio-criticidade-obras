@@ -1,0 +1,11 @@
+/*
+@pasta: T2 Análise crítica\Leituras\Contas
+@formato: 0
+@descricao: Em quantos meses da janela (do primeiro mês da janela ao de referência) o item da linha teve valor diferente de zero na obra em foco: zero = o item não entrou na conta desta obra no período.
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses = ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), "@v", [Item · valor · foco no mês] )
+RETURN
+    COUNTROWS ( FILTER ( _meses, NOT ISBLANK ( [@v] ) && [@v] <> 0 ) ) + 0

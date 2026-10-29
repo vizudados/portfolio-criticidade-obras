@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Mês
+@formato: texto
+@descricao: Mês de referência abreviado (jun/26).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    LOOKUPVALUE ( dMes[MesAno], dMes[Mes], _mes )

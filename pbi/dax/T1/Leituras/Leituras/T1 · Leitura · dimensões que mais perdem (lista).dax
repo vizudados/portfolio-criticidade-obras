@@ -1,0 +1,11 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: texto
+@descricao: Dimensões da nota empatadas no topo dos pontos perdidos pela carteira no mês de referência (empate: a ordem da dimensão), separadas por '|'; vazio sem perda.
+@oraculo: dados/_gabarito/nota_previa.csv · set/26: Prazo
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _dims = ADDCOLUMNS ( ALL ( dItemNota[Dimensao], dItemNota[OrdemDimensao] ), "@p", ROUND ( [Nota · item · perdidos · ref], 8 ) )
+VAR _max = MAXX ( FILTER ( _dims, [@p] > 0 ), [@p] )
+RETURN
+    CONCATENATEX ( FILTER ( _dims, [@p] > 0 && [@p] = _max ), dItemNota[Dimensao], "|", dItemNota[OrdemDimensao], ASC )

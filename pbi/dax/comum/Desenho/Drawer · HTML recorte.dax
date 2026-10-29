@@ -1,0 +1,16 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: Frase do recorte em uso no topo do drawer: mês, quantas obras e, nas telas de uma obra, a obra em foco.
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 1 · Leituras
+VAR _mes = [Mês de referência · longo]
+VAR _n = [Recorte · obras no recorte]
+VAR _foco = [Nota · obra em foco]
+VAR _escolhida = [Recorte · obra em foco escolhida]
+-- 2 · Textos
+VAR _txtObras = IF ( _n = 1, "1 obra em andamento", _n & " obras em andamento" )
+-- 4 · Marcação
+RETURN
+    "<div class='u dw'>Recorte exibido: " & _mes & ", " & _txtObras & ". Vale para todas as telas.</div>"

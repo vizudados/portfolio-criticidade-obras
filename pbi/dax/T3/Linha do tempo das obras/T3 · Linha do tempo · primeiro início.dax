@@ -1,0 +1,12 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: dd/mm/yyyy
+@descricao: Início mais antigo entre as obras em andamento e a iniciar (escala).
+@oraculo: min(cronograma início) out/23
+@gerado: pbi/scripts/contas_t3.py
+*/
+CALCULATE (
+    MIN ( dObra[Inicio] ),
+    REMOVEFILTERS ( dObra[Obra] ),
+    dObra[Situacao] IN { "Em andamento", "A iniciar" }
+)

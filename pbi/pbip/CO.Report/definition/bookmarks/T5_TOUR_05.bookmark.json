@@ -1,0 +1,302 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T5_TOUR_05",
+  "displayName": "T5 · tour · passo 5 de 7 · Chuva e ritmo",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T5_LeiX_Chuva",
+      "T5_LeiX_Qua",
+      "T5_LeiX_Seg",
+      "T5_LeiX_Sup",
+      "T5_Lei_Chuva",
+      "T5_Lei_Fora",
+      "T5_Lei_Qua",
+      "T5_Lei_Seg",
+      "T5_Lei_Sup",
+      "T5_TourAnt_P01",
+      "T5_TourAnt_P02",
+      "T5_TourAnt_P03",
+      "T5_TourAnt_P04",
+      "T5_TourAnt_P05",
+      "T5_TourAnt_P06",
+      "T5_TourAnt_P07",
+      "T5_TourFecha_P01",
+      "T5_TourFecha_P02",
+      "T5_TourFecha_P03",
+      "T5_TourFecha_P04",
+      "T5_TourFecha_P05",
+      "T5_TourFecha_P06",
+      "T5_TourFecha_P07",
+      "T5_TourProx_P01",
+      "T5_TourProx_P02",
+      "T5_TourProx_P03",
+      "T5_TourProx_P04",
+      "T5_TourProx_P05",
+      "T5_TourProx_P06",
+      "T5_TourProx_P07",
+      "T5_Tour_P01",
+      "T5_Tour_P02",
+      "T5_Tour_P03",
+      "T5_Tour_P04",
+      "T5_Tour_P05",
+      "T5_Tour_P06",
+      "T5_Tour_P07"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T5",
+    "sections": {
+      "T5": {
+        "visualContainers": {
+          "T5_LeiX_Chuva": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_LeiX_Qua": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_LeiX_Seg": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_LeiX_Sup": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_Lei_Chuva": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_Lei_Fora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_Lei_Qua": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_Lei_Seg": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_Lei_Sup": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourAnt_P01": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourAnt_P02": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourAnt_P03": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourAnt_P04": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourAnt_P05": {
+            "singleVisual": {}
+          },
+          "T5_TourAnt_P06": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourAnt_P07": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourFecha_P01": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourFecha_P02": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourFecha_P03": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourFecha_P04": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourFecha_P05": {
+            "singleVisual": {}
+          },
+          "T5_TourFecha_P06": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourFecha_P07": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourProx_P01": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourProx_P02": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourProx_P03": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourProx_P04": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourProx_P05": {
+            "singleVisual": {}
+          },
+          "T5_TourProx_P06": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_TourProx_P07": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_Tour_P01": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_Tour_P02": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_Tour_P03": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_Tour_P04": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_Tour_P05": {
+            "singleVisual": {}
+          },
+          "T5_Tour_P06": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_Tour_P07": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

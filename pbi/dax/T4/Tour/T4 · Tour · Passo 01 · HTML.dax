@@ -1,0 +1,38 @@
+/*
+@pasta: T4 Resultado no tempo\Tour
+@formato: texto
+@descricao: Passo 1 de 6 do tour da Resultado no tempo (Este é o Resultado no tempo): gestor (pose P1) no canto esquerda, balão de 480 px, ligação ao anel. Só desenha; lê a medida da pose.
+@gerado: pbi/scripts/tour_lib.py
+*/
+-- 4 · Marcação
+"<div class='u tr'>"
+    & "<div class='rc' style='left:344px;top:30px;width:874px;height:78px'></div>"
+    & "<svg class='sv' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M362 24H358A20 20 0 0 0 338 44V48M1200 24H1204A20 20 0 0 1 1224 44V48M362 114H358A20 20"
+    & " 0 0 1 338 94V90M1200 114H1204A20 20 0 0 0 1224 94V90' fill='none' stroke='#FFFFFF' stroke-width='3'"
+    & " stroke-linecap='round'/><path d='M650 362L650 108' fill='none' stroke='#E9E0CF' stroke-width='2' st"
+    & "roke-dasharray='2 6' stroke-linecap='round'/><circle cx='650' cy='108' r='3' fill='#E9E0CF' stroke='"
+    & "#0B0B0C' stroke-width='2'/></svg>"
+    & "<div class='nr' style='left:212px;top:751px;width:371px;height:329px'>"
+    & [Comum · Tour · Pose P1 · HTML]
+    & "</div>"
+    & "<svg class='bq' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M222 730L222 734Q227.7 837.975 299.819 918.91L302.181 918.09Q243.88 837.565 252 734L252"
+    & " 730Z' fill='#FFFFFF'/></svg>"
+    & "<section class='bl' role='dialog' aria-label='Tour guiado, passo 1 de 6: Este é o Resultado no tempo"
+    & "' style='left:194px;top:362px;width:480px;height:372px'>"
+    & "<span class='sl' style='left:32px;top:28px'>Passo 1 de 6</span>"
+    & "<h2 class='tt' style='left:32px;top:68px;width:416px'>Este é o Resultado no tempo</h2>"
+    & "<p class='tx' style='left:32px;top:116px;width:416px'>Esta tela olha a carteira ao longo dos meses e"
+    & " responde duas perguntas: o resultado está piorando? E cada obra gastou fora do previsto no mês e ju"
+    & "stificou? À esquerda ficam o resultado e o desembolso da carteira; à direita, cada obra no mês.</p>"
+    & "<div class='dc' style='left:32px;top:260px;width:416px'><svg class='cur' width='16' height='16' view"
+    & "Box='0 0 18 18' aria-hidden='true'><path d='M4 2L4 14L7.2 11L9.4 16L11.3 15.2L9.1 10.3L13.6 10.3Z' f"
+    & "ill='#0B0B0C'/></svg><p class='dt'>Escolha o mês e as obras pelo funil, no alto da tela.</p></div>"
+    & "<div class='rg' style='left:32px;top:324px;width:186px;gap:6px'><i style='width:26px;background:#0B0"
+    & "B0C'></i><i style='width:26px;background:#E1E1E1'></i><i style='width:26px;background:#E1E1E1'></i><"
+    & "i style='width:26px;background:#E1E1E1'></i><i style='width:26px;background:#E1E1E1'></i><i style='w"
+    & "idth:26px;background:#E1E1E1'></i></div>"
+    & "<span class='bt pl' style='left:250px;top:298px;width:64px;height:56px'>Pular</span>"
+    & "<span class='bt p' style='left:324px;top:304px;width:124px'>Seguir →</span>"
+    & "</section></div>"

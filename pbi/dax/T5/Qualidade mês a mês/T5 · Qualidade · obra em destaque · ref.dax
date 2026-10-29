@@ -1,0 +1,15 @@
+/*
+@pasta: T5 Canteiro\Qualidade mês a mês\Contas
+@formato: texto
+@descricao: A obra do recorte com a menor aprovação na 1.ª inspeção no mês de referência (no empate, a primeira em ordem alfabética): a linha que o gráfico destaca. Ex. set/26: REDINHA (89,6%).
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: REDINHA
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _t =
+    FILTER (
+        ADDCOLUMNS ( VALUES ( dObra[Obra] ), "@v", [Canteiro · aprovação na 1.ª inspeção · ref] ),
+        NOT ISBLANK ( [@v] )
+    )
+VAR _mn = MINX ( _t, [@v] )
+RETURN
+    CONCATENATEX ( TOPN ( 1, FILTER ( _t, [@v] = _mn ), dObra[Obra], ASC ), dObra[Obra] )

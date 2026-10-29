@@ -1,0 +1,19 @@
+/*
+@pasta: Base\Nota
+@formato: texto
+@descricao: Faixa do plano semanal em que o X caiu (rótulo gerado dos limites). Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _x = [Nota · X PPC]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), SWITCH (
+            TRUE (),
+            _x >= 0.8, "PPC ≥ 80%",
+            _x >= 0.7, "70% ≤ PPC < 80%",
+            _x >= 0.6, "60% ≤ PPC < 70%",
+            "PPC < 60%"
+        ) )
+)

@@ -1,0 +1,17 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: texto
+@descricao: Obras a iniciar que a tela lista, no contexto do visual (a mesma regra e ordem da tabela da leitura), pelo início previsto, separadas por '|'. Ex.: CANDELÁRIA|LAGOA NOVA (nomes ilustrativos).
+@oraculo: proximas[].obra
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _aIniciar =
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@ini", [Obra · início]
+        ),
+        dObra[Situacao] = "A iniciar"
+    )
+RETURN
+    CONCATENATEX ( _aIniciar, dObra[Obra], "|", [@ini], ASC, dObra[Obra], ASC )

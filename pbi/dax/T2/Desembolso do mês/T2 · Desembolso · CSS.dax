@@ -1,0 +1,13 @@
+/*
+@pasta: T2 Análise crítica\Desembolso do mês
+@formato: texto
+@descricao: CSS do bloco Desembolso do mês v2.
+@gerado: pbi/scripts/desenho_t2.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".dm{position:fixed;inset:0}.dm .c{position:absolute;width:186px}.dm .c .vs{display:flex;align-items:center;gap:6px}.dm .c .vs i{display:block;width:10px;height:10px;flex:none}.dm ."
+    & "c .vs i.pv{background:#E9E0CF;box-shadow:inset 0 0 0 1px #E1E1E1}.dm .c .vs i.dv{background:#0B0B0C}.dm .c b{display:flex;align-items:center;gap:7px;margin-top:4px;font-family:'Bar"
+    & "low U','Segoe UI',sans-serif;font-weight:600;font-size:21px;line-height:26px;white-space:nowrap;font-variant-numeric:tabular-nums}.dm .br{position:absolute;left:0;height:10px}.dm ."
+    & "br.pv{background:#E9E0CF}.dm .br.dv{background:#0B0B0C}.dm .js{position:absolute;left:0;right:0;top:156px;bottom:0;background:#F7F4EE;border-radius:6px;padding:16px}.dm .js .vs{dis"
+    & "play:block}.dm .js p{margin-top:8px;font-size:15px;line-height:21px;color:#3B3B3F;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}"

@@ -1,0 +1,18 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: CSS dos cartões de KPI com flip (frente e verso no mesmo visual; hover ou foco desliza a frente para cima e o verso creme entra por baixo, docs/06-interacoes-spec.md §1.5).
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".kc{position:fixed;inset:0;overflow:hidden;outline:none;cursor:default}.kc .lado{position:absolute;inset:0;transition:transform .22s cubic-bezier(.3,.7,.3,1)}.kc .verso{background:"
+    & "#E9E0CF;transform:translateY(100%)}.kc:hover .frente,.kc:focus .frente,.kc:focus-within .frente{transform:translateY(-100%)}.kc:hover .verso,.kc:focus .verso,.kc:focus-within .vers"
+    & "o{transform:translateY(0)}.kc .eb{left:20px;top:18px;font-size:15px;line-height:18px;letter-spacing:.03px;text-transform:none;color:#3B3B3F}.kc .linha1{position:absolute;left:20px;"
+    & "top:40px;display:flex;align-items:baseline;gap:6px;white-space:nowrap}.kc .ctx .mk{margin-right:6px}.kc .hero{font-size:42px;line-height:50px}.kc .lado2{font-size:17px;line-height:"
+    & "21px;color:#3B3B3F}.kc .ctx{position:absolute;left:20px;top:102px;width:262px;font-size:14px;line-height:19px;color:#3B3B3F;white-space:nowrap;overflow:hidden;text-overflow:ellipsi"
+    & "s}.kc.escuro .frente .vs{color:#E9E0CF}.kc.escuro .frente .hero{color:#FFFFFF}.kc.escuro .frente .lado2{color:#E9E0CF}.kc.escuro .frente .ctx{color:rgba(233,224,207,.85)}.kc .verso"
+    & " .v1{left:20px;top:16px}.kc .verso .regra{position:absolute;left:20px;top:36px;width:262px;font-size:14px;line-height:19px;color:#0B0B0C;white-space:normal}.kc .verso .ond{position"
+    & ":absolute;left:20px;display:flex;align-items:baseline;gap:0;white-space:nowrap}.kc .verso .ond .vs{width:93px;flex:none}.kc .verso .ond span+span{font-size:14px;line-height:19px;co"
+    & "lor:#0B0B0C}.kc .verso .regua{position:absolute;left:20px;top:106px;display:flex;align-items:center;gap:6px;font-size:14px;line-height:19px;white-space:nowrap;color:#3B3B3F}.kc .ve"
+    & "rso .regua .mk{margin-left:8px}.kc .verso .regua .mk:first-child{margin-left:0}"

@@ -1,0 +1,8 @@
+/*
+@pasta: T4 Resultado no tempo\Resultado mês a mês
+@formato: texto
+@descricao: Legenda do Resultado da carteira, mês a mês, na linha do título (F3): resultado aplicado positivo e negativo (barra) e o traço do resultado da planilha. Fundo branco por cima da legenda antiga da casca.
+@gerado: pbi/scripts/desenho_t4.py
+*/
+-- 4 · Marcação
+"<div class='u mlg'><i class='sp'></i><span>resultado aplicado</span><i class='sn'></i><span>negativo</span><i class='tq'></i><span>resultado da planilha</span></div>"

@@ -1,0 +1,41 @@
+/*
+@pasta: T1 Visão geral\Tour
+@formato: texto
+@descricao: Passo 8 de 9 do tour da Visão geral (Filtros e ajuda): gestor (pose P10) no canto direita, balão de 480 px, ligação ao anel. Só desenha; lê a medida da pose.
+@gerado: pbi/scripts/tour_lib.py
+*/
+-- 4 · Marcação
+"<div class='u tr'>"
+    & "<div class='rc' style='left:1407px;top:30px;width:461px;height:60px'></div>"
+    & "<svg class='sv' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M1425 24H1421A20 20 0 0 0 1401 44V48M1850 24H1854A20 20 0 0 1 1874 44V48M1425 96H1421A2"
+    & "0 20 0 0 1 1401 76V72M1850 96H1854A20 20 0 0 0 1874 76V72' fill='none' stroke='#FFFFFF' stroke-width"
+    & "='3' stroke-linecap='round'/><path d='M1398 357L1407 90' fill='none' stroke='#E9E0CF' stroke-width='"
+    & "2' stroke-dasharray='2 6' stroke-linecap='round'/><circle cx='1407' cy='90' r='3' fill='#E9E0CF' str"
+    & "oke='#0B0B0C' stroke-width='2'/></svg>"
+    & "<div class='nr' style='left:892px;top:746px;width:441px;height:334px'>"
+    & [Comum · Tour · Pose P10 · HTML]
+    & "</div>"
+    & "<svg class='bq' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M1202 725L1202 729Q1205.63 834.16 1142.84 913.04L1145.16 913.96Q1221.79 834.62 1232 729"
+    & "L1232 725Z' fill='#FFFFFF'/></svg>"
+    & "<section class='bl' role='dialog' aria-label='Tour guiado, passo 8 de 9: Filtros e ajuda' style='lef"
+    & "t:942px;top:357px;width:480px;height:372px'>"
+    & "<span class='sl' style='left:32px;top:28px'>Passo 8 de 9</span>"
+    & "<h2 class='tt' style='left:32px;top:68px;width:416px'>Filtros e ajuda</h2>"
+    & "<p class='tx' style='left:32px;top:116px;width:416px'>No alto ficam o mês e as obras em uso. O funil"
+    & " abre os filtros: o mês de referência, a janela de meses e as obras. Cada painel tem um “?” que expl"
+    & "ica o gráfico com os números do mês, e o “?” redondo daqui reabre este tour.</p>"
+    & "<div class='dc' style='left:32px;top:260px;width:416px'><svg class='cur' width='16' height='16' view"
+    & "Box='0 0 18 18' aria-hidden='true'><path d='M4 2L4 14L7.2 11L9.4 16L11.3 15.2L9.1 10.3L13.6 10.3Z' f"
+    & "ill='#0B0B0C'/></svg><p class='dt'>Mês e janela valem em todas; as obras, no Resultado.</p></div>"
+    & "<div class='rg' style='left:32px;top:324px;width:114px;gap:3px'><i style='width:10px;background:rgba"
+    & "(11,11,12,.45)'></i><i style='width:10px;background:rgba(11,11,12,.45)'></i><i style='width:10px;bac"
+    & "kground:rgba(11,11,12,.45)'></i><i style='width:10px;background:rgba(11,11,12,.45)'></i><i style='wi"
+    & "dth:10px;background:rgba(11,11,12,.45)'></i><i style='width:10px;background:rgba(11,11,12,.45)'></i>"
+    & "<i style='width:10px;background:rgba(11,11,12,.45)'></i><i style='width:10px;background:#0B0B0C'></i"
+    & "><i style='width:10px;background:#E1E1E1'></i></div>"
+    & "<span class='bt pl' style='left:148px;top:298px;width:64px;height:56px'>Pular</span>"
+    & "<span class='bt s' style='left:222px;top:304px;width:92px'>← Voltar</span>"
+    & "<span class='bt p' style='left:324px;top:304px;width:124px'>Seguir →</span>"
+    & "</section></div>"

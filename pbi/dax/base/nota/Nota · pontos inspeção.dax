@@ -1,0 +1,20 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: Pontos da aprovação na 1.ª inspeção (máx. 1): aprovação ≥ 95% → 1 · 90% ≤ aprovação < 95% → 0,75 · 85% ≤ aprovação < 90% → 0,5 · 80% ≤ aprovação < 85% → 0,25 · aprovação < 80% → 0; vazio sem dado. Uma obra; com várias, soma.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+SUMX (
+    VALUES ( dObra[Obra] ),
+    VAR _x = [Nota · X inspeção]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), SWITCH (
+            TRUE (),
+            _x >= 0.95, 1,
+            _x >= 0.9, 0.75,
+            _x >= 0.85, 0.5,
+            _x >= 0.8, 0.25,
+            0
+        ) )
+)

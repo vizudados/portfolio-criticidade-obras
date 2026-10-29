@@ -1,0 +1,469 @@
+/*
+@pasta: T3 Avanço físico\Leituras
+@formato: texto
+@descricao: Leitura do "?" da Curva S, sobre o próprio painel (L065, Figma 317:5115, 1028 × 402, duas colunas): achado com o desvio e a tendência da distância, explicação (ritmo executado × previsto, o que o cronograma pede, a trajetória do físico na nota na janela: dentro ou fora do limite), três destaques que contam, como ler; à direita o que explica (justificativas da planilha) e o detalhe do desvio mês a mês na janela, com o limite da nota (as barras correm; x pela posição na janela). Obra sem previsto na planilha (Figma 352:7993): achado com o executado e a falta do previsto, sem desvio nem faixa, e o detalhe vira o executado do mês, mês a mês. Só lê contas.
+@gerado: pbi/scripts/leituras_t3.py
+*/
+-- 1 · Leituras
+VAR _obra = [Nota · obra em foco]
+VAR _mesL = [Mês de referência · longo]
+VAR _mesN = [Mês de referência · nome]
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _nJan = [Série · meses até a referência]
+VAR _d = [Físico · desvio acumulado p.p. · foco]
+VAR _e = [Físico · executado acumulado · foco]
+VAR _s = [T3 · Status desvio físico · foco]
+VAR _lim = [Nota · limite prazo · ponto cheio]
+VAR _maxFF = [T3 · Prazo · máximo na nota]
+VAR _trv = [Nota · limite prazo · trava]
+VAR _notaMax = [Nota · nota · máximo]
+VAR _td = [T3 · Físico · tendência da distância · foco]
+VAR _tdd0 = [T3 · Físico · tendência da distância desde · foco]
+VAR _iniLado = [T3 · Físico · sinal · início da sequência · foco]
+VAR _tdd = IF ( NOT ISBLANK ( _iniLado ) && _iniLado > _tdd0, _iniLado, _tdd0 )
+VAR _abx = [T3 · Ritmo · executa abaixo desde · foco]
+VAR _acm = [T3 · Ritmo · executa acima desde · foco]
+VAR _pm1 = [T3 · Série · primeiro mês da obra · foco]
+VAR _n = [T3 · Série · meses da obra · foco]
+VAR _tp = [T3 · Ritmo · tendência do previsto · foco]
+VAR _te = [T3 · Ritmo · tendência do executado · foco]
+VAR _alc = [T3 · Ritmo · meses que alcançaram o previsto · foco]
+VAR _mMax = [T3 · Série · mês de maior executado · foco]
+VAR _eMax = [T3 · Série · executado no mês de maior executado · foco]
+VAR _mud = [T3 · Físico · mudanças de faixa (lista) · foco]
+VAR _ms = [T3 · Físico · maior status na série · foco]
+VAR _d1 = [T3 · Curva S · desvio no primeiro mês · foco]
+VAR _s1 = [T3 · Curva S · status no primeiro mês · foco]
+VAR _eMin = [T3 · Série · executado no mês de menor executado · foco]
+VAR _mMin = [T3 · Série · mês de menor executado · foco]
+VAR _des = [Desembolsado acumulado · foco]
+VAR _cred = [Crédito do orçamento · foco]
+VAR _jus = [T3 · Justificativas · grupos (lista) · foco]
+VAR _nAcima = [T3 · Justificativas · meses acima do previsto · foco]
+VAR _ddRef = [Desembolso · desvio no mês · foco]
+VAR _meses =
+    ADDCOLUMNS (
+        VALUES ( dMes[Mes] ),
+        "@ate", [Série · mês até a referência],
+        "@pj", [Série · posição na janela],
+        "@d", [T3 · Desvio físico p.p. · foco no mês],
+        "@s", [T3 · Status desvio físico · foco no mês],
+        "@em", [Físico · executado no mês · foco no mês],
+        "@rot", [Mês · abreviado]
+    )
+-- 2 · Textos
+VAR _semP = ISBLANK ( _d )
+VAR _dA = ABS ( _d )
+VAR _tdN = FORMAT ( ABS ( _d ), "0.0", "pt-BR" )
+VAR _tdS = SWITCH ( TRUE (), ROUND ( _d, 1 ) < 0, "−", ROUND ( _d, 1 ) > 0, "+", "" )
+VAR _tdTxt = IF ( ISBLANK ( _d ), "—", _tdS & _tdN & " p.p." )
+VAR _td1N = FORMAT ( ABS ( _d1 ), "0.0", "pt-BR" )
+VAR _td1S = SWITCH ( TRUE (), ROUND ( _d1, 1 ) < 0, "−", ROUND ( _d1, 1 ) > 0, "+", "" )
+VAR _td1Txt = IF ( ISBLANK ( _d1 ), "—", _td1S & _td1N & " p.p." )
+VAR _temN = FORMAT ( ABS ( _eMin ) * 100, "0.00", "pt-BR" )
+VAR _temS = IF ( ROUND ( _eMin * 100, 2 ) < 0, "−", "" )
+VAR _temTxt = IF ( ISBLANK ( _eMin ), "—", _temS & _temN & "%" )
+VAR _texN = FORMAT ( ABS ( _eMax ) * 100, "0.00", "pt-BR" )
+VAR _texS = IF ( ROUND ( _eMax * 100, 2 ) < 0, "−", "" )
+VAR _texTxt = IF ( ISBLANK ( _eMax ), "—", _texS & _texN & "%" )
+VAR _teaN = FORMAT ( ABS ( _e ) * 100, "0.0", "pt-BR" )
+VAR _teaS = IF ( ROUND ( _e * 100, 1 ) < 0, "−", "" )
+VAR _teaTxt = IF ( ISBLANK ( _e ), "—", _teaS & _teaN & "%" )
+VAR _tdsA = ABS ( _des )
+VAR _tdsNu = SWITCH ( TRUE (), _tdsA >= 99950000, FORMAT ( _tdsA / 1000000, "0.0", "pt-BR" ), _tdsA >= 999500, FORMAT ( _tdsA / 1000000, "0.00", "pt-BR" ), _tdsA >= 999.5, FORMAT ( _tdsA / 1000, "0", "pt-BR" ), FORMAT ( _tdsA, "#,0", "pt-BR" ) )
+VAR _tdsUn = SWITCH ( TRUE (), _tdsA >= 999500, " mi", _tdsA >= 999.5, " mil", "" )
+VAR _tdsN = _tdsNu & _tdsUn
+VAR _tdsZero = _tdsN = "0"
+VAR _tdsS = IF ( _tdsZero, "", IF ( _des < 0, "−", "" ) )
+VAR _tdsTxt = IF ( ISBLANK ( _des ), "—", _tdsS & "R$ " & _tdsN )
+VAR _tcrA = ABS ( _cred )
+VAR _tcrNu = SWITCH ( TRUE (), _tcrA >= 99950000, FORMAT ( _tcrA / 1000000, "0.0", "pt-BR" ), _tcrA >= 999500, FORMAT ( _tcrA / 1000000, "0.00", "pt-BR" ), _tcrA >= 999.5, FORMAT ( _tcrA / 1000, "0", "pt-BR" ), FORMAT ( _tcrA, "#,0", "pt-BR" ) )
+VAR _tcrUn = SWITCH ( TRUE (), _tcrA >= 999500, " mi", _tcrA >= 999.5, " mil", "" )
+VAR _tcrN = _tcrNu & _tcrUn
+VAR _tcrZero = _tcrN = "0"
+VAR _tcrS = IF ( _tcrZero, "", IF ( _cred < 0, "−", "" ) )
+VAR _tcrTxt = IF ( ISBLANK ( _cred ), "—", _tcrS & "R$ " & _tcrN )
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _txtSob = "LEITURA · CURVA S · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( UPPER ( _obra ), "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & " · " & UPPER ( _mesL )
+VAR _tl = FORMAT ( _lim, IF ( _lim = INT ( _lim ), "0", "0.0" ), "pt-BR" ) & IF ( _lim <= 1, " mês", " meses" )
+VAR _tMax = FORMAT ( _maxFF, "0.0#", "pt-BR" )
+VAR _ttv = FORMAT ( _trv, "0", "pt-BR" ) & IF ( _trv <= 1, " mês", " meses" )
+VAR _tNota = FORMAT ( _notaMax, "0", "pt-BR" )
+VAR _txtTend =
+    SWITCH (
+        TRUE (),
+        _d >= 0, ".",
+        _td = "cresce", ", e o atraso cresce desde " & IF ( _tdd = _jan || YEAR ( _tdd ) <> YEAR ( _ref ), FORMAT ( _tdd, "mmm/yy", "pt-BR" ), FORMAT ( _tdd, "mmmm", "pt-BR" ) ) & ".",
+        _td = "cai", ", e o atraso vem caindo desde " & IF ( _tdd = _jan || YEAR ( _tdd ) <> YEAR ( _ref ), FORMAT ( _tdd, "mmm/yy", "pt-BR" ), FORMAT ( _tdd, "mmmm", "pt-BR" ) ) & ".",
+        _td = "oscila", ", e o atraso oscila desde " & IF ( _tdd = _jan || YEAR ( _tdd ) <> YEAR ( _ref ), FORMAT ( _tdd, "mmm/yy", "pt-BR" ), FORMAT ( _tdd, "mmmm", "pt-BR" ) ) & ".",
+        "."
+    )
+VAR _lado = IF ( _d < 0, " p.p. atrás do cronograma", " p.p. à frente do cronograma" )
+-- o número-chave do achado conta (contador): o núcleo é o |desvio| com uma casa, sem sinal
+VAR _tkN = FORMAT ( _dA, "0.0", "pt-BR" )
+VAR _tkTxt = IF ( ISBLANK ( _dA ), "—", _tkN )
+VAR _tkKP = LEN ( _tkN ) > 0
+VAR _tkKN = IF ( _tkKP, _tkN )
+VAR _tkKS = SUBSTITUTE ( SUBSTITUTE ( _tkKN, ".", "" ), ",", "" )
+VAR _tkKT = IFERROR ( VALUE ( _tkKS ), -1 )
+VAR _tkKOk = _tkKP && _tkKT >= 2 && FORMAT ( _tkKT, REPT ( "0", LEN ( _tkKS ) ) ) = _tkKS
+VAR _tkKD = IF ( CONTAINSSTRING ( _tkKN, "," ), LEN ( _tkKN ) - SEARCH ( ",", _tkKN ), 0 )
+VAR _tkKM = IF ( CONTAINSSTRING ( _tkKN, "." ), "#,##0", "0" ) & IF ( _tkKD > 0, "." & REPT ( "0", _tkKD ) )
+VAR _tkKOd =
+    IF (
+        _tkKOk,
+        "<o-d><o-v>" & _tkKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tkKN, FORMAT ( ROUND ( _tkKT * [@odf] / 1000, 0 ) / POWER ( 10, _tkKD ), _tkKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tkN
+    )
+VAR _tkOd = IF ( ISBLANK ( _dA ), _tkTxt, _tkKOd )
+VAR _tdKP = LEN ( _tdN ) > 0
+VAR _tdKN = IF ( _tdKP, _tdN )
+VAR _tdKS = SUBSTITUTE ( SUBSTITUTE ( _tdKN, ".", "" ), ",", "" )
+VAR _tdKT = IFERROR ( VALUE ( _tdKS ), -1 )
+VAR _tdKOk = _tdKP && _tdKT >= 2 && FORMAT ( _tdKT, REPT ( "0", LEN ( _tdKS ) ) ) = _tdKS
+VAR _tdKD = IF ( CONTAINSSTRING ( _tdKN, "," ), LEN ( _tdKN ) - SEARCH ( ",", _tdKN ), 0 )
+VAR _tdKM = IF ( CONTAINSSTRING ( _tdKN, "." ), "#,##0", "0" ) & IF ( _tdKD > 0, "." & REPT ( "0", _tdKD ) )
+VAR _tdKOd =
+    IF (
+        _tdKOk,
+        "<o-d><o-v>" & _tdKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tdKN, FORMAT ( ROUND ( _tdKT * [@odf] / 1000, 0 ) / POWER ( 10, _tdKD ), _tdKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tdN
+    )
+VAR _tdOd = IF ( ISBLANK ( _d ), _tdTxt, _tdS & _tdKOd & " p.p." )
+VAR _teaKP = LEN ( _teaN ) > 0
+VAR _teaKN = IF ( _teaKP, _teaN )
+VAR _teaKS = SUBSTITUTE ( SUBSTITUTE ( _teaKN, ".", "" ), ",", "" )
+VAR _teaKT = IFERROR ( VALUE ( _teaKS ), -1 )
+VAR _teaKOk = _teaKP && _teaKT >= 2 && FORMAT ( _teaKT, REPT ( "0", LEN ( _teaKS ) ) ) = _teaKS
+VAR _teaKD = IF ( CONTAINSSTRING ( _teaKN, "," ), LEN ( _teaKN ) - SEARCH ( ",", _teaKN ), 0 )
+VAR _teaKM = IF ( CONTAINSSTRING ( _teaKN, "." ), "#,##0", "0" ) & IF ( _teaKD > 0, "." & REPT ( "0", _teaKD ) )
+VAR _teaKOd =
+    IF (
+        _teaKOk,
+        "<o-d><o-v>" & _teaKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _teaKN, FORMAT ( ROUND ( _teaKT * [@odf] / 1000, 0 ) / POWER ( 10, _teaKD ), _teaKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _teaN
+    )
+VAR _teaOd = IF ( ISBLANK ( _e ), _teaTxt, _teaS & _teaKOd & "%" )
+VAR _achado =
+    SWITCH (
+        TRUE (),
+        _semP, "A " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _obra, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & " fecha " & _mesN & " com " & _teaOd
+            & " executado, mas a planilha não traz o previsto: não há cronograma para medir atraso.",
+        ROUND ( _d, 1 ) = 0, "A " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _obra, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & " fecha " & _mesN & " no ritmo do cronograma (" & _tdOd & ").",
+        "A " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _obra, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & " fecha " & _mesN & " " & _tkOd & _lado & _txtTend
+    )
+VAR _txtE1 =
+    SWITCH (
+        TRUE (),
+        NOT ISBLANK ( _abx ),
+            "A obra executa menos do que o previsto desde "
+                & IF ( _abx = _pm1 && _pm1 > _jan, "a primeira aba, em " & FORMAT ( _pm1, "mmmm", "pt-BR" ), IF ( _abx = _jan || YEAR ( _abx ) <> YEAR ( _ref ), FORMAT ( _abx, "mmm/yy", "pt-BR" ), FORMAT ( _abx, "mmmm", "pt-BR" ) ) ) & ".",
+        NOT ISBLANK ( _acm ),
+            "A obra executa o previsto ou mais desde "
+                & IF ( _acm = _pm1 && _pm1 > _jan, "a primeira aba, em " & FORMAT ( _pm1, "mmmm", "pt-BR" ), IF ( _acm = _jan || YEAR ( _acm ) <> YEAR ( _ref ), FORMAT ( _acm, "mmm/yy", "pt-BR" ), FORMAT ( _acm, "mmmm", "pt-BR" ) ) ) & ".",
+        ""
+    )
+VAR _txtRitmo = SWITCH ( _tp, "acelera", "acelera a cada mês", "desacelera", "desacelera a cada mês", "constante", "é constante", "varia de mês a mês" )
+VAR _txtE2 =
+    " O cronograma pede um ritmo que " & _txtRitmo
+        & IF (
+            _alc = 0,
+            " e a execução não acompanhou: nem no melhor mês, " & FORMAT ( _mMax, "mmmm", "pt-BR" ) & ", ela alcançou o previsto.",
+            "; a execução alcançou o previsto em " & SWITCH ( _alc, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _alc, "0" ) ) & " dos " & SWITCH ( _n, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _n, "0" ) ) & " meses."
+        )
+VAR _nMud = IF ( ISBLANK ( _mud ) || _mud = "", 0, PATHLENGTH ( _mud ) )
+VAR _frases =
+    CONCATENATEX (
+        GENERATESERIES ( 1, MAX ( _nMud, 1 ) ),
+        VAR _it = SUBSTITUTE ( PATHITEM ( _mud, [Value] ), "§", "|" )
+        VAR _nm = PATHITEM ( _it, 1 )
+        VAR _de = PATHITEM ( _it, 3, INTEGER )
+        VAR _para = PATHITEM ( _it, 4, INTEGER )
+        VAR _nf = PATHITEM ( _it, 5, INTEGER )
+        VAR _sep = IF ( [Value] = 1, "", IF ( [Value] = _nMud, " e ", ", " ) )
+        RETURN
+            _sep & IF ( _para = 2, "passou do limite da nota em " & _nm, "em " & _nm & " voltou para dentro do limite" )
+                & IF ( [Value] < _nMud && _nf >= 2, ", ficou " & SWITCH ( _nf, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _nf, "0" ) ) & " meses " & IF ( _para = 2, "fora do limite", "dentro do limite" ), "" ),
+        "",
+        [Value], ASC
+    )
+VAR _txtE3 =
+    IF (
+        _nMud = 0,
+        IF ( _ms = 2, " O atraso ficou acima do limite da nota " & IF ( _n = 1, "no único mês", "em todos os " & SWITCH ( _n, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _n, "0" ) ) & " meses" ), " O atraso nunca passou do limite da nota " & IF ( _n = 1, "no único mês", "nos " & SWITCH ( _n, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _n, "0" ) ) & " meses" ) ) & ".",
+        " O físico " & _frases & "."
+    )
+VAR _txtExecMes = SWITCH ( _te, "cresce", "cresce", "cai", "cai", "constante", "se repete", "oscila" )
+VAR _explica =
+    IF (
+        _semP,
+        "As abas trazem o previsto em branco: a curva mostra só o executado, sem área de atraso, e o desvio e o "
+            & "ponto do físico ficam vazios — não valem zero.",
+        _txtE1 & _txtE2 & _txtE3
+    )
+VAR _rotD1 = "desvio em " & FORMAT ( _pm1, "mmmm", "pt-BR" ) & ", "
+    & IF ( _s1 = 2, "já fora do limite", IF ( _s = 2, "ainda dentro do limite", "dentro do limite" ) )
+VAR _rotMin = "executado no mês mais fraco, " & FORMAT ( _mMin, "mmmm", "pt-BR" )
+VAR _rotMax = "executado no melhor mês, " & FORMAT ( _mMax, "mmmm", "pt-BR" )
+VAR _rotD3 = "pagos até " & _mesN & "; " & "⁅" & _tcrTxt & "⁆" & " de obra executada"
+VAR _td1KP = LEN ( _td1N ) > 0
+VAR _td1KN = IF ( _td1KP, _td1N )
+VAR _td1KS = SUBSTITUTE ( SUBSTITUTE ( _td1KN, ".", "" ), ",", "" )
+VAR _td1KT = IFERROR ( VALUE ( _td1KS ), -1 )
+VAR _td1KOk = _td1KP && _td1KT >= 2 && FORMAT ( _td1KT, REPT ( "0", LEN ( _td1KS ) ) ) = _td1KS
+VAR _td1KD = IF ( CONTAINSSTRING ( _td1KN, "," ), LEN ( _td1KN ) - SEARCH ( ",", _td1KN ), 0 )
+VAR _td1KM = IF ( CONTAINSSTRING ( _td1KN, "." ), "#,##0", "0" ) & IF ( _td1KD > 0, "." & REPT ( "0", _td1KD ) )
+VAR _td1KOd =
+    IF (
+        _td1KOk,
+        "<o-d><o-v>" & _td1KN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _td1KN, FORMAT ( ROUND ( _td1KT * [@odf] / 1000, 0 ) / POWER ( 10, _td1KD ), _td1KM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _td1N
+    )
+VAR _td1Od = IF ( ISBLANK ( _d1 ), _td1Txt, _td1S & _td1KOd & " p.p." )
+VAR _temKP = LEN ( _temN ) > 0
+VAR _temKN = IF ( _temKP, _temN )
+VAR _temKS = SUBSTITUTE ( SUBSTITUTE ( _temKN, ".", "" ), ",", "" )
+VAR _temKT = IFERROR ( VALUE ( _temKS ), -1 )
+VAR _temKOk = _temKP && _temKT >= 2 && FORMAT ( _temKT, REPT ( "0", LEN ( _temKS ) ) ) = _temKS
+VAR _temKD = IF ( CONTAINSSTRING ( _temKN, "," ), LEN ( _temKN ) - SEARCH ( ",", _temKN ), 0 )
+VAR _temKM = IF ( CONTAINSSTRING ( _temKN, "." ), "#,##0", "0" ) & IF ( _temKD > 0, "." & REPT ( "0", _temKD ) )
+VAR _temKOd =
+    IF (
+        _temKOk,
+        "<o-d><o-v>" & _temKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _temKN, FORMAT ( ROUND ( _temKT * [@odf] / 1000, 0 ) / POWER ( 10, _temKD ), _temKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _temN
+    )
+VAR _temOd = IF ( ISBLANK ( _eMin ), _temTxt, _temS & _temKOd & "%" )
+VAR _texKP = LEN ( _texN ) > 0
+VAR _texKN = IF ( _texKP, _texN )
+VAR _texKS = SUBSTITUTE ( SUBSTITUTE ( _texKN, ".", "" ), ",", "" )
+VAR _texKT = IFERROR ( VALUE ( _texKS ), -1 )
+VAR _texKOk = _texKP && _texKT >= 2 && FORMAT ( _texKT, REPT ( "0", LEN ( _texKS ) ) ) = _texKS
+VAR _texKD = IF ( CONTAINSSTRING ( _texKN, "," ), LEN ( _texKN ) - SEARCH ( ",", _texKN ), 0 )
+VAR _texKM = IF ( CONTAINSSTRING ( _texKN, "." ), "#,##0", "0" ) & IF ( _texKD > 0, "." & REPT ( "0", _texKD ) )
+VAR _texKOd =
+    IF (
+        _texKOk,
+        "<o-d><o-v>" & _texKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _texKN, FORMAT ( ROUND ( _texKT * [@odf] / 1000, 0 ) / POWER ( 10, _texKD ), _texKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _texN
+    )
+VAR _texOd = IF ( ISBLANK ( _eMax ), _texTxt, _texS & _texKOd & "%" )
+VAR _tdsKP = LEN ( _tdsNu ) > 0
+VAR _tdsKN = IF ( _tdsKP, _tdsNu )
+VAR _tdsKS = SUBSTITUTE ( SUBSTITUTE ( _tdsKN, ".", "" ), ",", "" )
+VAR _tdsKT = IFERROR ( VALUE ( _tdsKS ), -1 )
+VAR _tdsKOk = _tdsKP && _tdsKT >= 2 && FORMAT ( _tdsKT, REPT ( "0", LEN ( _tdsKS ) ) ) = _tdsKS
+VAR _tdsKD = IF ( CONTAINSSTRING ( _tdsKN, "," ), LEN ( _tdsKN ) - SEARCH ( ",", _tdsKN ), 0 )
+VAR _tdsKM = IF ( CONTAINSSTRING ( _tdsKN, "." ), "#,##0", "0" ) & IF ( _tdsKD > 0, "." & REPT ( "0", _tdsKD ) )
+VAR _tdsKOd =
+    IF (
+        _tdsKOk,
+        "<o-d><o-v>" & _tdsKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tdsKN, FORMAT ( ROUND ( _tdsKT * [@odf] / 1000, 0 ) / POWER ( 10, _tdsKD ), _tdsKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tdsNu
+    )
+VAR _tdsOd = IF ( ISBLANK ( _des ), _tdsTxt, _tdsS & "R$ " & _tdsKOd & _tdsUn )
+VAR _g1 = SUBSTITUTE ( PATHITEM ( _jus, 1 ), "§", "|" )
+VAR _g2 = SUBSTITUTE ( PATHITEM ( _jus, 2 ), "§", "|" )
+VAR _t1 = PATHITEM ( _g1, 1 )
+VAR _t2 = PATHITEM ( _g2, 1 )
+VAR _n1 = PATHITEM ( _g1, 2, INTEGER )
+VAR _n2 = PATHITEM ( _g2, 2, INTEGER )
+VAR _t1s = IF ( RIGHT ( _t1, 1 ) = ".", LEFT ( _t1, LEN ( _t1 ) - 1 ), _t1 )
+VAR _t1m = IF ( EXACT ( UPPER ( _t1s ), _t1s ), _t1s, LOWER ( LEFT ( _t1s, 1 ) ) & MID ( _t1s, 2, LEN ( _t1s ) ) )
+VAR _t1e = SEARCH ( " ", _t1m, 56, 0 )
+VAR _t1L = IF ( LEN ( _t1m ) <= 72, _t1m, LEFT ( _t1m, IF ( _t1e > 0 && _t1e <= 71, _t1e - 1, 70 ) ) & "…" )
+VAR _txtOqe =
+    SWITCH (
+        TRUE (),
+        _nAcima = 0, "O desembolso acompanhou o previsto em todos os meses; o atraso não veio de falta de dinheiro.",
+        ISBLANK ( _jus ) || _jus = "", "A planilha não traz justificativa para o desembolso acima do previsto em nenhum mês.",
+        _d < 0 && _ddRef > 0,
+            "Pela planilha, o gasto acima do previsto foi justificado em " & IF ( _n1 = 1, "um mês", SWITCH ( _n1, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _n1, "0" ) ) & " meses" ) & " como " & _t1L
+            & IF ( RIGHT ( _t1L, 1 ) = "…", " ", ". " ) & "A obra paga para recuperar o prazo.",
+        ISBLANK ( _t2 ) || _t2 = "",
+            "Pela planilha, o gasto acima do previsto foi justificado em " & IF ( _n1 = 1, "um mês", SWITCH ( _n1, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _n1, "0" ) ) & " meses" ) & " como " & _t1L & IF ( RIGHT ( _t1L, 1 ) = "…", "", "." ),
+        "Pela planilha, o gasto acima do previsto foi justificado em " & IF ( _n1 = 1, "um mês", SWITCH ( _n1, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _n1, "0" ) ) & " meses" ) & " como " & _t1L
+            & IF ( RIGHT ( _t1L, 1 ) = "…", " ", "; " ) & "em " & IF ( _n2 = 1, "outro mês", SWITCH ( _n2, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _n2, "0" ) ) & " meses" ) & ", por outro motivo."
+    )
+-- 3 · Geometria
+VAR _serie = FILTER ( _meses, [@ate] = 1 ) /* lista */
+VAR _com = FILTER ( _serie, NOT ISBLANK ( [@d] ) ) /* lista */
+VAR _colW = INT ( DIVIDE ( 220, _nJan ) ) /* geometria */
+VAR _bw = MIN ( 18, _colW - 8 ) -- geometria
+VAR _maxPos = MAXX ( _com, MAX ( [@d], 0 ) ) /* geometria */
+VAR _maxNeg = MAXX ( _com, MAX ( - [@d], 0 ) ) /* geometria */
+VAR _negSpan = MAX ( _maxNeg, 1 ) /* geometria */
+VAR _k = MIN ( 10, DIVIDE ( 40, _maxPos + _negSpan ) ) /* geometria */
+VAR _base = 8 + ROUND ( _maxPos * _k, 0 ) /* geometria */
+VAR _yMes = 8 + 40 + 6 /* geometria */
+VAR _alt = _yMes + 16 /* geometria */
+VAR _colE = INT ( DIVIDE ( 320, _nJan ) ) /* geometria */
+VAR _bwE = MIN ( 20, _colE - 10 ) -- geometria
+VAR _maxEm = MAXX ( _serie, [@em] ) /* geometria */
+VAR _barras =
+    CONCATENATEX (
+        _serie,
+        VAR _v = [@d]
+        VAR _x = ( [@pj] - 1 ) * _colW /* geometria */
+        VAR _zero = NOT ISBLANK ( _v ) && ROUND ( _v, 1 ) = 0 -- geometria
+        VAR _h = IF ( ISBLANK ( _v ), 0, IF ( _zero, 2, MAX ( 1, ROUND ( ABS ( _v ) * _k, 0 ) ) ) ) /* geometria */
+        VAR _atraso = 300 + ( [@pj] - 1 ) * 120 /* geometria */
+        RETURN
+            "<span class='ms a-fd' style='left:" & _x & "px;width:" & _colW & "px;top:" & _yMes & "px;animation-delay:" & _atraso & "ms'>" & [@rot] & "</span>"
+                & IF (
+                    NOT ISBLANK ( _v ),
+                    "<i class='b " & IF ( _zero, "z", "s" & [@s] ) & "' style='left:" & ( _x + INT ( ( _colW - _bw ) / 2 ) )
+                        & "px;width:" & _bw & "px;" & IF ( _v >= 0, "top:auto;bottom:" & ( _alt - _base ), "top:" & _base )
+                        & "px;height:" & _h & "px' data-rk='c" & [@pj] & "' data-rp='height' data-rd='" & _atraso & "'></i>"
+                ),
+        "",
+        [@pj], ASC
+    )
+VAR _barrasE =
+    CONCATENATEX (
+        _serie,
+        VAR _x = ( [@pj] - 1 ) * _colE /* geometria */
+        VAR _h = IF ( ISBLANK ( [@em] ), 0, MAX ( 1, ROUND ( DIVIDE ( [@em], _maxEm ) * 30, 0 ) ) ) /* geometria */
+        VAR _atraso = 300 + ( [@pj] - 1 ) * 120 /* geometria */
+        RETURN
+            "<span class='ms a-fd' style='left:" & _x & "px;width:" & _colE & "px;top:40px;animation-delay:" & _atraso & "ms'>" & [@rot] & "</span>"
+                & IF (
+                    NOT ISBLANK ( [@em] ) && _h > 0,
+                    "<i class='b e' style='left:" & ( _x + INT ( ( _colE - _bwE ) / 2 ) ) & "px;width:" & _bwE
+                        & "px;top:auto;bottom:22px;height:" & _h & "px' data-rk='c" & [@pj] & "' data-rp='height' data-rd='"
+                        & _atraso & "'></i>"
+                ),
+        "",
+        [@pj], ASC
+    )
+-- 4 · Marcação
+VAR _htmlDet =
+    IF (
+        _semP,
+        "<div class='bp' style='height:56px'>" & _barrasE & "<i class='ax a-gx' style='top:34px;width:320px'></i></div>",
+        "<div class='bp' style='height:" & _alt & "px'>" & _barras
+            & "</div>"
+    )
+VAR _rotDet = IF ( _semP, "DETALHE · EXECUTADO NO MÊS · %", "DETALHE · DESVIO MÊS A MÊS · P.P." )
+VAR _htmlDst =
+    IF (
+        _semP,
+        "<div class='dst sobre-creme'>" & "<div><b>" & _temOd & "</b><span>" & _rotMin & "</span></div>" & "<div><b>" & _texOd & "</b><span>" & _rotMax & "</span></div>" & "<div><b>" & _tdsOd & "</b><span>" & _rotD3 & "</span></div>" & "</div>",
+        "<div class='dst sobre-creme'>" & "<div><b>" & IF ( ROUND ( _d1, 1 ) < 0, "<span class='ng'>" & _td1Od & "</span>", _td1Od ) & "</b><span>" & _rotD1 & "</span></div>" & "<div><b>" & _temOd & "</b><span>" & _rotMin & "</span></div>" & "<div><b>" & _tdsOd & "</b><span>" & _rotD3 & "</span></div>" & "</div>"
+    )
+VAR _esq =
+    "<div class='esq'><span class='vs sob'>" & _txtSob & "</span><h2 class='ach'>" & _achado & "</h2>"
+        & "<p class='exp'>" & _explica & "</p>" & _htmlDst
+    & "</div>"
+VAR _dir =
+    "<div class='dir'>" & "<div class='sec'><span class='vs'>" & "O QUE EXPLICA" & "</span>" & "<p class='oqe oq5'>" & _txtOqe & "</p>" & "</div>"
+        & "<div class='sec'><span class='vs'>" & _rotDet & "</span>" & _htmlDet & "</div>"
+        & "<div class='sec'><span class='vs'>" & "COMO LER" & "</span>" & IF ( _semP, "<p class='cl'>Sólido = executado acumulado, em % do orçamento. Sem previsto na planilha não há tracejado nem área de atraso; o desvio e o ponto do físico na nota ficam vazios.</p>", "<p class='cl'>Tracejado = previsto; sólido = executado; a área entre eles é o atraso. Na nota vale o atraso em meses: até " & "⁅" & _tl & "⁆" & ", " & "⁅" & _tMax & "⁆" & " pontos; os pontos caem até zero com mais de " & "⁅" & _ttv & "⁆" & ", e a obra fica crítica.</p>" ) & "</div>"
+    & "</div>"
+VAR _corpo = "<div class='cols'>" & _esq & _dir & "</div>"
+VAR _saidaHtml =
+    IF ( NOT ISBLANK ( _e ), "<div class='u lv' role='dialog' aria-label='" & "Leitura da Curva S" & "'><div class='pn pn-g'>" & _corpo & "</div><svg class='x' width='26' height='26' viewBox='0 0 26 26' aria-hidden='true'><circle cx='13' cy='13' r='12.375' fill='#FFFFFF' stroke='#3B3B3F' stroke-width='1.25'/><path d='M9 9L17 17M17 9L9 17' fill='none' stroke='#0B0B0C' stroke-width='1.5' stroke-linecap='round'/></svg></div>" & [Comum · JS contador tooltip] & [Comum · JS corrida] )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

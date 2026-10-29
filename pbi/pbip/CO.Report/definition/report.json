@@ -1,0 +1,159 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY26SU07",
+      "reportVersionAtImport": {
+        "visual": "2.11.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "Criticidade-Obras.json",
+      "reportVersionAtImport": {
+        "visual": "2.11.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "objects": {
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          },
+          "visible": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY26SU07",
+          "path": "BaseThemes/CY26SU07.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "Criticidade-Obras.json",
+          "path": "Criticidade-Obras.json",
+          "type": "CustomTheme"
+        },
+        {
+          "name": "wp-capa.jpg",
+          "path": "wp-capa.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "wp-d1.svg",
+          "path": "wp-d1.svg",
+          "type": "Image"
+        },
+        {
+          "name": "wp-d2.svg",
+          "path": "wp-d2.svg",
+          "type": "Image"
+        },
+        {
+          "name": "wp-d3.svg",
+          "path": "wp-d3.svg",
+          "type": "Image"
+        },
+        {
+          "name": "wp-d4.svg",
+          "path": "wp-d4.svg",
+          "type": "Image"
+        },
+        {
+          "name": "wp-d5.svg",
+          "path": "wp-d5.svg",
+          "type": "Image"
+        },
+        {
+          "name": "wp-provisorio.svg",
+          "path": "wp-provisorio.svg",
+          "type": "Image"
+        },
+        {
+          "name": "wp-t1.svg",
+          "path": "wp-t1.svg",
+          "type": "Image"
+        },
+        {
+          "name": "wp-t2.svg",
+          "path": "wp-t2.svg",
+          "type": "Image"
+        },
+        {
+          "name": "wp-t3.svg",
+          "path": "wp-t3.svg",
+          "type": "Image"
+        },
+        {
+          "name": "wp-t4.svg",
+          "path": "wp-t4.svg",
+          "type": "Image"
+        },
+        {
+          "name": "wp-t5.svg",
+          "path": "wp-t5.svg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "name": "STANDALONEhtmlContent443BE3AD55E043BF878BED274D3A6855",
+      "type": "CustomVisual",
+      "items": [
+        {
+          "name": "STANDALONEhtmlContent443BE3AD55E043BF878BED274D3A6855.pbiviz.json",
+          "path": "STANDALONEhtmlContent443BE3AD55E043BF878BED274D3A6855.pbiviz.json",
+          "type": "CustomVisualMetadata"
+        }
+      ]
+    },
+    {
+      "name": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A",
+      "type": "CustomVisual",
+      "items": [
+        {
+          "name": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A.pbiviz.json",
+          "path": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A.pbiviz.json",
+          "type": "CustomVisualMetadata"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  }
+}

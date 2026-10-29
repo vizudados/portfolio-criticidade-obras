@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Mês
+@formato: texto
+@descricao: Mês de referência abreviado em caixa alta (JUN/26), para sobretítulos.
+@gerado: pbi/scripts/contas_base.py
+*/
+UPPER ( [Mês de referência · curto] )

@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Prazo
+@formato: mmm/yy
+@descricao: Entrega contratual + 180 dias (6 meses) de tolerância (art. 43-A da Lei 4.591/64). Uma obra.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _e = SELECTEDVALUE ( dObra[EntregaContratual] )
+RETURN
+    IF ( NOT ISBLANK ( _e ), EDATE ( _e, 6 ) )

@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Canteiro
+@formato: 0.0
+@descricao: Dias impraticáveis por chuva; na carteira, a média (base complementar).
+@gerado: pbi/scripts/contas_base.py
+*/
+AVERAGE ( fBaseObra[DiasChuva] )

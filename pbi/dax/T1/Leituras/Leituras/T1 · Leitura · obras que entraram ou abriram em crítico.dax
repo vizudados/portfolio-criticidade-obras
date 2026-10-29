@@ -1,0 +1,25 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: 0
+@descricao: Quantas obras entraram em crítico no mês do contexto ou abriram nele: a soma das duas contagens acima, numa só varredura das obras (a série da piora lê esta conta mês a mês).
+@oraculo: oráculo da régua antiga (status mês a mês)
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _m = SELECTEDVALUE ( dMes[Mes] )
+VAR _ant = EDATE ( _m, -1 )
+VAR _recorte = VALUES ( dObra[Obra] )
+VAR _obras =
+    ADDCOLUMNS (
+        FILTER ( dRankingNota, dRankingNota[Mes] = _m && dRankingNota[TemAC] = 1 && dRankingNota[Obra] IN _recorte ),
+        "@s", dRankingNota[Status],
+        "@a",
+            VAR _o = dRankingNota[Obra]
+            RETURN
+                MAXX ( FILTER ( ALL ( dRankingNota ), dRankingNota[Obra] = _o && dRankingNota[Mes] = _ant && dRankingNota[TemAC] = 1 ), dRankingNota[Status] ),
+        "@ja",
+            VAR _o = dRankingNota[Obra]
+            RETURN
+                IF ( ISEMPTY ( FILTER ( ALL ( dRankingNota ), dRankingNota[Obra] = _o && dRankingNota[Mes] < _m && dRankingNota[TemAC] = 1 && dRankingNota[Pendente] == 0 ) ), 0, 1 )
+    )
+RETURN
+    COUNTROWS ( FILTER ( _obras, [@s] == 2 && NOT ISBLANK ( [@a] ) && [@a] < 2 ) ) + COUNTROWS ( FILTER ( _obras, [@s] == 2 && [@ja] = 0 ) ) + 0

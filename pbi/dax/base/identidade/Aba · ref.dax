@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Obra
+@formato: texto
+@descricao: Nome da aba da planilha no mês de referência (JUN26).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE ( SELECTEDVALUE ( fAnaliseCritica[Aba] ), REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

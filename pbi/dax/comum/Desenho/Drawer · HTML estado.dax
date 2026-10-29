@@ -1,0 +1,17 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: Ao lado do 'Limpar filtros': nenhum filtro ou quantos estão aplicados (mês, obras, obra em foco e a janela, esta só quando não é a de 12 meses).
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 1 · Leituras
+VAR _mes = [Recorte · mês escolhido]
+VAR _obras = [Recorte · obras escolhidas]
+VAR _foco = [Recorte · obra em foco escolhida]
+VAR _janela = [Recorte · janela escolhida]
+-- 2 · Textos
+VAR _n = _mes + _obras + _foco + _janela
+VAR _txt = IF ( _n = 0, "Nenhum filtro aplicado", IF ( _n = 1, "1 filtro aplicado", _n & " filtros aplicados" ) )
+-- 4 · Marcação
+RETURN
+    "<div class='u dw' style='display:flex;align-items:center'>" & _txt & "</div>"

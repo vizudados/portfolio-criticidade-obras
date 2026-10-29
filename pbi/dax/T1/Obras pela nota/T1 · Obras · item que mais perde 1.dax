@@ -1,0 +1,17 @@
+/*
+@pasta: T1 Visão geral\Obras pela nota\Contas
+@formato: texto
+@descricao: Código (dItemNota) do 1º item da nota em que a obra mais perde pontos no mês do contexto: mais pontos perdidos primeiro; empate pelo maior máximo e depois pela ordem da nota. Só itens com perda; vazio quando a obra perde pontos em menos de 1 item(ns). Uma obra no contexto.
+@oraculo: oráculo da régua antiga · ago/26: REDINHA medio_prazo, orcamento; POTENGI fluxo_caixa e vazio
+@gerado: pbi/scripts/contas_t1.py
+*/
+VAR _itens =
+    ADDCOLUMNS (
+        ALL ( dItemNota ),
+        "@p", [Nota · item · perdidos]
+    )
+VAR _perde = FILTER ( _itens, [@p] > 0 )
+VAR _top = TOPN ( 1, _perde, [@p], DESC, dItemNota[Maximo], DESC, dItemNota[Ordem], ASC )
+VAR _escolhido = TOPN ( 1, _top, [@p], ASC, dItemNota[Maximo], ASC, dItemNota[Ordem], DESC )
+RETURN
+    IF ( HASONEVALUE ( dObra[Obra] ) && COUNTROWS ( _top ) = 1, MAXX ( _escolhido, dItemNota[Item] ) )

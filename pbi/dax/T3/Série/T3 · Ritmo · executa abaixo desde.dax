@@ -1,0 +1,21 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: dd/mm/yyyy
+@descricao: Primeiro mês da sequência, terminada na referência, em que o executado do mês ficou abaixo do previsto (vazio quando a referência não está nessa condição ou não traz o previsto). Meses da janela com previsto; obra do contexto.
+@oraculo: sinal de obras[].serie[].exec_mes − prev_mes
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ref ),
+        "@e", VAR _m = dMes[Mes] RETURN CALCULATE ( [Físico · executado no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _m ),
+        "@p", VAR _m = dMes[Mes] RETURN CALCULATE ( [Físico · previsto no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _m )
+    )
+VAR _serie = FILTER ( _meses, NOT ISBLANK ( [@e] ) && NOT ISBLANK ( [@p] ) )
+VAR _quebra = MAXX ( FILTER ( _serie, NOT ( [@e] < [@p] ) ), dMes[Mes] )
+VAR _inicio = MINX ( FILTER ( _serie, ISBLANK ( _quebra ) || dMes[Mes] > _quebra ), dMes[Mes] )
+VAR _naRef = COUNTROWS ( FILTER ( _serie, dMes[Mes] = _ref && [@e] < [@p] ) ) > 0
+RETURN
+    IF ( _naRef, _inicio )

@@ -1,0 +1,15 @@
+/*
+@pasta: T2 Análise crítica\Como o resultado se forma
+@formato: texto
+@descricao: CSS da cascata v2 (uma entrada por degrau, colunas iguais).
+@gerado: pbi/scripts/desenho_t2.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & "#htmlContent{display:flex!important;align-items:flex-start;width:100vw;height:100vh;padding:0!important}.htmlViewerEntry{display:block!important;flex:1 1 0;min-width:0;margin:0!imp"
+    & "ortant;padding:0!important}.cd{position:relative;height:282px}.cd .b{position:absolute;left:calc(50% - 28px);width:56px}.cd .b.k2{background:#0B0B0C}.cd .b.kd{background:#F7E3E3;bo"
+    & "x-shadow:inset 0 0 0 1px #C43737}.cd .b.kn{background:#C43737}.cd .b.kr{background:repeating-linear-gradient(135deg,#0B0B0C 0 2px,#FFFFFF 2px 6px);box-shadow:inset 0 0 0 1px #0B0B0"
+    & "C}.cd .lg{position:absolute;left:calc(50% + 28px);width:calc(100% - 56px);height:1px;background:rgba(59,59,63,.5)}.cd .z{position:absolute;left:0;right:0;height:1px;background:rgba"
+    & "(59,59,63,.6)}.cd .v{position:absolute;left:-10px;right:-10px;text-align:center;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:14px;line-height:17px;white-s"
+    & "pace:nowrap;font-variant-numeric:tabular-nums}.cd .n{position:absolute;left:0;right:0;top:249px;text-align:center;font-size:13px;line-height:16px;color:#3B3B3F}.cd:hover .b{filter:"
+    & "brightness(.94)}"

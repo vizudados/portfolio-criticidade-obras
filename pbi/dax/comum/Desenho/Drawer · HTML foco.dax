@@ -1,0 +1,19 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: Nota sob o seletor de obra em foco: sem escolha, vale a mais crítica do mês.
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 1 · Leituras
+VAR _escolhida = [Recorte · obra em foco escolhida]
+VAR _foco = [Nota · obra em foco]
+-- 2 · Textos
+VAR _txt =
+    IF (
+        _escolhida = 1,
+        "Obra escolhida: " & _foco & ".",
+        "Sem escolha, vale a obra mais crítica do mês (a que mais perde pontos na nota): " & _foco & "."
+    )
+-- 4 · Marcação
+RETURN
+    "<div class='u dw'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _txt, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "</div>"

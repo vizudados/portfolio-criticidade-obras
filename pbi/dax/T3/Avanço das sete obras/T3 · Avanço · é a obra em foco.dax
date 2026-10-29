@@ -1,0 +1,11 @@
+/*
+@pasta: T3 Avanço físico\Avanço das sete obras\Contas
+@formato: 0
+@descricao: 1 na linha da obra em foco (a escolhida no drawer ou a que mais perde pontos na nota, sem o filtro da própria linha); 0 nas outras.
+@oraculo: obras[0].obra (REDINHA)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obra = SELECTEDVALUE ( dObra[Obra] )
+VAR _foco = CALCULATE ( [Nota · obra em foco], REMOVEFILTERS ( dObra[Obra] ) )
+RETURN
+    IF ( _obra = _foco, 1, 0 )

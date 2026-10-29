@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: Meses da janela da taxa de frequência. Do dicionário NOTA. Constante.
+@oraculo: dicionário NOTA
+@gerado: pbi/scripts/contas_base.py
+*/
+12

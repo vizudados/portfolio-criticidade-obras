@@ -1,0 +1,11 @@
+/*
+@pasta: T1 Visão geral\Tooltips\Contas
+@formato: 0
+@descricao: Obras com aba no mês de referência que não cabem na lista do tooltip do item da nota: vazio com até 8 obras (todas aparecem); com mais, as que passam das 7 mostradas (o N da linha 'e mais N obras').
+@oraculo: vazio com até 8 obras
+@gerado: pbi/scripts/tooltips_t1.py
+*/
+VAR _n =
+    [Obras com análise · ref] + 0
+RETURN
+    IF ( _n > 8, _n - 7 )

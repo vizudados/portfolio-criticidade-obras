@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Mês
+@formato: texto
+@descricao: Nome do mês de referência, minúsculo (junho), para as frases das leituras.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    FORMAT ( _mes, "mmmm", "pt-BR" )

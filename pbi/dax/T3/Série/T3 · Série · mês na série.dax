@@ -1,0 +1,10 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: 0
+@descricao: 1 quando o mês do eixo está na janela (do primeiro mês da janela à referência) e a obra do contexto tem aba nele; vazio fora da série (L044).
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _mes = MAX ( dMes[Mes] )
+VAR _tem = NOT ISBLANK ( [Físico · executado acumulado] )
+RETURN
+    IF ( _mes >= [Série · primeiro mês] && _mes <= [Mês de referência] && _tem, 1 )

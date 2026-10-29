@@ -1,0 +1,9 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: texto
+@descricao: [T3 · Mês · destaque no ritmo] da obra em foco.
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    CALCULATE ( [T3 · Mês · destaque no ritmo], dObra[Obra] = _obra )

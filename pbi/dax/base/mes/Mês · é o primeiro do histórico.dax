@@ -1,0 +1,10 @@
+/*
+@pasta: Base\Mês
+@formato: 0
+@descricao: 1 quando o mês do contexto é o primeiro mês do histórico (sem comparação com o anterior); 0 nos outros.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = MAX ( dMes[Mes] )
+VAR _ini = CALCULATE ( MIN ( dMes[Mes] ), REMOVEFILTERS ( dMes ) )
+RETURN
+    IF ( _mes = _ini, 1, 0 )

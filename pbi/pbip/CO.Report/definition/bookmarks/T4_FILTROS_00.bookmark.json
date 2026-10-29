@@ -1,0 +1,110 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T4_FILTROS_00",
+  "displayName": "T4 · filtros fechados",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T4_Drw_Estado",
+      "T4_Drw_Fechar",
+      "T4_Drw_Fora",
+      "T4_Drw_Fundo",
+      "T4_Drw_Janela",
+      "T4_Drw_JanelaNota",
+      "T4_Drw_Limpar",
+      "T4_Drw_Mes",
+      "T4_Drw_Obras",
+      "T4_Drw_Recorte",
+      "T4_Drw_Status"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T4",
+    "sections": {
+      "T4": {
+        "visualContainers": {
+          "T4_Drw_Estado": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Drw_Fechar": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Drw_Fora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Drw_Fundo": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Drw_Janela": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Drw_JanelaNota": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Drw_Limpar": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Drw_Mes": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Drw_Obras": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Drw_Recorte": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Drw_Status": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Canteiro
+@formato: 0
+@descricao: Serviços verificados no mês (FVS) (base complementar).
+@gerado: pbi/scripts/contas_base.py
+*/
+SUM ( fBaseObra[ServicosVerificados] )

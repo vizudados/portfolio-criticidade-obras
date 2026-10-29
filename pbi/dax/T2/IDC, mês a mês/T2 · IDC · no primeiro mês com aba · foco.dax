@@ -1,0 +1,9 @@
+/*
+@pasta: T2 Análise crítica\IDC, mês a mês\Contas
+@formato: 0.00
+@descricao: IDC da obra em foco no primeiro mês da janela em que ela tem aba.
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _ini = [T2 · Leitura · primeiro mês com aba · foco]
+RETURN
+    CALCULATE ( [IDC · foco no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _ini )

@@ -1,0 +1,11 @@
+/*
+@pasta: T5 Canteiro\Leituras\Contas
+@formato: texto
+@descricao: Obras com [Canteiro · entregas no prazo] no mês de referência abaixo do ponto cheio da nota, da menor para a maior. Ex. set/26: POTENGI|REDINHA|JANGADA.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26
+@gerado: pbi/scripts/contas_t5.py
+*/
+CONCATENATEX (
+    FILTER ( VALUES ( dObra[Obra] ), VAR _x = [Canteiro · entregas no prazo · ref] RETURN NOT ISBLANK ( _x ) && _x < [Nota · limite entregas · ponto cheio] ),
+    dObra[Obra], "|", [Canteiro · entregas no prazo · ref], ASC, dObra[Obra], ASC
+)

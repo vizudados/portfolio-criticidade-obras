@@ -1,0 +1,334 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T2_TOUR_07",
+  "displayName": "T2 · tour · passo 7 de 8 · O desembolso do mês",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T2_LeiX_Forma",
+      "T2_LeiX_Itens",
+      "T2_LeiX_Mes",
+      "T2_LeiX_Nota",
+      "T2_Lei_Fora",
+      "T2_Lei_Forma",
+      "T2_Lei_Itens",
+      "T2_Lei_Mes",
+      "T2_Lei_Nota",
+      "T2_TourAnt_P01",
+      "T2_TourAnt_P02",
+      "T2_TourAnt_P03",
+      "T2_TourAnt_P04",
+      "T2_TourAnt_P05",
+      "T2_TourAnt_P06",
+      "T2_TourAnt_P07",
+      "T2_TourAnt_P08",
+      "T2_TourFecha_P01",
+      "T2_TourFecha_P02",
+      "T2_TourFecha_P03",
+      "T2_TourFecha_P04",
+      "T2_TourFecha_P05",
+      "T2_TourFecha_P06",
+      "T2_TourFecha_P07",
+      "T2_TourFecha_P08",
+      "T2_TourProx_P01",
+      "T2_TourProx_P02",
+      "T2_TourProx_P03",
+      "T2_TourProx_P04",
+      "T2_TourProx_P05",
+      "T2_TourProx_P06",
+      "T2_TourProx_P07",
+      "T2_TourProx_P08",
+      "T2_Tour_P01",
+      "T2_Tour_P02",
+      "T2_Tour_P03",
+      "T2_Tour_P04",
+      "T2_Tour_P05",
+      "T2_Tour_P06",
+      "T2_Tour_P07",
+      "T2_Tour_P08"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T2",
+    "sections": {
+      "T2": {
+        "visualContainers": {
+          "T2_LeiX_Forma": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_LeiX_Itens": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_LeiX_Mes": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_LeiX_Nota": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Lei_Fora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Lei_Forma": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Lei_Itens": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Lei_Mes": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Lei_Nota": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourAnt_P01": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourAnt_P02": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourAnt_P03": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourAnt_P04": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourAnt_P05": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourAnt_P06": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourAnt_P07": {
+            "singleVisual": {}
+          },
+          "T2_TourAnt_P08": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourFecha_P01": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourFecha_P02": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourFecha_P03": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourFecha_P04": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourFecha_P05": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourFecha_P06": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourFecha_P07": {
+            "singleVisual": {}
+          },
+          "T2_TourFecha_P08": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourProx_P01": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourProx_P02": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourProx_P03": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourProx_P04": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourProx_P05": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourProx_P06": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_TourProx_P07": {
+            "singleVisual": {}
+          },
+          "T2_TourProx_P08": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Tour_P01": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Tour_P02": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Tour_P03": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Tour_P04": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Tour_P05": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Tour_P06": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Tour_P07": {
+            "singleVisual": {}
+          },
+          "T2_Tour_P08": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

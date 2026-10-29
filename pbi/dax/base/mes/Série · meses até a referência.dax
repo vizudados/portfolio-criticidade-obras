@@ -1,0 +1,10 @@
+/*
+@pasta: Base\Mês
+@formato: 0
+@descricao: Quantos meses a série mostra: do primeiro mês da janela ao mês de referência (8 em ago/26 com janela de 12, porque o histórico começa em jan/26).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+RETURN
+    COUNTROWS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ) )

@@ -1,0 +1,8 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: texto
+@descricao: Situação da obra no cadastro (Em andamento, A iniciar, Concluída).
+@oraculo: obras[].situacao · proximas[]
+@gerado: pbi/scripts/contas_t3.py
+*/
+SELECTEDVALUE ( dObra[Situacao] )

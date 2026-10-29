@@ -1,0 +1,19 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: Pontos do plano semanal (máx. 1): PPC ≥ 80% → 1 · 70% ≤ PPC < 80% → 0,5 · 60% ≤ PPC < 70% → 0,25 · PPC < 60% → 0; vazio sem dado. Uma obra; com várias, soma.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+SUMX (
+    VALUES ( dObra[Obra] ),
+    VAR _x = [Nota · X PPC]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), SWITCH (
+            TRUE (),
+            _x >= 0.8, 1,
+            _x >= 0.7, 0.5,
+            _x >= 0.6, 0.25,
+            0
+        ) )
+)

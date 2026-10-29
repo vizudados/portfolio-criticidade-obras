@@ -1,0 +1,10 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: 0
+@descricao: [T4 · Obras com resultado negativo] no primeiro mês com aba do recorte, até o de referência.
+@oraculo: jan/26: 0
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ini = [T4 · Primeiro mês com aba]
+RETURN
+    CALCULATE ( [T4 · Obras com resultado negativo], REMOVEFILTERS ( dMes ), dMes[Mes] = _ini )

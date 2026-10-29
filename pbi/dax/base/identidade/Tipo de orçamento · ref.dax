@@ -1,0 +1,11 @@
+/*
+@pasta: Base\Obra
+@formato: texto
+@descricao: Tipo do orçamento na aba do mês de referência, curto e minúsculo (preliminar, legal, executivo).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = [Mês de referência]
+VAR _tipo =
+    CALCULATE ( SELECTEDVALUE ( fAnaliseCritica[TipoOrcamento] ), REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )
+RETURN
+    LOWER ( TRIM ( SUBSTITUTE ( SUBSTITUTE ( _tipo, "Orçamento", "" ), "orçamento", "" ) ) )

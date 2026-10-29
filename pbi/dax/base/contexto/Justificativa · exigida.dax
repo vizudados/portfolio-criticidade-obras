@@ -1,0 +1,10 @@
+/*
+@pasta: Base\Desembolso
+@formato: 0
+@descricao: 1 quando o desvio do desembolso do mês passa de ±10% (regra proposta, a validar com a Construtora); 0 senão.
+@oraculo: obras[].ultimo.justificativa_exigida
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _desvio = [Desembolso · desvio no mês]
+RETURN
+    IF ( NOT ISBLANK ( _desvio ), IF ( ABS ( _desvio ) > 0.10, 1, 0 ) )

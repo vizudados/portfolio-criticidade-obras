@@ -1,0 +1,9 @@
+/*
+@pasta: T2 Análise crítica\Cabeçalho\Contas
+@formato: texto
+@descricao: Tipo do orçamento da obra em foco (preliminar, legal, executivo).
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    CALCULATE ( [Tipo de orçamento · ref], dObra[Obra] = _obra )

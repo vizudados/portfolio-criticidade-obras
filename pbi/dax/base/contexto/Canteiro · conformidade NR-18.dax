@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Canteiro
+@formato: 0.00%
+@descricao: Itens conformes ÷ itens aplicáveis do checklist NR-18 (na carteira, soma ÷ soma); vazio sem o denominador.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _d = [Canteiro · NR-18 aplicáveis]
+RETURN
+    IF ( _d > 0, DIVIDE ( [Canteiro · NR-18 conformes], _d ) )

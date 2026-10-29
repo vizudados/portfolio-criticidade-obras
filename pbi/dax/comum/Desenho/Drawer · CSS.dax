@@ -1,0 +1,12 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: CSS dos textos do drawer de filtros (sobre a sidebar estendida, preta).
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".dw{position:fixed;inset:0;font-size:14px;line-height:19px;color:rgba(233,224,207,.75)}.dw.cx{display:flex;align-items:center;padding-left:14px;font-family:'Barlow U','Segoe UI',sa"
+    & "ns-serif;font-weight:600;font-size:15px;color:#F7F4EE}.dw .st{display:grid;grid-template-columns:1fr 1fr;column-gap:22px;row-gap:6px;margin-top:8px}.dw .st span{display:inline-flex"
+    & ";align-items:center;gap:8px;font-size:15px;line-height:19px;color:#F7F4EE;white-space:nowrap}.dw .st b{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600}.dw .st .mkm{bor"
+    & "der-color:#B8B8B8}.dw .vs{color:rgba(233,224,207,.6)}"

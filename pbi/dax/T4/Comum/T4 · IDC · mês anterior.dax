@@ -1,0 +1,10 @@
+/*
+@pasta: T4 Resultado no tempo\Comum\Contas
+@formato: 0.000
+@descricao: IDC do recorte no mês anterior ao do contexto (na carteira, soma ÷ soma).
+@oraculo: nota_previa.csv x_idc do mês anterior (por obra)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+RETURN
+    CALCULATE ( [IDC], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

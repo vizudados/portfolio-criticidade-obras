@@ -1,0 +1,26 @@
+/*
+@pasta: T3 Avanço físico\Leituras
+@formato: texto
+@descricao: CSS das leituras do "?" da Tela 03 (v2: sobre o painel, superfície offwhite reta com contorno e sombra; completa em duas colunas, condensada, detalhe do desvio, tabela das obras a iniciar, trajetória) e do guia da página (1120, duas colunas, centrado).
+@gerado: pbi/scripts/leituras_t3.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".lv{position:fixed;inset:0}.lv .pn{position:absolute;inset:0;background:#FFFFFF;border:1px solid #0B0B0C;border-radius:16px;overflow:hidden;color:#0B0B0C}.lv .sob{display:block;whi"
+    & "te-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lv .ach{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;color:#0B0B0C}.lv .exp{font-size:17px;line-height:26px;"
+    & "color:#3B3B3F}.lv .dst{background:#E9E0CF;border-radius:4px;display:grid;grid-template-columns:repeat(3,minmax(110px,auto));column-gap:16px;padding:12px 16px}.lv .dst b{display:blo"
+    & "ck;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:34px;line-height:40px;white-space:nowrap;font-variant-numeric:tabular-nums}.lv .dst span{display:block;wid"
+    & "th:0;min-width:100%;margin-top:2px;font-size:14px;line-height:19px;color:#3B3B3F}.lv .sec>.vs{margin-bottom:6px}.lv .oqe{font-size:15px;line-height:21px;color:#0B0B0C}.lv .cl{font-"
+    & "size:14px;line-height:19px;color:#0B0B0C}.pn-g{padding:20px 24px 0}.pn-g .cols{display:grid;grid-template-columns:500px 320px;column-gap:32px}.pn-g .ach{margin-top:8px;font-size:23"
+    & "px;line-height:28px}.pn-g .exp{margin-top:10px}.pn-g .dst{margin-top:14px}.pn-g .dir .sec+.sec{margin-top:14px}.pn-g .dir .sec:first-child .oqe{padding-right:48px}.lv .oq5{display:"
+    & "-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden}.lv .bp{position:relative}.lv .bp .ms{position:absolute;text-align:center;font-size:13px;line-height:16"
+    & "px;color:#3B3B3F}.lv .bp .b{position:absolute}.lv .bp .b.s0{background:#A9CDB9}.lv .bp .b.s2{background:#C43737}.lv .bp .b.z{background:#E1E1E1}.lv .bp .b.e{background:#0B0B0C}.lv "
+    & ".bp .ax{position:absolute;left:0;height:1px;background:#E1E1E1}.lv .bp .lm{position:absolute;left:0;height:0;border-top:1px dashed #3B3B3F;transform-origin:left;animation:lvLim .4s"
+    & " ease-out .1s backwards}@keyframes lvLim{from{transform:scaleX(0)}}.lv .bp .lr{position:absolute;font-size:13px;line-height:16px;color:#3B3B3F;white-space:nowrap}.ln .ai{display:gr"
+    & "id;grid-template-columns:22px 60px 1fr auto;align-items:center;height:22px;white-space:nowrap}.ln .ai .aim{display:block;width:14px;height:9px;border:1px dashed #3B3B3F}.ln .ai b{f"
+    & "ont-size:15px;line-height:21px;font-weight:600}.ln .ai .pr{font-size:14px;line-height:19px;color:#3B3B3F}.ln .ai .or{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;fo"
+    & "nt-size:16px;text-align:right}.pn-p{padding:20px 24px 0}.pn-p .sob{padding-right:52px}.pn-p .ach{margin-top:8px;font-size:21px;line-height:26px;padding-right:40px}.pn-p .exp{margin"
+    & "-top:10px}.pn-p .dst{margin-top:14px}.pn-p .sec{margin-top:14px}.av .tj{display:grid;grid-template-columns:18px 86px 1fr;align-items:center;height:22px;white-space:nowrap;animation"
+    & ":lvTj .3s ease-out backwards}.av .tj b{font-size:15px;line-height:21px;font-weight:600}.av .tj span{font-size:14px;line-height:17px;padding:2px 0;color:#3B3B3F;white-space:normal}."
+    & "av .tj{height:auto;min-height:22px}.av .tj.sp span{color:#6B6B70}@keyframes lvTj{from{opacity:0}}@media (prefers-reduced-motion:reduce){.lv .bp .lm,.av .tj{animation:none}}.lv svg."
+    & "x{position:absolute;right:11px;top:7px;width:26px;height:26px;display:block;z-index:5}"

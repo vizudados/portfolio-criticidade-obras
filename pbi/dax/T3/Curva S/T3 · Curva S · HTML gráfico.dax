@@ -1,0 +1,261 @@
+/*
+@pasta: T3 Avanço físico\Curva S
+@formato: texto
+@descricao: Curva S da obra em foco (Figma 289:7413) na janela escolhida (1 a 12 meses): previsto acumulado (tracejado, só nos meses que o trazem) e executado acumulado (sólido) nos meses com aba (L044), x pela posição na janela; a área do executado abaixo do previsto (só quando todos os meses trazem o previsto), a grade em % do orçamento com escala pelo maior valor, todos os meses da janela no eixo (sem aba a 50%), os rótulos finais (contam) e a chave do desvio. Obra sem previsto na planilha: só o executado, sem área, rótulo do previsto nem chave. Sem granularidade: o tooltip do mês vem do visual de cima (T3 · Curva S · HTML mês).
+@gerado: pbi/scripts/desenho_t3.py
+*/
+-- 1 · Leituras
+VAR _ref = [Mês de referência]
+VAR _n = [Série · meses até a referência]
+VAR _meses =
+    ADDCOLUMNS (
+        VALUES ( dMes[Mes] ),
+        "@ate", [Série · mês até a referência],
+        "@pj", [Série · posição na janela],
+        "@na", [T3 · Série · mês na série · foco no mês],
+        "@p", [Físico · previsto acumulado · foco no mês],
+        "@e", [Físico · executado acumulado · foco no mês],
+        "@rot", [Mês · rótulo curto]
+    )
+VAR _janela = FILTER ( _meses, [@ate] = 1 ) /* lista */
+VAR _serie = FILTER ( _janela, [@na] = 1 ) /* lista */
+VAR _pRef = [Físico · previsto acumulado · foco]
+VAR _eRef = [Físico · executado acumulado · foco]
+VAR _dRef = [Físico · desvio acumulado p.p. · foco]
+-- 2 · Textos
+VAR _tprN = FORMAT ( ABS ( _pRef ) * 100, "0.0", "pt-BR" )
+VAR _tprS = IF ( ROUND ( _pRef * 100, 1 ) < 0, "−", "" )
+VAR _tprTxt = IF ( ISBLANK ( _pRef ), "—", _tprS & _tprN & "%" )
+VAR _terN = FORMAT ( ABS ( _eRef ) * 100, "0.0", "pt-BR" )
+VAR _terS = IF ( ROUND ( _eRef * 100, 1 ) < 0, "−", "" )
+VAR _terTxt = IF ( ISBLANK ( _eRef ), "—", _terS & _terN & "%" )
+VAR _tdrN = FORMAT ( ABS ( _dRef ), "0.0", "pt-BR" )
+VAR _tdrS = SWITCH ( TRUE (), ROUND ( _dRef, 1 ) < 0, "−", ROUND ( _dRef, 1 ) > 0, "+", "" )
+VAR _tdrTxt = IF ( ISBLANK ( _dRef ), "—", _tdrS & _tdrN & " p.p." )
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _tprKP = LEN ( _tprN ) > 0
+VAR _tprKN = IF ( _tprKP, _tprN )
+VAR _tprKS = SUBSTITUTE ( SUBSTITUTE ( _tprKN, ".", "" ), ",", "" )
+VAR _tprKT = IFERROR ( VALUE ( _tprKS ), -1 )
+VAR _tprKOk = _tprKP && _tprKT >= 2 && FORMAT ( _tprKT, REPT ( "0", LEN ( _tprKS ) ) ) = _tprKS
+VAR _tprKD = IF ( CONTAINSSTRING ( _tprKN, "," ), LEN ( _tprKN ) - SEARCH ( ",", _tprKN ), 0 )
+VAR _tprKM = IF ( CONTAINSSTRING ( _tprKN, "." ), "#,##0", "0" ) & IF ( _tprKD > 0, "." & REPT ( "0", _tprKD ) )
+VAR _tprKOd =
+    IF (
+        _tprKOk,
+        "<o-d><o-v>" & _tprKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tprKN, FORMAT ( ROUND ( _tprKT * [@odf] / 1000, 0 ) / POWER ( 10, _tprKD ), _tprKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tprN
+    )
+VAR _tprOd = IF ( ISBLANK ( _pRef ), _tprTxt, _tprS & _tprKOd & "%" )
+VAR _terKP = LEN ( _terN ) > 0
+VAR _terKN = IF ( _terKP, _terN )
+VAR _terKS = SUBSTITUTE ( SUBSTITUTE ( _terKN, ".", "" ), ",", "" )
+VAR _terKT = IFERROR ( VALUE ( _terKS ), -1 )
+VAR _terKOk = _terKP && _terKT >= 2 && FORMAT ( _terKT, REPT ( "0", LEN ( _terKS ) ) ) = _terKS
+VAR _terKD = IF ( CONTAINSSTRING ( _terKN, "," ), LEN ( _terKN ) - SEARCH ( ",", _terKN ), 0 )
+VAR _terKM = IF ( CONTAINSSTRING ( _terKN, "." ), "#,##0", "0" ) & IF ( _terKD > 0, "." & REPT ( "0", _terKD ) )
+VAR _terKOd =
+    IF (
+        _terKOk,
+        "<o-d><o-v>" & _terKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _terKN, FORMAT ( ROUND ( _terKT * [@odf] / 1000, 0 ) / POWER ( 10, _terKD ), _terKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _terN
+    )
+VAR _terOd = IF ( ISBLANK ( _eRef ), _terTxt, _terS & _terKOd & "%" )
+VAR _tdrKP = LEN ( _tdrN ) > 0
+VAR _tdrKN = IF ( _tdrKP, _tdrN )
+VAR _tdrKS = SUBSTITUTE ( SUBSTITUTE ( _tdrKN, ".", "" ), ",", "" )
+VAR _tdrKT = IFERROR ( VALUE ( _tdrKS ), -1 )
+VAR _tdrKOk = _tdrKP && _tdrKT >= 2 && FORMAT ( _tdrKT, REPT ( "0", LEN ( _tdrKS ) ) ) = _tdrKS
+VAR _tdrKD = IF ( CONTAINSSTRING ( _tdrKN, "," ), LEN ( _tdrKN ) - SEARCH ( ",", _tdrKN ), 0 )
+VAR _tdrKM = IF ( CONTAINSSTRING ( _tdrKN, "." ), "#,##0", "0" ) & IF ( _tdrKD > 0, "." & REPT ( "0", _tdrKD ) )
+VAR _tdrKOd =
+    IF (
+        _tdrKOk,
+        "<o-d><o-v>" & _tdrKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tdrKN, FORMAT ( ROUND ( _tdrKT * [@odf] / 1000, 0 ) / POWER ( 10, _tdrKD ), _tdrKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tdrN
+    )
+VAR _tdrOd = IF ( ISBLANK ( _dRef ), _tdrTxt, _tdrS & _tdrKOd & " p.p." )
+-- 3 · Geometria
+VAR _passoX = IF ( _n > 1, DIVIDE ( 672, _n - 1 ), 0 ) /* geometria */
+VAR _maxV = MAXX ( _serie, MAX ( [@p], [@e] ) ) /* geometria */
+VAR _passoY = SWITCH ( TRUE (), _maxV <= 0.4, 0.1, _maxV <= 0.8, 0.2, 0.25 ) -- geometria
+VAR _teto = MAX ( _passoY, CEILING ( _maxV / _passoY, 1 ) * _passoY ) -- geometria
+VAR _escY = DIVIDE ( 234.00, _teto ) /* geometria */
+VAR _pts = ADDCOLUMNS ( _serie, "@x", ROUND ( IF ( _n > 1, 64 + ( [@pj] - 1 ) * _passoX, 736 ), 0 ), "@ye", ROUND ( 262 - [@e] * _escY, 0 ) ) /* geometria */
+VAR _ptsP = ADDCOLUMNS ( FILTER ( _pts, NOT ISBLANK ( [@p] ) ), "@yp", ROUND ( 262 - [@p] * _escY, 0 ) ) /* geometria */
+VAR _nObra = COUNTROWS ( _pts ) -- geometria
+VAR _nP = COUNTROWS ( _ptsP ) + 0 -- geometria
+VAR _cheia = _nP > 0 && _nP = _nObra -- geometria
+VAR _pU = MAXX ( _pts, [@pj] ) /* geometria */
+VAR _p1 = MINX ( _pts, [@pj] ) /* geometria */
+VAR _xU = ROUND ( IF ( _n > 1, 64 + ( _pU - 1 ) * _passoX, 736 ), 0 ) -- geometria
+VAR _x1 = ROUND ( IF ( _n > 1, 64 + ( _p1 - 1 ) * _passoX, 736 ), 0 ) -- geometria
+VAR _yP = IF ( NOT ISBLANK ( _pRef ), ROUND ( 262 - _pRef * _escY, 0 ) ) -- geometria
+VAR _yE = ROUND ( 262 - _eRef * _escY, 0 ) -- geometria
+VAR _temChave = NOT ISBLANK ( _pRef ) && NOT ISBLANK ( _eRef ) -- geometria
+VAR _gap = IF ( _temChave, ABS ( _yE - _yP ), 99 ) -- geometria
+VAR _meioY = IF ( _temChave, ROUND ( ( _yP + _yE ) / 2, 0 ), _yE ) -- geometria
+VAR _yLP = IF ( _gap < 18, IF ( _yP <= _yE, _meioY - 18, _meioY ), _yP - 9 ) -- geometria
+VAR _yLE = IF ( _gap < 18, IF ( _yP <= _yE, _meioY, _meioY - 18 ), _yE - 9 ) -- geometria
+VAR _xCh = _xU - 12 -- geometria
+VAR _nLinhas = ROUND ( _teto / _passoY, 0 ) -- geometria
+-- 4 · Marcação
+VAR _dPrev =
+    CONCATENATEX (
+        _ptsP,
+        VAR _k = [@pj]
+        VAR _segue = NOT ISEMPTY ( FILTER ( _ptsP, [@pj] = _k - 1 ) ) /* geometria */
+        RETURN
+            IF ( _segue, " L", " M" ) & [@x] & "," & [@yp],
+        "",
+        [@pj], ASC
+    )
+VAR _dExec = "M" & CONCATENATEX ( _pts, [@x] & "," & [@ye], " L", [@pj], ASC )
+VAR _dExecInv = CONCATENATEX ( _pts, [@x] & "," & [@ye], " L", [@pj], DESC )
+VAR _clipSob = _dPrev & " L" & _xU & ",262 L" & _x1 & ",262 Z"
+VAR _area = "M" & _x1 & ",0 L" & _xU & ",0 L" & _dExecInv & " Z"
+VAR _grade =
+    CONCATENATEX (
+        GENERATESERIES ( 0, _nLinhas ),
+        VAR _y = ROUND ( 262 - [Value] * _passoY * _escY, 0 ) /* geometria */
+        VAR _txt = "⁅" & FORMAT ( [Value] * _passoY * 100, "0", "pt-BR" ) & "⁆" & "%"
+        RETURN
+            "<i class='a-fd' style='position:absolute;left:52px;top:" & _y & "px;width:692px;height:1px;background:"
+                & IF ( [Value] = 0, "#E1E1E1", "#EFEFEF" ) & "'></i>"
+                & "<span class='ey' style='top:" & ( _y - 8 ) & "px'>" & _txt & "</span>",
+        "",
+        [Value], ASC
+    )
+VAR _pontos =
+    CONCATENATEX (
+        _pts,
+        VAR _atraso = ROUND ( 100 + DIVIDE ( [@x] - 64, 672 ) * 900, 0 ) /* geometria */
+        RETURN
+            "<circle class='pt' cx='" & [@x] & "' cy='" & [@ye] & "' r='4.5' fill='#0B0B0C' "
+                & "style='animation-delay:" & ( _atraso + 250 ) & "ms'/>",
+        "",
+        [@pj], ASC
+    )
+VAR _pontosP =
+    CONCATENATEX (
+        _ptsP,
+        VAR _atraso = ROUND ( 100 + DIVIDE ( [@x] - 64, 672 ) * 900, 0 ) /* geometria */
+        RETURN
+            "<circle class='pt' cx='" & [@x] & "' cy='" & [@yp] & "' r='3.75' fill='#FFFFFF' stroke='#3B3B3F' "
+                & "stroke-width='1.5' style='animation-delay:" & _atraso & "ms'/>",
+        "",
+        [@pj], ASC
+    )
+VAR _eixoX =
+    CONCATENATEX (
+        _janela,
+        VAR _x = ROUND ( IF ( _n > 1, 64 + ( [@pj] - 1 ) * _passoX, 736 ), 0 ) /* geometria */
+        VAR _atraso = ROUND ( DIVIDE ( _x - 64, 672 ) * 600, 0 ) /* geometria */
+        RETURN
+            "<span class='ex a-fd" & IF ( dMes[Mes] = _ref, " ref", IF ( [@na] = 1, "", " sem" ) ) & "' style='left:"
+                & ( _x - 30 ) & "px;top:272px;animation-delay:" & _atraso & "ms'>" & [@rot] & "</span>",
+        "",
+        [@pj], ASC
+    )
+VAR _svg =
+    "<svg width='900' height='302' viewBox='0 0 900 302' aria-hidden='true'><defs>"
+        & IF ( _cheia, "<clipPath id='t3cs'><path d='" & _clipSob & "'/></clipPath>" )
+        & "<clipPath id='t3rp'><rect class='rv' x='0' y='0' width='900' height='302'/></clipPath>"
+        & "<clipPath id='t3re'><rect class='rv e' x='0' y='0' width='900' height='302'/></clipPath></defs>"
+        & IF ( _cheia, "<path class='ar' d='" & _area & "' fill='#F7E3E3' clip-path='url(#t3cs)'/>" )
+        & IF ( _nP > 0, "<path d='" & _dPrev & "' fill='none' stroke='#3B3B3F' stroke-width='2' "
+            & "stroke-linecap='round' stroke-linejoin='round' stroke-dasharray='6 5' clip-path='url(#t3rp)'/>" )
+        & "<path d='" & _dExec & "' fill='none' stroke='#0B0B0C' stroke-width='2.6' stroke-linecap='round' "
+        & "stroke-linejoin='round' clip-path='url(#t3re)'/>"
+        & IF ( _temChave && _gap >= 2, "<path class='ch' d='M" & ( _xCh + 4 ) & "," & _yP & " H" & _xCh & " V" & _yE
+            & " H" & ( _xCh + 4 ) & "' fill='none' stroke='#0B0B0C' stroke-width='1.2' stroke-linecap='round' "
+            & "stroke-linejoin='round'/>" )
+        & _pontosP & _pontos
+    & "</svg>"
+VAR _saidaHtml =
+    IF (
+        _nObra > 0,
+        "<div class='u cs'>" & _grade & _svg & _eixoX
+            & IF ( _temChave, "<span class='fp' style='left:" & ( _xU + 16 ) & "px;top:" & _yLP & "px'>" & _tprOd
+                & " previsto</span>" )
+            & "<span class='fe' style='left:" & ( _xU + 16 ) & "px;top:" & _yLE & "px'>" & _terOd & " executado</span>"
+            & IF ( _temChave, "<span class='dv" & IF ( ROUND ( _dRef, 1 ) < 0, " ng", "" ) & "' style='right:" & ( 906 - _xCh ) & "px;top:" & MAX ( 0, MIN ( _yP, _yE ) - 22 )
+                & "px'>" & _tdrOd & "</span>" )
+        & "</div>" & [Comum · JS contador],
+        "<div class='u cs'><p class='vz'>Sem aba da obra na janela: a série começa na primeira aba da planilha.</p></div>"
+    )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

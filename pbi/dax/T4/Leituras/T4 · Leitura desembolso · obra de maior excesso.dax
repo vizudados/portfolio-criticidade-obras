@@ -1,0 +1,15 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: texto
+@descricao: Obra do recorte com o maior desembolso acima do previsto, em reais, no mês de referência.
+@oraculo: max obras[].ultimo.diferenca_desembolso_rs: CAJUEIRO (496.406)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _mes = [Mês de referência]
+VAR _obras = CALCULATETABLE (
+        ADDCOLUMNS ( VALUES ( fAnaliseCritica[Obra] ), "@d", [Desembolso · diferença no mês] ),
+        REMOVEFILTERS ( dMes ),
+        dMes[Mes] = _mes
+    )
+RETURN
+    MAXX ( TOPN ( 1, FILTER ( _obras, [@d] > 0 ), [@d], DESC, fAnaliseCritica[Obra], ASC ), fAnaliseCritica[Obra] )

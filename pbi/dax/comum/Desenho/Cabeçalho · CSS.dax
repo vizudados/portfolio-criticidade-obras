@@ -1,0 +1,11 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: CSS do recorte em uso no cabeçalho.
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".cab{position:fixed;inset:0;display:flex;justify-content:flex-end;align-items:center;gap:28px;white-space:nowrap}.cab div{display:flex;align-items:center;gap:8px}.cab .r{font-famil"
+    & "y:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:12px;letter-spacing:1.2px;color:#3B3B3F}.cab .v{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:"
+    & "19px;line-height:24px;color:#0B0B0C}.cab .v.nm{display:inline-block;max-width:180px;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom}"

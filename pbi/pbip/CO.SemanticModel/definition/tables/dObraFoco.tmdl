@@ -1,0 +1,63 @@
+/// Obra em foco das telas Análise crítica e Avanço físico (seletor de escolha única, no drawer). Desconectada de propósito. A primeira linha, "Mais crítica do mês", é a escolha automática: as medidas usam a obra de maior pontuação de criticidade no mês de referência entre as obras do recorte. O seletor de escolha única marca a primeira linha quando nada está escolhido.
+table dObraFoco
+	lineageTag: 6cb3f68a-7b7c-5679-89e5-300b6e551593
+
+	/// Obra (só as que têm planilha Análise Crítica), depois da linha automática.
+	column ObraFoco
+		dataType: string
+		isKey
+		lineageTag: 4dc63e65-904c-548d-ada6-032c05feeff2
+		summarizeBy: none
+		sourceColumn: ObraFoco
+		sortByColumn: OrdemFoco
+
+		annotation SummarizationSetBy = Automatic
+
+	/// REAL ou ILUSTR. (vazio na linha automática).
+	column Selo
+		dataType: string
+		lineageTag: 6310f2b7-8574-5803-9ea4-a8e86faf6485
+		summarizeBy: none
+		sourceColumn: Selo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem no seletor: 0 = mais crítica do mês; depois, ordem alfabética.
+	column OrdemFoco
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 55011adc-b89d-5a9f-9865-771778a774e6
+		summarizeBy: none
+		sourceColumn: OrdemFoco
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Verdadeiro só na linha "Mais crítica do mês" (não conta como filtro escolhido).
+	column Automatico
+		dataType: boolean
+		isHidden
+		lineageTag: 509bd8bf-0bb8-5124-b3e2-ecfc2ffcb7cb
+		summarizeBy: none
+		sourceColumn: Automatico
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dObraFoco = m
+		mode: import
+		source =
+				let
+				    Origem = Table.SelectRows(dObra, each [TemAnaliseCritica] = true),
+				    Colunas = Table.SelectColumns(Origem, {"Obra", "Selo"}),
+				    Renomeado = Table.RenameColumns(Colunas, {{"Obra", "ObraFoco"}}),
+				    Ordenado = Table.Sort(Renomeado, {{"ObraFoco", Order.Ascending}}),
+				    ComOrdem = Table.AddIndexColumn(Ordenado, "OrdemFoco", 1, 1, Int64.Type),
+				    Obras = Table.AddColumn(ComOrdem, "Automatico", each false, type logical),
+				    Automatica = #table(type table [ObraFoco = text, Selo = text, OrdemFoco = Int64.Type, Automatico = logical],
+				        {{"Mais crítica do mês", null, 0, true}}),
+				    Tabela = Table.Combine({Automatica, Obras})
+				in
+				    Tabela
+
+	annotation PBI_ResultType = Table
+

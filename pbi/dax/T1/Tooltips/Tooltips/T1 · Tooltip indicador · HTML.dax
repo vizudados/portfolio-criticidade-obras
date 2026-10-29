@@ -1,0 +1,251 @@
+/*
+@pasta: T1 Visão geral\Tooltips
+@formato: texto
+@descricao: Tooltip de página da dimensão da nota (linha de 'Onde a carteira perde pontos', eixo dItemNota[Dimensao]): quanto a dimensão vale, as faixas de cada item dela (Nota · item · faixas), obra por obra da que mais perde à que menos perde, com o status da obra, o X de cada item e os pontos da dimensão de possíveis ('falta na base' sem dado), e no pé 'como ler' (no caixa, as justificativas exigidas e preenchidas na planilha). Até 8 obras, todas aparecem; de 9 em diante, as 7 primeiras e 'e mais N obras'. O pé fica preso à base do cartão.
+@gerado: pbi/scripts/tooltips_t1.py
+*/
+-- 1 · Leituras
+VAR _dim = SELECTEDVALUE ( dItemNota[Dimensao] )
+VAR _maxD = [Nota · item · máximo]
+VAR _fonte = [Nota · item · fonte]
+VAR _mesCM = [Mês de referência · curto maiúsculo]
+VAR _exig = [Carteira · justificativas exigidas · ref] + 0
+VAR _branco = [Carteira · justificativas em branco · ref] + 0
+VAR _pre = [Carteira · justificativas preenchidas · ref] + 0
+VAR _listaBranco = [Recorte · justificativas em branco (lista) · ref]
+VAR _foraRod = [Recorte · justificativas em branco fora da lista curta · ref]
+VAR _mais = [T1 · Tooltip indicador · obras fora da lista]
+VAR _itens =
+    ADDCOLUMNS (
+        VALUES ( dItemNota[Item] ),
+        "@ord", [Nota · item · ordem],
+        "@rot", [Nota · item · nome],
+        "@fx", [Nota · item · faixas]
+    )
+VAR _nItens = COUNTROWS ( _itens ) /* lista */
+VAR _obras =
+    ADDCOLUMNS (
+        VALUES ( dObra[Obra] ),
+        "@aba", [Obras com análise · ref],
+        "@pos", [T1 · Obras · posição],
+        "@st", [Nota · status · ranking · ref],
+        "@pend", [Nota · pendente · ranking · ref],
+        "@pts", [Nota · item · pontos · ref],
+        "@poss", [Nota · item · possíveis · ref],
+        "@perd", [Nota · item · perdidos · ref],
+        "@selo", [Obra · selo]
+    )
+VAR _comAba = FILTER ( _obras, [@aba] = 1 ) /* lista */
+/* passou de 8 obras: as 7 primeiras (a ordem da lista) e a linha 'e mais N obras' */
+VAR _mostra =
+    TOPN (
+        IF ( _mais > 0, 7, 8 ),
+        _comAba,
+        INT ( ISBLANK ( [@pts] ) ), ASC,
+        [@perd], DESC,
+        [@pos], ASC
+    ) /* lista */
+-- 2 · Textos
+VAR _txtFalta = IF ( _fonte = "Análise Crítica", "sem dado na planilha", "falta na base" )
+VAR _txtDir = "VALE ATÉ " & "⁅" & FORMAT ( _maxD, "0.0#", "pt-BR" ) & "⁆" & IF ( _maxD < 2, " PONTO", " PONTOS" )
+VAR _htmlFx =
+    CONCATENATEX (
+        _itens,
+        VAR _fxEsc = SUBSTITUTE ( SUBSTITUTE ( [@fx], "<", "&lt;" ), ">", "&gt;" )
+        RETURN
+            "<p class='fx'>" & IF ( _nItens > 1, "<b>" & [@rot] & ":</b> ", "" ) & "<span class='f'>"
+                & SUBSTITUTE ( _fxEsc, " · ", "</span> · <span class='f'>" ) & "</span></p>",
+        "",
+        [@ord], ASC
+    )
+VAR _htmlLinhas =
+    CONCATENATEX (
+        _mostra,
+        VAR _pts = [@pts]
+        VAR _possI = [@poss]
+        VAR _vals =
+            CONCATENATEX (
+                VALUES ( dItemNota[Item] ),
+                VAR _c = dItemNota[Item]
+                VAR _x = [Nota · item · X · ref]
+                VAR _vA = ABS ( _x )
+                VAR _vTxt =
+                    SWITCH (
+                        TRUE (),
+                        ISBLANK ( _x ), "—",
+                        _c = "custo", "IDC " & FORMAT ( _x, "0.00", "pt-BR" ),
+                        _c = "prazo", IF ( ROUND ( _x, 1 ) > 0, "atraso ", IF ( ROUND ( _x, 1 ) < 0, "adiantada ", "em dia" ) )
+                            & IF ( ROUND ( _x, 1 ) = 0, "", FORMAT ( _vA, "0.0", "pt-BR" ) & IF ( ROUND ( _vA, 1 ) <= 1, " mês", " meses" ) ),
+                        _c = "acidentes", "TF " & FORMAT ( _x, "0.0", "pt-BR" ),
+                        _c = "analise", FORMAT ( _x, "0" ) & " de 3",
+                        FORMAT ( TRUNC ( _vA * 100, 1 ), "0.0", "pt-BR" ) & "%"
+                    )
+                VAR _vNg = IF ( ( _c = "custo" && _x < 1 ) || ( _c = "prazo" && ROUND ( _x, 1 ) > 0 ), " ng", "" )
+                RETURN
+                    "<span class='" & TRIM ( _vNg ) & "'>" & "⁅" & _vTxt & "⁆" & "</span>",
+                " · ",
+                [Nota · item · ordem], ASC
+            )
+        VAR _kTxt = IF ( ISBLANK ( _pts ), "falta na base", FORMAT ( _pts, "0.0#", "pt-BR" ) & " de " & FORMAT ( _possI, "0.0#", "pt-BR" ) )
+        VAR _kCls = SWITCH ( TRUE (), ISBLANK ( _pts ), "f", _pts >= _possI, "c", _pts = 0, "z", "p" )
+        VAR _kHtml = "<span class='chi chi-" & _kCls & "'>" & _kTxt & "</span>"
+        VAR _clsK = SWITCH ( TRUE (), ISBLANK ( _pts ), "f", _pts >= _possI, "c", _pts = 0, "z", "p" )
+        VAR _chip = "<span class='chi chi-" & _clsK & "'>" & IF ( ISBLANK ( _pts ), _txtFalta, "⁅" & _kTxt & "⁆" ) & "</span>"
+        VAR _mk = IF ( IF ( [@pend] = 1, "m", IF ( ISBLANK ( [@st] ), "", [@st] & "" ) ) = "", "", "<i class='mk mk" & IF ( [@pend] = 1, "m", IF ( ISBLANK ( [@st] ), "", [@st] & "" ) ) & "'></i>" )
+        VAR _seloH = "<span class='selo " & IF ( [@selo] = "REAL", "selo-r", "selo-i" ) & "'>" & [@selo] & "</span>"
+        RETURN
+            "<div class='lin'><span class='n'>" & _mk & dObra[Obra] & _seloH & "</span>"
+                & "<span class='v'>" & _vals & "</span><span class='d'></span>"
+                & "<span class='p'>" & _chip & "</span></div>",
+        "",
+        INT ( ISBLANK ( [@pts] ) ), ASC,
+        [@perd], DESC,
+        [@pos], ASC
+    )
+VAR _htmlMais = IF ( _mais > 0, "<i class='vz'>e mais " & "⁅" & FORMAT ( _mais, "0" ) & "⁆" & " obras</i>" )
+VAR _nLin = COUNTROWS ( _mostra ) + IF ( _mais > 0, 1, 0 ) /* lista */
+/* rodapé do caixa (520 px): 'P de E preenchidas · ' (~9 px por algarismo + 120) e o trecho dos nomes, com 2 px de folga; o ±10% (regra da Análise Crítica) fica no versalete da direita */
+VAR _pxRod = ROUND ( ( 398 - 9 * LEN ( _pre & _exig ) ) * 13 / 15, 0 ) -- geometria
+/* nomes em branco numa linha só, sem cortar nome: todos; senão os 2 primeiros e 'e mais M'; senão nenhum (justificativas_rodape.py) */
+VAR _nbN = IF ( ISBLANK ( _listaBranco ) || _listaBranco = "", 0, PATHLENGTH ( _listaBranco ) )
+VAR _nbPos = IF ( _nbN >= 2, FIND ( "§", SUBSTITUTE ( _listaBranco, "|", "§", _nbN - 1 ) ) )
+VAR _nbTodos =
+    IF (
+        _nbN <= 1,
+        _listaBranco,
+        SUBSTITUTE ( LEFT ( _listaBranco, _nbPos - 1 ), "|", ", " ) & " e " & MID ( _listaBranco, _nbPos + 1, 999 )
+    )
+VAR _nbCorte = FIND ( "§", SUBSTITUTE ( _listaBranco & "|", "|", "§", 2 ), 1, LEN ( _listaBranco ) + 1 )
+VAR _nbPrimeiros = LEFT ( _listaBranco, _nbCorte - 1 )
+VAR _nbResto = IF ( _foraRod = _pre, IF ( _foraRod = 1, " e outra", " e outras" ), " e mais " & _foraRod )
+VAR _nbSemTodos = SUBSTITUTE ( _listaBranco, "|", "" )
+VAR _nbSemPrimeiros = SUBSTITUTE ( _nbPrimeiros, "|", "" )
+VAR _nbPxNomesTodosCar = GENERATESERIES ( 1, LEN ( _nbSemTodos ) + 0 )
+VAR _nbPxNomesTodos =
+    SUMX ( _nbPxNomesTodosCar, /* lista */ -- geometria
+        SWITCH (
+            MID ( _nbSemTodos, [Value], 1 ),
+            " ", 3.6, "A", 8.4, "B", 7.5, "C", 7.8, "D", 9.2, "E", 6.6, "F", 6.4, "G", 9.0, "H", 9.3, "I", 3.5,
+            "J", 4.2, "K", 7.6, "L", 6.2, "M", 11.7, "N", 9.8, "O", 9.8, "P", 7.3, "Q", 9.8, "R", 7.8, "S", 7.0,
+            "T", 7.1, "U", 9.0, "V", 8.1, "W", 12.2, "X", 7.7, "Y", 7.2, "Z", 7.5, "Á", 8.4, "Ã", 8.4, "Â", 8.4,
+            "À", 8.4, "É", 6.6, "Ê", 6.6, "Í", 3.5, "Ó", 9.8, "Õ", 9.8, "Ô", 9.8, "Ú", 9.0, "Ç", 7.8,
+            8
+        )
+    )
+VAR _nbPxNomesPrimeirosCar = GENERATESERIES ( 1, LEN ( _nbSemPrimeiros ) + 0 )
+VAR _nbPxNomesPrimeiros =
+    SUMX ( _nbPxNomesPrimeirosCar, /* lista */ -- geometria
+        SWITCH (
+            MID ( _nbSemPrimeiros, [Value], 1 ),
+            " ", 3.6, "A", 8.4, "B", 7.5, "C", 7.8, "D", 9.2, "E", 6.6, "F", 6.4, "G", 9.0, "H", 9.3, "I", 3.5,
+            "J", 4.2, "K", 7.6, "L", 6.2, "M", 11.7, "N", 9.8, "O", 9.8, "P", 7.3, "Q", 9.8, "R", 7.8, "S", 7.0,
+            "T", 7.1, "U", 9.0, "V", 8.1, "W", 12.2, "X", 7.7, "Y", 7.2, "Z", 7.5, "Á", 8.4, "Ã", 8.4, "Â", 8.4,
+            "À", 8.4, "É", 6.6, "Ê", 6.6, "Í", 3.5, "Ó", 9.8, "Õ", 9.8, "Ô", 9.8, "Ú", 9.0, "Ç", 7.8,
+            8
+        )
+    )
+VAR _nbPxTodos = ROUND ( _nbPxNomesTodos + 7 * MAX ( _nbN - 2, 0 ) + IF ( _nbN >= 2, 14, 0 ), 0 ) -- geometria
+VAR _nbPxResto =
+    SWITCH (
+        TRUE (),
+        _foraRod <> _pre, 51 + 7 * ( LEN ( _foraRod & "" ) - 1 ), -- geometria
+        _foraRod = 1, 41,
+        50
+    )
+VAR _nbPxPrimeiros = ROUND ( _nbPxNomesPrimeiros + 7 * 1 + _nbPxResto, 0 ) -- geometria
+VAR _nbPxCabe = ROUND ( _pxRod, 0 ) - 68 -- geometria
+VAR _nbTxt =
+    SWITCH (
+        TRUE (),
+        _branco = 0, "nenhuma em branco",
+        _nbPxTodos <= _nbPxCabe, "em branco: " & _nbTodos,
+        _nbN > 2 && _nbPxPrimeiros <= _nbPxCabe,
+            "em branco: " & SUBSTITUTE ( _nbPrimeiros, "|", ", " ) & _nbResto,
+        _pre = 0, "todas em branco",
+        _branco = _pre, "as outras em branco",
+        _branco & " em branco"
+    )
+VAR _txtRod =
+    SWITCH (
+        TRUE (),
+        _dim <> "Caixa", SWITCH ( _dim, "Custo", "IDC = valor agregado ÷ custo do que já virou obra", "Prazo", "atraso pelo cronograma; PPC = tarefas da semana cumpridas", "Qualidade", "serviços aprovados na primeira inspeção ÷ verificados", "Segurança", "acidentes por milhão de horas em 12 meses; checklist NR-18", "Suprimentos", "pedidos no prazo e completos ÷ previstos no mês", "Gestão", "conta fecha, justificativa quando exigida, previsto não caiu" ),
+        _exig = 0, "nenhuma exigida: todo desembolso ficou dentro da tolerância",
+        _branco = 0, IF ( _exig = 1, "a única exigida está preenchida", "todas as " & _exig & " preenchidas" ),
+        "⁅" & _pre & "⁆" & " de " & _exig & IF ( _exig = 1, " preenchida · ", " preenchidas · " ) & _nbTxt
+    )
+VAR _htmlRotRod =
+    IF (
+        _dim = "Caixa",
+        "<div class='bh'><span class='vs'>JUSTIFICATIVA NA PLANILHA</span><span class='vs'>EXIGIDA ACIMA DE ±10%</span>"
+            & "</div>",
+        "<span class='vs'>COMO LER</span>"
+    )
+-- 4 · Marcação
+VAR _saidaHtml =
+    IF (
+        NOT ISBLANK ( _dim ),
+        "<div class='u tt'><div class='cab'><p class='vs'>ONDE A CARTEIRA PERDE PONTOS · " & _mesCM & "</p>"
+            & "<div class='tit'><b>" & _dim & "</b></div>"
+            & "<p class='vs dir'>" & _txtDir & "</p></div>"
+            & "<div class='corpo'>" & _htmlFx
+            & "<div class='bh'><span class='vs'>OBRA POR OBRA</span><span class='vs'>PONTOS</span></div>"
+            & "<div class='tab i" & " ls " & SWITCH ( TRUE (), _nLin <= 3, "e1", _nLin <= 6, "e2", _nLin <= 9, "e3", _nLin <= 12, "e4", "e5" ) & "' style='--n:" & _nLin & "'>" & _htmlLinhas & _htmlMais & "</div></div>"
+            & "<div class='pe'><div class='rg'></div>" & _htmlRotRod
+            & "<p class='rod'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _txtRod, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "</p>"
+        & "</div></div>" & [Comum · JS contador tooltip]
+    )
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

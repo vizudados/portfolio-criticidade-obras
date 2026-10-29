@@ -1,0 +1,15 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: 0
+@descricao: Obras do recorte na faixa crítica da previsão de caixa da nota (sem ponto) no mês do contexto e no anterior.
+@oraculo: ago/26 (teste)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _obras =
+    ADDCOLUMNS (
+        FILTER ( VALUES ( dObra[Obra] ), [Obras com análise] > 0 ),
+        "@s", [T4 · Desembolso · faixa do fluxo de caixa],
+        "@a", [T4 · Desembolso · status · mês anterior]
+    )
+RETURN
+    COUNTROWS ( FILTER ( _obras, [@s] = 2 && [@a] = 2 ) ) + 0

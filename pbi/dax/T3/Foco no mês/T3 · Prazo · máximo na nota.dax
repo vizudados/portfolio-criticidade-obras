@@ -1,0 +1,8 @@
+/*
+@pasta: T3 Avanço físico\Foco no mês\Contas
+@formato: 0.0#
+@descricao: Quanto o prazo (atraso em meses) vale na Nota da obra ([Nota · item · máximo] do item prazo: 2).
+@oraculo: dItemNota[Maximo] (2)
+@gerado: pbi/scripts/contas_t3.py
+*/
+CALCULATE ( [Nota · item · máximo], dItemNota[Item] = "prazo" )

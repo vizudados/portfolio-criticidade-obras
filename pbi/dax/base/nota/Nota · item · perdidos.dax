@@ -1,0 +1,10 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: Possíveis − pontos dos itens do contexto (item da linha ou dimensão).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _p = [Nota · item · possíveis]
+RETURN
+    IF ( NOT ISBLANK ( _p ), ROUND ( _p - [Nota · item · pontos], 8 ) )

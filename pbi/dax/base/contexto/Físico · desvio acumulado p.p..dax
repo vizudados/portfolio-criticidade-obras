@@ -1,0 +1,11 @@
+/*
+@pasta: Base\Físico
+@formato: +0.00;-0.00;0.00
+@descricao: Executado acumulado − previsto acumulado, em pontos percentuais (< 0 = atrasada); na carteira, ponderado pelo orçamento das obras que têm previsto. Vazio quando a aba não traz o previsto.
+@oraculo: obras[].ultimo.indicadores.desvio_fisico_pp · carteira.desvio_fisico_pp
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _linhas = FILTER ( fAnaliseCritica, NOT ISBLANK ( fAnaliseCritica[PrevAcum] ) && NOT ISBLANK ( fAnaliseCritica[ExecAcum] ) )
+VAR _orc = SUMX ( _linhas, fAnaliseCritica[Orcamento] )
+RETURN
+    IF ( _orc > 0, DIVIDE ( SUMX ( _linhas, ( fAnaliseCritica[ExecAcum] - fAnaliseCritica[PrevAcum] ) * fAnaliseCritica[Orcamento] ), _orc ) * 100 )

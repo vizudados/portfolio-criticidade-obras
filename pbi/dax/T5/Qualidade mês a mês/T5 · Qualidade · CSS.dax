@@ -1,0 +1,16 @@
+/*
+@pasta: T5 Canteiro\Qualidade mês a mês
+@formato: texto
+@descricao: CSS do gráfico de linhas de Qualidade, mês a mês.
+@gerado: pbi/scripts/desenho_t5.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".ql{position:fixed;inset:0}.ql svg{position:absolute;left:0;top:0;overflow:visible}.ql .lo{fill:none;stroke:#C9C5BD;stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}.ql "
+    & ".ld{fill:none;stroke:#3B3B3F;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}.ql .lc{fill:none;stroke:#0B0B0C;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}"
+    & ".ql .mt{stroke:#6B6B70;stroke-width:1.5;stroke-dasharray:4 3}.ql circle{fill:#0B0B0C}.ql .ey{position:absolute;left:0;width:44px;text-align:right;font-size:13px;line-height:16px;co"
+    & "lor:#6B6B70}.ql .gr{position:absolute;left:52px;width:860px;height:1px;background:#EFEFEF}.ql .ex{position:absolute;width:60px;text-align:center;font-size:13px;line-height:16px;col"
+    & "or:#3B3B3F;white-space:nowrap}.ql .ex.ref{font-weight:600;color:#0B0B0C}.ql .fl{position:absolute;font-size:14px;line-height:18px;white-space:nowrap;color:#3B3B3F}.ql .fl b{font-fa"
+    & "mily:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:16px;margin-right:6px}.ql .fl.c{color:#0B0B0C}.ql .vz{position:absolute;left:64px;top:120px;font-size:15px;color:#3B"
+    & "3B3F}@keyframes qlIn{from{stroke-dashoffset:1000}to{stroke-dashoffset:0}}.ql .lc,.ql .ld,.ql .lo{stroke-dasharray:1000;animation:qlIn 1.2s ease-out backwards}.ql .ld{animation-dela"
+    & "y:.15s}.ql .lc{animation-delay:.3s}@media (prefers-reduced-motion:reduce){.ql .lc,.ql .ld,.ql .lo{animation:none;stroke-dasharray:none}}"

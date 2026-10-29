@@ -1,0 +1,23 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: dd/mm/yyyy
+@descricao: Início mais antigo entre as obras em andamento.
+@oraculo: set/23
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obras =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@e", [Físico · executado acumulado · ref],
+            "@d", [Físico · desvio acumulado p.p. · ref],
+            "@ini", [Obra · início],
+            "@fim", [Obra · término previsto],
+            "@orc", [Orçamento · ref],
+            "@tipo", [Tipo de orçamento · ref]
+        ),
+        NOT ISBLANK ( [@e] )
+    )
+VAR _top = TOPN ( 1, FILTER ( _obras, TRUE () ), [@ini], ASC, dObra[Obra], ASC )
+RETURN
+    MAXX ( _top, [@ini] )

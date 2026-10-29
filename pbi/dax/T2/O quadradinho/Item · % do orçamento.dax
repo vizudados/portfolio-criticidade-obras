@@ -1,0 +1,8 @@
+/*
+@pasta: T2 Análise crítica\O quadradinho\Contas
+@formato: 0.00%
+@descricao: Valor do item sobre o orçamento projetado (coluna % do quadradinho).
+@oraculo: obras[].composicao[].pct_orcamento
+@gerado: pbi/scripts/contas_t2.py
+*/
+DIVIDE ( [Item · valor], [Orçamento] )

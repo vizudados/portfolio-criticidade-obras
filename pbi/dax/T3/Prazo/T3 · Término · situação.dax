@@ -1,0 +1,15 @@
+/*
+@pasta: T3 Avanço físico\Prazo\Contas
+@formato: 0
+@descricao: Onde o término projetado cai, na obra e no mês do contexto: 0 até a entrega contratual, 1 depois dela mas dentro dos 180 dias de tolerância, 2 depois da tolerância; vazio sem término projetado. Uma obra.
+@oraculo: set/26: JANGADA, POTENGI e TIROL 1; as outras 0
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _p = [Prazo · término projetado]
+VAR _e = [Prazo · entrega contratual]
+VAR _t = [Prazo · entrega com tolerância]
+RETURN
+    IF (
+        NOT ISBLANK ( _p ) && NOT ISBLANK ( _e ),
+        SWITCH ( TRUE (), _p <= _e, 0, _p <= _t, 1, 2 )
+    )

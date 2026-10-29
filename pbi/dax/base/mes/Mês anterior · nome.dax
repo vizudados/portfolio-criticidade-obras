@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Mês
+@formato: texto
+@descricao: Nome do mês anterior ao do contexto, minúsculo (maio), para as frases de comparação do tooltip do mês.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+RETURN
+    FORMAT ( _mes, "mmmm", "pt-BR" )

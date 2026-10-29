@@ -1,0 +1,22 @@
+/*
+@pasta: T3 Avanço físico\Curva S
+@formato: texto
+@descricao: Uma coluna invisível por mês da série (granularidade dMes[Mes]) sobre a Curva S: é o alvo estável do mouse que abre o tooltip do mês (L012) e mostra a linha-guia no mês. x pela posição na janela; a coluna vai da metade do caminho desde o mês anterior com aba (ou da borda, no primeiro) até a metade do caminho para o seguinte (ou a borda, na referência), então os meses vazios da janela ficam com o mês seguinte; vazio fora da série.
+@gerado: pbi/scripts/desenho_t3.py
+*/
+-- 1 · Leituras
+VAR _na = [T3 · Série · mês na série · foco no mês]
+VAR _pj = [Série · posição na janela]
+VAR _ant = [T3 · Série · posição da aba anterior · foco no mês]
+VAR _n = [Série · meses até a referência]
+-- 3 · Geometria
+VAR _passoX = IF ( _n > 1, DIVIDE ( 672, _n - 1 ), 0 ) /* geometria */
+VAR _x = ROUND ( IF ( _n > 1, 64 + ( _pj - 1 ) * _passoX, 736 ), 0 ) -- geometria
+VAR _b0 = IF ( _ant = 0, 0, ROUND ( 64 + ( _ant - 0.5 ) * _passoX, 0 ) ) -- geometria
+VAR _b1 = IF ( _pj = _n, 860, ROUND ( 64 + ( _pj - 0.5 ) * _passoX, 0 ) ) -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        _na = 1,
+        "<div class='u hm' style='width:" & ( _b1 - _b0 ) & "px'><i style='left:" & ( _x - _b0 ) & "px'></i></div>"
+    )

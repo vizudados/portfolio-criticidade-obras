@@ -1,0 +1,107 @@
+{
+  "name": "Criticidade-Obras.json",
+  "dataColors": [
+    "#0B0B0C",
+    "#3B3B3F",
+    "#E9E0CF",
+    "#8A8478",
+    "#C9BFAE",
+    "#5E5A52",
+    "#F7F4EE",
+    "#FFFFFF",
+    "#6E5D42",
+    "#B5AC9C"
+  ],
+  "good": "#E9E0CF",
+  "neutral": "#3B3B3F",
+  "bad": "#0B0B0C",
+  "maximum": "#0B0B0C",
+  "center": "#8A8478",
+  "minimum": "#F7F4EE",
+  "null": "#F1ECE3",
+  "background": "#F7F4EE",
+  "secondaryBackground": "#FFFFFF",
+  "foreground": "#0B0B0C",
+  "foregroundNeutralSecondary": "#3B3B3F",
+  "foregroundNeutralTertiary": "#5E5A52",
+  "tableAccent": "#0B0B0C",
+  "hyperlink": "#0B0B0C",
+  "visitedHyperlink": "#3B3B3F",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 33,
+      "color": "#0B0B0C"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 18,
+      "color": "#0B0B0C"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 13,
+      "color": "#0B0B0C"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 11,
+      "color": "#3B3B3F"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "visualHeader": [
+          {
+            "show": false
+          }
+        ],
+        "title": [
+          {
+            "show": false
+          }
+        ],
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F7F4EE"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F7F4EE"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    }
+  }
+}

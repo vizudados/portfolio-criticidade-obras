@@ -1,0 +1,66 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T3_FILTROS_01",
+  "displayName": "T3 · filtros abertos",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T3_Drw_Estado",
+      "T3_Drw_Fechar",
+      "T3_Drw_Foco",
+      "T3_Drw_FocoNota",
+      "T3_Drw_Fora",
+      "T3_Drw_Fundo",
+      "T3_Drw_Janela",
+      "T3_Drw_JanelaNota",
+      "T3_Drw_Limpar",
+      "T3_Drw_Mes",
+      "T3_Drw_Recorte"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T3",
+    "sections": {
+      "T3": {
+        "visualContainers": {
+          "T3_Drw_Estado": {
+            "singleVisual": {}
+          },
+          "T3_Drw_Fechar": {
+            "singleVisual": {}
+          },
+          "T3_Drw_Foco": {
+            "singleVisual": {}
+          },
+          "T3_Drw_FocoNota": {
+            "singleVisual": {}
+          },
+          "T3_Drw_Fora": {
+            "singleVisual": {}
+          },
+          "T3_Drw_Fundo": {
+            "singleVisual": {}
+          },
+          "T3_Drw_Janela": {
+            "singleVisual": {}
+          },
+          "T3_Drw_JanelaNota": {
+            "singleVisual": {}
+          },
+          "T3_Drw_Limpar": {
+            "singleVisual": {}
+          },
+          "T3_Drw_Mes": {
+            "singleVisual": {}
+          },
+          "T3_Drw_Recorte": {
+            "singleVisual": {}
+          }
+        }
+      }
+    }
+  }
+}

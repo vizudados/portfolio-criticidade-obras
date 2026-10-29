@@ -1,0 +1,14 @@
+/*
+@pasta: T1 Visão geral\Onde a carteira perde pontos\Contas
+@formato: 0.00
+@descricao: Pontos que as obras críticas no mês de referência perderam na dimensão da linha (dItemNota[Dimensao]). Somadas as quatro, dá [Nota · item · perdidos · ref].
+@oraculo: dados/_gabarito/nota_previa.csv
+@gerado: pbi/scripts/contas_t1.py
+*/
+VAR _mes = [Mês de referência]
+VAR _obras = CALCULATETABLE ( FILTER ( VALUES ( dObra[Obra] ), NOT ISEMPTY ( RELATEDTABLE ( fAnaliseCritica ) ) ), REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )
+RETURN
+    IF (
+        HASONEVALUE ( dItemNota[Dimensao] ),
+        SUMX ( _obras, IF ( [Nota · status · ranking · ref] == 2, [Nota · item · perdidos · ref] ) )
+    )

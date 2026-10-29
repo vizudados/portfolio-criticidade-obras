@@ -1,0 +1,73 @@
+/*
+@tipo: tabela-calculada
+@descricao: Ranking da nota por obra × mês (obras com aba da Análise Crítica ou com a base complementar no mês): pontos perdidos, nota para desempate (pendente = 99), status, pendente, pontos obtidos e possíveis e a trava, copiados das medidas Nota no refresh. TemAC = 1 nas linhas com aba da Análise Crítica: a obra em foco, a posição, as listas e a carteira leem só essas; as leituras · ranking leem todas. GERADA por pbi/scripts/contas_base.py; a regra fica nas medidas.
+@oculta: sim
+@coluna: Obra | texto | | Obra.
+@coluna: Mes | data | formato=dd/mm/yyyy | Mês.
+@coluna: TemAC | inteiro | formato=0 | 1 quando a obra tem aba da Análise Crítica no mês.
+@coluna: Perdidos | decimal | formato=0.00 | [Nota · pontos perdidos] da obra no mês.
+@coluna: NotaOrdem | decimal | formato=0.00 | [Nota · nota final] da obra no mês; 99 quando pendente (desempate: a pendente vai depois).
+@coluna: Status | inteiro | formato=0 | [Nota · status] (vazio quando pendente).
+@coluna: Pendente | inteiro | formato=0 | [Nota · pendente].
+@coluna: Obtidos | decimal | formato=0.00 | [Nota · pontos obtidos] da obra no mês.
+@coluna: Possiveis | decimal | formato=0.00 | [Nota · pontos possíveis] da obra no mês.
+@coluna: Trava | inteiro | formato=0 | [Nota · trava] da obra no mês.
+*/
+VAR _ac = SELECTCOLUMNS ( SUMMARIZE ( fAnaliseCritica, fAnaliseCritica[Obra], fAnaliseCritica[Mes] ),
+    "Obra", fAnaliseCritica[Obra] & "", "Mes", fAnaliseCritica[Mes] + 0 )
+VAR _base = SELECTCOLUMNS ( SUMMARIZE ( fBaseObra, fBaseObra[Obra], fBaseObra[Mes] ), "Obra", fBaseObra[Obra] & "", "Mes", fBaseObra[Mes] + 0 )
+VAR _obraMes =
+    SELECTCOLUMNS (
+        DISTINCT ( UNION ( _ac, _base ) ),
+        "Obra", [Obra],
+        "Mes", DATE ( YEAR ( [Mes] ), MONTH ( [Mes] ), 1 )
+    )
+RETURN
+    SELECTCOLUMNS (
+        _obraMes,
+        "Obra", [Obra],
+        "Mes", [Mes],
+        "TemAC",
+            VAR _o = [Obra]
+            VAR _m = [Mes]
+            RETURN
+                IF ( NOT ISEMPTY ( FILTER ( fAnaliseCritica, fAnaliseCritica[Obra] = _o && fAnaliseCritica[Mes] = _m ) ), 1, 0 ),
+        "Perdidos",
+            VAR _o = [Obra]
+            VAR _m = [Mes]
+            RETURN
+                CALCULATE ( [Nota · pontos perdidos], REMOVEFILTERS ( fAnaliseCritica ), REMOVEFILTERS ( fBaseObra ), dObra[Obra] = _o, dMes[Mes] = _m ),
+        "NotaOrdem",
+            VAR _o = [Obra]
+            VAR _m = [Mes]
+            RETURN
+                COALESCE (
+                    CALCULATE ( [Nota · nota final], REMOVEFILTERS ( fAnaliseCritica ), REMOVEFILTERS ( fBaseObra ), dObra[Obra] = _o, dMes[Mes] = _m ),
+                    99
+                ),
+        "Status",
+            VAR _o = [Obra]
+            VAR _m = [Mes]
+            RETURN
+                CALCULATE ( [Nota · status], REMOVEFILTERS ( fAnaliseCritica ), REMOVEFILTERS ( fBaseObra ), dObra[Obra] = _o, dMes[Mes] = _m ),
+        "Pendente",
+            VAR _o = [Obra]
+            VAR _m = [Mes]
+            RETURN
+                CALCULATE ( [Nota · pendente], REMOVEFILTERS ( fAnaliseCritica ), REMOVEFILTERS ( fBaseObra ), dObra[Obra] = _o, dMes[Mes] = _m ),
+        "Obtidos",
+            VAR _o = [Obra]
+            VAR _m = [Mes]
+            RETURN
+                CALCULATE ( [Nota · pontos obtidos], REMOVEFILTERS ( fAnaliseCritica ), REMOVEFILTERS ( fBaseObra ), dObra[Obra] = _o, dMes[Mes] = _m ),
+        "Possiveis",
+            VAR _o = [Obra]
+            VAR _m = [Mes]
+            RETURN
+                CALCULATE ( [Nota · pontos possíveis], REMOVEFILTERS ( fAnaliseCritica ), REMOVEFILTERS ( fBaseObra ), dObra[Obra] = _o, dMes[Mes] = _m ),
+        "Trava",
+            VAR _o = [Obra]
+            VAR _m = [Mes]
+            RETURN
+                CALCULATE ( [Nota · trava], REMOVEFILTERS ( fAnaliseCritica ), REMOVEFILTERS ( fBaseObra ), dObra[Obra] = _o, dMes[Mes] = _m )
+    )

@@ -1,0 +1,15 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: 0
+@descricao: Justificativas exigidas e preenchidas na janela, somadas pelas obras com aba no período (a grade do desembolso). Com 0, a frase diz 'nenhum excesso exigido trouxe justificativa no período'. Ex. ago/26: 6.
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _obras =
+    ADDCOLUMNS (
+        VALUES ( dObra[Obra] ),
+        "@hist", [T4 · Meses com aba],
+        "@pre", [T4 · Obra · justificativas preenchidas no período]
+    )
+VAR _naGrade = FILTER ( _obras, [@hist] > 0 )
+RETURN
+    SUMX ( _naGrade, [@pre] ) + 0

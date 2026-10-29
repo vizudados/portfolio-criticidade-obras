@@ -1,0 +1,13 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: 1 quando a obra tem os 9 itens com dado; 0 quando falta algum; vazio sem obra no contexto. Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _f = [Nota · itens faltando]
+    RETURN
+        IF ( NOT ISBLANK ( _f ), IF ( _f = 0, 1, 0 ) )
+)

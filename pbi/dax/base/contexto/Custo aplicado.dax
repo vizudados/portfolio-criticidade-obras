@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Obra
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Custo do que já virou obra (CA): desembolsado corrigido + contas a pagar + dívida da obra − pago e não aplicado − receita de personalizações.
+@oraculo: pipeline/conferir_ficticios.py (CA da prévia da nota)
+@gerado: pbi/scripts/contas_base.py
+*/
+[Desembolsado acumulado] + [Contas a pagar] + [Dívida da obra] - [Pago e não aplicado] - [Receita de personalizações]

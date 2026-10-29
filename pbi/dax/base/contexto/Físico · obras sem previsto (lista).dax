@@ -1,0 +1,17 @@
+/*
+@pasta: Base\Físico
+@formato: texto
+@descricao: Obras com executado e sem previsto acumulado na aba (ficam fora do previsto e do desvio da carteira), em ordem alfabética; vazio quando todas têm previsto.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _obras =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( fAnaliseCritica[Obra] ),
+            "@p", CALCULATE ( MAX ( fAnaliseCritica[PrevAcum] ) ),
+            "@e", CALCULATE ( MAX ( fAnaliseCritica[ExecAcum] ) )
+        ),
+        ISBLANK ( [@p] ) && NOT ISBLANK ( [@e] )
+    )
+RETURN
+    CONCATENATEX ( _obras, fAnaliseCritica[Obra], ", ", fAnaliseCritica[Obra], ASC )

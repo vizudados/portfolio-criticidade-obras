@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Obra
+@formato: texto
+@descricao: Código do empreendimento no Fluxo de Caixa (uma obra).
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( dObra[Codigo] )

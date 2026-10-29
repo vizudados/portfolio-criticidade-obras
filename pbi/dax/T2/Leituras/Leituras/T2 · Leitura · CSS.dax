@@ -1,0 +1,21 @@
+/*
+@pasta: T2 Análise crítica\Leituras
+@formato: texto
+@descricao: CSS v2 das leituras do "?" (superfície do tamanho do painel, achado, explicação, destaques, seções e a matriz dos itens da nota) e do guia da Tela 02 (1120, duas colunas). Não depende da CSS da T1.
+@gerado: pbi/scripts/leituras_t2.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".lv{position:fixed;inset:0}.lv .pn{position:absolute;inset:0;background:#FFFFFF;border:1px solid #0B0B0C;border-radius:16px;overflow:hidden;color:#0B0B0C;padding:18px 20px}.lv .pn."
+    & "q{padding:18px 24px}.lv .pn.e{padding:18px 18px}.lv .sob{display:block;padding-right:32px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lv .ach span,.lv .exp span,.lv "
+    & ".nw{white-space:nowrap}.lv .ach{margin-top:12px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:21px;line-height:26px}.lv .pn.q .ach{font-size:23px;line-heig"
+    & "ht:28px}.lv .exp{margin-top:10px;font-size:17px;line-height:26px;color:#3B3B3F}.lv .dst{margin-top:14px;background:#E9E0CF;display:grid;grid-template-columns:repeat(3,1fr);column-g"
+    & "ap:14px;padding:12px 16px}.lv .dst b{display:block;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:23px;line-height:28px;white-space:nowrap;font-variant-nume"
+    & "ric:tabular-nums}.lv .dst>div>span{display:block;margin-top:2px;font-size:14px;line-height:19px;color:#3B3B3F}.lv .sec{margin-top:14px}.lv .sec>.vs{display:block;margin-bottom:4px}"
+    & ".lv .oqe{font-size:15px;line-height:21px}.lv .mx{display:grid;align-items:center;row-gap:2px;margin-top:8px;font-size:14px;line-height:19px}.lv .mx .h{text-align:center;font-size:1"
+    & "3px;line-height:16px;white-space:nowrap;color:#3B3B3F}.lv .mx .h.ref{font-weight:600;color:#0B0B0C}.lv .mx .r{white-space:nowrap}.lv .mx .c{display:flex;justify-content:center}.lv "
+    & ".mx .ob{border-top:1px solid #E1E1E1;padding-top:5px;margin-top:4px}.lv .mx .r.ob{font-weight:600;font-size:15px;line-height:21px}.lv .mx .c .mk{animation:mxEntra .25s ease-out bac"
+    & "kwards}@keyframes mxEntra{from{opacity:0;transform:scale(.4)}}@media (prefers-reduced-motion:reduce){.lv .mx .c .mk{animation:none}}.lv .pn.e.it{padding:14px 18px}.lv .pn.e.it .ach"
+    & "{margin-top:8px}.lv .mx.c8{row-gap:0;margin-top:4px;font-size:13px;line-height:15px}.lv .mx.c8 .r.ob{font-size:14px;line-height:19px}.lv .mk.mkn{box-shadow:inset 0 0 0 1px #C9C9CC}"
+    & ".lv .mk.mkx{border:1px dashed #C43737}.lv .lg{display:flex;align-items:center;gap:5px;margin-top:6px;font-size:13px;line-height:16px;color:#3B3B3F;white-space:nowrap}.lv .lg .mk{ma"
+    & "rgin-left:8px}.lv .lg .mk:first-child{margin-left:0}.lv svg.x{position:absolute;right:11px;top:7px;width:26px;height:26px;display:block;z-index:5}"

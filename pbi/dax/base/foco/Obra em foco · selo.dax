@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Obra em foco
+@formato: texto
+@descricao: REAL ou ILUSTR. da obra em foco (critério da nota).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    LOOKUPVALUE ( dObra[Selo], dObra[Obra], _obra )

@@ -1,0 +1,16 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: dd/mm/yyyy
+@descricao: Segundo mês depois do primeiro da janela em que alguma obra entrou ou abriu em crítico na nota (vazio sem ele).
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] > _ini && dMes[Mes] <= _ref ),
+        "@n", [T1 · Leitura · obras que entraram ou abriram em crítico]
+    )
+VAR _e1 = MINX ( FILTER ( _meses, [@n] > 0 ), dMes[Mes] )
+RETURN
+    IF ( NOT ISBLANK ( _e1 ), MINX ( FILTER ( _meses, [@n] > 0 && dMes[Mes] > _e1 ), dMes[Mes] ) )

@@ -1,0 +1,8 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Orçamento da obra na cronograma, da versão do cadastro (T3 · cronograma · versão; obras a iniciar).
+@oraculo: proximas[].orcamento_crono
+@gerado: pbi/scripts/contas_t3.py
+*/
+SELECTEDVALUE ( dObra[OrcamentoCrono] )

@@ -1,0 +1,16 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: Contador dos números nos tooltips de página: cada aparição nova do balão conta de novo; passando de um ponto a outro em menos de 1,5 s, não.
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 4 · Marcação
+"<script>/*contador*/(function(){try{var d=document,W=window,R=d.documentElement,t=Date.now();var Fz=function(){try{if(d.getAnimations){d.getAnimations().forEach(function(a){try{a.f"
+    & "inish();}catch(y){}});}}catch(x){}};if(!W.__fimO){W.__fimO=1;d.addEventListener('visibilitychange',function(){if(d.visibilityState==='hidden'){Fz();}});}if(d.visibilityState==='hid"
+    & "den'){setTimeout(Fz,0);}setTimeout(Fz,2500);if(!W.__odP){W.__odP=1;W.__odC=!!(W.__odA&&t-W.__odA<600);if(!W.__odC){W.__odJ=!!(W.__odT&&t-W.__odT<1500);W.__odB=!W.__odJ?{}:(W.__odm|"
+    & "|{});W.__odA=t;}setTimeout(function(){W.__odP=0;W.__odT=Date.now();W.__odm=W.__odn||{};W.__odn=null;},0);}var m=W.__odB||{},p=W.__odm||{},n=W.__odn||(W.__odn={}),dt=t-W.__odA;if(W."
+    & "__odJ){R.classList.add('tqv');}else{R.classList.remove('tqv');}var E=d.querySelectorAll('.htmlViewerEntry');var grupos=E.length?Array.prototype.slice.call(E):[d];grupos.forEach(fun"
+    & "ction(g,ie){var L=g.querySelectorAll('o-d');Array.prototype.forEach.call(L,function(o,io){if(o.getAttribute('data-od')){return;}o.setAttribute('data-od','1');var v=o.firstChild?o.f"
+    & "irstChild.textContent:'',ch=ie+'.'+io;if(m[ch]===v){o.classList.add('oq');}else if(W.__odC&&p[ch]===v&&o.getAnimations){o.getAnimations({subtree:true}).forEach(function(a){a.curren"
+    & "tTime=dt;});}n[ch]=v;});});if(W.__odC&&d.getAnimations){d.getAnimations().forEach(function(a){if(!/^od(Conta|T|V)$/.test(a.animationName||'')){a.currentTime=dt;}});}}catch(x){}})()"
+    & ";</script>"

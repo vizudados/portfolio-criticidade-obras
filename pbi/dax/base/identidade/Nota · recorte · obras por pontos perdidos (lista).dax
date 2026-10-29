@@ -1,0 +1,16 @@
+/*
+@pasta: Base\Recorte
+@formato: texto
+@descricao: Obras com aba no mês de referência, da que mais perde pontos na nota para a que menos perde (empate: menor nota, pendente depois; depois o nome), separadas por '|'.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = [Mês de referência]
+VAR _recorte = VALUES ( dObra[Obra] )
+VAR _obras = FILTER ( dRankingNota, dRankingNota[Mes] = _mes && dRankingNota[TemAC] = 1 && dRankingNota[Obra] IN _recorte )
+RETURN
+    CONCATENATEX (
+        _obras,
+        dRankingNota[Obra], "|",
+        dRankingNota[Perdidos], DESC, dRankingNota[NotaOrdem], ASC, dRankingNota[Obra], ASC
+    )

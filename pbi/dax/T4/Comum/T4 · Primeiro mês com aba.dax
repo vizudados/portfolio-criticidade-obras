@@ -1,0 +1,11 @@
+/*
+@pasta: T4 Resultado no tempo\Comum\Contas
+@formato: dd/mm/yyyy
+@descricao: Primeiro mês da janela ([Série · primeiro mês] ao de referência) em que o recorte do contexto (carteira do drawer ou uma obra) tem aba na Análise Crítica. É o começo das comparações 'desde janeiro' das leituras.
+@oraculo: carteira.serie[0].mes (2026-01-01) · TIROL: obras[].serie[0].mes (2026-03-01)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+RETURN
+    MINX ( FILTER ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), CALCULATE ( [Obras com análise] ) > 0 ), dMes[Mes] )

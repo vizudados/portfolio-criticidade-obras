@@ -1,0 +1,11 @@
+/*
+@pasta: Base\Desembolso
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Desembolsado no mês só das obras do contexto que têm previsto no mês (regra 'sem previsto'). Na obra, igual ao desembolsado quando ela tem previsto; vazio quando não tem.
+@oraculo: jun/26 real: R$ 4,90 mi (sem os R$ 296 mil da TIROL) · ago/26: R$ 5,10 mi
+@gerado: pbi/scripts/contas_base.py
+*/
+SUMX (
+    VALUES ( fAnaliseCritica[Obra] ),
+    IF ( NOT ISBLANK ( [Desembolso · previsto no mês] ), [Desembolso · realizado no mês] )
+)

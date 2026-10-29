@@ -1,0 +1,10 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: texto
+@descricao: Nomes das obras com resultado aplicado (R$) menor que o do mês anterior, no mês do contexto, em ordem alfabética, separados por '|'.
+@oraculo: contagem no mês
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _obras = ADDCOLUMNS ( VALUES ( fAnaliseCritica[Obra] ), "@v", [T4 · Resultado aplicado · variação no mês] )
+RETURN
+    CONCATENATEX ( FILTER ( _obras, [@v] < 0 ), fAnaliseCritica[Obra], "|", fAnaliseCritica[Obra], ASC )

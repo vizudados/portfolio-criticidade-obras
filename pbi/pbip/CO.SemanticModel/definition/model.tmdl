@@ -1,0 +1,33 @@
+/// Construtora fictícia de Natal/RN · Acompanhamento de obras e análise crítica, Vizu Dados. Fonte: uma planilha Análise Crítica por obra, uma aba por mês, lida pelo Power Query (stgAbas → fAnaliseCritica, fItens; fConferencia é consulta auxiliar, não carregada), e uma base complementar por obra (stgAbasBase → fBaseObra); a cronograma (stgCrono → dObra: situação, orçamento, datas; fCurvaPrevista). Mês de referência pelo seletor dMesRef (desconectado). Gerado pelo gerador do modelo.
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: pt-BR
+	valueFilterBehavior: independent
+	dataAccessOptions
+		fastCombine
+		legacyRedirects
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["pOrigem","pPastaPlanilhas","pCadastroObras","pInicioHistorico","pPastaBases","pPastaCrono","pPrefixoCrono","fxNormaliza","fxMesDaAba","fxCaminhoOrigem","fxDadosEmbutidos","fxArquivosOrigem","fxConteudoOrigem","fxLerAba","fxArquivosPlanilhas","stgCadastro","stgAbas","fxRegrasBase","fxArquivosBases","stgAbasBase","fxArquivosCrono","stgCrono","fConferencia","fAnaliseCritica","fItens","fBaseObra","fCurvaPrevista","dObra","dMes","dMesRef","dItem","dItemNota","dObraFoco","dDegrau","dJanela"]
+
+ref table fAnaliseCritica
+ref table fItens
+ref table fBaseObra
+ref table fCurvaPrevista
+ref table dObra
+ref table dMes
+ref table dMesRef
+ref table dItem
+ref table dItemNota
+ref table dObraFoco
+ref table dDegrau
+ref table dJanela
+ref table dItemRankingNota
+ref table dRankingNota
+ref table _Medidas
+
+ref cultureInfo pt-BR
+

@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: texto
+@descricao: Nome do item da linha (Custo (IDC), Atraso em meses).
+@oraculo: dItemNota (gerada do dicionário NOTA)
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( dItemNota[Rotulo] )

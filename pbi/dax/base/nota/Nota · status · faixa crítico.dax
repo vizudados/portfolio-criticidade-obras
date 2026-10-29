@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: texto
+@descricao: Faixa da nota para o status crítico (< 6), gerada do dicionário NOTA. Constante.
+@oraculo: dicionário NOTA (status)
+@gerado: pbi/scripts/contas_base.py
+*/
+"< 6"

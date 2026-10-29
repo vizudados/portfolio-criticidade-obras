@@ -1,0 +1,242 @@
+/// Bases complementares (modelo BC 2.0): uma linha por obra × mês com algum campo preenchido (a aba que vale em stgAbasBase), de pInicioHistorico em diante, só com o VALOR CRU que foi digitado na base. Faixas, pontos e nota ficam na DAX (dicionário NOTA nas contas do painel). Texto onde se espera número chega vazio (o aviso vai para fConferencia); número fora da faixa válida chega como foi digitado e a DAX o trata como sem dado. Acidentes12m, HHT12m e DiasPerdidos12m somam os 12 meses até o da linha (inclusive os anteriores ao histórico), para as taxas de frequência e de gravidade da NBR 14280. Obra × mês sem base (ou com a aba vazia) não tem linha.
+table fBaseObra
+	lineageTag: 9e09cf39-6725-51fd-9f5c-310fac751962
+
+	/// Obra (pelo nome do arquivo da base).
+	column Obra
+		dataType: string
+		lineageTag: 0034c960-d9f4-5585-9b6f-33fae709e716
+		summarizeBy: none
+		sourceColumn: Obra
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Mês de referência (pelo nome da aba).
+	column Mes
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 7d5bf2e0-053c-5b22-8987-3e4afffbab42
+		summarizeBy: none
+		sourceColumn: Mes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Gestor da obra.
+	column Gestor
+		dataType: string
+		lineageTag: ff3f881d-ecb4-5c3c-ac5f-ba0392edc696
+		summarizeBy: none
+		sourceColumn: Gestor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// PPC do mês: pacotes concluídos ÷ planejados (fração).
+	column PPC
+		dataType: double
+		isHidden
+		formatString: 0.00%
+		lineageTag: bfeb0058-1835-514c-a444-57e0e2891e91
+		summarizeBy: none
+		sourceColumn: PPC
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Serviços verificados no mês (FVS).
+	column ServicosVerificados
+		dataType: double
+		isHidden
+		formatString: 0
+		lineageTag: 5779bca0-7123-5b45-a691-f4cff95e97fc
+		summarizeBy: none
+		sourceColumn: ServicosVerificados
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Serviços aprovados na primeira inspeção.
+	column AprovadosPrimeira
+		dataType: double
+		isHidden
+		formatString: 0
+		lineageTag: db65bee6-04e0-5849-bec1-e09ac93b15e0
+		summarizeBy: none
+		sourceColumn: AprovadosPrimeira
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Horas-homem trabalhadas no mês.
+	column HHT
+		dataType: double
+		isHidden
+		formatString: #,0
+		lineageTag: 4f847a1d-61e5-500b-af74-29d6d3b89fc0
+		summarizeBy: none
+		sourceColumn: HHT
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Acidentes com afastamento no mês.
+	column Acidentes
+		dataType: double
+		isHidden
+		formatString: 0
+		lineageTag: 64118315-13e6-5697-9dd5-5ee603494e2c
+		summarizeBy: none
+		sourceColumn: Acidentes
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Dias perdidos por acidente no mês (NBR 14280).
+	column DiasPerdidos
+		dataType: double
+		isHidden
+		formatString: 0
+		lineageTag: fc706fd3-ba61-5e02-b1b2-dddc1e538160
+		summarizeBy: none
+		sourceColumn: DiasPerdidos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Itens aplicáveis do checklist NR-18 no mês.
+	column NR18Aplicaveis
+		dataType: double
+		isHidden
+		formatString: 0
+		lineageTag: c375fb42-5844-55df-8c36-bb06d68f2726
+		summarizeBy: none
+		sourceColumn: NR18Aplicaveis
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Itens conformes do checklist NR-18 no mês.
+	column NR18Conformes
+		dataType: double
+		isHidden
+		formatString: 0
+		lineageTag: f5cd7c0b-1f3c-5307-b26c-4b50024802da
+		summarizeBy: none
+		sourceColumn: NR18Conformes
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Pedidos com entrega prevista no mês.
+	column PedidosPrevistos
+		dataType: double
+		isHidden
+		formatString: 0
+		lineageTag: 6d6954df-8091-5217-afdd-b6579bf66756
+		summarizeBy: none
+		sourceColumn: PedidosPrevistos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Pedidos entregues no prazo e completos.
+	column PedidosNoPrazo
+		dataType: double
+		isHidden
+		formatString: 0
+		lineageTag: 85c58dab-5c23-5183-b4cf-b2e3e1192244
+		summarizeBy: none
+		sourceColumn: PedidosNoPrazo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Dias impraticáveis por chuva no mês.
+	column DiasChuva
+		dataType: double
+		isHidden
+		formatString: 0
+		lineageTag: 8afca5db-971d-572e-b87c-68702964aba4
+		summarizeBy: none
+		sourceColumn: DiasChuva
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Acidentes com afastamento nos 12 meses até o mês.
+	column Acidentes12m
+		dataType: double
+		isHidden
+		formatString: 0
+		lineageTag: 8bd51a77-36fc-5a68-a3f1-06476cce8c54
+		summarizeBy: none
+		sourceColumn: Acidentes12m
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Horas-homem trabalhadas nos 12 meses até o mês.
+	column HHT12m
+		dataType: double
+		isHidden
+		formatString: #,0
+		lineageTag: 0e71224d-b939-5697-ae18-0ccaa062d20f
+		summarizeBy: none
+		sourceColumn: HHT12m
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Dias perdidos por acidente nos 12 meses até o mês.
+	column DiasPerdidos12m
+		dataType: double
+		isHidden
+		formatString: 0
+		lineageTag: 39fc1bfc-4499-5a94-ac2f-e01ee71e1b50
+		summarizeBy: none
+		sourceColumn: DiasPerdidos12m
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Arquivo da base.
+	column Arquivo
+		dataType: string
+		isHidden
+		lineageTag: 229e6af7-c52a-518f-8e98-f38592bba9b0
+		summarizeBy: none
+		sourceColumn: Arquivo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Aba da base (SET 2026).
+	column Aba
+		dataType: string
+		isHidden
+		lineageTag: ac06e20b-85d7-55ec-936b-6916983b0152
+		summarizeBy: none
+		sourceColumn: Aba
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fBaseObra = m
+		mode: import
+		source =
+				let
+				    Numericos = {"PPC", "ServicosVerificados", "AprovadosPrimeira", "HHT", "Acidentes", "DiasPerdidos", "NR18Aplicaveis",
+				        "NR18Conformes", "PedidosPrevistos", "PedidosNoPrazo", "DiasChuva"},
+				    Campos = {"Gestor"} & Numericos,
+				    // todas as abas que valem (também as anteriores ao histórico, para a janela de 12 meses dos acidentes)
+				    Todas = Table.Buffer(Table.ExpandRecordColumn(
+				        Table.SelectColumns(Table.SelectRows(stgAbasBase, each [Vale] and [Preenchida]), {"Obra", "Mes", "Valores", "Arquivo", "Aba"}),
+				        "Valores", Campos)),
+				    Soma12 = (obra as text, mes as date, campo as text) as nullable number =>
+				        let
+				            Janela = Table.SelectRows(Todas, each [Obra] = obra and [Mes] <= mes and [Mes] > Date.AddMonths(mes, -12)),
+				            Valores = List.RemoveNulls(Table.Column(Janela, campo))
+				        in
+				            if List.IsEmpty(Valores) then null else List.Sum(Valores),
+				    NoHistorico = Table.SelectRows(Todas, each [Mes] >= pInicioHistorico),
+				    ComJanela = Table.AddColumn(Table.AddColumn(Table.AddColumn(NoHistorico,
+				        "Acidentes12m", each Soma12([Obra], [Mes], "Acidentes")),
+				        "HHT12m", each Soma12([Obra], [Mes], "HHT")),
+				        "DiasPerdidos12m", each Soma12([Obra], [Mes], "DiasPerdidos")),
+				    Doze = {"Acidentes12m", "HHT12m", "DiasPerdidos12m"},
+				    Colunas = Table.SelectColumns(ComJanela, {"Obra", "Mes", "Gestor"} & Numericos & Doze & {"Arquivo", "Aba"}),
+				    Tipado = Table.TransformColumnTypes(Colunas,
+				        {{"Obra", type text}, {"Mes", type date}, {"Gestor", type text}}
+				        & List.Transform(Numericos & Doze, each {_, type number})
+				        & {{"Arquivo", type text}, {"Aba", type text}}),
+				    Ordenado = Table.Sort(Tipado, {{"Obra", Order.Ascending}, {"Mes", Order.Ascending}})
+				in
+				    Ordenado
+
+	annotation PBI_ResultType = Table
+

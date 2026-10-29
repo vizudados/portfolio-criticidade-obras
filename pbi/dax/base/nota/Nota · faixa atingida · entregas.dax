@@ -1,0 +1,18 @@
+/*
+@pasta: Base\Nota
+@formato: texto
+@descricao: Faixa das entregas de material em que o X caiu (rótulo gerado dos limites). Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _x = [Nota · X entregas]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), SWITCH (
+            TRUE (),
+            _x >= 0.9, "entregas ≥ 90%",
+            _x >= 0.8, "80% ≤ entregas < 90%",
+            "entregas < 80%"
+        ) )
+)

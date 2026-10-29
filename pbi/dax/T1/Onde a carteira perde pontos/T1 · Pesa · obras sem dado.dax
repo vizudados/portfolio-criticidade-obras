@@ -1,0 +1,15 @@
+/*
+@pasta: T1 Visão geral\Onde a carteira perde pontos\Contas
+@formato: 0
+@descricao: Obras com aba no mês de referência em que falta dado em algum item da dimensão da linha (falta na base ou sem dado na planilha; o valor fora da faixa válida também conta, porque o item fica sem pontos).
+@oraculo: dados completos: 0 em todas as dimensões
+@gerado: pbi/scripts/contas_t1.py
+*/
+VAR _mes = [Mês de referência]
+VAR _obras = CALCULATETABLE ( FILTER ( VALUES ( dObra[Obra] ), NOT ISEMPTY ( RELATEDTABLE ( fAnaliseCritica ) ) ), REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )
+VAR _max = [Nota · item · máximo]
+RETURN
+    IF (
+        HASONEVALUE ( dItemNota[Dimensao] ),
+        COUNTROWS ( FILTER ( _obras, NOT ( [Nota · item · possíveis · ref] >= _max ) ) ) + 0
+    )

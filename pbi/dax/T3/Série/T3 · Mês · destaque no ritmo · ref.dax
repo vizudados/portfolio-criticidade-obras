@@ -1,0 +1,9 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: texto
+@descricao: [T3 · Mês · destaque no ritmo] no mês de referência (obra do contexto: tooltip do avanço).
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE ( [T3 · Mês · destaque no ritmo], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

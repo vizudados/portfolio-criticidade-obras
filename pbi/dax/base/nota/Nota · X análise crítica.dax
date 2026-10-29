@@ -1,0 +1,17 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: Checagens da aba do mês que passam (de 3): a conta fecha (resultado apresentado = regra, ± R$ 1); há justificativa quando o caixa desvia mais de 10%; o previsto acumulado não caiu. Vazio sem aba. Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _conta = INT ( ABS ( SUM ( fAnaliseCritica[Resultado] ) - SUM ( fAnaliseCritica[ResultadoRegra] ) ) < 1 )
+    VAR _just = INT ( NOT ( [Justificativa · em branco] = 1 ) )
+    VAR _prev = SELECTEDVALUE ( fAnaliseCritica[PrevAcum] )
+    VAR _ant = SELECTEDVALUE ( fAnaliseCritica[PrevAcumAnterior] )
+    VAR _naoCaiu = INT ( ISBLANK ( _prev ) || ISBLANK ( _ant ) || _prev >= _ant - 0.000001 )
+    RETURN
+        IF ( NOT ISEMPTY ( fAnaliseCritica ), _conta + _just + _naoCaiu )
+)

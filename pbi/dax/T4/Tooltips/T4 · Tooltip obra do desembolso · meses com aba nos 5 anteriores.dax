@@ -1,0 +1,15 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: 0
+@descricao: Meses com aba (análise) da obra nos 5 meses antes do de referência, dentro da janela; decide se o histórico das justificativas aparece no tooltip. Ex. ago/26 (CAJUEIRO): 5.
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _meses =
+    ADDCOLUMNS (
+        VALUES ( dMes[Mes] ),
+        "@ate", [Série · mês até a referência],
+        "@tem", [Obras com análise]
+    )
+RETURN
+    COUNTROWS ( FILTER ( _meses, [@ate] = 1 && [@tem] > 0 && dMes[Mes] >= EDATE ( _ref, -5 ) && dMes[Mes] < _ref ) ) + 0

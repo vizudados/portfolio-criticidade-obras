@@ -1,0 +1,17 @@
+/*
+@pasta: T2 Análise crítica\Leituras\Contas
+@formato: 0
+@descricao: Quantos itens empatam no topo dos pontos perdidos da obra em foco no mês de referência (os primeiros da lista 'itens que perdem pontos'); vazio quando nenhum perde. A frase cita todos os empatados (auditoria da Fase 2, minor 2).
+@oraculo: bases de teste, ago/26
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _obra = [Nota · obra em foco]
+VAR _itens =
+    ADDCOLUMNS (
+        ALL ( dItemNota[Item] ),
+        "@p", ROUND ( CALCULATE ( [Nota · item · perdidos · ref], dObra[Obra] = _obra ), 8 )
+    )
+VAR _perdem = FILTER ( _itens, [@p] > 0 )
+VAR _max = MAXX ( _perdem, [@p] )
+RETURN
+    COUNTROWS ( FILTER ( _perdem, [@p] = _max ) )

@@ -1,0 +1,16 @@
+/*
+@pasta: T1 Visão geral\Tooltips\Contas
+@formato: texto
+@descricao: Obra do recorte com o maior desvio do desembolso (absoluto) no mês de referência.
+@oraculo: maior obras[].ultimo.indicadores.desvio_desembolso
+@gerado: pbi/scripts/tooltips_t1.py
+*/
+VAR _mes = [Mês de referência]
+VAR _obras =
+    CALCULATETABLE (
+        ADDCOLUMNS ( VALUES ( fAnaliseCritica[Obra] ), "@d", ABS ( [Desembolso · desvio no mês] ) ),
+        REMOVEFILTERS ( dMes ),
+        dMes[Mes] = _mes
+    )
+RETURN
+    MAXX ( TOPN ( 1, FILTER ( _obras, NOT ISBLANK ( [@d] ) ), [@d], DESC ), fAnaliseCritica[Obra] )

@@ -1,0 +1,16 @@
+/*
+@pasta: T2 Análise crítica\IDC, mês a mês
+@formato: texto
+@descricao: CSS do IDC mês a mês (uma entrada por mês da janela; colunas iguais) e do subtítulo.
+@gerado: pbi/scripts/desenho_t2.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & "#htmlContent{display:flex!important;align-items:flex-start;width:100vw;height:100vh;margin:0!important;padding:0 20px 0 0!important;box-sizing:border-box!important}.htmlViewerEntry"
+    & "{display:block!important;flex:1 1 0;min-width:0;margin:0!important;padding:0!important}.mm{position:relative;height:281px}.mm .l1{position:absolute;left:0;right:0;height:0;border-t"
+    & "op:1px solid #0B0B0C}.mm .l9{position:absolute;left:0;right:0;height:0;border-top:1px dashed #C43737}.mm .b{position:absolute;left:calc(50% - 9px);width:18px}.mm .b.q0{background:#"
+    & "A9CDB9}.mm .b.q1{background:#C9821F}.mm .b.q2{background:#C43737}.mm .v{position:absolute;left:-30px;right:-30px;text-align:center;font-family:'Barlow U','Segoe UI',sans-serif;font"
+    & "-weight:600;font-size:14px;line-height:17px;white-space:nowrap;font-variant-numeric:tabular-nums;color:#0B0B0C;text-shadow:1px 0 0 #FFF,-1px 0 0 #FFF,0 1px 0 #FFF,0 -1px 0 #FFF,1px"
+    & " 1px 0 #FFF,-1px -1px 0 #FFF,1px -1px 0 #FFF,-1px 1px 0 #FFF,0 0 3px #FFF}.mm .v.ng{color:#C43737}.mm .ms{position:absolute;left:-12px;right:-12px;top:265px;text-align:center;font-"
+    & "size:13px;line-height:16px;white-space:nowrap;color:#3B3B3F}.mm .ms.ref{font-weight:600;color:#0B0B0C}.mm .ms.sem{opacity:.35}.mm:hover .b{filter:brightness(.92)}.ms2{position:fixe"
+    & "d;inset:0;font-size:15px;line-height:20px;color:#3B3B3F;white-space:nowrap}"

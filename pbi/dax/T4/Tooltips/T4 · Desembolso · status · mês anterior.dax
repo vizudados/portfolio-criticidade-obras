@@ -1,0 +1,10 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: 0
+@descricao: Faixa da previsão de caixa da nota (0/1/2, 'T4 · Desembolso · faixa do fluxo de caixa') da obra na aba anterior ao mês do contexto.
+@oraculo: faixa do fluxo de caixa da obra no mês anterior
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+RETURN
+    CALCULATE ( [T4 · Desembolso · faixa do fluxo de caixa], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

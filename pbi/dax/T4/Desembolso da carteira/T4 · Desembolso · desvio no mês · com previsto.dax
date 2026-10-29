@@ -1,0 +1,11 @@
+/*
+@pasta: T4 Resultado no tempo\Desembolso da carteira\Contas
+@formato: 0.00%
+@descricao: Desvio do desembolso do mês sobre o previsto só com as obras que têm previsto: desembolsado dessas obras ÷ previsto − 1 (vazio sem previsto). Na obra, igual a [Desembolso · desvio no mês].
+@oraculo: jun/26 real: 4,90 ÷ 3,88 − 1 = +26% (era +34% com a TIROL) · ago/26: 0%
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _prev = [Desembolso · previsto no mês]
+VAR _real = [T4 · Desembolso · realizado com previsto no mês]
+RETURN
+    IF ( NOT ISBLANK ( _prev ) && NOT ISBLANK ( _real ), DIVIDE ( _real, _prev ) - 1 )

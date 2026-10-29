@@ -1,0 +1,11 @@
+/*
+@pasta: T4 Resultado no tempo\Comum\Contas
+@formato: 0
+@descricao: Meses da janela, até o de referência, em que o recorte do contexto tem aba (6 na carteira em jun/26; 4 na TIROL; 8 em ago/26 com a janela de 12).
+@oraculo: len(carteira.serie) · len(obras[].serie)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+RETURN
+    COUNTROWS ( FILTER ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), CALCULATE ( [Obras com análise] ) > 0 ) ) + 0

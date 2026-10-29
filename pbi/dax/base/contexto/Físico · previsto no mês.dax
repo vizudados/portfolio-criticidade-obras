@@ -1,0 +1,11 @@
+/*
+@pasta: Base\Físico
+@formato: 0.00%
+@descricao: % previsto do mês (na carteira, ponderado pelo orçamento). Obra sem previsto na aba fica fora da média.
+@oraculo: obras[].ultimo.prev_mes
+@gerado: pbi/scripts/contas_base.py
+*/
+DIVIDE (
+    SUMX ( FILTER ( fAnaliseCritica, NOT ISBLANK ( fAnaliseCritica[PrevMes] ) ), fAnaliseCritica[PrevMes] * fAnaliseCritica[Orcamento] ),
+    SUMX ( FILTER ( fAnaliseCritica, NOT ISBLANK ( fAnaliseCritica[PrevMes] ) ), fAnaliseCritica[Orcamento] )
+)

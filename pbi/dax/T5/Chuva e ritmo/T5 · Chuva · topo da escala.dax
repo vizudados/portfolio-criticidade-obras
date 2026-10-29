@@ -1,0 +1,15 @@
+/*
+@pasta: T5 Canteiro\Chuva e ritmo\Contas
+@formato: 0.00
+@descricao: Topo da escala dos dias impraticáveis por chuva (média por obra) na janela: o maior mês arredondado para cima de 2 em 2, no mínimo 10. Ex. set/26: 10 (abr/26, 9,6).
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 10
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _ini = [Série · primeiro mês]
+VAR _ref = [Mês de referência]
+VAR _mx = MAXX ( ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ),
+        "@v", [Canteiro · dias de chuva]
+    ), [@v] )
+RETURN
+    MAX ( 10, CEILING ( _mx, 2 ) )

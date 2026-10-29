@@ -1,0 +1,19 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: Obras do recorte com status críticas no mês do contexto (só as com nota; a pendente não entra). Conta as linhas de dRankingNota. Um mês no contexto; com mais de um, vazio.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dMes[Mes] ),
+    COUNTROWS (
+        FILTER (
+            dRankingNota,
+            dRankingNota[Mes] = VALUES ( dMes[Mes] )
+                && dRankingNota[TemAC] = 1
+                && dRankingNota[Obra] IN VALUES ( dObra[Obra] )
+                && dRankingNota[Status] == 2
+        )
+    )
+)

@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: IDC a partir do qual o custo vale o máximo. Do dicionário NOTA. Constante.
+@oraculo: dicionário NOTA
+@gerado: pbi/scripts/contas_base.py
+*/
+1

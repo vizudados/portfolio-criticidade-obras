@@ -1,0 +1,18 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: 0%
+@descricao: Maior desvio do desembolso de uma obra num mês, do primeiro mês da janela ao de referência.
+@oraculo: max obras[].serie[].indicadores.desvio_desembolso: +68% (JANGADA abr/26)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _pares =
+    CALCULATETABLE (
+        ADDCOLUMNS ( SUMMARIZE ( fAnaliseCritica, fAnaliseCritica[Obra], fAnaliseCritica[Mes] ), "@d", [Desembolso · desvio no mês] ),
+        REMOVEFILTERS ( dMes ),
+        dMes[Mes] >= _ini && dMes[Mes] <= _ref
+    )
+VAR _top = TOPN ( 1, FILTER ( _pares, NOT ISBLANK ( [@d] ) ), [@d], DESC, fAnaliseCritica[Mes], ASC, fAnaliseCritica[Obra], ASC )
+RETURN
+    MAXX ( _top, [@d] )

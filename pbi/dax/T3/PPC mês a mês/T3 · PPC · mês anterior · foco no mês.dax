@@ -1,0 +1,9 @@
+/*
+@pasta: T3 Avanço físico\PPC mês a mês\Contas
+@formato: 0.00%
+@descricao: PPC da obra em foco no mês anterior ao do eixo (vazio sem base nesse mês).
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _m = EDATE ( MAX ( dMes[Mes] ), -1 )
+RETURN
+    CALCULATE ( [Canteiro · PPC · foco no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _m )

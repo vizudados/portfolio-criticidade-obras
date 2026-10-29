@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Obra em foco
+@formato: 0.00%
+@descricao: [Canteiro · aprovação na 1.ª inspeção] da obra em foco (a que mais perde pontos na nota, ou a escolhida), no mês de referência.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    CALCULATE ( [Canteiro · aprovação na 1.ª inspeção · ref], dObra[Obra] = _obra )

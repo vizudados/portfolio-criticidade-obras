@@ -1,0 +1,94 @@
+/*
+@pasta: T4 Resultado no tempo\Resultado mês a mês
+@formato: texto
+@descricao: Uma coluna por mês da janela (granularidade dMes[Mes]; coluna = 1068 ÷ n): barra = resultado aplicado da carteira (preta ≥ 0, vermelha < 0) a partir do zero, barra = mín(46; 0,36 × coluna), e o traço do resultado da planilha por cima (a distância é o que falta realizar). Até 8 meses, valor do aplicado em todo mês ('−R$ 340 mil', vermelho quando negativo); de 9 a 12, só no mês de referência e nos meses do maior e do menor aplicado, compacto ('−3,65 mi'). O valor fica do lado de fora da barra (em cima no positivo, embaixo no negativo), preso na coluna. Mês de referência em semibold; mês sem aba só com o rótulo apagado; eixo 'jan/26' até 8 meses e 'jan' (ano só no primeiro mês e em janeiro) acima disso. A barra corre do zero em cascata e o valor conta.
+@gerado: pbi/scripts/desenho_t4.py
+*/
+-- 1 · Leituras
+VAR _noRecorte = [Série · mês até a referência]
+VAR _ap = [Resultado aplicado]
+VAR _pla = [Resultado da obra]
+VAR _topo = [T4 · Mês a mês · topo da escala]
+VAR _base = [T4 · Mês a mês · base da escala]
+VAR _mes = [Mês · rótulo curto]
+VAR _mesAbrev = [Mês · abreviado]
+VAR _data = [Mês · data]
+VAR _ehRef = [Série · é o mês de referência]
+VAR _pos = [Série · posição na janela]
+VAR _n = [Série · meses até a referência]
+VAR _mx = [T4 · Mês a mês · mês do maior aplicado]
+VAR _mn = [T4 · Mês a mês · mês do menor aplicado]
+-- 2 · Textos
+VAR _trA = ABS ( _ap )
+VAR _trNu = SWITCH ( TRUE (), _trA >= 99950000, FORMAT ( _trA / 1000000, "0.0", "pt-BR" ), _trA >= 999500, FORMAT ( _trA / 1000000, "0.00", "pt-BR" ), _trA >= 999.5, FORMAT ( _trA / 1000, "0", "pt-BR" ), FORMAT ( _trA, "#,0", "pt-BR" ) )
+VAR _trUn = SWITCH ( TRUE (), _trA >= 999500, " mi", _trA >= 999.5, " mil", "" )
+VAR _trN = _trNu & _trUn
+VAR _trZero = _trN = "0"
+VAR _trS = IF ( _trZero, "", IF ( _ap < 0, "−", "" ) )
+VAR _trTxt = IF ( ISBLANK ( _ap ), "—", _trS & "R$ " & _trN )
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _trKP = LEN ( _trNu ) > 0
+VAR _trKN = IF ( _trKP, _trNu )
+VAR _trKS = SUBSTITUTE ( SUBSTITUTE ( _trKN, ".", "" ), ",", "" )
+VAR _trKT = IFERROR ( VALUE ( _trKS ), -1 )
+VAR _trKOk = _trKP && _trKT >= 2 && FORMAT ( _trKT, REPT ( "0", LEN ( _trKS ) ) ) = _trKS
+VAR _trKD = IF ( CONTAINSSTRING ( _trKN, "," ), LEN ( _trKN ) - SEARCH ( ",", _trKN ), 0 )
+VAR _trKM = IF ( CONTAINSSTRING ( _trKN, "." ), "#,##0", "0" ) & IF ( _trKD > 0, "." & REPT ( "0", _trKD ) )
+VAR _trKOd =
+    IF (
+        _trKOk,
+        "<o-d><o-v>" & _trKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _trKN, FORMAT ( ROUND ( _trKT * [@odf] / 1000, 0 ) / POWER ( 10, _trKD ), _trKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _trNu
+    )
+VAR _trOd = IF ( ISBLANK ( _ap ), _trTxt, _trS & "R$ " & _trKOd & _trUn )
+VAR _denso = _n >= 9
+VAR _rot = NOT _denso || _ehRef = 1 || _data = _mx || _data = _mn
+VAR _txtR = IF ( _denso, _trS & _trKOd & _trUn, _trOd )
+VAR _txtMes = IF ( _denso, _mesAbrev & IF ( _pos = 1 || MONTH ( _data ) = 1, RIGHT ( _mes, 3 ), "" ), _mes )
+VAR _clsMes = IF ( _ehRef = 1, " ref", "" ) & IF ( ISBLANK ( _ap ), " sem", "" )
+VAR _ngR = IF ( _trS = "−", " ng", "" )
+VAR _clsBr = IF ( _ap < 0, " ng", "" )
+-- 3 · Geometria
+VAR _b = MIN ( 46, ROUND ( 0.36 * 1068 / _n, 0 ) ) -- geometria
+VAR _caixa = IF ( _denso, 56, 80 ) -- geometria
+VAR _meiaCaixa = IF ( _denso, 28, 40 ) -- geometria
+VAR _u = DIVIDE ( 226, _topo - _base ) -- geometria
+VAR _zero = 27 + ROUND ( _topo * _u, 0 ) -- geometria
+VAR _hR = IF ( _ap = 0, 0, MAX ( 2, ROUND ( ABS ( _ap ) * _u, 0 ) ) ) -- geometria
+VAR _yR = IF ( _ap >= 0, _zero - _hR, _zero + 1 ) -- geometria
+VAR _yT = _zero - ROUND ( _pla * _u, 0 ) - 1 -- geometria
+/* o rótulo fica do lado de fora da barra; se o traço da planilha cai ali, passa para o outro lado do traço */
+VAR _yRot0 = IF ( _ap >= 0, _yR - 21, _yR + _hR + 4 ) -- geometria
+VAR _bate = NOT ISBLANK ( _pla ) && _yT >= _yRot0 - 3 && _yT <= _yRot0 + 20 -- geometria
+VAR _yRot = IF ( _bate, IF ( _ap >= 0, _yT - 21, _yT + 6 ), _yRot0 ) -- geometria
+VAR _offR = _meiaCaixa -- geometria
+VAR _caixaCss = "px),calc(100% - " & _caixa & "px));width:" & _caixa & "px'>"
+VAR _atraso = ( _pos - 1 ) * 100 -- geometria
+VAR _corre = "' data-rp='top,height' data-r0-top='" & _zero & "px' data-r0-height='0px' data-rd='"
+-- 4 · Marcação
+VAR _htmlBarras =
+    IF (
+        NOT ISBLANK ( _ap ),
+        IF ( _rot, "<span class='vl b6 a-fd" & _ngR & "' style='animation-delay:" & ( _atraso + 250 ) & "ms;top:" & _yRot & "px;left:clamp(0px,calc(50% - "
+            & _offR & _caixaCss & _txtR & "</span>" )
+            & "<i class='br" & _clsBr & "' style='top:" & _yR & "px;height:" & _hR & "px;left:calc(50% - "
+            & INT ( _b / 2 ) & "px);width:" & _b & "px' data-rk='" & _mes & "|a" & _corre & _atraso & "'></i>"
+            & IF ( ISBLANK ( _pla ), "", "<i class='tq a-pop' style='animation-delay:" & ( _atraso + 600 ) & "ms;top:" & _yT & "px;left:calc(50% - " & ( INT ( _b / 2 ) + 6 )
+                & "px);width:" & ( _b + 12 ) & "px'></i>" )
+    )
+RETURN
+    IF (
+        _noRecorte = 1,
+        "<div class='u mc'><i class='rz a-fd' style='top:" & _zero & "px'></i>" & _htmlBarras
+            & "<p class='ms a-fd" & _clsMes & "' style='animation-delay:" & _atraso & "ms'>" & _txtMes & "</p>"
+        & "</div>" & [Comum · JS contador] & [Comum · JS corrida]
+    )

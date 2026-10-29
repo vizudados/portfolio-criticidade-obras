@@ -1,0 +1,17 @@
+/*
+@pasta: T3 Avanço físico\Leituras\Contas
+@formato: 0
+@descricao: Meses da série da obra do contexto, na janela, em que o desembolso passou do previsto.
+@oraculo: obras[].serie[].indicadores.desvio_desembolso > 0
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ref ),
+        "@d", VAR _m = dMes[Mes] RETURN CALCULATE ( [Desembolso · desvio no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _m ),
+        "@j", VAR _m = dMes[Mes] RETURN CALCULATE ( TRIM ( [Justificativa do desembolso] ), REMOVEFILTERS ( dMes ), dMes[Mes] = _m )
+    )
+RETURN
+    COUNTROWS ( FILTER ( _meses, [@d] > 0 ) ) + 0

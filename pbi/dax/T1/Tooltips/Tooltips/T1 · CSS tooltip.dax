@@ -1,0 +1,24 @@
+/*
+@pasta: T1 Visão geral\Tooltips
+@formato: texto
+@descricao: CSS dos tooltips de página v2 da Tela 01 (cartão offwhite de cantos retos, cabeçalho preto de 72 com a meta em flex-wrap, corpo em fluxo e pé preso à base). Candidato a substituir o [Comum · CSS tooltip] (v1, usado pelas outras telas) quando a camada comum passar para a v2.
+@gerado: pbi/scripts/tooltips_t1.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".tt{position:fixed;inset:0;display:flex;flex-direction:column;background:#FFFFFF;border:1px solid #0B0B0C;border-radius:0;overflow:hidden}.tt .cab{flex:none;display:flex;flex-wrap:"
+    & "wrap;align-items:baseline;column-gap:24px;row-gap:6px;padding:14px 20px 13px;background:#0B0B0C}.tt .cab>.vs:first-child{flex:0 0 100%;margin-bottom:-2px;color:rgba(233,224,207,.7)"
+    & "}.tt .cab .tit{display:flex;align-items:baseline;gap:8px;white-space:nowrap;min-width:0}.tt .cab .tit b{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:21px;"
+    & "line-height:26px;color:#F7F4EE}.tt .cab .tit em{font-style:normal;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:12px;line-height:15px;letter-spacing:1.2px;"
+    & "color:rgba(233,224,207,.6)}.tt .cab .tit .selo-i{border-color:rgba(233,224,207,.6);color:rgba(233,224,207,.85)}.tt .cab .tit .selo-r{background:#E9E0CF;color:#0B0B0C}.tt .cab .vs.d"
+    & "ir{margin-left:auto;line-height:16px;white-space:nowrap;color:rgba(233,224,207,.85)}.tt .corpo{flex:1;min-height:0;position:relative;margin:16px 20px 0;overflow:hidden}.tt .pe{flex"
+    & ":none;margin:0 20px 16px}.tt .pe .rg{margin:0 0 11px}.tt .bh{display:flex;justify-content:space-between;margin-bottom:8px}.tt .pe .bh{margin-bottom:0}.tt .rg{height:1px;background:"
+    & "#E1E1E1;margin:12px 0}.tt .tx{font-size:15px;line-height:21px;color:#0B0B0C}.tt .vs{display:block}.tt .tab{display:grid;grid-template-columns:max-content max-content 1fr max-conten"
+    & "t;column-gap:16px;align-items:center;white-space:nowrap}.tt .lin{display:grid;align-items:center;height:28px;white-space:nowrap}.tt .tab .lin{display:contents}.tt .tab .lin>span{di"
+    & "splay:block;height:28px;line-height:28px;min-width:0}.tt .tab .lin>.n{display:flex;align-items:center;gap:6px}.tt .lin .n{font-size:15px;font-weight:600}.tt .lin .n .mk{flex:none}."
+    & "tt .lin .v{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:16px}.tt .lin .d{font-size:14px;color:#3B3B3F;overflow:hidden;text-overflow:ellipsis}.tt .tab .lin"
+    & ">.d{display:flex;align-items:center;white-space:normal;line-height:14px}.tt .lin .p{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:16px;text-align:right}.tt"
+    & " .lin .p em{font-style:normal;color:#6B6B70;margin-left:4px}.tt .lin .p.z{color:#6B6B70}.tt .lin.est .v{color:#3B3B3F}.tt i.vz{display:block;font-style:normal;color:#6B6B70;font-si"
+    & "ze:14px;line-height:25px}.tt .tab i.vz{grid-column:1/-1;padding-left:17px;line-height:27px}.tt .rod{margin-top:4px;font-size:15px;line-height:21px;white-space:nowrap;overflow:hidde"
+    & "n;text-overflow:ellipsis}.tt .rod.r2{white-space:normal;min-height:42px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}@keyframes ttFim{from{opacity:0}}.tt .f"
+    & "im{animation:ttFim .2s ease-out backwards}@media (prefers-reduced-motion:reduce){.tt .fim{animation:none}}"

@@ -1,0 +1,10 @@
+/*
+@pasta: T5 Canteiro\Cartões\Contas
+@formato: 0
+@descricao: Obras com taxa de frequência de 12 meses acima da média do setor ([Nota · limite acidentes · setor]) no mês de referência: as que zeram o item acidentes da nota. Ex. set/26: 2 (REDINHA 11,0 e POTENGI 8,0).
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 2
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _lim = [Nota · limite acidentes · setor]
+RETURN
+    COUNTROWS ( FILTER ( VALUES ( dObra[Obra] ), [Canteiro · taxa de frequência (12 meses) · ref] > _lim ) ) + 0

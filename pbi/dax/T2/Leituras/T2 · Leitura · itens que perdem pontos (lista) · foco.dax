@@ -1,0 +1,17 @@
+/*
+@pasta: T2 Análise crítica\Leituras\Contas
+@formato: texto
+@descricao: Códigos (dItemNota) dos itens que perdem pontos na obra em foco no mês de referência, do que mais perde ao que menos perde (empate pela ordem da régua), separados por '|'; vazio quando nenhum perde. A obra em foco é lida uma vez só (cada conta · foco a recalcula).
+@oraculo: oráculo da régua antiga (pontos por item)
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _obra = [Nota · obra em foco]
+VAR _itens =
+    ADDCOLUMNS (
+        ALL ( dItemNota[Item] ),
+        "@p", CALCULATE ( [Nota · item · perdidos · ref], dObra[Obra] = _obra ),
+        "@o", [Nota · item · ordem]
+    )
+VAR _perdem = FILTER ( _itens, [@p] > 0 )
+RETURN
+    CONCATENATEX ( _perdem, dItemNota[Item], "|", [@p], DESC, [@o], ASC )

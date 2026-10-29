@@ -1,0 +1,10 @@
+/*
+@pasta: T4 Resultado no tempo\Comum\Contas
+@formato: texto
+@descricao: Limite da faixa crítica da previsão de caixa da Nota da obra, como texto ('20%'), da constante 'Nota · limite caixa · meio ponto' (acima dele, nenhum ponto). As leituras dizem 'mais de 20%, para mais ou para menos'.
+@oraculo: 20%
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _meio = [Nota · limite caixa · meio ponto]
+RETURN
+    IF ( NOT ISBLANK ( _meio ), IF ( ROUND ( _meio * 100, 2 ) = ROUND ( _meio * 100, 0 ), FORMAT ( _meio * 100, "0" ), FORMAT ( _meio * 100, "0.0#", "pt-BR" ) ) & "%" )

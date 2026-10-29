@@ -1,0 +1,16 @@
+/*
+@pasta: T3 Avanço físico\PPC mês a mês
+@formato: texto
+@descricao: CSS do PPC mês a mês (uma entrada por mês da janela; colunas iguais).
+@gerado: pbi/scripts/desenho_t3.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & "#htmlContent{display:flex!important;align-items:flex-start;width:100vw;height:100vh;margin:0!important;padding:0!important;box-sizing:border-box!important}.htmlViewerEntry{display:"
+    & "block!important;flex:1 1 0;min-width:0;margin:0!important;padding:0!important}.pm{position:relative;height:222px;transition:background .15s}.pm:hover,.htmlViewerEntry.hover .pm{bac"
+    & "kground:rgba(233,224,207,.35)}.pm .l0{position:absolute;left:0;right:0;top:190px;height:1px;background:#E1E1E1}.pm .lm{position:absolute;left:0;right:0;height:0;border-top:1px dash"
+    & "ed #0B0B0C}.pm .b{position:absolute;bottom:32px;left:calc(50% - 11px);width:22px}.pm .b.q0{background:#A9CDB9}.pm .b.q1{background:#C9821F}.pm .b.q2{background:#C43737}.pm .v{posit"
+    & "ion:absolute;left:-30px;right:-30px;text-align:center;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:14px;line-height:17px;white-space:nowrap;font-variant-n"
+    & "umeric:tabular-nums;color:#0B0B0C;text-shadow:1px 0 0 #FFF,-1px 0 0 #FFF,0 1px 0 #FFF,0 -1px 0 #FFF,1px 1px 0 #FFF,-1px -1px 0 #FFF,1px -1px 0 #FFF,-1px 1px 0 #FFF,0 0 3px #FFF}.pm"
+    & " .v.ng{color:#C43737}.pm .ms{position:absolute;left:-12px;right:-12px;top:198px;text-align:center;font-size:13px;line-height:16px;white-space:nowrap;color:#3B3B3F}.pm .ms.ref{font-"
+    & "weight:600;color:#0B0B0C}.pm .ms.sem{opacity:.35}.pm .vz{position:absolute;left:4px;top:60px;font-size:14px;line-height:19px;color:#3B3B3F;white-space:nowrap}"

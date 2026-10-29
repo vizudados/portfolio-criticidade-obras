@@ -1,0 +1,10 @@
+/*
+@pasta: T1 Visão geral\Tooltips\Contas
+@formato: 0
+@descricao: [T1 · Obra · status no mês anterior] com o mês do contexto = mês de referência.
+@oraculo: oráculo da régua antiga (mês anterior)
+@gerado: pbi/scripts/tooltips_t1.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE ( [T1 · Obra · status no mês anterior], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

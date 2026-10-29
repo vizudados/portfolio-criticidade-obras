@@ -1,0 +1,23 @@
+/*
+@pasta: T3 Avanço físico\Avanço das sete obras\Contas
+@formato: 0
+@descricao: Obras cujo atraso físico passa do limite do item prazo da nota (perdem os pontos do item). Obras com aba no mês de referência.
+@oraculo: oráculo da nota (coluna F-F = 0)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obras =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@e", [Físico · executado acumulado · ref],
+            "@d", [Físico · desvio acumulado p.p. · ref],
+            "@ini", [Obra · início],
+            "@fim", [Obra · término previsto],
+            "@orc", [Orçamento · ref],
+            "@tipo", [Tipo de orçamento · ref],
+            "@s", [T3 · Status desvio físico · ref]
+        ),
+        NOT ISBLANK ( [@e] )
+    )
+RETURN
+    COUNTROWS ( FILTER ( _obras, [@s] = 2 ) ) + 0

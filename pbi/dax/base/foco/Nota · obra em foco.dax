@@ -1,0 +1,19 @@
+/*
+@pasta: Base\Obra em foco
+@formato: texto
+@descricao: Obra escolhida no seletor de obra (dObraFoco); na linha automática (ou sem escolha), a que mais perde pontos na nota no mês de referência entre as obras do recorte (empate: menor nota, com a pendente depois das que têm nota; depois o nome). Lê o ranking guardado em dRankingNota (as mesmas medidas, calculadas no refresh): uma conta só por chamada.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (obra em foco)
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _auto = SELECTEDVALUE ( dObraFoco[Automatico], TRUE () )
+VAR _escolha = IF ( _auto, BLANK (), SELECTEDVALUE ( dObraFoco[ObraFoco] ) )
+VAR _mes = [Mês de referência]
+VAR _recorte = VALUES ( dObra[Obra] )
+VAR _obras = FILTER ( dRankingNota, dRankingNota[Mes] = _mes && dRankingNota[TemAC] = 1 && dRankingNota[Obra] IN _recorte )
+VAR _maisPerde =
+    MAXX (
+        TOPN ( 1, _obras, dRankingNota[Perdidos], DESC, dRankingNota[NotaOrdem], ASC, dRankingNota[Obra], ASC ),
+        dRankingNota[Obra]
+    )
+RETURN
+    COALESCE ( _escolha, _maisPerde )

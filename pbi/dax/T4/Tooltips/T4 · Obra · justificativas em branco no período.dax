@@ -1,0 +1,11 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: 0
+@descricao: Meses da janela, até o de referência, com a justificativa exigida e o campo da planilha vazio.
+@oraculo: obras[].serie[] exigida e sem texto (CAJUEIRO 4)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+RETURN
+    SUMX ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), [Justificativa · em branco] ) + 0

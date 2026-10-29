@@ -1,0 +1,13 @@
+/*
+@pasta: T1 Visão geral\Obras pela nota\Contas
+@formato: texto
+@descricao: Obras do recorte com item da nota de valor fora da faixa válida no mês de referência, separadas por '|', em ordem de nome; vazio sem nenhuma.
+@oraculo: pbi/qa/nota/casos_auditoria.py · bases de teste, ago/26: DUNAS (Médio Prazo e termômetros)
+@gerado: pbi/scripts/contas_t1.py
+*/
+CONCATENATEX (
+    FILTER ( VALUES ( dObra[Obra] ), [Nota · itens fora da faixa · ref] > 0 ),
+    dObra[Obra],
+    "|",
+    dObra[Obra], ASC
+)

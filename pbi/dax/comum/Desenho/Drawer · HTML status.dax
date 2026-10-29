@@ -1,0 +1,20 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: Contagem das obras do recorte por status da nota no mês de referência, com as marcas v2 (informativo: não filtra): críticas, em atenção, estáveis e pendentes (falta item; tracejado).
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 1 · Leituras
+VAR _mes = [Mês de referência · curto maiúsculo]
+VAR _c = [Nota · carteira · obras críticas · ref] + 0
+VAR _a = [Nota · carteira · obras em atenção · ref] + 0
+VAR _e = [Nota · carteira · obras estáveis · ref] + 0
+VAR _p = [Nota · carteira · obras pendentes · ref] + 0
+-- 4 · Marcação
+RETURN
+    "<div class='u dw'><p class='vs'>STATUS NA NOTA EM " & _mes & "</p><div class='st'>"
+        & "<span><i class='mk mk2'></i>Crítico <b>" & _c & "</b></span>"
+        & "<span><i class='mk mk1'></i>Atenção <b>" & _a & "</b></span>"
+        & "<span><i class='mk mk0'></i>Estável <b>" & _e & "</b></span>"
+        & "<span><i class='mk mkm'></i>Pendente <b>" & _p & "</b></span>"
+    & "</div></div>"

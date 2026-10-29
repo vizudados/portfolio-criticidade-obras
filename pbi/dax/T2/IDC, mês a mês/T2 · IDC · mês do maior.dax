@@ -1,0 +1,13 @@
+/*
+@pasta: T2 Análise crítica\IDC, mês a mês\Contas
+@formato: dd/mm/yyyy
+@descricao: Mês da janela com o maior IDC da obra em foco (empate: o mais recente); vazio sem aba.
+@oraculo: dados/_gabarito/nota_previa.csv (x_idc)
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses = FILTER ( ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), "@i", VAR _v = [IDC · foco no mês] RETURN IF ( NOT ISBLANK ( _v ), ROUND ( _v, 2 ) ) ), NOT ISBLANK ( [@i] ) )
+VAR _x = MAXX ( _meses, [@i] )
+RETURN
+    MAXX ( FILTER ( _meses, [@i] = _x ), dMes[Mes] )

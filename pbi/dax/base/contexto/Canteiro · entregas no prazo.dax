@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Canteiro
+@formato: 0.00%
+@descricao: Pedidos entregues no prazo e completos ÷ pedidos com entrega prevista (na carteira, soma ÷ soma); vazio sem o denominador.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _d = [Canteiro · pedidos previstos]
+RETURN
+    IF ( _d > 0, DIVIDE ( [Canteiro · pedidos no prazo], _d ) )

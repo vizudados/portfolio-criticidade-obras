@@ -1,0 +1,8 @@
+/*
+@pasta: T4 Resultado no tempo\Resultado mês a mês
+@formato: texto
+@descricao: Subtítulo do Resultado da carteira, mês a mês (F3): o que a barra e o traço mostram. Fundo branco por cima do subtítulo antigo da casca.
+@gerado: pbi/scripts/desenho_t4.py
+*/
+-- 4 · Marcação
+"<p class='u msb'>barra = resultado aplicado (valor agregado − custo aplicado) · traço = resultado da planilha · a distância é o que ainda vai se realizar</p>"

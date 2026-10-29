@@ -1,0 +1,8 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: 0
+@descricao: Obras do recorte com resultado aplicado negativo no mês do contexto.
+@oraculo: obras[].serie[m].resultado < 0 (jun/26: 2 · jan/26: 0)
+@gerado: pbi/scripts/contas_t4.py
+*/
+COUNTROWS ( FILTER ( VALUES ( fAnaliseCritica[Obra] ), [Resultado aplicado] < 0 ) ) + 0

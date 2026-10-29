@@ -1,0 +1,16 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: texto
+@descricao: Dimensão da nota em que mais obras perderam pontos no mês de referência (empate: mais pontos perdidos, depois a ordem da dimensão); vazio sem perda.
+@oraculo: dados/_gabarito/nota_previa.csv
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _dims =
+    ADDCOLUMNS (
+        ALL ( dItemNota[Dimensao], dItemNota[OrdemDimensao] ),
+        "@o", [Nota · item · obras que perderam pontos · ref] + 0,
+        "@p", [Nota · item · perdidos · ref] + 0
+    )
+VAR _top = TOPN ( 1, FILTER ( _dims, [@o] > 0 ), [@o], DESC, [@p], DESC, dItemNota[OrdemDimensao], ASC )
+RETURN
+    MAXX ( _top, dItemNota[Dimensao] )

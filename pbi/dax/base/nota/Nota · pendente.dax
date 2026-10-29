@@ -1,0 +1,11 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: 1 quando a obra está no contexto e falta algum item (sem nota nem status); 0 quando completa. Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    IF ( [Nota · obra presente] = 1, IF ( [Nota · completa] = 1, 0, 1 ) )
+)

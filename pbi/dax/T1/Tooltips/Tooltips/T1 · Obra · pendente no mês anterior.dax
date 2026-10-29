@@ -1,0 +1,10 @@
+/*
+@pasta: T1 Visão geral\Tooltips\Contas
+@formato: 0
+@descricao: [Nota · pendente] da obra no mês anterior ao do contexto (vazio sem aba nem base no mês anterior). Uma obra no contexto. Lê [Nota · pendente · um mês].
+@oraculo: oráculo da régua antiga (mês anterior)
+@gerado: pbi/scripts/tooltips_t1.py
+*/
+VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+RETURN
+    CALCULATE ( [Nota · pendente · um mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

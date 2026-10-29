@@ -1,0 +1,10 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: dd/mm/yyyy
+@descricao: Término previsto da primeira obra de [T3 · Linha do tempo · obras perto do fim com atraso (lista)].
+@oraculo: POTENGI jan/27
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obra = PATHITEM ( [T3 · Linha do tempo · obras perto do fim com atraso (lista)], 1 )
+RETURN
+    LOOKUPVALUE ( dObra[TerminoPrevisto], dObra[Obra], _obra )

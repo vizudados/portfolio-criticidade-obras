@@ -1,0 +1,41 @@
+/*
+@pasta: T4 Resultado no tempo\Tour
+@formato: texto
+@descricao: Passo 4 de 6 do tour da Resultado no tempo (Obras no mês): gestor (pose P3) no canto direita, balão de 560 px, ligação ao anel. Só desenha; lê a medida da pose.
+@gerado: pbi/scripts/tour_lib.py
+*/
+-- 4 · Marcação
+"<div class='u tr'>"
+    & "<div class='rc' style='left:1452px;top:265px;width:416px;height:783px'></div>"
+    & "<svg class='sv' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M1470 259H1466A20 20 0 0 0 1446 279V283M1850 259H1854A20 20 0 0 1 1874 279V283M1470 105"
+    & "4H1466A20 20 0 0 1 1446 1034V1030M1850 1054H1854A20 20 0 0 0 1874 1034V1030' fill='none' stroke='#FF"
+    & "FFFF' stroke-width='3' stroke-linecap='round'/><path d='M1333 656.5L1452 656.5' fill='none' stroke='"
+    & "#E9E0CF' stroke-width='2' stroke-dasharray='2 6' stroke-linecap='round'/><circle cx='1452' cy='656.5"
+    & "' r='3' fill='#E9E0CF' stroke='#0B0B0C' stroke-width='2'/></svg>"
+    & "<div class='nr' style='left:916px;top:744px;width:511px;height:336px'>"
+    & [Comum · Tour · Pose P3 · HTML]
+    & "</div>"
+    & "<svg class='bq' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M1233 723L1233 727Q1236.13 832.337 1172.84 911.035L1175.16 911.965Q1252.29 832.803 1263"
+    & " 727L1263 723Z' fill='#FFFFFF'/></svg>"
+    & "<section class='bl' role='dialog' aria-label='Tour guiado, passo 4 de 6: Obras no mês' style='left:7"
+    & "73px;top:333px;width:560px;height:394px'>"
+    & "<span class='sl' style='left:32px;top:28px'>Passo 4 de 6</span>"
+    & "<h2 class='tt' style='left:32px;top:68px;width:496px'>Obras no mês</h2>"
+    & "<p class='tx' style='left:32px;top:116px;width:496px'>Uma linha por obra, na ordem da nota: o IDC co"
+    & "m a marca dos pontos do item Custo, a variação dele no mês, o desvio de caixa com a marca da Previsã"
+    & "o de caixa e, embaixo, a justificativa da planilha. Acima de 10% a justificativa é exigida; em branc"
+    & "o, ela aparece em vermelho.</p>"
+    & "<div class='dc' style='left:32px;top:260px;width:496px'><svg class='cur' width='16' height='16' view"
+    & "Box='0 0 18 18' aria-hidden='true'><path d='M4 2L4 14L7.2 11L9.4 16L11.3 15.2L9.1 10.3L13.6 10.3Z' f"
+    & "ill='#0B0B0C'/></svg><p class='dt'>Passe o mouse numa obra para ver o caixa mês a mês e as justifica"
+    & "tivas anteriores.</p></div>"
+    & "<div class='rg' style='left:32px;top:346px;width:180px;gap:6px'><i style='width:25px;background:rgba"
+    & "(11,11,12,.45)'></i><i style='width:25px;background:rgba(11,11,12,.45)'></i><i style='width:25px;bac"
+    & "kground:rgba(11,11,12,.45)'></i><i style='width:25px;background:#0B0B0C'></i><i style='width:25px;ba"
+    & "ckground:#E1E1E1'></i><i style='width:25px;background:#E1E1E1'></i></div>"
+    & "<span class='bt pl' style='left:228px;top:320px;width:64px;height:56px'>Pular</span>"
+    & "<span class='bt s' style='left:302px;top:326px;width:92px'>← Voltar</span>"
+    & "<span class='bt p' style='left:404px;top:326px;width:124px'>Seguir →</span>"
+    & "</section></div>"

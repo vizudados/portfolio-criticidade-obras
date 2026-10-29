@@ -1,0 +1,15 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: 0
+@descricao: Das obras com aplicado negativo no mês de referência, quantas fecharam abaixo do mês anterior ('pesam cada vez mais').
+@oraculo: POTENGI e TIROL caíram: 2
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _mes = [Mês de referência]
+VAR _obras = CALCULATETABLE (
+        ADDCOLUMNS ( VALUES ( fAnaliseCritica[Obra] ), "@r", [Resultado aplicado], "@v", [T4 · Resultado aplicado · variação no mês] ),
+        REMOVEFILTERS ( dMes ),
+        dMes[Mes] = _mes
+    )
+RETURN
+    COUNTROWS ( FILTER ( _obras, [@r] < 0 && [@v] < 0 ) ) + 0

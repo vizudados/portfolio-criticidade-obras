@@ -1,0 +1,20 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: Itens da fonte 'Análise Crítica' sem dado (4 itens: Custo, Atraso, Caixa, Análise crítica). Soma pelas obras presentes no contexto.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+SUMX (
+    VALUES ( dObra[Obra] ),
+    IF (
+        [Nota · obra presente] = 1,
+        4
+            - (
+                INT ( NOT ISBLANK ( [Nota · pontos custo] ) )
+                + INT ( NOT ISBLANK ( [Nota · pontos prazo] ) )
+                + INT ( NOT ISBLANK ( [Nota · pontos caixa] ) )
+                + INT ( NOT ISBLANK ( [Nota · pontos análise crítica] ) )
+            )
+    )
+)

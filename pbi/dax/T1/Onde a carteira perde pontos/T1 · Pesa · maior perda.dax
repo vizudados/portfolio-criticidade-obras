@@ -1,0 +1,8 @@
+/*
+@pasta: T1 Visão geral\Onde a carteira perde pontos\Contas
+@formato: 0.00
+@descricao: Maior soma de pontos perdidos entre as dimensões da nota no mês de referência (escala das barras do painel).
+@oraculo: dados/_gabarito/nota_previa.csv
+@gerado: pbi/scripts/contas_t1.py
+*/
+MAXX ( ALL ( dItemNota[Dimensao], dItemNota[OrdemDimensao] ), [Nota · item · perdidos · ref] )

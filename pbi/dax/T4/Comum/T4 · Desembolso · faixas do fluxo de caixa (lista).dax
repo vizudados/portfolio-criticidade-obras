@@ -1,0 +1,16 @@
+/*
+@pasta: T4 Resultado no tempo\Comum\Contas
+@formato: texto
+@descricao: Rótulos curtos das faixas da previsão de caixa da nota, da faixa crítica (sem ponto) para a de pontos cheios, separados por '|' ('> 20%|10% a 20%|< 10%'), montados das constantes 'Nota · limite caixa · ponto inteiro' e '· meio ponto'. O desvio conta em módulo: o verso diz 'para mais ou para menos'.
+@oraculo: > 20%|10% a 20%|< 10%
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _inteiro = [Nota · limite caixa · ponto inteiro]
+VAR _meio = [Nota · limite caixa · meio ponto]
+VAR _tInteiro = IF ( ROUND ( _inteiro * 100, 2 ) = ROUND ( _inteiro * 100, 0 ), FORMAT ( _inteiro * 100, "0" ), FORMAT ( _inteiro * 100, "0.0#", "pt-BR" ) ) & "%"
+VAR _tMeio = IF ( ROUND ( _meio * 100, 2 ) = ROUND ( _meio * 100, 0 ), FORMAT ( _meio * 100, "0" ), FORMAT ( _meio * 100, "0.0#", "pt-BR" ) ) & "%"
+RETURN
+    IF (
+        NOT ISBLANK ( _inteiro ) && NOT ISBLANK ( _meio ),
+        "> " & _tMeio & "|" & _tInteiro & " a " & _tMeio & "|< " & _tInteiro
+    )

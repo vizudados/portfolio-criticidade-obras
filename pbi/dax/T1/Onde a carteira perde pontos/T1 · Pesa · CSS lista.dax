@@ -1,0 +1,14 @@
+/*
+@pasta: T1 Visão geral\Onde a carteira perde pontos
+@formato: texto
+@descricao: CSS da lista 'Onde a carteira perde pontos' (uma entrada por dimensão da nota).
+@gerado: pbi/scripts/desenho_t1.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".htmlViewerEntry{display:block!important;margin:0!important;padding:0!important}.pl{position:relative;height:48px;transition:background .15s}.pl:hover,.htmlViewerEntry.hover .pl{ba"
+    & "ckground:rgba(247,244,238,.9)}.pl .rt{position:absolute;left:0;top:0;display:flex;align-items:baseline;gap:10px;white-space:nowrap}.pl .rt span{font-size:15px;line-height:21px;font"
+    & "-weight:600}.pl .rt em{font-style:normal;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:12px;line-height:15px;letter-spacing:1.2px;color:#6B6B70}.pl .pt{rig"
+    & "ht:0;top:0;font-size:16px;line-height:20px}.pl .pt.vz{color:#6B6B70}.pl .tr{position:absolute;left:0;top:27px;width:464px;height:8px;background:#EFEFEF}.pl .tr.f{top:31px;height:0;"
+    & "background:transparent;border-top:1px dashed #9A9A9E}.pl .tr i{position:absolute;top:0;bottom:0}.pl .tr i.c{background:#C43737}.pl .tr i.a{background:#C9821F}.pl .tr i.e{background"
+    & ":#A9CDB9}.pl .tr i.p{background:#FFFFFF;border:1px dashed #3B3B3F;box-sizing:border-box}"

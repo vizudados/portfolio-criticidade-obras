@@ -1,0 +1,20 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: 1 quando o item da linha tem valor na base, mas fora da faixa válida (fica sem pontos, mas não por falta); 0 nos demais casos. Uma obra e um item no contexto.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _i = SELECTEDVALUE ( dItemNota[Item] )
+RETURN
+    IF (
+        HASONEVALUE ( dItemNota[Item] ) && HASONEVALUE ( dObra[Obra] ),
+        SWITCH (
+            _i,
+            "ppc", INT ( NOT ISBLANK ( MAX ( fBaseObra[PPC] ) ) && ISBLANK ( [Nota · X PPC] ) ),
+            "inspecao", INT ( NOT ISBLANK ( SUM ( fBaseObra[AprovadosPrimeira] ) ) && SUM ( fBaseObra[ServicosVerificados] ) > 0 && ISBLANK ( [Nota · X inspeção] ) ),
+            "nr18", INT ( NOT ISBLANK ( SUM ( fBaseObra[NR18Conformes] ) ) && SUM ( fBaseObra[NR18Aplicaveis] ) > 0 && ISBLANK ( [Nota · X NR-18] ) ),
+            "entregas", INT ( NOT ISBLANK ( SUM ( fBaseObra[PedidosNoPrazo] ) ) && SUM ( fBaseObra[PedidosPrevistos] ) > 0 && ISBLANK ( [Nota · X entregas] ) ),
+            0
+        )
+    )

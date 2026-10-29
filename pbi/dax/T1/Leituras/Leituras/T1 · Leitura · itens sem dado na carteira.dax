@@ -1,0 +1,13 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: 0
+@descricao: Itens da nota sem dado no mês de referência, somados pelas obras da carteira (as que têm aba da Análise Crítica no mês, como em Nota · carteira · …). O valor fora da faixa válida não falta (auditoria da Fase 3, rodada 2, m3).
+@oraculo: pbi/qa/nota/casos_auditoria.py teste · ago/26: 7 (CAJUEIRO 1, JANGADA 6; os 2 da DUNAS são fora da faixa)
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    SUMX (
+        CALCULATETABLE ( FILTER ( VALUES ( dObra[Obra] ), NOT ISEMPTY ( RELATEDTABLE ( fAnaliseCritica ) ) ), REMOVEFILTERS ( dMes ), dMes[Mes] = _mes ),
+        [Nota · itens faltando · ref] - [Nota · itens fora da faixa · ref]
+    ) + 0

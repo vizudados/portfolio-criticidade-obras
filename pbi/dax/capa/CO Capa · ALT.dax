@@ -1,0 +1,29 @@
+/*
+@pasta: Capa
+@formato: texto
+@descricao: Texto alternativo da capa: mês, obras por status e os 4 números principais (≤ 250 caracteres).
+@gerado: pbi/scripts/capa_medidas.py
+*/
+-- 1 · Leituras
+VAR _mes = [Mês de referência · longo]
+VAR _crit = [Nota · carteira · obras críticas · ref]
+VAR _aten = [Nota · carteira · obras em atenção · ref]
+VAR _est = [Nota · carteira · obras estáveis · ref]
+VAR _pend = [Nota · carteira · obras pendentes · ref]
+VAR _o1 = [Capa · obras · valor (texto)]
+VAR _r1 = [Capa · resultado · valor (texto)]
+VAR _f1 = [Capa · físico · valor (texto)]
+VAR _d1 = [Capa · desembolso · valor (texto)]
+VAR _s1 = [Capa · sem estoque · valor (texto)]
+-- 2 · Textos
+VAR _c = _crit + 0
+VAR _a = _aten + 0
+VAR _e = _est + 0
+VAR _p = _pend + 0
+VAR _status = FORMAT ( _c, "0" ) & IF ( _c = 1, " crítica, ", " críticas, " ) & FORMAT ( _a, "0" ) & " em atenção, " & FORMAT ( _e, "0" ) & IF ( _e = 1, " estável, ", " estáveis, " ) & FORMAT ( _p, "0" ) & IF ( _p = 1, " pendente na nota", " pendentes na nota" )
+-- 4 · Marcação
+RETURN
+    "Capa do Criticidade de Obras, " & _mes & ": " & _o1 & IF ( _o1 = "1", " obra (", " obras (" ) & _status
+        & "), resultado " & _r1
+        & ", físico " & _f1 & ", desembolso " & _d1 & ", sem estoque " & _s1
+        & ". Entrar no painel e os 5 cartões abrem as telas."

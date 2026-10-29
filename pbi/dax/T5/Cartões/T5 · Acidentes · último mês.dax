@@ -1,0 +1,10 @@
+/*
+@pasta: T5 Canteiro\Cartões\Contas
+@formato: dd/mm/yyyy
+@descricao: Último mês, até o de referência, com acidente com afastamento em alguma obra do recorte (todo o histórico da base). Vazio quando nenhum. Ex. set/26: jul/26 (REDINHA).
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 01/07/2026
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _ref = [Mês de referência]
+RETURN
+    CALCULATE ( MAX ( fBaseObra[Mes] ), REMOVEFILTERS ( dMes ), fBaseObra[Mes] <= _ref, fBaseObra[Acidentes] > 0 )

@@ -1,0 +1,207 @@
+/*
+@pasta: T2 Análise crítica\Desembolso do mês
+@formato: texto
+@descricao: Desembolso do mês da obra em foco: previsto e desembolsado (com as barras creme × preta na mesma escala), diferença e × previsto com a marca dos pontos da previsão de caixa na nota (cheio, parcial ou zero, pelas faixas do item) e os pontos ao lado do rótulo, e a justificativa da planilha (exigida acima de ±10%; em branco vira aviso). Desvio e diferença negativos ficam em preto (decisão do Alisson).
+@gerado: pbi/scripts/desenho_t2.py
+*/
+-- 1 · Leituras
+VAR _prev = [Desembolso · previsto no mês · foco]
+VAR _real = [Desembolso · realizado no mês · foco]
+VAR _dif = [Desembolso · diferença no mês · foco]
+VAR _desv = [Desembolso · desvio no mês · foco]
+VAR _ptx = [Nota · pontos caixa · foco]
+VAR _psx = [Nota · possíveis · caixa · foco]
+VAR _exig = [Justificativa · exigida · foco]
+VAR _branco = [Justificativa · em branco · foco]
+VAR _just = [Justificativa do desembolso · foco]
+-- 2 · Textos
+VAR _tpA = ABS ( _prev )
+VAR _tpNu = SWITCH ( TRUE (), _tpA >= 99950000, FORMAT ( _tpA / 1000000, "0.0", "pt-BR" ), _tpA >= 999500, FORMAT ( _tpA / 1000000, "0.00", "pt-BR" ), _tpA >= 999.5, FORMAT ( _tpA / 1000, "0", "pt-BR" ), FORMAT ( _tpA, "#,0", "pt-BR" ) )
+VAR _tpUn = SWITCH ( TRUE (), _tpA >= 999500, " mi", _tpA >= 999.5, " mil", "" )
+VAR _tpN = _tpNu & _tpUn
+VAR _tpZero = _tpN = "0"
+VAR _tpS = IF ( _tpZero, "", IF ( _prev < 0, "−", "" ) )
+VAR _tpTxt = IF ( ISBLANK ( _prev ), "—", _tpS & "R$ " & _tpN )
+VAR _trA = ABS ( _real )
+VAR _trNu = SWITCH ( TRUE (), _trA >= 99950000, FORMAT ( _trA / 1000000, "0.0", "pt-BR" ), _trA >= 999500, FORMAT ( _trA / 1000000, "0.00", "pt-BR" ), _trA >= 999.5, FORMAT ( _trA / 1000, "0", "pt-BR" ), FORMAT ( _trA, "#,0", "pt-BR" ) )
+VAR _trUn = SWITCH ( TRUE (), _trA >= 999500, " mi", _trA >= 999.5, " mil", "" )
+VAR _trN = _trNu & _trUn
+VAR _trZero = _trN = "0"
+VAR _trS = IF ( _trZero, "", IF ( _real < 0, "−", "" ) )
+VAR _trTxt = IF ( ISBLANK ( _real ), "—", _trS & "R$ " & _trN )
+VAR _tdA = ABS ( _dif )
+VAR _tdNu = SWITCH ( TRUE (), _tdA >= 99950000, FORMAT ( _tdA / 1000000, "0.0", "pt-BR" ), _tdA >= 999500, FORMAT ( _tdA / 1000000, "0.00", "pt-BR" ), _tdA >= 999.5, FORMAT ( _tdA / 1000, "0", "pt-BR" ), FORMAT ( _tdA, "#,0", "pt-BR" ) )
+VAR _tdUn = SWITCH ( TRUE (), _tdA >= 999500, " mi", _tdA >= 999.5, " mil", "" )
+VAR _tdN = _tdNu & _tdUn
+VAR _tdZero = _tdN = "0"
+VAR _tdS = IF ( _tdZero, "", SWITCH ( TRUE (), _dif < 0, "−", _dif > 0, "+", "" ) )
+VAR _tdTxt = IF ( ISBLANK ( _dif ), "—", _tdS & "R$ " & _tdN )
+VAR _tvN = FORMAT ( ABS ( _desv ) * 100, "0", "pt-BR" )
+VAR _tvS = SWITCH ( TRUE (), ROUND ( _desv * 100, 0 ) < 0, "−", ROUND ( _desv * 100, 0 ) > 0, "+", "" )
+VAR _tvTxt = IF ( ISBLANK ( _desv ), "—", _tvS & _tvN & "%" )
+VAR _tiTxt = IF ( ISBLANK ( _ptx ), "sem dado na planilha", "⁅" & FORMAT ( _ptx, "0.0#", "pt-BR" ) & "⁆" & " de " & "⁅" & FORMAT ( _psx, "0.0#", "pt-BR" ) & "⁆" )
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _tpKP = LEN ( _tpNu ) > 0
+VAR _tpKN = IF ( _tpKP, _tpNu )
+VAR _tpKS = SUBSTITUTE ( SUBSTITUTE ( _tpKN, ".", "" ), ",", "" )
+VAR _tpKT = IFERROR ( VALUE ( _tpKS ), -1 )
+VAR _tpKOk = _tpKP && _tpKT >= 2 && FORMAT ( _tpKT, REPT ( "0", LEN ( _tpKS ) ) ) = _tpKS
+VAR _tpKD = IF ( CONTAINSSTRING ( _tpKN, "," ), LEN ( _tpKN ) - SEARCH ( ",", _tpKN ), 0 )
+VAR _tpKM = IF ( CONTAINSSTRING ( _tpKN, "." ), "#,##0", "0" ) & IF ( _tpKD > 0, "." & REPT ( "0", _tpKD ) )
+VAR _tpKOd =
+    IF (
+        _tpKOk,
+        "<o-d><o-v>" & _tpKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tpKN, FORMAT ( ROUND ( _tpKT * [@odf] / 1000, 0 ) / POWER ( 10, _tpKD ), _tpKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tpNu
+    )
+VAR _tpOd = IF ( ISBLANK ( _prev ), _tpTxt, _tpS & "R$ " & _tpKOd & _tpUn )
+VAR _trKP = LEN ( _trNu ) > 0
+VAR _trKN = IF ( _trKP, _trNu )
+VAR _trKS = SUBSTITUTE ( SUBSTITUTE ( _trKN, ".", "" ), ",", "" )
+VAR _trKT = IFERROR ( VALUE ( _trKS ), -1 )
+VAR _trKOk = _trKP && _trKT >= 2 && FORMAT ( _trKT, REPT ( "0", LEN ( _trKS ) ) ) = _trKS
+VAR _trKD = IF ( CONTAINSSTRING ( _trKN, "," ), LEN ( _trKN ) - SEARCH ( ",", _trKN ), 0 )
+VAR _trKM = IF ( CONTAINSSTRING ( _trKN, "." ), "#,##0", "0" ) & IF ( _trKD > 0, "." & REPT ( "0", _trKD ) )
+VAR _trKOd =
+    IF (
+        _trKOk,
+        "<o-d><o-v>" & _trKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _trKN, FORMAT ( ROUND ( _trKT * [@odf] / 1000, 0 ) / POWER ( 10, _trKD ), _trKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _trNu
+    )
+VAR _trOd = IF ( ISBLANK ( _real ), _trTxt, _trS & "R$ " & _trKOd & _trUn )
+VAR _tdKP = LEN ( _tdNu ) > 0
+VAR _tdKN = IF ( _tdKP, _tdNu )
+VAR _tdKS = SUBSTITUTE ( SUBSTITUTE ( _tdKN, ".", "" ), ",", "" )
+VAR _tdKT = IFERROR ( VALUE ( _tdKS ), -1 )
+VAR _tdKOk = _tdKP && _tdKT >= 2 && FORMAT ( _tdKT, REPT ( "0", LEN ( _tdKS ) ) ) = _tdKS
+VAR _tdKD = IF ( CONTAINSSTRING ( _tdKN, "," ), LEN ( _tdKN ) - SEARCH ( ",", _tdKN ), 0 )
+VAR _tdKM = IF ( CONTAINSSTRING ( _tdKN, "." ), "#,##0", "0" ) & IF ( _tdKD > 0, "." & REPT ( "0", _tdKD ) )
+VAR _tdKOd =
+    IF (
+        _tdKOk,
+        "<o-d><o-v>" & _tdKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tdKN, FORMAT ( ROUND ( _tdKT * [@odf] / 1000, 0 ) / POWER ( 10, _tdKD ), _tdKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tdNu
+    )
+VAR _tdOd = IF ( ISBLANK ( _dif ), _tdTxt, _tdS & "R$ " & _tdKOd & _tdUn )
+VAR _tvKP = LEN ( _tvN ) > 0
+VAR _tvKN = IF ( _tvKP, _tvN )
+VAR _tvKS = SUBSTITUTE ( SUBSTITUTE ( _tvKN, ".", "" ), ",", "" )
+VAR _tvKT = IFERROR ( VALUE ( _tvKS ), -1 )
+VAR _tvKOk = _tvKP && _tvKT >= 2 && FORMAT ( _tvKT, REPT ( "0", LEN ( _tvKS ) ) ) = _tvKS
+VAR _tvKD = IF ( CONTAINSSTRING ( _tvKN, "," ), LEN ( _tvKN ) - SEARCH ( ",", _tvKN ), 0 )
+VAR _tvKM = IF ( CONTAINSSTRING ( _tvKN, "." ), "#,##0", "0" ) & IF ( _tvKD > 0, "." & REPT ( "0", _tvKD ) )
+VAR _tvKOd =
+    IF (
+        _tvKOk,
+        "<o-d><o-v>" & _tvKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tvKN, FORMAT ( ROUND ( _tvKT * [@odf] / 1000, 0 ) / POWER ( 10, _tvKD ), _tvKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tvN
+    )
+VAR _tvOd = IF ( ISBLANK ( _desv ), _tvTxt, _tvS & _tvKOd & "%" )
+VAR _txtRot = IF ( _exig = 1, "Justificativa · exigida acima de ±10%", "Justificativa · não exigida (dentro de ±10%)" )
+VAR _txtJust =
+    SWITCH (
+        TRUE (),
+        _branco = 1, "Em branco: a planilha não traz a justificativa exigida.",
+        TRIM ( _just ) = "", "Sem justificativa na planilha.",
+        SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( TRIM ( _just ), "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+    )
+-- 3 · Geometria
+VAR _maior = MAX ( ABS ( _prev ), ABS ( _real ) ) -- geometria
+VAR _wP = IF ( ISBLANK ( _prev ), 0, MAX ( ROUND ( DIVIDE ( ABS ( _prev ), _maior ) * 372, 0 ), 2 ) ) -- geometria
+VAR _wR = IF ( ISBLANK ( _real ), 0, MAX ( ROUND ( DIVIDE ( ABS ( _real ), _maior ) * 372, 0 ), 2 ) ) -- geometria
+-- 4 · Marcação
+VAR _saidaHtml =
+    IF (
+        NOT ISBLANK ( _prev ) || NOT ISBLANK ( _real ),
+        "<div class='u dm'>"
+            & "<div class='c' style='left:0;top:0'><span class='vs'><i class='pv a-pop'></i>Previsto</span><b>" & _tpOd & "</b></div>"
+            & "<div class='c' style='left:186px;top:0'><span class='vs'><i class='dv a-pop' style='animation-delay:90ms'></i>Desembolsado</span><b>" & _trOd & "</b></div>"
+            & "<i class='br pv' style='top:55px;width:" & _wP & "px' data-rk='dp' data-rp='width'></i>"
+            & "<i class='br dv' style='top:69px;width:" & _wR & "px' data-rk='dr' data-rp='width' data-rd='90'></i>"
+            & "<div class='c' style='left:0;top:95px'><span class='vs'>Diferença</span><b>" & _tdOd & "</b></div>"
+            & "<div class='c' style='left:186px;top:95px'><span class='vs'>× previsto" & IF ( ISBLANK ( _ptx ), "", " · <span>" & _tiTxt & "</span>" ) & "</span><b>" & IF ( IF ( ISBLANK ( _ptx ), "", IF ( _ptx >= _psx, "0", IF ( _ptx = 0, "2", "1" ) ) ) = "", "", "<i class='a-pop mk mk" & IF ( ISBLANK ( _ptx ), "", IF ( _ptx >= _psx, "0", IF ( _ptx = 0, "2", "1" ) ) ) & "' style='animation-delay:700ms'></i>" ) & "<span>" & _tvOd & "</span></b></div>"
+            & "<div class='js'><span class='vs'>" & _txtRot & "</span><p>" & _txtJust & "</p></div>"
+        & "</div>" & [Comum · JS contador] & [Comum · JS corrida]
+    )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

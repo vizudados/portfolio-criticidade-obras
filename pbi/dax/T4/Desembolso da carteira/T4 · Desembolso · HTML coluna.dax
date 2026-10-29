@@ -1,0 +1,86 @@
+/*
+@pasta: T4 Resultado no tempo\Desembolso da carteira
+@formato: texto
+@descricao: Um par de colunas por mês da janela (granularidade dMes[Mes]; coluna = 1068 ÷ n, barra = mín(44; 0,36 × coluna)): previsto (creme) × desembolsado (preto) na mesma escala, com o desvio sobre o previsto em cima (só as obras com previsto; preto também quando negativo; cabe em todo mês até 12; 13 px a partir de 10). Mês de referência em semibold; mês sem aba só com o rótulo apagado; o ano entra no primeiro mês e em janeiro quando a janela cruza a virada. As colunas correm da base em cascata e o desvio conta.
+@gerado: pbi/scripts/desenho_t4.py
+*/
+-- 1 · Leituras
+VAR _noRecorte = [Série · mês até a referência]
+VAR _prev = [Desembolso · previsto no mês]
+VAR _real = [Desembolso · realizado no mês]
+VAR _desv = [T4 · Desembolso · desvio no mês · com previsto]
+VAR _topo = [T4 · Desembolso · topo da escala]
+VAR _mes = [Mês · abreviado]
+VAR _mesAno = [Mês · rótulo curto]
+VAR _data = [Mês · data]
+VAR _ehRef = [Série · é o mês de referência]
+VAR _pos = [Série · posição na janela]
+VAR _n = [Série · meses até a referência]
+VAR _ini = [Série · primeiro mês]
+VAR _ref = [Mês de referência]
+-- 2 · Textos
+VAR _tdN = FORMAT ( ABS ( _desv ) * 100, "0", "pt-BR" )
+VAR _tdS = SWITCH ( TRUE (), ROUND ( _desv * 100, 0 ) < 0, "−", ROUND ( _desv * 100, 0 ) > 0, "+", "" )
+VAR _tdTxt = IF ( ISBLANK ( _desv ), "—", _tdS & _tdN & "%" )
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _tdKP = LEN ( _tdN ) > 0
+VAR _tdKN = IF ( _tdKP, _tdN )
+VAR _tdKS = SUBSTITUTE ( SUBSTITUTE ( _tdKN, ".", "" ), ",", "" )
+VAR _tdKT = IFERROR ( VALUE ( _tdKS ), -1 )
+VAR _tdKOk = _tdKP && _tdKT >= 2 && FORMAT ( _tdKT, REPT ( "0", LEN ( _tdKS ) ) ) = _tdKS
+VAR _tdKD = IF ( CONTAINSSTRING ( _tdKN, "," ), LEN ( _tdKN ) - SEARCH ( ",", _tdKN ), 0 )
+VAR _tdKM = IF ( CONTAINSSTRING ( _tdKN, "." ), "#,##0", "0" ) & IF ( _tdKD > 0, "." & REPT ( "0", _tdKD ) )
+VAR _tdKOd =
+    IF (
+        _tdKOk,
+        "<o-d><o-v>" & _tdKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tdKN, FORMAT ( ROUND ( _tdKT * [@odf] / 1000, 0 ) / POWER ( 10, _tdKD ), _tdKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tdN
+    )
+VAR _tdOd = IF ( ISBLANK ( _desv ), _tdTxt, _tdS & _tdKOd & "%" )
+VAR _cruza = YEAR ( _ini ) <> YEAR ( _ref )
+VAR _txtMes = _mes & IF ( _cruza && ( _pos = 1 || MONTH ( _data ) = 1 ), RIGHT ( _mesAno, 3 ), "" )
+VAR _clsMes = IF ( _ehRef = 1, " ref", "" ) & IF ( ISBLANK ( _real ) && ISBLANK ( _prev ), " sem", "" )
+-- 3 · Geometria
+VAR _b = MIN ( 44, ROUND ( 0.36 * 1068 / _n, 0 ) ) -- geometria
+VAR _caixa = MIN ( 70, INT ( 1068 / _n ) ) -- geometria
+VAR _meiaCaixa = INT ( _caixa / 2 ) -- geometria
+VAR _xP = _b + 2 -- geometria
+VAR _u = DIVIDE ( 231, _topo ) -- geometria
+VAR _hP = MAX ( 0, ROUND ( _prev * _u, 0 ) ) -- geometria
+VAR _hR = MAX ( 0, ROUND ( _real * _u, 0 ) ) -- geometria
+VAR _yP = 255 - _hP -- geometria
+VAR _yR = 255 - _hR -- geometria
+VAR _yRot = MIN ( _yP, _yR ) - 21 -- geometria
+VAR _atraso = ( _pos - 1 ) * 100 -- geometria
+VAR _corre = "' data-rp='top,height' data-r0-top='255px' data-r0-height='0px' data-rd='"
+VAR _clsDv = IF ( _n >= 10, " d13", "" )
+-- 4 · Marcação
+VAR _htmlBarras =
+    IF (
+        NOT ISBLANK ( _real ) || NOT ISBLANK ( _prev ),
+        "<i class='bp' style='top:" & _yP & "px;height:" & _hP & "px;left:calc(50% - " & _xP & "px);width:" & _b
+            & "px' data-rk='" & _mes & "|p" & _corre & _atraso & "'></i>"
+            & "<i class='bd' style='top:" & _yR & "px;height:" & _hR & "px;left:calc(50% + 1px);width:" & _b
+            & "px' data-rk='" & _mes & "|d" & _corre & ( _atraso + 50 ) & "'></i>"
+            & IF (
+                NOT ISBLANK ( _desv ),
+                "<span class='dv b6 a-fd" & _clsDv & "' style='animation-delay:" & ( _atraso + 250 ) & "ms;top:" & _yRot & "px;left:calc(50% - " & _meiaCaixa
+                    & "px);width:" & _caixa & "px'>" & _tdOd & "</span>"
+            )
+    )
+RETURN
+    IF (
+        _noRecorte = 1,
+        "<div class='u dc'><i class='rz a-fd'></i>" & _htmlBarras
+            & "<p class='ms a-fd" & _clsMes & "' style='animation-delay:" & _atraso & "ms'>" & _txtMes & "</p>"
+        & "</div>" & [Comum · JS contador] & [Comum · JS corrida]
+    )

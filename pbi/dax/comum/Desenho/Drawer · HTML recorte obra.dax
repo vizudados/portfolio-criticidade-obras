@@ -1,0 +1,15 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: Frase do recorte nas telas de uma obra: mês e obra em foco (escolhida ou a mais crítica).
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 1 · Leituras
+VAR _mes = [Mês de referência · longo]
+VAR _foco = [Nota · obra em foco]
+VAR _escolhida = [Recorte · obra em foco escolhida]
+-- 2 · Textos
+VAR _txtFoco = IF ( _escolhida = 1, "obra " & _foco, _foco & ", a obra mais crítica do mês" )  -- critério da nota
+-- 4 · Marcação
+RETURN
+    "<div class='u dw'>Recorte exibido: " & _mes & ", " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _txtFoco, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & ". O mês vale para todas as telas.</div>"

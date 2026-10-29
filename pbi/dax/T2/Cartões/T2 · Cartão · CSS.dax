@@ -1,0 +1,9 @@
+/*
+@pasta: T2 Análise crítica\Cartões
+@formato: texto
+@descricao: CSS dos cartões da T2: o do cartão v2 com flip (camada comum) mais a marca de status antes do contexto (as cores da marca são as mesmas no cartão escuro) e o chip de status do cartão Nota da obra.
+@gerado: pbi/scripts/desenho_t2.py
+*/
+-- 4 · Marcação
+[Comum · CSS cartão]
+    & ".kc .ctx .mk{margin-right:7px;vertical-align:-1px}.kc .ctx .chip{height:21px;margin:-1px 8px 0 0;vertical-align:top}"

@@ -1,0 +1,18 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: texto
+@descricao: Versão da cronograma dos campos do cadastro, em mês e ano curtos (abr/26), a partir de dObra[VersaoCrono] (MM/AAAA da planilha de versão mais recente). Vazio sem cronograma.
+@oraculo: abr/26 (cronograma 04/2026)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _v = FIRSTNONBLANK ( dObra[VersaoCrono], 1 )
+RETURN
+    IF (
+        ISBLANK ( _v ),
+        BLANK (),
+        MID (
+            "janfevmarabrmaijunjulagosetoutnovdez",
+            ( VALUE ( LEFT ( _v, 2 ) ) - 1 ) * 3 + 1,
+            3
+        ) & "/" & RIGHT ( _v, 2 )
+    )

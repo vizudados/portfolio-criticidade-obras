@@ -1,0 +1,24 @@
+/*
+@pasta: T3 Avanço físico\Avanço das sete obras\Contas
+@formato: texto
+@descricao: Obras cujo atraso em meses passa do ponto cheio do item prazo da nota, do maior atraso para o menor. Obras com aba no mês de referência, separadas por '|'.
+@oraculo: nota_previa.csv pts_atraso < 2
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obras =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@e", [Físico · executado acumulado · ref],
+            "@d", [Físico · desvio acumulado p.p. · ref],
+            "@ini", [Obra · início],
+            "@fim", [Obra · término previsto],
+            "@orc", [Orçamento · ref],
+            "@tipo", [Tipo de orçamento · ref],
+            "@s", [T3 · Status desvio físico · ref],
+            "@a", [Prazo · atraso (meses) · ref]
+        ),
+        NOT ISBLANK ( [@e] )
+    )
+RETURN
+    CONCATENATEX ( FILTER ( _obras, [@s] = 2 ), dObra[Obra], "|", [@a], DESC, dObra[Obra], ASC )

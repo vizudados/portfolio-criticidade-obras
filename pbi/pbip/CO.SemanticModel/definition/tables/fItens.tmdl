@@ -1,0 +1,96 @@
+/// Linhas das tabelas anexadas de cada aba (estoque, adiantamentos, contas a pagar, itens irregulares…), uma por linha preenchida com valor diferente de zero, de pInicioHistorico em diante. É o detalhe que compõe cada item do quadradinho (tooltip da análise crítica).
+table fItens
+	lineageTag: 743d7be6-9e20-5a10-b1a1-e8a72a0615a7
+
+	/// Obra.
+	column Obra
+		dataType: string
+		lineageTag: 209ba683-d467-5510-80b0-e4d7a31185a3
+		summarizeBy: none
+		sourceColumn: Obra
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Mês de referência.
+	column Mes
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 4d85e446-6811-5d8d-8c3e-829bf749404f
+		summarizeBy: none
+		sourceColumn: Mes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Item do quadradinho que a linha compõe (código de dItem; itens irregulares corrigem o desembolsado).
+	column Item
+		dataType: string
+		lineageTag: 0acb3c9e-1893-576c-a758-99443538832a
+		summarizeBy: none
+		sourceColumn: Item
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Descrição digitada na linha ("(sem descrição)" quando vazia).
+	column Descricao
+		dataType: string
+		lineageTag: 09bcd203-0913-5bc5-ba50-4d75b315353d
+		summarizeBy: none
+		sourceColumn: Descricao
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Valor da linha.
+	column Valor
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 9730abc7-d645-530e-9700-24d4da26a458
+		summarizeBy: none
+		sourceColumn: Valor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem da linha dentro da tabela anexada.
+	column Linha
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4dcbbd58-8c1c-5775-b2ac-2bd512220f81
+		summarizeBy: none
+		sourceColumn: Linha
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fItens = m
+		mode: import
+		source =
+				let
+				    Origem = Table.SelectRows(stgAbas, each [Leitura][Layout] = true and [Mes] >= pInicioHistorico),
+				    Unicas = Table.Combine(Table.Group(Origem, {"Obra", "Mes"},
+				        {{"T", each Table.FirstN(Table.Sort(_, {{"Preliminar", Order.Ascending}, {"OrdemAba", Order.Descending}}), 1),
+				            type table}})[T]),
+				    ItemDaTabela = [SaldoContrato = "SaldoContrato", AdiantServicos = "AdiantServicos",
+				        AdiantMateriais = "AdiantMateriais", Estoque = "Estoque", Equipamentos = "Equipamentos",
+				        ReceitaPersonalizacao = "ReceitaPersonalizacao", ContasPagar = "ContasPagar", ItensIrregulares = "Desembolsado",
+				        Divida = "Divida"],
+				    Linhas = List.Combine(List.Transform(Table.ToRecords(Unicas), (a) =>
+				        List.Combine(List.Transform(a[Leitura][Tabelas], (t) =>
+				            List.Transform(List.Positions(t[Itens]), (i) =>
+				                let it = t[Itens]{i} in
+				                [Obra = a[Obra], Mes = a[Mes], Item = Record.Field(ItemDaTabela, t[Grupo]),
+				                 Descricao = it[Descricao], Valor = it[Valor], Linha = i + 1]))))),
+				    Tabela = if List.IsEmpty(Linhas)
+				        then #table(type table [Obra = text, Mes = date, Item = text, Descricao = text, Valor = number, Linha = Int64.Type], {})
+				        else Table.FromRecords(Linhas),
+				    Tipado = Table.TransformColumnTypes(Tabela, {{"Obra", type text}, {"Mes", type date},
+				        {"Item", type text}, {"Descricao", type text}, {"Valor", type number}, {"Linha", Int64.Type}}),
+				    // sem nenhuma aba lida (pasta ausente ou vazia): tabela vazia com as colunas do cabeçalho (@coluna)
+				    Vazia = #table(type table [Obra = nullable text, Mes = nullable date, Item = nullable text, Descricao = nullable text,
+				        Valor = nullable number, Linha = nullable Int64.Type], {})
+				in
+				    if Table.RowCount(stgAbas) = 0 then Vazia else Tipado
+
+	annotation PBI_ResultType = Table
+

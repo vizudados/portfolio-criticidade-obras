@@ -1,0 +1,13 @@
+/*
+@pasta: T4 Resultado no tempo\Obras no mês
+@formato: texto
+@descricao: Cabeçalho da tabela Obras no mês (F3): o mês e a ordem (subtítulo) e os nomes das colunas (OBRA, IDC, NO MÊS, CAIXA). Fundo branco por cima do subtítulo antigo da casca.
+@gerado: pbi/scripts/desenho_t4.py
+*/
+-- 1 · Leituras
+VAR _mesC = [Mês de referência · curto]
+-- 4 · Marcação
+RETURN
+    "<div class='u obc'><span class='sub'>" & _mesC & " · IDC, variação no mês, caixa e justificativa"
+        & "</span><span class='vs' style='left:14px'>obra</span><span class='vs' style='left:150px'>IDC</span>"
+        & "<span class='vs' style='left:230px'>no mês</span><span class='vs' style='right:14px'>caixa</span></div>"

@@ -1,0 +1,10 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: 0.00%
+@descricao: % executado da obra em foco no mês de [T3 · Série · mês de menor executado · foco].
+@oraculo: obras[0].serie[].exec_mes (extremo)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _mes = [T3 · Série · mês de menor executado · foco]
+RETURN
+    CALCULATE ( [Físico · executado no mês · foco no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

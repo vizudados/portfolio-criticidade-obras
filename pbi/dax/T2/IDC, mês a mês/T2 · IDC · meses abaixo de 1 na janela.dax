@@ -1,0 +1,12 @@
+/*
+@pasta: T2 Análise crítica\IDC, mês a mês\Contas
+@formato: 0
+@descricao: Meses da janela em que o IDC da obra em foco ficou abaixo de 1 (gastou mais do que agregou).
+@oraculo: dados/_gabarito/nota_previa.csv (x_idc)
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses = ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), "@i", VAR _v = [IDC · foco no mês] RETURN IF ( NOT ISBLANK ( _v ), ROUND ( _v, 2 ) ) )
+RETURN
+    COUNTROWS ( FILTER ( _meses, NOT ISBLANK ( [@i] ) && [@i] < 1 ) ) + 0

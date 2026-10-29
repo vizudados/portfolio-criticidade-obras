@@ -1,0 +1,9 @@
+/*
+@pasta: T2 Análise crítica\Tooltips\Contas
+@formato: texto
+@descricao: Nome da aba da obra em foco no mês do eixo (JUN26).
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    CALCULATE ( SELECTEDVALUE ( fAnaliseCritica[Aba] ), dObra[Obra] = _obra )

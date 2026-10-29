@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Obra em foco
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: [Resultado da obra] da obra em foco (a que mais perde pontos na nota, ou a escolhida) no mês do eixo (séries da obra em foco).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    CALCULATE ( [Resultado da obra], dObra[Obra] = _obra )

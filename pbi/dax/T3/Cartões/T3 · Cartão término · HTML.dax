@@ -1,0 +1,32 @@
+/*
+@pasta: T3 Avanço físico\Cartões
+@formato: texto
+@descricao: Cartão do término projetado da obra em foco (Lipke, IEAC(t)), com a entrega contratual e a entrega com os 180 dias de tolerância (Lei 4.591/64, art. 43-A) no contexto; a marca diz onde o término projetado cai: até a entrega, nos 180 dias ou depois deles. Datas não contam. Só lê contas · foco.
+@gerado: pbi/scripts/desenho_t3.py
+*/
+-- 1 · Leituras
+VAR _proj = [Prazo · término projetado · foco]
+VAR _ent = [Prazo · entrega contratual · foco]
+VAR _tol = [Prazo · entrega com tolerância · foco]
+VAR _sit = [T3 · Término · situação · foco]
+VAR _alem = [T3 · Término · meses além da entrega · foco]
+-- 2 · Textos
+VAR _txtProj = IF ( ISBLANK ( _proj ), "—", FORMAT ( _proj, "mmm/yy", "pt-BR" ) )
+VAR _txtEnt = FORMAT ( _ent, "mmm/yy", "pt-BR" )
+VAR _txtTol = FORMAT ( _tol, "mmm/yy", "pt-BR" )
+VAR _txtCtx = SWITCH ( TRUE (), ISBLANK ( _ent ), "sem entrega no cadastro", ISBLANK ( _proj ), "sem curva prevista · entrega " & _txtEnt, "<i class='mk mk" & _sit & "'></i>entrega " & _txtEnt & " · limite " & _txtTol )
+-- 4 · Marcação
+RETURN
+    "<div class='u kc' tabindex='0'>"
+        & "<div class='lado frente'>"
+            & "<p class='ab vs eb'>" & "Término projetado" & "</p>"
+            & "<div class='linha1'><span class='b6 hero'>" & _txtProj & "</span>" & "</div>"
+            & "<p class='ctx'>" & _txtCtx & "</p>"
+        & "</div>"
+        & "<div class='lado verso sobre-creme'>"
+            & "<p class='ab vs v1'>COMO É CALCULADO</p>"
+            & "<p class='regra'>" & "Início + duração prevista ÷ IDP(t), o ritmo de prazo pelo cronograma agregado. Limite: a entrega + 180 dias." & "</p>"
+            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Cronograma, planilha e cadastro</span></div>"
+            & "<div class='regua'><i class='mk mk0'></i><span>até a entrega</span><i class='mk mk1'></i><span>nos 180 dias</span><i class='mk mk2'></i><span>depois deles</span></div>"
+        & "</div>"
+    & "</div>"

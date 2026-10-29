@@ -1,0 +1,297 @@
+/*
+@pasta: T1 Visão geral\Leituras
+@formato: texto
+@descricao: Leitura do "?" de Como os meses evoluíram, sobre o próprio painel (L065, 464 × 321, condensada mínima): obras críticas e pendentes na nota do primeiro mês da janela ao de referência, quando a piora começou e se firmou (entrou ou abriu em crítico, pela regra nova), o pico e quem saiu de crítico, e três destaques em linha que contam. A linha do tempo fica no tooltip do mês. Só lê contas.
+@gerado: pbi/scripts/leituras_t1.py
+*/
+-- 1 · Leituras
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _nMeses = [Série · meses até a referência] + 0
+VAR _mesC = [Mês de referência · curto maiúsculo]
+VAR _mesN = [Mês de referência · nome]
+VAR _nObras = [Recorte · obras no recorte] + 0
+VAR _critIni = [T1 · Leitura · obras críticas no primeiro mês] + 0
+VAR _critRef = [Nota · carteira · obras críticas · ref] + 0
+VAR _pendIni = [T1 · Leitura · obras pendentes no primeiro mês] + 0
+VAR _pendRef = [Nota · carteira · obras pendentes · ref] + 0
+VAR _ativIni = [T1 · Leitura · ativos no primeiro mês]
+VAR _ativRef = [Ativos não consumidos · ref]
+VAR _fisIni = [T1 · Leitura · desvio físico no primeiro mês]
+VAR _fisRef = [Físico · desvio acumulado p.p. · ref]
+VAR _pico = [T1 · Leitura · pico de obras críticas] + 0
+VAR _picoMes = [T1 · Leitura · mês do pico de obras críticas]
+VAR _e1 = [T1 · Leitura · mês em que a piora começou]
+VAR _e2 = [T1 · Leitura · mês em que a piora se firmou]
+VAR _e1Obras = CALCULATE ( [T1 · Leitura · obras que entraram em crítico (lista)], dMes[Mes] = _e1 )
+VAR _e1Abriu = CALCULATE ( [T1 · Leitura · obras que abriram em crítico (lista)], dMes[Mes] = _e1 )
+VAR _e2Obras = CALCULATE ( [T1 · Leitura · obras que entraram em crítico (lista)], dMes[Mes] = _e2 )
+VAR _e2Abriu = CALCULATE ( [T1 · Leitura · obras que abriram em crítico (lista)], dMes[Mes] = _e2 )
+VAR _saiRef = IF ( _ref > _ini, CALCULATE ( [T1 · Leitura · obras que saíram de crítico (lista)], dMes[Mes] = _ref ) )
+VAR _e1O1 = PATHITEM ( _e1Obras, 1 )
+VAR _e2O1 = PATHITEM ( _e2Obras, 1 )
+VAR _e1L = CALCULATE ( [T1 · Obras · itens que mais perdem (lista)], dMes[Mes] = _e1, dObra[Obra] = _e1O1 ) & ""
+VAR _e2L = CALCULATE ( [T1 · Obras · itens que mais perdem (lista)], dMes[Mes] = _e2, dObra[Obra] = _e2O1 ) & ""
+VAR _i1N = IF ( _e1L = "", 0, PATHLENGTH ( _e1L ) )
+VAR _i1a = PATHITEM ( _e1L, 1 ) & ""
+VAR _i1aFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _i1a )
+VAR _i1aFr = IF ( _i1a = "", "", SWITCH ( TRUE (), LEFT ( _i1aFrase, 3 ) = "os ", "nos " & MID ( _i1aFrase, 4, 99 ), LEFT ( _i1aFrase, 3 ) = "as ", "nas " & MID ( _i1aFrase, 4, 99 ), LEFT ( _i1aFrase, 2 ) = "o ", "no " & MID ( _i1aFrase, 3, 99 ), LEFT ( _i1aFrase, 2 ) = "a ", "na " & MID ( _i1aFrase, 3, 99 ), "em " & _i1aFrase ) )
+VAR _i1b = PATHITEM ( _e1L, 2 ) & ""
+VAR _i1bFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _i1b )
+VAR _i1bFr = IF ( _i1b = "", "", SWITCH ( TRUE (), LEFT ( _i1bFrase, 3 ) = "os ", "nos " & MID ( _i1bFrase, 4, 99 ), LEFT ( _i1bFrase, 3 ) = "as ", "nas " & MID ( _i1bFrase, 4, 99 ), LEFT ( _i1bFrase, 2 ) = "o ", "no " & MID ( _i1bFrase, 3, 99 ), LEFT ( _i1bFrase, 2 ) = "a ", "na " & MID ( _i1bFrase, 3, 99 ), "em " & _i1bFrase ) )
+VAR _i1c = PATHITEM ( _e1L, 3 ) & ""
+VAR _i1cFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _i1c )
+VAR _i1cFr = IF ( _i1c = "", "", SWITCH ( TRUE (), LEFT ( _i1cFrase, 3 ) = "os ", "nos " & MID ( _i1cFrase, 4, 99 ), LEFT ( _i1cFrase, 3 ) = "as ", "nas " & MID ( _i1cFrase, 4, 99 ), LEFT ( _i1cFrase, 2 ) = "o ", "no " & MID ( _i1cFrase, 3, 99 ), LEFT ( _i1cFrase, 2 ) = "a ", "na " & MID ( _i1cFrase, 3, 99 ), "em " & _i1cFrase ) )
+VAR _i1Fr = SWITCH ( _i1N, 0, "", 1, _i1aFr, 2, _i1aFr & " e " & _i1bFr, 3, _i1aFr & ", " & _i1bFr & " e " & _i1cFr, "em " & SWITCH ( _i1N, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _i1N, "0" ) ) & " itens empatados" )
+VAR _i2N = IF ( _e2L = "", 0, PATHLENGTH ( _e2L ) )
+VAR _i2a = PATHITEM ( _e2L, 1 ) & ""
+VAR _i2aFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _i2a )
+VAR _i2aFr = IF ( _i2a = "", "", SWITCH ( TRUE (), LEFT ( _i2aFrase, 3 ) = "os ", "nos " & MID ( _i2aFrase, 4, 99 ), LEFT ( _i2aFrase, 3 ) = "as ", "nas " & MID ( _i2aFrase, 4, 99 ), LEFT ( _i2aFrase, 2 ) = "o ", "no " & MID ( _i2aFrase, 3, 99 ), LEFT ( _i2aFrase, 2 ) = "a ", "na " & MID ( _i2aFrase, 3, 99 ), "em " & _i2aFrase ) )
+VAR _i2b = PATHITEM ( _e2L, 2 ) & ""
+VAR _i2bFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _i2b )
+VAR _i2bFr = IF ( _i2b = "", "", SWITCH ( TRUE (), LEFT ( _i2bFrase, 3 ) = "os ", "nos " & MID ( _i2bFrase, 4, 99 ), LEFT ( _i2bFrase, 3 ) = "as ", "nas " & MID ( _i2bFrase, 4, 99 ), LEFT ( _i2bFrase, 2 ) = "o ", "no " & MID ( _i2bFrase, 3, 99 ), LEFT ( _i2bFrase, 2 ) = "a ", "na " & MID ( _i2bFrase, 3, 99 ), "em " & _i2bFrase ) )
+VAR _i2c = PATHITEM ( _e2L, 3 ) & ""
+VAR _i2cFrase = CALCULATE ( [Nota · item · nome em frase], dItemNota[Item] = _i2c )
+VAR _i2cFr = IF ( _i2c = "", "", SWITCH ( TRUE (), LEFT ( _i2cFrase, 3 ) = "os ", "nos " & MID ( _i2cFrase, 4, 99 ), LEFT ( _i2cFrase, 3 ) = "as ", "nas " & MID ( _i2cFrase, 4, 99 ), LEFT ( _i2cFrase, 2 ) = "o ", "no " & MID ( _i2cFrase, 3, 99 ), LEFT ( _i2cFrase, 2 ) = "a ", "na " & MID ( _i2cFrase, 3, 99 ), "em " & _i2cFrase ) )
+VAR _i2Fr = SWITCH ( _i2N, 0, "", 1, _i2aFr, 2, _i2aFr & " e " & _i2bFr, 3, _i2aFr & ", " & _i2bFr & " e " & _i2cFr, "em " & SWITCH ( _i2N, 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _i2N, "0" ) ) & " itens empatados" )
+VAR _entRef = IF ( _ref > _ini && _ref <> _e1 && _ref <> _e2, CALCULATE ( [T1 · Leitura · obras que entraram em crítico (lista)], dMes[Mes] = _ref ) )
+VAR _abrRef = IF ( _ref > _ini && _ref <> _e1 && _ref <> _e2, CALCULATE ( [T1 · Leitura · obras que abriram em crítico (lista)], dMes[Mes] = _ref ) )
+VAR _saiO1 = PATHITEM ( _saiRef, 1 )
+VAR _saiSt = CALCULATE ( [Nota · status · ranking · ref], dObra[Obra] = _saiO1 )
+-- 2 · Textos
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _l1N = IF ( ISBLANK ( _e1Obras ) || _e1Obras = "", 0, PATHLENGTH ( _e1Obras ) )
+VAR _l1Pos = IF ( _l1N >= 2, FIND ( "§", SUBSTITUTE ( _e1Obras, "|", "§", _l1N - 1 ) ) )
+VAR _l1Txt = SWITCH ( TRUE (), _l1N = 0, "", _l1N = 1, _e1Obras, SUBSTITUTE ( LEFT ( _e1Obras, _l1Pos - 1 ), "|", ", " ) & " e " & MID ( _e1Obras, _l1Pos + 1, 999 ) )
+VAR _l2N = IF ( ISBLANK ( _e2Obras ) || _e2Obras = "", 0, PATHLENGTH ( _e2Obras ) )
+VAR _l2Pos = IF ( _l2N >= 2, FIND ( "§", SUBSTITUTE ( _e2Obras, "|", "§", _l2N - 1 ) ) )
+VAR _l2Txt = SWITCH ( TRUE (), _l2N = 0, "", _l2N = 1, _e2Obras, SUBSTITUTE ( LEFT ( _e2Obras, _l2Pos - 1 ), "|", ", " ) & " e " & MID ( _e2Obras, _l2Pos + 1, 999 ) )
+VAR _lsN = IF ( ISBLANK ( _saiRef ) || _saiRef = "", 0, PATHLENGTH ( _saiRef ) )
+VAR _lsPos = IF ( _lsN >= 2, FIND ( "§", SUBSTITUTE ( _saiRef, "|", "§", _lsN - 1 ) ) )
+VAR _lsTxt = SWITCH ( TRUE (), _lsN = 0, "", _lsN = 1, _saiRef, SUBSTITUTE ( LEFT ( _saiRef, _lsPos - 1 ), "|", ", " ) & " e " & MID ( _saiRef, _lsPos + 1, 999 ) )
+VAR _a1N = IF ( ISBLANK ( _e1Abriu ) || _e1Abriu = "", 0, PATHLENGTH ( _e1Abriu ) )
+VAR _a1Pos = IF ( _a1N >= 2, FIND ( "§", SUBSTITUTE ( _e1Abriu, "|", "§", _a1N - 1 ) ) )
+VAR _a1Txt = SWITCH ( TRUE (), _a1N = 0, "", _a1N = 1, _e1Abriu, SUBSTITUTE ( LEFT ( _e1Abriu, _a1Pos - 1 ), "|", ", " ) & " e " & MID ( _e1Abriu, _a1Pos + 1, 999 ) )
+VAR _a2N = IF ( ISBLANK ( _e2Abriu ) || _e2Abriu = "", 0, PATHLENGTH ( _e2Abriu ) )
+VAR _a2Pos = IF ( _a2N >= 2, FIND ( "§", SUBSTITUTE ( _e2Abriu, "|", "§", _a2N - 1 ) ) )
+VAR _a2Txt = SWITCH ( TRUE (), _a2N = 0, "", _a2N = 1, _e2Abriu, SUBSTITUTE ( LEFT ( _e2Abriu, _a2Pos - 1 ), "|", ", " ) & " e " & MID ( _e2Abriu, _a2Pos + 1, 999 ) )
+VAR _lrN = IF ( ISBLANK ( _entRef ) || _entRef = "", 0, PATHLENGTH ( _entRef ) )
+VAR _lrPos = IF ( _lrN >= 2, FIND ( "§", SUBSTITUTE ( _entRef, "|", "§", _lrN - 1 ) ) )
+VAR _lrTxt = SWITCH ( TRUE (), _lrN = 0, "", _lrN = 1, _entRef, SUBSTITUTE ( LEFT ( _entRef, _lrPos - 1 ), "|", ", " ) & " e " & MID ( _entRef, _lrPos + 1, 999 ) )
+VAR _lbN = IF ( ISBLANK ( _abrRef ) || _abrRef = "", 0, PATHLENGTH ( _abrRef ) )
+VAR _lbPos = IF ( _lbN >= 2, FIND ( "§", SUBSTITUTE ( _abrRef, "|", "§", _lbN - 1 ) ) )
+VAR _lbTxt = SWITCH ( TRUE (), _lbN = 0, "", _lbN = 1, _abrRef, SUBSTITUTE ( LEFT ( _abrRef, _lbPos - 1 ), "|", ", " ) & " e " & MID ( _abrRef, _lbPos + 1, 999 ) )
+VAR _txtEntRef = IF ( _lrN = 0, "", _lrTxt & IF ( _lrN = 1, " entrou em crítico", " entraram em crítico" ) ) & IF ( _lbN = 0, "", IF ( _lrN > 0, " e ", "" ) & _lbTxt & IF ( _lbN = 1, " abriu em crítico", " abriram em crítico" ) )
+VAR _abrevIni = FORMAT ( _ini, "mmm", "pt-BR" )
+VAR _txtSob = "LEITURA · COMO OS MESES EVOLUÍRAM · " & IF ( _nMeses <= 1, _mesC, UPPER ( _abrevIni ) & " A " & _mesC )
+VAR _tarA = ABS ( _ativRef )
+VAR _tarNu = SWITCH ( TRUE (), _tarA >= 99950000, FORMAT ( _tarA / 1000000, "0.0", "pt-BR" ), _tarA >= 999500, FORMAT ( _tarA / 1000000, "0.00", "pt-BR" ), _tarA >= 999.5, FORMAT ( _tarA / 1000, "0", "pt-BR" ), FORMAT ( _tarA, "#,0", "pt-BR" ) )
+VAR _tarUn = SWITCH ( TRUE (), _tarA >= 999500, " mi", _tarA >= 999.5, " mil", "" )
+VAR _tarN = _tarNu & _tarUn
+VAR _tarZero = _tarN = "0"
+VAR _tarS = IF ( _tarZero, "", IF ( _ativRef < 0, "−", "" ) )
+VAR _tarTxt = IF ( ISBLANK ( _ativRef ), "—", _tarS & "R$ " & _tarN )
+VAR _taiA = ABS ( _ativIni )
+VAR _taiNu = SWITCH ( TRUE (), _taiA >= 99950000, FORMAT ( _taiA / 1000000, "0.0", "pt-BR" ), _taiA >= 999500, FORMAT ( _taiA / 1000000, "0.00", "pt-BR" ), _taiA >= 999.5, FORMAT ( _taiA / 1000, "0", "pt-BR" ), FORMAT ( _taiA, "#,0", "pt-BR" ) )
+VAR _taiUn = SWITCH ( TRUE (), _taiA >= 999500, " mi", _taiA >= 999.5, " mil", "" )
+VAR _taiN = _taiNu & _taiUn
+VAR _taiZero = _taiN = "0"
+VAR _taiS = IF ( _taiZero, "", IF ( _ativIni < 0, "−", "" ) )
+VAR _taiTxt = IF ( ISBLANK ( _ativIni ), "—", _taiS & "R$ " & _taiN )
+VAR _tfrN = FORMAT ( ABS ( _fisRef ), "0.0", "pt-BR" )
+VAR _tfrS = SWITCH ( TRUE (), ROUND ( _fisRef, 1 ) < 0, "−", ROUND ( _fisRef, 1 ) > 0, "+", "" )
+VAR _tfrTxt = IF ( ISBLANK ( _fisRef ), "—", _tfrS & _tfrN & " p.p." )
+VAR _tfiN = FORMAT ( ABS ( _fisIni ), "0.0", "pt-BR" )
+VAR _tfiS = SWITCH ( TRUE (), ROUND ( _fisIni, 1 ) < 0, "−", ROUND ( _fisIni, 1 ) > 0, "+", "" )
+VAR _tfiTxt = IF ( ISBLANK ( _fisIni ), "—", _tfiS & _tfiN & " p.p." )
+VAR _tarKP = LEN ( _tarNu ) > 0
+VAR _tarKN = IF ( _tarKP, _tarNu )
+VAR _tarKS = SUBSTITUTE ( SUBSTITUTE ( _tarKN, ".", "" ), ",", "" )
+VAR _tarKT = IFERROR ( VALUE ( _tarKS ), -1 )
+VAR _tarKOk = _tarKP && _tarKT >= 2 && FORMAT ( _tarKT, REPT ( "0", LEN ( _tarKS ) ) ) = _tarKS
+VAR _tarKD = IF ( CONTAINSSTRING ( _tarKN, "," ), LEN ( _tarKN ) - SEARCH ( ",", _tarKN ), 0 )
+VAR _tarKM = IF ( CONTAINSSTRING ( _tarKN, "." ), "#,##0", "0" ) & IF ( _tarKD > 0, "." & REPT ( "0", _tarKD ) )
+VAR _tarKOd =
+    IF (
+        _tarKOk,
+        "<o-d><o-v>" & _tarKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tarKN, FORMAT ( ROUND ( _tarKT * [@odf] / 1000, 0 ) / POWER ( 10, _tarKD ), _tarKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tarNu
+    )
+VAR _tarOd = IF ( ISBLANK ( _ativRef ), _tarTxt, _tarS & "R$ " & _tarKOd & _tarUn )
+VAR _tfrKP = LEN ( _tfrN ) > 0
+VAR _tfrKN = IF ( _tfrKP, _tfrN )
+VAR _tfrKS = SUBSTITUTE ( SUBSTITUTE ( _tfrKN, ".", "" ), ",", "" )
+VAR _tfrKT = IFERROR ( VALUE ( _tfrKS ), -1 )
+VAR _tfrKOk = _tfrKP && _tfrKT >= 2 && FORMAT ( _tfrKT, REPT ( "0", LEN ( _tfrKS ) ) ) = _tfrKS
+VAR _tfrKD = IF ( CONTAINSSTRING ( _tfrKN, "," ), LEN ( _tfrKN ) - SEARCH ( ",", _tfrKN ), 0 )
+VAR _tfrKM = IF ( CONTAINSSTRING ( _tfrKN, "." ), "#,##0", "0" ) & IF ( _tfrKD > 0, "." & REPT ( "0", _tfrKD ) )
+VAR _tfrKOd =
+    IF (
+        _tfrKOk,
+        "<o-d><o-v>" & _tfrKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tfrKN, FORMAT ( ROUND ( _tfrKT * [@odf] / 1000, 0 ) / POWER ( 10, _tfrKD ), _tfrKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tfrN
+    )
+VAR _tfrOd = IF ( ISBLANK ( _fisRef ), _tfrTxt, _tfrS & _tfrKOd & " p.p." )
+VAR _tpcN = FORMAT ( _pico, "#,0", "pt-BR" )
+VAR _tpcTxt = IF ( ISBLANK ( _pico ), "0", _tpcN )
+VAR _tpcKP = LEN ( _tpcN ) > 0
+VAR _tpcKN = IF ( _tpcKP, _tpcN )
+VAR _tpcKS = SUBSTITUTE ( SUBSTITUTE ( _tpcKN, ".", "" ), ",", "" )
+VAR _tpcKT = IFERROR ( VALUE ( _tpcKS ), -1 )
+VAR _tpcKOk = _tpcKP && _tpcKT >= 2 && FORMAT ( _tpcKT, REPT ( "0", LEN ( _tpcKS ) ) ) = _tpcKS
+VAR _tpcKD = IF ( CONTAINSSTRING ( _tpcKN, "," ), LEN ( _tpcKN ) - SEARCH ( ",", _tpcKN ), 0 )
+VAR _tpcKM = IF ( CONTAINSSTRING ( _tpcKN, "." ), "#,##0", "0" ) & IF ( _tpcKD > 0, "." & REPT ( "0", _tpcKD ) )
+VAR _tpcKOd =
+    IF (
+        _tpcKOk,
+        "<o-d><o-v>" & _tpcKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tpcKN, FORMAT ( ROUND ( _tpcKT * [@odf] / 1000, 0 ) / POWER ( 10, _tpcKD ), _tpcKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tpcN
+    )
+VAR _tpcOd = IF ( ISBLANK ( _pico ), _tpcTxt, _tpcKOd )
+VAR _txtCrit = IF ( _critIni = _critRef, SWITCH ( _critRef, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _critRef, "0" ) ) & " no início e no fim", "de " & SWITCH ( _critIni, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _critIni, "0" ) ) & " para " & SWITCH ( _critRef, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _critRef, "0" ) ) )
+VAR _txtPend = IF ( _pendIni = _pendRef, SWITCH ( _pendRef, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _pendRef, "0" ) ) & " no início e no fim", "de " & SWITCH ( _pendIni, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _pendIni, "0" ) ) & " para " & SWITCH ( _pendRef, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _pendRef, "0" ) ) )
+VAR _txtAchado =
+    SWITCH (
+        TRUE (),
+        _nMeses <= 1, "Primeiro mês do histórico: " & SWITCH ( _critRef, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _critRef, "0" ) ) & IF ( _critRef <= 1, " crítica", " críticas" ) & " e " & SWITCH ( _pendRef, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", FORMAT ( _pendRef, "0" ) ) & IF ( _pendRef = 1, " pendente.", " pendentes." ),
+        "Críticas: " & _txtCrit & "; pendentes, " & _txtPend & "."
+    )
+VAR _p1 = IF ( _l1N > 0, _l1Txt & IF ( _i1Fr <> "", ", perdendo mais " & _i1Fr, "" ), "" )
+VAR _q1 = IF ( _a1N = 0, "", _a1Txt & IF ( _a1N = 1, " já abriu crítica", " já abriram críticas" ) )
+VAR _par1 = "(" & _p1 & IF ( _p1 <> "" && _q1 <> "", "; ", "" ) & _q1 & ")"
+VAR _p2 = IF ( _l2N > 0, _l2Txt & IF ( _i2Fr <> "", ", perdendo mais " & _i2Fr, "" ), "" )
+VAR _q2 = IF ( _a2N = 0, "", _a2Txt & IF ( _a2N = 1, " já abriu crítica", " já abriram críticas" ) )
+VAR _par2 = "(" & _p2 & IF ( _p2 <> "" && _q2 <> "", "; ", "" ) & _q2 & ")"
+VAR _txtPiora =
+    IF (
+        ISBLANK ( _e1 ),
+        "Nenhuma obra entrou em crítico no período.",
+        "A piora começou em " & FORMAT ( _e1, "mmmm", "pt-BR" ) & " " & _par1
+            & IF ( ISBLANK ( _e2 ), "", " e se firmou em " & FORMAT ( _e2, "mmmm", "pt-BR" ) & " " & _par2 ) & "."
+    )
+VAR _txtPico =
+    IF (
+        _pico = 0 || ISBLANK ( _picoMes ) || _picoMes = _e1,
+        "",
+        " " & UPPER ( LEFT ( FORMAT ( _picoMes, "mmmm", "pt-BR" ), 1 ) ) & MID ( FORMAT ( _picoMes, "mmmm", "pt-BR" ), 2, LEN ( FORMAT ( _picoMes, "mmmm", "pt-BR" ) ) ) & IF ( _picoMes = _ref, " é", " foi" ) & " o pico"
+    )
+VAR _txtSaida =
+    SWITCH (
+        TRUE (),
+        _lsN = 0 && _txtEntRef = "", IF ( _txtPico = "", "", "." ),
+        _lsN = 0, IF ( _txtPico = "", " Em ", "; em " ) & _mesN & " " & _txtEntRef & ".",
+        IF ( _txtPico = "", " Em ", "; em " ) & _mesN & " " & _lsTxt & IF ( _lsN = 1, " voltou", " voltaram" ) & IF ( _saiSt = 1, " para atenção", " para a faixa estável" ) & IF ( _txtEntRef = "", ".", ", e " & _txtEntRef & "." )
+    )
+VAR _txtJanela = IF ( _nMeses <= 1, "no mês", "nos últimos " & "⁅" & _nMeses & "⁆" & " meses" )
+VAR _txtObrasCrit = IF ( _pico = 1, "obra crítica", "obras críticas" )
+VAR _txtD1 =
+    SWITCH (
+        TRUE (),
+        _pico = 0, "obras críticas " & _txtJanela,
+        _nMeses <= 1, _txtObrasCrit & " em " & FORMAT ( _picoMes, "mmmm", "pt-BR" ),
+        _txtObrasCrit & " em " & FORMAT ( _picoMes, "mmmm", "pt-BR" ) & ", o pico dos " & "⁅" & _nMeses & "⁆" & " meses"
+    )
+VAR _txtAbIni = _abrevIni & "."
+VAR _txtAtivIni =
+    SWITCH (
+        TRUE (),
+        _nMeses <= 1, "",
+        _taiTxt = _tarTxt, " (o mesmo de " & _txtAbIni & ")",
+        " (" & _txtAbIni & ": " & "⁅" & _taiTxt & "⁆" & ")"
+    )
+VAR _txtFisIni =
+    SWITCH (
+        TRUE (),
+        _nMeses <= 1, "",
+        _tfiTxt = _tfrTxt, " (o mesmo de " & _txtAbIni & ")",
+        " (" & _txtAbIni & ": " & IF ( ROUND ( _fisIni, 1 ) < 0, "<span class='ng'>" & "⁅" & _tfiTxt & "⁆" & "</span>", "⁅" & _tfiTxt & "⁆" ) & ")"
+    )
+-- 4 · Marcação
+VAR _htmlDst =
+    "<div class='dst dst-l'>"
+        & "<div class='dl'><b>" & _tpcOd & "</b><span>" & _txtD1 & "</span></div>"
+        & "<div class='dl'><b>" & _tarOd & "</b><span>" & "pagos e não aplicados" & _txtAtivIni & "</span></div>"
+        & "<div class='dl'><b>" & IF ( ROUND ( _fisRef, 1 ) < 0, "<span class='ng'>" & _tfrOd & "</span>", _tfrOd ) & "</b><span>" & "físico ponderado" & _txtFisIni & "</span></div>"
+    & "</div>"
+VAR _corpo =
+    "<span class='vs sob'>" & _txtSob & "</span>"
+        & "<h2 class='ach'>" & _txtAchado & "</h2>"
+        & "<p class='exp'>" & _txtPiora & _txtPico & _txtSaida & "</p>"
+        & _htmlDst
+VAR _saidaHtml =
+    IF ( _nObras > 0, "<div class='u lv' role='dialog' aria-label='" & "Leitura de Como os meses evoluíram" & "'><div class='pn pn-peq pn-meses'>" & _corpo & "</div><svg class='x' width='26' height='26' viewBox='0 0 26 26' aria-hidden='true'><circle cx='13' cy='13' r='12.375' fill='#FFFFFF' stroke='#3B3B3F' stroke-width='1.25'/><path d='M9 9L17 17M17 9L9 17' fill='none' stroke='#0B0B0C' stroke-width='1.5' stroke-linecap='round'/></svg></div>" & [Comum · JS contador tooltip] )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

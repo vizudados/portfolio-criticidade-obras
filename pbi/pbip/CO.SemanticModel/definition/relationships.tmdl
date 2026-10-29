@@ -1,0 +1,35 @@
+relationship rel_fAnaliseCritica_Obra_dObra
+	crossFilteringBehavior: oneDirection
+	fromColumn: fAnaliseCritica.Obra
+	toColumn: dObra.Obra
+
+relationship rel_fAnaliseCritica_Mes_dMes
+	crossFilteringBehavior: oneDirection
+	fromColumn: fAnaliseCritica.Mes
+	toColumn: dMes.Mes
+
+relationship rel_fItens_Obra_dObra
+	crossFilteringBehavior: oneDirection
+	fromColumn: fItens.Obra
+	toColumn: dObra.Obra
+
+relationship rel_fItens_Mes_dMes
+	crossFilteringBehavior: oneDirection
+	fromColumn: fItens.Mes
+	toColumn: dMes.Mes
+
+relationship rel_fItens_Item_dItem
+	crossFilteringBehavior: oneDirection
+	fromColumn: fItens.Item
+	toColumn: dItem.Item
+
+relationship rel_fBaseObra_Obra_dObra
+	crossFilteringBehavior: oneDirection
+	fromColumn: fBaseObra.Obra
+	toColumn: dObra.Obra
+
+relationship rel_fBaseObra_Mes_dMes
+	crossFilteringBehavior: oneDirection
+	fromColumn: fBaseObra.Mes
+	toColumn: dMes.Mes
+

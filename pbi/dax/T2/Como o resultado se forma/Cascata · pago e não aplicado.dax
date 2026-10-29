@@ -1,0 +1,8 @@
+/*
+@pasta: T2 Análise crítica\Como o resultado se forma\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Degrau 'pago e não aplicado' da cascata: itens 02 a 07 do quadradinho (saldo de contrato, adiantamentos, estoque, equipamentos e receita de personalizações) — tudo o que soma no resultado sem ter virado obra pelo crédito.
+@oraculo: serie[].ativos_nao_consumidos (+ receita)
+@gerado: pbi/scripts/contas_t2.py
+*/
+[Ativos não consumidos] + [Receita de personalizações]

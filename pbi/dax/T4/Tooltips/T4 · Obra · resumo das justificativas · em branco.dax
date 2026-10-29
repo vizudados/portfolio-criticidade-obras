@@ -1,0 +1,17 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: 0
+@descricao: Justificativas exigidas e em branco da obra nos meses da janela anteriores aos 6 mais recentes (a linha de resumo do tooltip da obra do desembolso); vazio ou zero quando a janela tem 6 meses ou menos.
+@oraculo: 1 (jan)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _corte = EDATE ( _ref, -5 )
+VAR _meses =
+    FILTER (
+        ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] < _corte ), "@tem", [Obras com análise] ),
+        [@tem] > 0
+    )
+RETURN
+    SUMX ( _meses, [Justificativa · em branco] ) + 0

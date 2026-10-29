@@ -1,0 +1,20 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: Obras do recorte (com aba da Análise Crítica) que perderam pontos nos itens do contexto (item ou dimensão). Lido de dItemRankingNota.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _t =
+    GROUPBY (
+        FILTER ( FILTER (
+        dItemRankingNota,
+        dItemRankingNota[Item] IN VALUES ( dItemNota[Item] )
+            && dItemRankingNota[Obra] IN VALUES ( dObra[Obra] )
+            && dItemRankingNota[Mes] IN VALUES ( dMes[Mes] )
+    ), dItemRankingNota[TemAC] = 1 ),
+        dItemRankingNota[Obra],
+        "@perde", SUMX ( CURRENTGROUP (), dItemRankingNota[Possiveis] - dItemRankingNota[Pontos] )
+    )
+RETURN
+    COUNTROWS ( FILTER ( _t, ROUND ( [@perde], 8 ) > 0 ) )

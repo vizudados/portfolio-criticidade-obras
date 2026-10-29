@@ -1,0 +1,10 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00
+@descricao: [Ativos não consumidos] no primeiro mês da janela das séries (recorte de obras do drawer).
+@oraculo: carteira.serie[0]
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _ini = [Série · primeiro mês]
+RETURN
+    CALCULATE ( [Ativos não consumidos], REMOVEFILTERS ( dMes ), dMes[Mes] = _ini )

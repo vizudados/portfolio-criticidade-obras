@@ -1,0 +1,10 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: 0.00%
+@descricao: Desembolsado ÷ previsto − 1 da obra no mês anterior ao do contexto.
+@oraculo: obras[].serie[m−1].indicadores.desvio_desembolso (JANGADA mai/26: +53%)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+RETURN
+    CALCULATE ( [Desembolso · desvio no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

@@ -1,0 +1,68 @@
+/*
+@tipo: tabela-calculada
+@descricao: Pontos e possíveis de cada item da nota por obra × mês (obras com aba da Análise Crítica ou com a base complementar no mês), copiados das medidas da regra de cada item no refresh. As somas por item e por dimensão (Nota · item · …) leem esta tabela. GERADA por pbi/scripts/contas_base.py; a regra fica nas medidas.
+@oculta: sim
+@coluna: Obra | texto | | Obra.
+@coluna: Mes | data | formato=dd/mm/yyyy | Mês.
+@coluna: Item | texto | | Código do item (dItemNota).
+@coluna: TemAC | inteiro | formato=0 | 1 quando a obra tem aba da Análise Crítica no mês.
+@coluna: Pontos | decimal | formato=0.00 | Pontos do item.
+@coluna: Possiveis | decimal | formato=0.00 | Máximo do item quando tem dado.
+*/
+VAR _obraMes =
+    SELECTCOLUMNS ( dRankingNota, "Obra", dRankingNota[Obra], "Mes", dRankingNota[Mes], "TemAC", dRankingNota[TemAC] )
+VAR _itens = SELECTCOLUMNS ( { "custo", "prazo", "ppc", "caixa", "inspecao", "acidentes", "nr18", "entregas", "analise" }, "Item", [Value] )
+RETURN
+    SELECTCOLUMNS (
+        CROSSJOIN ( _obraMes, _itens ),
+        "Obra", [Obra],
+        "Mes", [Mes],
+        "Item", [Item],
+        "TemAC", [TemAC],
+        "Pontos",
+            VAR _o = [Obra]
+            VAR _m = [Mes]
+            VAR _i = [Item]
+            RETURN
+                CALCULATE (
+                    SWITCH (
+                        _i,
+                        "custo", [Nota · pontos custo],
+                        "prazo", [Nota · pontos prazo],
+                        "ppc", [Nota · pontos PPC],
+                        "caixa", [Nota · pontos caixa],
+                        "inspecao", [Nota · pontos inspeção],
+                        "acidentes", [Nota · pontos acidentes],
+                        "nr18", [Nota · pontos NR-18],
+                        "entregas", [Nota · pontos entregas],
+                        "analise", [Nota · pontos análise crítica]
+                    ),
+                    REMOVEFILTERS ( fAnaliseCritica ),
+                    REMOVEFILTERS ( fBaseObra ),
+                    dObra[Obra] = _o,
+                    dMes[Mes] = _m
+                ),
+        "Possiveis",
+            VAR _o = [Obra]
+            VAR _m = [Mes]
+            VAR _i = [Item]
+            RETURN
+                CALCULATE (
+                    SWITCH (
+                        _i,
+                        "custo", [Nota · possíveis · custo],
+                        "prazo", [Nota · possíveis · prazo],
+                        "ppc", [Nota · possíveis · PPC],
+                        "caixa", [Nota · possíveis · caixa],
+                        "inspecao", [Nota · possíveis · inspeção],
+                        "acidentes", [Nota · possíveis · acidentes],
+                        "nr18", [Nota · possíveis · NR-18],
+                        "entregas", [Nota · possíveis · entregas],
+                        "analise", [Nota · possíveis · análise crítica]
+                    ),
+                    REMOVEFILTERS ( fAnaliseCritica ),
+                    REMOVEFILTERS ( fBaseObra ),
+                    dObra[Obra] = _o,
+                    dMes[Mes] = _m
+                )
+    )

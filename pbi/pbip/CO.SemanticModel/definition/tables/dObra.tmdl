@@ -1,0 +1,241 @@
+/// Obras: as do cadastro (em andamento, a iniciar e concluídas), as que estão na cronograma sem estar no cadastro (entram assim mesmo, sem código nem SPE) e qualquer obra que tenha planilha Análise Crítica lida em stgAbas. Situação, orçamento, tipo, m², início e término vêm da cronograma (stgCrono), pelo nome da obra na cronograma (NomeCrono do cadastro); código e SPE vêm do cadastro. Fonte diz se o dado da obra é real (planilha da obra) ou ilustrativo (planilha de exemplo, com FICTICIO no nome); obra sem análise crítica é cronograma. Selo só aparece quando há planilha de exemplo na leitura: aí a real leva REAL e a de exemplo ILUSTR.; com todas reais, nenhuma leva selo.
+table dObra
+	lineageTag: 8036ad13-a579-52a7-a1bc-562d438dd16b
+
+	/// Nome da obra (do cadastro; obra só da cronograma leva o nome da cronograma).
+	column Obra
+		dataType: string
+		isKey
+		lineageTag: a4f056fb-1c67-5648-a90c-78f188640599
+		summarizeBy: none
+		sourceColumn: Obra
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Código do empreendimento no Fluxo de Caixa (cadastro).
+	column Codigo
+		dataType: string
+		lineageTag: 086ac95a-9155-5b37-92c0-5f0cffdecdd9
+		summarizeBy: none
+		sourceColumn: Codigo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sociedade de propósito específico (cadastro).
+	column SPE
+		dataType: string
+		lineageTag: 4aa7d6b5-c02a-5e59-9f6b-94a0b1302d4d
+		summarizeBy: none
+		sourceColumn: SPE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Em andamento, A iniciar ou Concluída (cronograma: realizado acumulado ÷ orçamento).
+	column Situacao
+		dataType: string
+		lineageTag: 60ef6269-d39a-5a5c-b56c-2573aad4211c
+		summarizeBy: none
+		sourceColumn: Situacao
+		sortByColumn: OrdemSituacao
+
+		annotation SummarizationSetBy = Automatic
+
+	/// 1 em andamento · 2 a iniciar · 3 concluída · 9 sem situação na cronograma.
+	column OrdemSituacao
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 986cb3b8-3f71-50b3-ab66-ecbc0e6fb3b4
+		summarizeBy: none
+		sourceColumn: OrdemSituacao
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Tipo do orçamento na cronograma (versão em VersaoCrono).
+	column TipoOrcamentoCrono
+		dataType: string
+		lineageTag: 8a87c9f5-fec4-575c-a00b-33aa1e0b89d0
+		summarizeBy: none
+		sourceColumn: TipoOrcamentoCrono
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Orçamento na cronograma (versão em VersaoCrono).
+	column OrcamentoCrono
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 911ae30a-82c4-590a-8e2c-e5c53b849dc0
+		summarizeBy: none
+		sourceColumn: OrcamentoCrono
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Área (m² NBR), da cronograma.
+	column M2
+		dataType: double
+		isHidden
+		formatString: #,0
+		lineageTag: b71ef047-5dfc-52d3-841c-34bc6bad9666
+		summarizeBy: none
+		sourceColumn: M2
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Início da obra (mês), da cronograma.
+	column Inicio
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: d5640f5b-9fc2-5695-a70b-69c431e89b0b
+		summarizeBy: none
+		sourceColumn: Inicio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Término previsto (mês), da cronograma.
+	column TerminoPrevisto
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 4bebd1ff-bc75-54de-8c85-9b00386d4403
+		summarizeBy: none
+		sourceColumn: TerminoPrevisto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Versão da cronograma de onde vêm os campos (MM/AAAA, do nome do arquivo).
+	column VersaoCrono
+		dataType: string
+		lineageTag: daa36f8e-15f0-5f37-a230-050b1581f2a3
+		summarizeBy: none
+		sourceColumn: VersaoCrono
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Real, Ilustrativo ou cronograma (só cronograma, sem análise crítica).
+	column Fonte
+		dataType: string
+		lineageTag: 90e2067c-dc4c-5b59-bb33-f3a728f3942f
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// ILUSTR. para planilha fictícia; REAL só quando há fictícia na leitura; vazio nos demais casos.
+	column Selo
+		dataType: string
+		lineageTag: 33eac4bb-4635-50b7-bdac-5b60a17d5ba6
+		summarizeBy: none
+		sourceColumn: Selo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// A obra tem planilha Análise Crítica lida.
+	column TemAnaliseCritica
+		dataType: boolean
+		lineageTag: c575bbf0-31e9-5daa-8bd8-7fdde66b134b
+		summarizeBy: none
+		sourceColumn: TemAnaliseCritica
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Bairro da obra (cadastro).
+	column Bairro
+		dataType: string
+		lineageTag: 708e5cf9-6c35-5865-b569-7a016c6420b4
+		summarizeBy: none
+		sourceColumn: Bairro
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Unidades do empreendimento (cadastro).
+	column Unidades
+		dataType: int64
+		formatString: 0
+		lineageTag: 39d5a225-9173-5c55-80a8-9d7377142c6d
+		summarizeBy: none
+		sourceColumn: Unidades
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Entrega contratual (cadastro): base do prazo com a tolerância de 180 dias.
+	column EntregaContratual
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: cc6e4668-854d-532b-b71b-94f379b96cb3
+		summarizeBy: none
+		sourceColumn: EntregaContratual
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition dObra = m
+		mode: import
+		source =
+				let
+				    Cadastro = Table.SelectColumns(stgCadastro, {"Obra", "Codigo", "SPE", "NomeCrono"}),
+				    Crono = Table.SelectRows(stgCrono, each [ObraCrono] <> null),
+
+				    // Fonte de cada obra pelas planilhas lidas (real vence ilustrativo)
+				    Planilhas = Table.Group(Table.SelectColumns(stgAbas, {"Obra", "Fonte"}), {"Obra"},
+				        {{"FontePlanilha", each if List.Contains([Fonte], "Real") then "Real" else "Ilustrativo", type text}}),
+				    TemFicticia = List.Contains(Planilhas[FontePlanilha], "Ilustrativo"),
+
+				    // o cadastro leva a cronograma pelo nome da obra na cronograma (vínculo explícito, sem fuzzy)
+				    ComCrono = Table.NestedJoin(Cadastro, {"NomeCrono"}, Crono, {"ObraCrono"}, "G", JoinKind.LeftOuter),
+				    DoCadastro = Table.ExpandTableColumn(ComCrono, "G",
+				        {"TipoOrcamento", "Orcamento", "M2", "Inicio", "TerminoPrevisto", "Situacao", "VersaoCrono"},
+				        {"TipoOrcamentoCrono", "OrcamentoCrono", "M2", "Inicio", "TerminoPrevisto", "Situacao", "VersaoCrono"}),
+				    NomesNoCadastro = List.Select(Cadastro[NomeCrono], each _ <> null),
+
+				    // obra da cronograma que não está no cadastro: entra assim mesmo, sem código nem SPE (aviso em fConferencia)
+				    // (e não entra a cronograma cujo nome já é de uma obra do cadastro sem nome_crono: a chave Obra não pode repetir)
+				    SoCrono = Table.SelectRows(Crono, each not List.Contains(NomesNoCadastro, [ObraCrono]) and not List.Contains(Cadastro[Obra], [ObraCrono])),
+				    Forma = type table [Obra = text, Codigo = nullable text, SPE = nullable text, Situacao = nullable text,
+				        TipoOrcamentoCrono = nullable text, OrcamentoCrono = nullable number, M2 = nullable number,
+				        Inicio = nullable date, TerminoPrevisto = nullable date, VersaoCrono = nullable text],
+				    NovasCrono = Table.FromRecords(List.Transform(Table.ToRecords(SoCrono), (r) => [Obra = r[ObraCrono], Codigo = null,
+				        SPE = null, Situacao = r[Situacao], TipoOrcamentoCrono = r[TipoOrcamento], OrcamentoCrono = r[Orcamento],
+				        M2 = r[M2], Inicio = r[Inicio], TerminoPrevisto = r[TerminoPrevisto], VersaoCrono = r[VersaoCrono]]), Forma),
+
+				    // obra só com planilha Análise Crítica (fora do cadastro e da cronograma): em andamento, como antes
+				    NomesJa = List.Combine({Cadastro[Obra], Table.Column(NovasCrono, "Obra")}),
+				    SoNasPlanilhas = Table.SelectRows(Planilhas, each not List.Contains(NomesJa, [Obra])),
+				    NovasPlanilhas = Table.FromRecords(List.Transform(SoNasPlanilhas[Obra], (o) => [Obra = o, Codigo = null, SPE = null,
+				        Situacao = "Em andamento", TipoOrcamentoCrono = null, OrcamentoCrono = null, M2 = null, Inicio = null,
+				        TerminoPrevisto = null, VersaoCrono = null]), Forma),
+
+				    Todas = Table.Combine({Table.SelectColumns(DoCadastro, {"Obra", "Codigo", "SPE", "Situacao", "TipoOrcamentoCrono",
+				        "OrcamentoCrono", "M2", "Inicio", "TerminoPrevisto", "VersaoCrono"}), NovasCrono, NovasPlanilhas}),
+				    ComFonte = Table.NestedJoin(Todas, {"Obra"}, Planilhas, {"Obra"}, "P", JoinKind.LeftOuter),
+				    Expandido = Table.ExpandTableColumn(ComFonte, "P", {"FontePlanilha"}),
+				    Final = Table.FromRecords(List.Transform(Table.ToRecords(Expandido), (r) =>
+				        let Fonte = if r[FontePlanilha] = null then "cronograma" else r[FontePlanilha] in
+				        Record.RemoveFields(r, {"FontePlanilha"}) & [
+				            OrdemSituacao = if r[Situacao] = "Em andamento" then 1 else if r[Situacao] = "A iniciar" then 2
+				                else if r[Situacao] = "Concluída" then 3 else 9,
+				            Fonte = Fonte,
+				            Selo = if Fonte = "Ilustrativo" then "ILUSTR." else if Fonte = "Real" and TemFicticia then "REAL" else "",
+				            TemAnaliseCritica = r[FontePlanilha] <> null
+				        ])),
+				    Ordenado = Table.SelectColumns(Final, {"Obra", "Codigo", "SPE", "Situacao", "OrdemSituacao", "TipoOrcamentoCrono",
+				        "OrcamentoCrono", "M2", "Inicio", "TerminoPrevisto", "VersaoCrono", "Fonte", "Selo", "TemAnaliseCritica"}),
+				    TipadoFinal = Table.TransformColumnTypes(Ordenado, {{"Obra", type text}, {"Codigo", type text}, {"SPE", type text},
+				        {"Situacao", type text}, {"OrdemSituacao", Int64.Type}, {"TipoOrcamentoCrono", type text},
+				        {"OrcamentoCrono", type number}, {"M2", type number}, {"Inicio", type date}, {"TerminoPrevisto", type date},
+				        {"VersaoCrono", type text}, {"Fonte", type text}, {"Selo", type text}, {"TemAnaliseCritica", type logical}}),
+				    // bairro, unidades e entrega contratual vêm do cadastro (obra fora do cadastro: vazios)
+				    Extras = Table.SelectColumns(stgCadastro, {"Obra", "Bairro", "Unidades", "EntregaContratual"}),
+				    ComExtras = Table.ExpandTableColumn(Table.NestedJoin(TipadoFinal, {"Obra"}, Extras, {"Obra"}, "C", JoinKind.LeftOuter),
+				        "C", {"Bairro", "Unidades", "EntregaContratual"}),
+				    Saida = Table.TransformColumnTypes(ComExtras, {{"Bairro", type text}, {"Unidades", Int64.Type},
+				        {"EntregaContratual", type date}})
+				in
+				    Saida
+
+	annotation PBI_ResultType = Table
+

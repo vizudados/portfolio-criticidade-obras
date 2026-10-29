@@ -1,0 +1,12 @@
+/*
+@pasta: T4 Resultado no tempo\Resultado mês a mês
+@formato: texto
+@descricao: CSS do subtítulo e da legenda do Resultado da carteira, mês a mês (F3).
+@gerado: pbi/scripts/desenho_t4.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".mlg{position:fixed;inset:0;background:#FFFFFF;display:flex;justify-content:flex-end;align-items:center;font-size:14px;line-height:19px;color:#3B3B3F;white-space:nowrap}.mlg i{disp"
+    & "lay:block;flex:none;margin-right:6px}.mlg span{margin-right:18px}.mlg span:last-child{margin-right:0}.mlg .sp{width:12px;height:12px;background:#0B0B0C}.mlg .sn{width:12px;height:1"
+    & "2px;background:#C43737}.mlg .tq{width:18px;height:3px;background:#0B0B0C}.msb{position:fixed;inset:0;background:#FFFFFF;font-size:15px;line-height:22px;color:#3B3B3F;white-space:no"
+    & "wrap}"

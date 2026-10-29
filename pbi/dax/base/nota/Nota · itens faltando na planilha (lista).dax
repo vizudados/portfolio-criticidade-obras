@@ -1,0 +1,19 @@
+/*
+@pasta: Base\Nota
+@formato: texto
+@descricao: Códigos (dItemNota) dos itens da Análise Crítica sem dado para a obra do contexto, na ordem da régua, separados por '|'; vazio sem falta ou sem obra. Uma obra no contexto.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _falta =
+    {
+        ( "custo", INT ( ISBLANK ( [Nota · pontos custo] ) ) ),
+        ( "prazo", INT ( ISBLANK ( [Nota · pontos prazo] ) ) ),
+        ( "caixa", INT ( ISBLANK ( [Nota · pontos caixa] ) ) ),
+        ( "analise", INT ( ISBLANK ( [Nota · pontos análise crítica] ) ) )
+    }
+RETURN
+    IF (
+        HASONEVALUE ( dObra[Obra] ) && [Nota · obra presente] = 1,
+        CONCATENATEX ( FILTER ( _falta, [Value2] = 1 ), [Value1], "|" )
+    )

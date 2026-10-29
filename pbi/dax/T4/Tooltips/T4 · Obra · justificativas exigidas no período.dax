@@ -1,0 +1,11 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: 0
+@descricao: Meses da janela, até o de referência, em que a obra passou de ±10% de desvio no desembolso (justificativa exigida).
+@oraculo: obras[].serie[] com |desvio_desembolso| > 10% (REDINHA 6 · CAJUEIRO 4 · DUNAS 0)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+RETURN
+    SUMX ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), [Justificativa · exigida] ) + 0

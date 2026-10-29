@@ -1,0 +1,25 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: texto
+@descricao: Como a distância ao cronograma (|desvio físico|) anda até a referência, dentro da janela: cresce ou cai quando os dois últimos meses ou mais vão no mesmo sentido; oscila quando o último mês inverteu o sentido. Uma obra no contexto.
+@oraculo: obras[].serie[].indicadores.desvio_fisico_pp (|d| mês a mês)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ref ),
+        "@d", VAR _m = dMes[Mes] RETURN CALCULATE ( [Físico · desvio acumulado p.p.], REMOVEFILTERS ( dMes ), dMes[Mes] = _m ),
+        "@a", VAR _m = dMes[Mes] RETURN CALCULATE ( [Físico · desvio acumulado p.p.], REMOVEFILTERS ( dMes ), dMes[Mes] = EDATE ( _m, -1 ) )
+    )
+VAR _serie = FILTER ( _meses, NOT ISBLANK ( [@d] ) )
+VAR _comDelta = ADDCOLUMNS ( _serie, "@sg", IF ( ISBLANK ( [@a] ) || dMes[Mes] = _jan, BLANK (), SIGN ( ROUND ( ABS ( [@d] ) - ABS ( [@a] ), 3 ) ) ) )
+VAR _sgRef = MAXX ( FILTER ( _comDelta, dMes[Mes] = _ref ), [@sg] )
+VAR _quebra = MAXX ( FILTER ( _comDelta, ISBLANK ( [@sg] ) || [@sg] <> _sgRef ), dMes[Mes] )
+VAR _passos = DATEDIFF ( _quebra, _ref, MONTH )
+RETURN
+    IF (
+        NOT ISBLANK ( _sgRef ),
+        SWITCH ( TRUE (), _passos >= 2 && _sgRef > 0, "cresce", _passos >= 2 && _sgRef < 0, "cai", "oscila" )
+    )

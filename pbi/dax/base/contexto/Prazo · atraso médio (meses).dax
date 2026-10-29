@@ -1,0 +1,15 @@
+/*
+@pasta: Base\Prazo
+@formato: 0.0
+@descricao: Atraso em meses das obras do recorte com aba, ponderado pelo orçamento (na obra, o atraso dela).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _t =
+    ADDCOLUMNS (
+        FILTER ( VALUES ( dObra[Obra] ), NOT ISEMPTY ( RELATEDTABLE ( fAnaliseCritica ) ) ),
+        "@a", [Prazo · atraso (meses)],
+        "@o", [Orçamento]
+    )
+VAR _v = FILTER ( _t, NOT ISBLANK ( [@a] ) )
+RETURN
+    IF ( NOT ISEMPTY ( _v ), DIVIDE ( SUMX ( _v, [@a] * [@o] ), SUMX ( _v, [@o] ) ) )

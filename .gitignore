@@ -1,0 +1,22 @@
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+.env
+~$*
+.DS_Store
+Thumbs.db
+
+# Power BI: binário e cache local nunca sobem
+*.pbix
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# Caminhos da máquina de quem roda e saídas de conferência local
+pbi/scripts/perfil_local.json
+pbi/_backups/
+pbi/qa/
+
+# Capa: a pasta de publicação é o ramo órfão capa-midia deste repositório (servido pelo GitHub Pages), montada por
+# pbi/scripts/capa_publicar.py --montar; os quadros e o MP4 do Remotion saem em pbi/spec/capa/remotion/renders/
+pbi/spec/capa/publicacao/

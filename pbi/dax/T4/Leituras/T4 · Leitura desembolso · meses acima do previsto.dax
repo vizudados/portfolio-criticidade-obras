@@ -1,0 +1,12 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: 0
+@descricao: Meses da janela, até o de referência, em que o desembolso da carteira passou do previsto.
+@oraculo: carteira.serie[].desvio_desembolso > 0: 6
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses = ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), "@d", [T4 · Desembolso · desvio no mês · com previsto] )
+RETURN
+    COUNTROWS ( FILTER ( _meses, NOT ISBLANK ( [@d] ) && [@d] > 0 ) ) + 0

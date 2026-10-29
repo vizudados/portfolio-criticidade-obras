@@ -1,0 +1,15 @@
+/*
+@pasta: T5 Canteiro\Cartões\Contas
+@formato: 0
+@descricao: Meses seguidos sem acidente com afastamento no recorte, contados depois do último mês com acidente até o de referência (a base é mensal: não dá o dia). Sem acidente no histórico, os meses do histórico até o de referência. Ex. set/26: 2 (ago e set, depois do de REDINHA em jul/26).
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 2
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ult = [T5 · Acidentes · último mês]
+VAR _ini = [T5 · Acidentes · início do histórico]
+RETURN
+    IF (
+        NOT ISBLANK ( _ref ) && NOT ISBLANK ( _ini ),
+        IF ( ISBLANK ( _ult ), DATEDIFF ( _ini, _ref, MONTH ) + 1, DATEDIFF ( _ult, _ref, MONTH ) )
+    )

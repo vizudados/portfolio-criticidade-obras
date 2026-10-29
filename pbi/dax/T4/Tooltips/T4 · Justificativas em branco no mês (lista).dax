@@ -1,0 +1,15 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: texto
+@descricao: Obras do recorte com justificativa exigida e em branco no mês do contexto, do maior para o menor |desvio| do desembolso (empate: ordem alfabética), separadas por '|'. O rodapé do tooltip escreve quantas couberem numa linha.
+@oraculo: obras[].serie[m] com |desvio| > 10% e justificativa vazia (jun e jan/26: CAJUEIRO · ago/26 real: JANGADA|POTENGI|REDINHA|CAJUEIRO)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _obras =
+    ADDCOLUMNS (
+        VALUES ( fAnaliseCritica[Obra] ),
+        "@b", [Justificativa · em branco],
+        "@d", ABS ( [Desembolso · desvio no mês] )
+    )
+RETURN
+    CONCATENATEX ( FILTER ( _obras, [@b] = 1 ), fAnaliseCritica[Obra], "|", [@d], DESC, fAnaliseCritica[Obra], ASC )

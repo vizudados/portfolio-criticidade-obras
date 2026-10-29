@@ -1,0 +1,155 @@
+/*
+@pasta: T5 Canteiro\Tooltips
+@formato: texto
+@descricao: Tooltip de página do mês (coluna de Chuva e ritmo): uma obra por linha, da mais chuvosa para a menos, com os dias impraticáveis por chuva (barra creme, escala pelo maior do mês, no mínimo 10) e o executado no mês da obra; no pé, a carteira (dias por obra, em média, e executado ponderado pelo orçamento).
+@gerado: pbi/scripts/tooltips_t5.py
+*/
+-- 1 · Leituras
+VAR _mesC = UPPER ( [Mês · rótulo curto] )
+VAR _mesL = [Mês · longo]
+VAR _chC = [Canteiro · dias de chuva]
+VAR _exC = [Físico · executado no mês]
+VAR _obras =
+    ADDCOLUMNS (
+        VALUES ( dObra[Obra] ),
+        "@ch", [Canteiro · dias de chuva],
+        "@ex", [Físico · executado no mês]
+    )
+VAR _comBase = FILTER ( _obras, NOT ISBLANK ( [@ch] ) || NOT ISBLANK ( [@ex] ) ) /* lista */
+-- 2 · Textos
+VAR _tcN = IF ( _chC = INT ( _chC ), FORMAT ( _chC, "0", "pt-BR" ), FORMAT ( _chC, "0.0", "pt-BR" ) )
+VAR _tcTxt = IF ( ISBLANK ( _chC ), "—", _tcN )
+VAR _teN = FORMAT ( ABS ( _exC ) * 100, "0.0", "pt-BR" )
+VAR _teS = IF ( ROUND ( _exC * 100, 1 ) < 0, "−", "" )
+VAR _teTxt = IF ( ISBLANK ( _exC ), "—", _teS & _teN & "%" )
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _tcKP = LEN ( _tcN ) > 0
+VAR _tcKN = IF ( _tcKP, _tcN )
+VAR _tcKS = SUBSTITUTE ( SUBSTITUTE ( _tcKN, ".", "" ), ",", "" )
+VAR _tcKT = IFERROR ( VALUE ( _tcKS ), -1 )
+VAR _tcKOk = _tcKP && _tcKT >= 2 && FORMAT ( _tcKT, REPT ( "0", LEN ( _tcKS ) ) ) = _tcKS
+VAR _tcKD = IF ( CONTAINSSTRING ( _tcKN, "," ), LEN ( _tcKN ) - SEARCH ( ",", _tcKN ), 0 )
+VAR _tcKM = IF ( CONTAINSSTRING ( _tcKN, "." ), "#,##0", "0" ) & IF ( _tcKD > 0, "." & REPT ( "0", _tcKD ) )
+VAR _tcKOd =
+    IF (
+        _tcKOk,
+        "<o-d><o-v>" & _tcKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tcKN, FORMAT ( ROUND ( _tcKT * [@odf] / 1000, 0 ) / POWER ( 10, _tcKD ), _tcKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tcN
+    )
+VAR _tcOd = IF ( ISBLANK ( _chC ), _tcTxt, _tcKOd )
+VAR _teKP = LEN ( _teN ) > 0
+VAR _teKN = IF ( _teKP, _teN )
+VAR _teKS = SUBSTITUTE ( SUBSTITUTE ( _teKN, ".", "" ), ",", "" )
+VAR _teKT = IFERROR ( VALUE ( _teKS ), -1 )
+VAR _teKOk = _teKP && _teKT >= 2 && FORMAT ( _teKT, REPT ( "0", LEN ( _teKS ) ) ) = _teKS
+VAR _teKD = IF ( CONTAINSSTRING ( _teKN, "," ), LEN ( _teKN ) - SEARCH ( ",", _teKN ), 0 )
+VAR _teKM = IF ( CONTAINSSTRING ( _teKN, "." ), "#,##0", "0" ) & IF ( _teKD > 0, "." & REPT ( "0", _teKD ) )
+VAR _teKOd =
+    IF (
+        _teKOk,
+        "<o-d><o-v>" & _teKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _teKN, FORMAT ( ROUND ( _teKT * [@odf] / 1000, 0 ) / POWER ( 10, _teKD ), _teKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _teN
+    )
+VAR _teOd = IF ( ISBLANK ( _exC ), _teTxt, _teS & _teKOd & "%" )
+-- 3 · Geometria
+VAR _max = MAX ( 10, MAXX ( _comBase, [@ch] ) ) /* geometria */
+VAR _nLs = COUNTROWS ( _comBase ) /* lista */
+-- 4 · Marcação
+VAR _htmlLinhas =
+    CONCATENATEX (
+        _comBase,
+        VAR _ch = [@ch]
+        VAR _ex = [@ex]
+        VAR _w = IF ( _ch > 0, MAX ( 2, ROUND ( DIVIDE ( _ch, _max ) * 200, 0 ) ), 0 ) -- geometria
+        VAR _txtCh = IF ( ISBLANK ( _ch ), "—", "⁅" & FORMAT ( _ch, "0", "pt-BR" ) & "⁆" & IF ( _ch = 1, " dia", " dias" ) )
+        VAR _txtEx = IF ( ISBLANK ( _ex ), "—", "⁅" & FORMAT ( _ex * 100, "0.0", "pt-BR" ) & "⁆" & "%" )
+        VAR _rd = ( RANKX ( _comBase, [@ch], _ch, DESC, Dense ) - 1 ) * 60 -- geometria
+        RETURN
+            "<div class='cr'><span class='nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( dObra[Obra], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "</span>"
+                & IF ( _w > 0, "<i class='bc' style='width:" & _w & "px' data-rk='ch|" & dObra[Obra] & "' data-rd='" & _rd & "'></i>" ) /* geometria */
+                & "<span class='dc' style='left:" & ( 150 + _w + 8 ) & "px'>" & _txtCh & "</span>"
+                & "<span class='ex'>" & _txtEx & "</span></div>",
+        "",
+        [@ch], DESC,
+        dObra[Obra], ASC
+    )
+VAR _saidaHtml =
+    IF (
+        NOT ISEMPTY ( _comBase ),
+        "<div class='u tt'><div class='cab'><p class='vs'>CHUVA E RITMO · " & _mesC & "</p>"
+            & "<div class='lin1'><div class='tit'><b>" & _mesL & "</b></div></div></div>"
+            & "<div class='corpo lim'><div class='bh'><span class='vs'>DIAS IMPRATICÁVEIS POR CHUVA, POR OBRA</span>"
+            & "<span class='vs'>EXECUTADO</span></div><div class='lsc" & " ls " & SWITCH ( TRUE (), _nLs <= 3, "e1", _nLs <= 6, "e2", _nLs <= 9, "e3", _nLs <= 12, "e4", "e5" ) & "' style='--n:" & _nLs & "'>" & _htmlLinhas & "</div></div>"
+            & "<div class='pe'><div class='dd'><span class='vs'>CARTEIRA</span><b>" & _tcOd & "</b>"
+            & "<span class='dt'>dias por obra, em média · </span><b>" & _teOd & "</b><span class='dt'>executado, "
+            & "pelo orçamento</span></div></div>"
+        & "</div>" & [Comum · JS contador tooltip] & [Comum · JS corrida]
+    )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

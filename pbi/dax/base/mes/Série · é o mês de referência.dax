@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Mês
+@formato: 0
+@descricao: 1 quando o mês do eixo é o mês de referência (destaque no eixo); 0 nos outros.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = MAX ( dMes[Mes] )
+RETURN
+    IF ( _mes = [Mês de referência], 1, 0 )

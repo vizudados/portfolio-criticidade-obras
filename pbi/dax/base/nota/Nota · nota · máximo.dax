@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: 0.0
+@descricao: Nota máxima: a soma dos máximos dos itens (10). Constante.
+@oraculo: dicionário NOTA (itens)
+@gerado: pbi/scripts/contas_base.py
+*/
+10

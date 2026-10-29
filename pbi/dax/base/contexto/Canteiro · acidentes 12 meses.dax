@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Canteiro
+@formato: 0
+@descricao: Acidentes com afastamento nos 12 meses até o mês (base complementar).
+@gerado: pbi/scripts/contas_base.py
+*/
+SUM ( fBaseObra[Acidentes12m] )

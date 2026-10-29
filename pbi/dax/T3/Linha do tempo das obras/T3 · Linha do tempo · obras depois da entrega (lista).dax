@@ -1,0 +1,23 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: texto
+@descricao: Obras cujo término projetado passa da entrega contratual mas fica nos 180 dias de tolerância, pela entrega. Obras com aba no mês de referência, separadas por '|'.
+@oraculo: set/26: POTENGI|JANGADA|TIROL
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obras =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@e", [Físico · executado acumulado · ref],
+            "@d", [Físico · desvio acumulado p.p. · ref],
+            "@ini", [Obra · início],
+            "@fim", [Obra · término previsto],
+            "@orc", [Orçamento · ref],
+            "@tipo", [Tipo de orçamento · ref],
+            "@sit", [T3 · Término · situação · ref]
+        ),
+        NOT ISBLANK ( [@e] )
+    )
+RETURN
+    CONCATENATEX ( FILTER ( _obras, [@sit] = 1 ), dObra[Obra], "|", [@fim], ASC, dObra[Obra], ASC )

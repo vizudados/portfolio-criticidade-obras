@@ -1,0 +1,20 @@
+/*
+@pasta: T1 Visão geral\Como os meses evoluíram
+@formato: texto
+@descricao: Subtítulo do painel Como os meses evoluíram: o que o mapa mostra e a janela (nota de cada obra, mês a mês · out/25 a set/26).
+@gerado: pbi/scripts/desenho_t1.py
+*/
+-- 1 · Leituras
+VAR _ini = [Série · primeiro mês]
+VAR _ref = [Mês de referência]
+VAR _n = [Série · meses até a referência]
+-- 2 · Textos
+VAR _txtIni = FORMAT ( _ini, "mmm/yy", "pt-BR" )
+VAR _txtRef = FORMAT ( _ref, "mmm/yy", "pt-BR" )
+VAR _txt = "nota de cada obra, mês a mês · " & IF ( _n = 1, _txtRef, _txtIni & " a " & _txtRef )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _ref ),
+        "<div class='u' style='position:fixed;inset:0'><p class='ab' style='left:0;top:0;font-size:15px;line-height:20px;color:#3B3B3F'>" & _txt & "</p></div>"
+    )

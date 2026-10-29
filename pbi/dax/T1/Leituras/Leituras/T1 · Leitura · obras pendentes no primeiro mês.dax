@@ -1,0 +1,10 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: 0
+@descricao: [Nota · carteira · obras pendentes] no primeiro mês da janela das séries (recorte de obras do drawer).
+@oraculo: carteira.serie[0]
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _ini = [Série · primeiro mês]
+RETURN
+    CALCULATE ( [Nota · carteira · obras pendentes], REMOVEFILTERS ( dMes ), dMes[Mes] = _ini )

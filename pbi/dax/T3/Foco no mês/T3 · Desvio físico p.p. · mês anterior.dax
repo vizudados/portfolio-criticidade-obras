@@ -1,0 +1,10 @@
+/*
+@pasta: T3 Avanço físico\Foco no mês\Contas
+@formato: +0.00;-0.00;0.00
+@descricao: [Físico · desvio acumulado p.p.] no mês anterior ao do contexto (vazio sem aba nesse mês).
+@oraculo: obras[].serie[m-1]
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _m = EDATE ( MAX ( dMes[Mes] ), -1 )
+RETURN
+    CALCULATE ( [Físico · desvio acumulado p.p.], REMOVEFILTERS ( dMes ), dMes[Mes] = _m )

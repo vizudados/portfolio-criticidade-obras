@@ -1,0 +1,11 @@
+/*
+@pasta: Base\Nota
+@formato: 0.0
+@descricao: Atraso em meses (cronograma agregado): meses decorridos − meses agregados; negativo, adiantada. Vazio sem aba ou sem a curva prevista. Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    [Prazo · atraso (meses)]
+)

@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Mês
+@formato: 0
+@descricao: Quantos meses a série olha até o mês de referência, escolhidos no drawer (dJanela, desconectada): 12, 9, 6 ou 3; sem escolha, 12.
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( dJanela[Meses], 12 )

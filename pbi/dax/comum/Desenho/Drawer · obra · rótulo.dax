@@ -1,0 +1,21 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: Rótulo à direita do nome da obra no drawer, pela nota no mês de referência: 'crítico · 5,4' (status e nota) ou 'pendente · 4,0 de 6,0' (pontos obtidos dos possíveis, quando falta item); sem obra no mês, 'sem aba no mês'.
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 1 · Leituras
+VAR _st = [Nota · status · ranking · ref]
+VAR _pend = [Nota · pendente · ranking · ref]
+VAR _nota = [Nota · nota final · ranking · ref]
+VAR _obt = [Nota · pontos obtidos · ranking · ref]
+VAR _poss = [Nota · pontos possíveis · ranking · ref]
+-- 2 · Textos
+VAR _nN = FORMAT ( _nota, "0.0#", "pt-BR" )
+VAR _nOb = FORMAT ( _obt, "0.0#", "pt-BR" )
+VAR _nPo = FORMAT ( _poss, "0.0#", "pt-BR" )
+VAR _nTxt = SWITCH ( TRUE (), _pend = 1, "pendente · " & _nOb & " de " & _nPo, ISBLANK ( _nota ), "—", "" & _nN )
+VAR _txt = IF ( _pend = 1, _nTxt, SWITCH ( TRUE (), _pend = 1, "pendente", ISBLANK ( _st ), "", _st = 2, "crítico", _st = 1, "atenção", "estável" ) & " · " & _nN )
+-- 4 · Marcação
+RETURN
+    IF ( ISBLANK ( _pend ), "sem aba no mês", _txt )

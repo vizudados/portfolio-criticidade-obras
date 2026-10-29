@@ -1,0 +1,13 @@
+/*
+@pasta: T3 Avanço físico\Foco no mês\Contas
+@formato: 0
+@descricao: Status do físico pelo item prazo da Nota da obra, na obra e no mês do contexto: 0 quando o atraso em meses fica dentro da faixa cheia (ganha todos os pontos), 2 quando perde pontos; vazio sem curva prevista ou sem aba. Compara os pontos do item com o máximo dele ([T3 · Prazo · máximo na nota]), sem limite escrito. Uma obra no contexto.
+@oraculo: conferir_real.py · oráculo da nota (coluna F-F)
+@gerado: pbi/scripts/contas_t3.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),
+    VAR _pts = [Nota · pontos prazo]
+    RETURN
+        IF ( NOT ISBLANK ( _pts ), IF ( _pts < [T3 · Prazo · máximo na nota], 2, 0 ) )
+)

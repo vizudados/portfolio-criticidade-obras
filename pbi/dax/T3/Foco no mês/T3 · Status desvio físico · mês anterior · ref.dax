@@ -1,0 +1,10 @@
+/*
+@pasta: T3 Avanço físico\Foco no mês\Contas
+@formato: 0
+@descricao: Status do físico na nota (dentro ou fora do limite) da obra do contexto no mês anterior ao de referência.
+@oraculo: oráculo da nota (coluna F-F, mês anterior)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE ( [T3 · Status desvio físico · mês anterior], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

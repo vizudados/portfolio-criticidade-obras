@@ -1,0 +1,8 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: 0
+@descricao: Justificativas exigidas e deixadas em branco na janela, somadas pelas obras do recorte.
+@oraculo: 4 (todas da CAJUEIRO)
+@gerado: pbi/scripts/contas_t4.py
+*/
+SUMX ( VALUES ( dObra[Obra] ), [T4 · Obra · justificativas em branco no período] ) + 0

@@ -1,0 +1,11 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: +0.00;-0.00;0.00
+@descricao: Desvio do desembolso da carteira no mês de referência menos o do mês anterior, em pontos percentuais (> 0: sobe), só com as obras que têm previsto nos dois meses.
+@oraculo: ago/26: desvio −0,3% − 29,9% = −30,2 p.p. (igual ao de antes da regra das mesmas obras)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _v = CALCULATE ( [T4 · Desembolso · desvio · variação no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _ref )
+RETURN
+    IF ( NOT ISBLANK ( _v ), _v * 100 )

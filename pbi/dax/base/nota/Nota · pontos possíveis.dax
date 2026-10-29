@@ -1,0 +1,19 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: Soma dos máximos dos itens com dado (10 com tudo preenchido); vazio sem nenhum item.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _p =
+    [Nota · possíveis · custo]
+        + [Nota · possíveis · prazo]
+        + [Nota · possíveis · PPC]
+        + [Nota · possíveis · caixa]
+        + [Nota · possíveis · inspeção]
+        + [Nota · possíveis · acidentes]
+        + [Nota · possíveis · NR-18]
+        + [Nota · possíveis · entregas]
+        + [Nota · possíveis · análise crítica]
+RETURN
+    IF ( NOT ISBLANK ( _p ), ROUND ( _p, 8 ) )

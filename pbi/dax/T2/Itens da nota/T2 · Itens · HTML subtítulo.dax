@@ -1,0 +1,11 @@
+/*
+@pasta: T2 Análise crítica\Itens da nota
+@formato: texto
+@descricao: Subtítulo de Itens da nota: diz a ordem das linhas (quem mais perde pontos primeiro) e o que a minissérie mostra. O total perdido já está no cartão Nota da obra e não se repete aqui.
+@gerado: pbi/scripts/desenho_t2.py
+*/
+-- 1 · Leituras
+VAR _po = [Nota · pontos possíveis · ranking · foco]
+-- 4 · Marcação
+RETURN
+    IF ( NOT ISBLANK ( _po ), "<p class='u ss'>pontos de cada item, quem mais perde primeiro · à direita, os pontos mês a mês</p>" )

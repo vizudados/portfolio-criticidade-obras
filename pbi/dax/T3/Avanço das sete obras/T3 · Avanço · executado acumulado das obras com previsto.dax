@@ -1,0 +1,18 @@
+/*
+@pasta: T3 Avanço físico\Avanço das sete obras\Contas
+@formato: 0.00%
+@descricao: Executado acumulado da carteira no mês de referência só com as abas que trazem o previsto, ponderado pelo orçamento como o previsto e o desvio da carteira (sem a JANGADA): o 'executado × previsto' da leitura compara o mesmo grupo.
+@oraculo: carteira.exec_acum_ponderado (obras com previsto)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE (
+        [Físico · executado acumulado],
+        REMOVEFILTERS ( dMes ),
+        dMes[Mes] = _mes,
+        FILTER (
+            ALL ( fAnaliseCritica[PrevAcum], fAnaliseCritica[ExecAcum] ),
+            NOT ISBLANK ( fAnaliseCritica[PrevAcum] ) && NOT ISBLANK ( fAnaliseCritica[ExecAcum] )
+        )
+    )

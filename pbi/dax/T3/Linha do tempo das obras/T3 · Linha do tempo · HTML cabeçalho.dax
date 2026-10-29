@@ -1,0 +1,8 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras
+@formato: texto
+@descricao: Subtítulo da Linha do tempo das obras, Figma 387:4421 (a legenda da faixa fica no pé do gráfico; F3: a marca do término projetado e a faixa dos 180 dias de tolerância).
+@gerado: pbi/scripts/desenho_t3.py
+*/
+-- 4 · Marcação
+"<div class='u pc'><span class='sub'>início → término previsto · preenchido = executado · ◆ = término projetado · hachura = 180 dias após a entrega</span></div>"

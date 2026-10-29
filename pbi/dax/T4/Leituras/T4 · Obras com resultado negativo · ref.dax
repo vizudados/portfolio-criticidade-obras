@@ -1,0 +1,10 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: 0
+@descricao: [T4 · Obras com resultado negativo] no mês de referência (seletor do drawer; sem escolha, o último mês).
+@oraculo: jun/26: 2
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE ( [T4 · Obras com resultado negativo], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Obra
+@formato: texto
+@descricao: Nome da obra do contexto (uma obra).
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( dObra[Obra] )

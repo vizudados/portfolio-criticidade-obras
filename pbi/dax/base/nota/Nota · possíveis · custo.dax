@@ -1,0 +1,11 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: Máximo do custo (3) quando o item tem dado. Uma obra; com várias, soma.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+SUMX (
+    VALUES ( dObra[Obra] ),
+    IF ( NOT ISBLANK ( [Nota · pontos custo] ), 3 )
+)

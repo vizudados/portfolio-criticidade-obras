@@ -1,0 +1,18 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: Pontos das entregas de material (máx. 0,5): entregas ≥ 90% → 0,5 · 80% ≤ entregas < 90% → 0,25 · entregas < 80% → 0; vazio sem dado. Uma obra; com várias, soma.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+SUMX (
+    VALUES ( dObra[Obra] ),
+    VAR _x = [Nota · X entregas]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), SWITCH (
+            TRUE (),
+            _x >= 0.9, 0.5,
+            _x >= 0.8, 0.25,
+            0
+        ) )
+)

@@ -1,0 +1,43 @@
+/*
+@pasta: T1 Visão geral\Tour
+@formato: texto
+@descricao: Passo 4 de 9 do tour da Visão geral (Obras pela nota): gestor (pose P2) no canto direita, balão de 480 px, ligação ao anel. Só desenha; lê a medida da pose.
+@gerado: pbi/scripts/tour_lib.py
+*/
+-- 4 · Marcação
+"<div class='u tr'>"
+    & "<div class='rc' style='left:344px;top:265px;width:1020px;height:647px'></div>"
+    & "<svg class='sv' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M362 259H358A20 20 0 0 0 338 279V283M1346 259H1350A20 20 0 0 1 1370 279V283M362 918H358"
+    & "A20 20 0 0 1 338 898V894M1346 918H1350A20 20 0 0 0 1370 898V894' fill='none' stroke='#FFFFFF' stroke"
+    & "-width='3' stroke-linecap='round'/><path d='M1416 588.5L1364 588.5' fill='none' stroke='#E9E0CF' str"
+    & "oke-width='2' stroke-dasharray='2 6' stroke-linecap='round'/><circle cx='1364' cy='588.5' r='3' fill"
+    & "='#E9E0CF' stroke='#0B0B0C' stroke-width='2'/></svg>"
+    & "<div class='nr' style='left:1376px;top:749px;width:469px;height:331px'>"
+    & [Comum · Tour · Pose P2 · HTML]
+    & "</div>"
+    & "<svg class='bq' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M1492 728L1492 732Q1502.71 837.803 1579.84 916.965L1582.16 916.035Q1518.87 837.337 1522"
+    & " 732L1522 728Z' fill='#FFFFFF'/></svg>"
+    & "<section class='bl' role='dialog' aria-label='Tour guiado, passo 4 de 9: Obras pela nota' style='lef"
+    & "t:1416px;top:312px;width:480px;height:420px'>"
+    & "<span class='sl' style='left:32px;top:28px'>Passo 4 de 9</span>"
+    & "<h2 class='tt' style='left:32px;top:68px;width:416px'>Obras pela nota</h2>"
+    & "<p class='tx' style='left:32px;top:116px;width:416px'>As obras aparecem da que mais perde pontos par"
+    & "a a que menos perde, pela Nota da obra no mês. Cada linha traz o status, a barra da nota com as marc"
+    & "as de 6 e 8 e sete quadradinhos, um por dimensão, cheios pelos pontos feitos. Obra crítica ganha fun"
+    & "do vermelho claro.</p>"
+    & "<div class='dc' style='left:32px;top:286px;width:416px'><svg class='cur' width='16' height='16' view"
+    & "Box='0 0 18 18' aria-hidden='true'><path d='M4 2L4 14L7.2 11L9.4 16L11.3 15.2L9.1 10.3L13.6 10.3Z' f"
+    & "ill='#0B0B0C'/></svg><p class='dt'>Passe o mouse numa obra para ver os itens da nota e a nota mês a "
+    & "mês.</p></div>"
+    & "<div class='rg' style='left:32px;top:372px;width:114px;gap:3px'><i style='width:10px;background:rgba"
+    & "(11,11,12,.45)'></i><i style='width:10px;background:rgba(11,11,12,.45)'></i><i style='width:10px;bac"
+    & "kground:rgba(11,11,12,.45)'></i><i style='width:10px;background:#0B0B0C'></i><i style='width:10px;ba"
+    & "ckground:#E1E1E1'></i><i style='width:10px;background:#E1E1E1'></i><i style='width:10px;background:#"
+    & "E1E1E1'></i><i style='width:10px;background:#E1E1E1'></i><i style='width:10px;background:#E1E1E1'></"
+    & "i></div>"
+    & "<span class='bt pl' style='left:148px;top:346px;width:64px;height:56px'>Pular</span>"
+    & "<span class='bt s' style='left:222px;top:352px;width:92px'>← Voltar</span>"
+    & "<span class='bt p' style='left:324px;top:352px;width:124px'>Seguir →</span>"
+    & "</section></div>"

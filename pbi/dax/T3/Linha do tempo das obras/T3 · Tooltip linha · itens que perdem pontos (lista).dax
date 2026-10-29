@@ -1,0 +1,19 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: texto
+@descricao: Itens da nota em que a obra do item perdeu pontos no mês de referência, do que mais perdeu ao que menos (empate pela ordem do item), pelo nome médio e separados por '|'. Itens sem dado não entram. Ex. de teste ago/26: REDINHA → Médio Prazo|Fluxo de caixa|… .
+@oraculo: oráculo da nota (itens com pontos abaixo do máximo)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _itens =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( dItemNota[Item] ),
+            "@p", [Nota · item · perdidos · ref],
+            "@o", [Nota · item · ordem],
+            "@nm", [Nota · item · nome médio]
+        ),
+        [@p] > 0
+    )
+RETURN
+    CONCATENATEX ( _itens, [@nm], "|", [@p], DESC, [@o], ASC )

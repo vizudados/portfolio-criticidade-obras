@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: texto
+@descricao: Gestor da obra, como a base complementar traz.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( fBaseObra[Gestor] )

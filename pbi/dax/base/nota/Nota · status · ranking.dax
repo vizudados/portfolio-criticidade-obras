@@ -1,0 +1,16 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: [Nota · status] lido de dRankingNota quando há uma obra e um mês no contexto e a obra tem dado no mês; senão, a própria [Nota · status]. Mesmo valor, mais rápido nas listas que iteram obras × meses.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _o = SELECTEDVALUE ( dObra[Obra] )
+VAR _m = SELECTEDVALUE ( dMes[Mes] )
+VAR _linha = FILTER ( dRankingNota, dRankingNota[Obra] = _o && dRankingNota[Mes] = _m )
+RETURN
+    IF (
+        NOT ISBLANK ( _o ) && NOT ISBLANK ( _m ) && NOT ISEMPTY ( _linha ),
+        MAXX ( _linha, dRankingNota[Status] ),
+        [Nota · status]
+    )

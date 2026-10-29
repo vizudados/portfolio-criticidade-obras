@@ -1,0 +1,15 @@
+/*
+@pasta: T5 Canteiro\Chuva e ritmo\Contas
+@formato: 0.00%
+@descricao: Topo da escala do executado no mês da carteira na janela: o maior mês arredondado para cima de 1 em 1 ponto, no mínimo 2%. Ex. set/26: 5% (set/26, 4,7%).
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 0,05
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _ini = [Série · primeiro mês]
+VAR _ref = [Mês de referência]
+VAR _mx = MAXX ( ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ),
+        "@v", [Físico · executado no mês]
+    ), [@v] )
+RETURN
+    MAX ( 0.02, CEILING ( _mx, 0.01 ) )

@@ -1,0 +1,11 @@
+/*
+@pasta: Base\Físico
+@formato: 0.00%
+@descricao: % executado do mês (na carteira, ponderado pelo orçamento).
+@oraculo: obras[].ultimo.exec_mes
+@gerado: pbi/scripts/contas_base.py
+*/
+DIVIDE (
+    SUMX ( fAnaliseCritica, fAnaliseCritica[ExecMes] * fAnaliseCritica[Orcamento] ),
+    SUMX ( fAnaliseCritica, fAnaliseCritica[Orcamento] )
+)

@@ -1,0 +1,190 @@
+/*
+@pasta: T5 Canteiro\Leituras
+@formato: texto
+@descricao: Leitura do "?" de Chuva e ritmo, sobre o próprio painel (1068 × 347, completa em duas colunas): se a carteira executou menos nos meses de chuva (achado), o mês mais chuvoso e o ritmo dele (explicação), três destaques (o executado médio nos meses de chuva e nos outros e o do mês mais chuvoso) e, à direita, a quadra chuvosa de Natal e o que é dia impraticável. Só lê contas.
+@gerado: pbi/scripts/leituras_t5.py
+*/
+-- 1 · Leituras
+VAR _mesC = [Mês de referência · curto maiúsculo]
+VAR _nCh = [T5 · Leitura chuva · meses chuvosos] + 0
+VAR _nJan = [Série · meses até a referência]
+VAR _prim = [T5 · Leitura chuva · primeiro mês chuvoso]
+VAR _ult = [T5 · Leitura chuva · último mês chuvoso]
+VAR _exCh = [T5 · Leitura chuva · executado médio nos meses chuvosos]
+VAR _exOut = [T5 · Leitura chuva · executado médio nos outros meses]
+VAR _mMax = [T5 · Leitura chuva · mês mais chuvoso]
+VAR _dMax = [T5 · Leitura chuva · dias no mês mais chuvoso]
+VAR _exMax = [T5 · Leitura chuva · executado no mês mais chuvoso]
+VAR _exMin = [T5 · Leitura chuva · menor executado]
+VAR _lim = [T5 · Chuva · limite de mês chuvoso]
+-- 2 · Textos
+VAR _tchN = FORMAT ( ABS ( _exCh ) * 100, "0.0", "pt-BR" )
+VAR _tchS = IF ( ROUND ( _exCh * 100, 1 ) < 0, "−", "" )
+VAR _tchTxt = IF ( ISBLANK ( _exCh ), "—", _tchS & _tchN & "%" )
+VAR _touN = FORMAT ( ABS ( _exOut ) * 100, "0.0", "pt-BR" )
+VAR _touS = IF ( ROUND ( _exOut * 100, 1 ) < 0, "−", "" )
+VAR _touTxt = IF ( ISBLANK ( _exOut ), "—", _touS & _touN & "%" )
+VAR _tmxN = FORMAT ( ABS ( _exMax ) * 100, "0.0", "pt-BR" )
+VAR _tmxS = IF ( ROUND ( _exMax * 100, 1 ) < 0, "−", "" )
+VAR _tmxTxt = IF ( ISBLANK ( _exMax ), "—", _tmxS & _tmxN & "%" )
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _tchKP = LEN ( _tchN ) > 0
+VAR _tchKN = IF ( _tchKP, _tchN )
+VAR _tchKS = SUBSTITUTE ( SUBSTITUTE ( _tchKN, ".", "" ), ",", "" )
+VAR _tchKT = IFERROR ( VALUE ( _tchKS ), -1 )
+VAR _tchKOk = _tchKP && _tchKT >= 2 && FORMAT ( _tchKT, REPT ( "0", LEN ( _tchKS ) ) ) = _tchKS
+VAR _tchKD = IF ( CONTAINSSTRING ( _tchKN, "," ), LEN ( _tchKN ) - SEARCH ( ",", _tchKN ), 0 )
+VAR _tchKM = IF ( CONTAINSSTRING ( _tchKN, "." ), "#,##0", "0" ) & IF ( _tchKD > 0, "." & REPT ( "0", _tchKD ) )
+VAR _tchKOd =
+    IF (
+        _tchKOk,
+        "<o-d><o-v>" & _tchKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tchKN, FORMAT ( ROUND ( _tchKT * [@odf] / 1000, 0 ) / POWER ( 10, _tchKD ), _tchKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tchN
+    )
+VAR _tchOd = IF ( ISBLANK ( _exCh ), _tchTxt, _tchS & _tchKOd & "%" )
+VAR _touKP = LEN ( _touN ) > 0
+VAR _touKN = IF ( _touKP, _touN )
+VAR _touKS = SUBSTITUTE ( SUBSTITUTE ( _touKN, ".", "" ), ",", "" )
+VAR _touKT = IFERROR ( VALUE ( _touKS ), -1 )
+VAR _touKOk = _touKP && _touKT >= 2 && FORMAT ( _touKT, REPT ( "0", LEN ( _touKS ) ) ) = _touKS
+VAR _touKD = IF ( CONTAINSSTRING ( _touKN, "," ), LEN ( _touKN ) - SEARCH ( ",", _touKN ), 0 )
+VAR _touKM = IF ( CONTAINSSTRING ( _touKN, "." ), "#,##0", "0" ) & IF ( _touKD > 0, "." & REPT ( "0", _touKD ) )
+VAR _touKOd =
+    IF (
+        _touKOk,
+        "<o-d><o-v>" & _touKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _touKN, FORMAT ( ROUND ( _touKT * [@odf] / 1000, 0 ) / POWER ( 10, _touKD ), _touKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _touN
+    )
+VAR _touOd = IF ( ISBLANK ( _exOut ), _touTxt, _touS & _touKOd & "%" )
+VAR _tmxKP = LEN ( _tmxN ) > 0
+VAR _tmxKN = IF ( _tmxKP, _tmxN )
+VAR _tmxKS = SUBSTITUTE ( SUBSTITUTE ( _tmxKN, ".", "" ), ",", "" )
+VAR _tmxKT = IFERROR ( VALUE ( _tmxKS ), -1 )
+VAR _tmxKOk = _tmxKP && _tmxKT >= 2 && FORMAT ( _tmxKT, REPT ( "0", LEN ( _tmxKS ) ) ) = _tmxKS
+VAR _tmxKD = IF ( CONTAINSSTRING ( _tmxKN, "," ), LEN ( _tmxKN ) - SEARCH ( ",", _tmxKN ), 0 )
+VAR _tmxKM = IF ( CONTAINSSTRING ( _tmxKN, "." ), "#,##0", "0" ) & IF ( _tmxKD > 0, "." & REPT ( "0", _tmxKD ) )
+VAR _tmxKOd =
+    IF (
+        _tmxKOk,
+        "<o-d><o-v>" & _tmxKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tmxKN, FORMAT ( ROUND ( _tmxKT * [@odf] / 1000, 0 ) / POWER ( 10, _tmxKD ), _tmxKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tmxN
+    )
+VAR _tmxOd = IF ( ISBLANK ( _exMax ), _tmxTxt, _tmxS & _tmxKOd & "%" )
+VAR _tdmN = IF ( _dMax = INT ( _dMax ), FORMAT ( _dMax, "0", "pt-BR" ), FORMAT ( _dMax, "0.0", "pt-BR" ) )
+VAR _tdmTxt = IF ( ISBLANK ( _dMax ), "—", _tdmN )
+VAR _nOut = _nJan - _nCh
+VAR _txtSob = "LEITURA · CHUVA E RITMO · " & _mesC
+VAR _txtPer = IF ( _prim = _ult, "No mês de chuva, " & FORMAT ( _prim, "mmmm", "pt-BR" ), "Nos meses de chuva, de " & FORMAT ( _prim, "mmmm", "pt-BR" ) & " a " & FORMAT ( _ult, "mmmm", "pt-BR" ))
+VAR _achado =
+    SWITCH (
+        TRUE (),
+        _nCh = 0, "Nenhum mês da janela teve " & "⁅" & _lim & "⁆" & " ou mais dias de chuva por obra.",
+        _nOut <= 0 || ISBLANK ( _exOut ), "Todos os meses da janela tiveram " & "⁅" & _lim & "⁆" & " ou mais dias de chuva por obra.",
+        _txtPer & ", a carteira executou " & IF ( _exCh < _exOut, "menos", "mais" ) & " que nos outros meses."
+    )
+VAR _explica =
+    IF (
+        ISBLANK ( _mMax ) || _dMax = 0,
+        "",
+        UPPER ( LEFT ( FORMAT ( _mMax, "mmmm", "pt-BR" ), 1 ) ) & MID ( FORMAT ( _mMax, "mmmm", "pt-BR" ), 2, LEN ( FORMAT ( _mMax, "mmmm", "pt-BR" ) ) ) & " foi o mês mais chuvoso, com " & "⁅" & _tdmTxt & "⁆" & " dias parados por obra"
+            & IF ( _exMax = _exMin, ", e teve o menor ritmo do período.", "." )
+    )
+VAR _txtD1 = "executado por mês " & IF ( _nCh = 1, "no mês de chuva", "nos " & "⁅" & _nCh & "⁆" & " meses de chuva" )
+VAR _txtD2 = IF ( _nOut = 1, "no outro mês", "nos outros " & "⁅" & _nOut & "⁆" & " meses" )
+VAR _txtD3 = "executado em " & FORMAT ( _mMax, "mmmm", "pt-BR" )
+VAR _txtOqe =
+    "A quadra chuvosa de Natal vai de março a julho, com pico em abril (normal do INMET para abril: " & "⁅" & "240,5" & "⁆" & " mm). "
+        & "Dia impraticável é o dia em que a chuva para o serviço externo; a base complementar registra quantos "
+        & "houve no mês em cada obra. Mês de chuva, aqui, é o que tem " & "⁅" & _lim & "⁆" & " ou mais por obra."
+-- 4 · Marcação
+VAR _esq =
+    "<div class='esq'><span class='vs sob'>" & _txtSob & "</span>"
+        & "<h2 class='ach'>" & _achado & "</h2>"
+        & IF ( _explica = "", "", "<p class='exp'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _explica, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "</p>" )
+        & "<div class='dst sobre-creme'>"
+        & IF ( _nCh > 0, "<div><b>" & _tchOd & "</b><span>" & _txtD1 & "</span></div>" )
+        & IF ( _nOut > 0 && NOT ISBLANK ( _exOut ), "<div><b>" & _touOd & "</b><span>" & _txtD2 & "</span></div>" )
+        & IF ( _nCh > 0, "<div><b>" & _tmxOd & "</b><span>" & _txtD3 & "</span></div>" )
+        & "</div>"
+    & "</div>"
+/* painel de 347: o 'como ler' curto vai para a coluna da direita, abaixo do 'o que explica' */
+VAR _dir =
+    "<div class='dir'>" & "<div class='sec'><span class='vs'>O que explica</span>" & "<p class='oqe'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _txtOqe, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "</p>" & "</div>" & "<div class='sec'><span class='vs'>Como ler</span>" & "<p class='cl'>Passe o mouse num mês para ver a chuva e o executado de cada obra.</p>" & "</div>" & "</div>"
+VAR _corpo = "<div class='cols'>" & _esq & "<i class='div'></i>" & _dir & "</div>"
+VAR _saidaHtml =
+    IF ( _nJan > 0, "<div class='u lv' role='dialog' aria-label='" & "Leitura de Chuva e ritmo" & "'><div class='pn pn-2c'>" & _corpo & "</div><svg class='x' width='26' height='26' viewBox='0 0 26 26' aria-hidden='true'><circle cx='13' cy='13' r='12.375' fill='#FFFFFF' stroke='#3B3B3F' stroke-width='1.25'/><path d='M9 9L17 17M17 9L9 17' fill='none' stroke='#0B0B0C' stroke-width='1.5' stroke-linecap='round'/></svg></div>" & [Comum · JS contador tooltip] )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

@@ -1,0 +1,10 @@
+/*
+@pasta: T5 Canteiro\Cartões\Contas
+@formato: 0
+@descricao: Obras com [Canteiro · aprovação na 1.ª inspeção] no mês de referência abaixo do ponto cheio da nota ([Nota · limite inspeção · ponto cheio]); sem dado não conta. Ex. set/26: 3 (JANGADA, POTENGI e REDINHA).
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 3
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _lim = [Nota · limite inspeção · ponto cheio]
+RETURN
+    COUNTROWS ( FILTER ( VALUES ( dObra[Obra] ), VAR _x = [Canteiro · aprovação na 1.ª inspeção · ref] RETURN NOT ISBLANK ( _x ) && _x < _lim ) ) + 0

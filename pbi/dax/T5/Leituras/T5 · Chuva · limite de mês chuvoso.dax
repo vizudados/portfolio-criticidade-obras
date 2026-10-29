@@ -1,0 +1,8 @@
+/*
+@pasta: T5 Canteiro\Leituras\Contas
+@formato: 0.00
+@descricao: Dias impraticáveis por chuva (média por obra) a partir dos quais o mês conta como chuvoso nas leituras. Constante.
+@oraculo: constante
+@gerado: pbi/scripts/contas_t5.py
+*/
+5

@@ -1,0 +1,18 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: Status pela nota: ≥ 8 → 0, ≥ 6 → 1, abaixo → 2 (0 estável · 1 atenção · 2 crítico); com a trava, crítico. Vazio quando pendente. Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _n = [Nota · nota final]
+    RETURN
+        IF ( NOT ISBLANK ( _n ), IF ( [Nota · trava] = 1, 2, SWITCH (
+            TRUE (),
+            _n >= 8, 0,
+            _n >= 6, 1,
+            2
+        ) ) )
+)

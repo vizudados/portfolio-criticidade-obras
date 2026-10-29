@@ -1,0 +1,11 @@
+/*
+@pasta: T5 Canteiro\Comum
+@formato: texto
+@descricao: CSS dos subtítulos e dos nomes de coluna dos painéis da T5.
+@gerado: pbi/scripts/desenho_t5.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".hsb{position:fixed;inset:0;background:#FFFFFF;font-size:15px;line-height:22px;color:#3B3B3F;white-space:nowrap;overflow:hidden}.hsb .lg{display:inline-block;vertical-align:-1px;ma"
+    & "rgin:0 6px 0 0}.hsb .sep{margin:0 8px;color:#6B6B70}.obc{position:fixed;inset:0;background:#FFFFFF;white-space:nowrap}.obc .sub{position:absolute;left:0;top:0;font-size:15px;line-h"
+    & "eight:20px;color:#3B3B3F}.obc .vs{position:absolute;top:36px;font-size:12px;line-height:16px;letter-spacing:1px;text-transform:uppercase;color:#6B6B70}"

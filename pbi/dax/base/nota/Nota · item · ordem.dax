@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: Ordem do item na régua (1 = custo), para desempate nas listas.
+@oraculo: dItemNota (gerada do dicionário NOTA)
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( dItemNota[Ordem] )

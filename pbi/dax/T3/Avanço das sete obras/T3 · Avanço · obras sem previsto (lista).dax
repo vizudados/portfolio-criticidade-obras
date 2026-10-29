@@ -1,0 +1,22 @@
+/*
+@pasta: T3 Avanço físico\Avanço das sete obras\Contas
+@formato: texto
+@descricao: Obras cuja aba do mês de referência não traz o previsto acumulado (JANGADA): ficam fora do desvio da carteira. Obras com aba no mês de referência, separadas por '|'.
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obras =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@e", [Físico · executado acumulado · ref],
+            "@d", [Físico · desvio acumulado p.p. · ref],
+            "@ini", [Obra · início],
+            "@fim", [Obra · término previsto],
+            "@orc", [Orçamento · ref],
+            "@tipo", [Tipo de orçamento · ref],
+            "@pos", [T3 · Avanço · posição]
+        ),
+        NOT ISBLANK ( [@e] )
+    )
+RETURN
+    CONCATENATEX ( FILTER ( _obras, ISBLANK ( [@d] ) ), dObra[Obra], "|", [@pos], ASC, dObra[Obra], ASC )

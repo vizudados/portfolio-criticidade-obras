@@ -1,0 +1,17 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: dd/mm/yyyy
+@descricao: Primeiro mês da sequência, na janela e terminando no de referência, em que o desembolso da obra está na faixa crítica da previsão de caixa da nota (sem ponto, para mais ou para menos); vazio fora dela.
+@oraculo: ago/26 (teste)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses = ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), "@v", [T4 · Desembolso · faixa do fluxo de caixa] )
+VAR _vRef = MAXX ( FILTER ( _meses, dMes[Mes] = _ref ), [@v] )
+VAR _vale = ADDCOLUMNS ( _meses, "@ok", IF ( NOT ISBLANK ( [@v] ) && [@v] = 2, 1, 0 ) )
+VAR _noRef = MAXX ( FILTER ( _vale, dMes[Mes] = _ref ), [@ok] ) = 1
+VAR _quebra = MAXX ( FILTER ( _vale, [@ok] = 0 ), dMes[Mes] )
+VAR _inicio = MINX ( FILTER ( _vale, ISBLANK ( _quebra ) || dMes[Mes] > _quebra ), dMes[Mes] )
+RETURN
+    IF ( _noRef, _inicio )

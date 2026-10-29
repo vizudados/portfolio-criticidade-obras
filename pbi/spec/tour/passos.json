@@ -1,0 +1,892 @@
+{
+  "_leia": "Fonte única dos passos do tour guiado (v2 dos textos, 07/10/2026; régua Nota da obra desde 28/10/2026, com os números do dicionário em marcadores NOTA:nome entre chaves, trocados pelo tour_lib.valores_nota; pedido do Alisson: 'não ser tão resumido, fonte maior, cantos arredondados, ocupar mais espaço'). Figma e Power BI leem daqui. foco = retângulo do ELEMENTO no canvas 1920x1080 (sem folga); folga, anel e cantoneiras são do desenho. foco_fonte: 'figma' = medido no nó real; 'inventario' = conferir no Figma; 'medir' = medir no Figma. card/personagem/layout/lado_final = gravados pelo agente do Figma depois de desenhar. Textos: título ≤ 34 caracteres; texto ≤ 280 caracteres (até 7 linhas na coluna de texto); dica ≤ 95 caracteres (opcional, linha de 'como usar').",
+  "figma_componentes": {
+    "Tour · personagem": "432:8406",
+    "Tour · foco": "432:8407",
+    "Tour · cota": "433:8421",
+    "Tour · controles": "433:8443",
+    "Tour · dica": "439:14847",
+    "Tour · card": "442:11791",
+    "Tour · card grande": "447:12086"
+  },
+  "figma_componentes_v1": {
+    "Tour · personagem": "432:8406",
+    "Tour · foco": "432:8407",
+    "Tour · cota": "433:8421",
+    "Tour · controles": "433:8443",
+    "Tour · card": "433:8500",
+    "Tour · card grande": "433:8501"
+  },
+  "poses": {
+    "P1": "acenando",
+    "P2": "apontando para a esquerda",
+    "P3": "apontando para a direita",
+    "P4": "explicando com as mãos",
+    "P5": "polegar para cima",
+    "P6": "segurando uma prancheta",
+    "P7": "apontando para cima à esquerda",
+    "P8": "apontando para cima à direita",
+    "P9": "apontando na diagonal para cima à esquerda",
+    "P10": "apontando na diagonal para cima à direita",
+    "P11": "vistoria, anotando na prancheta"
+  },
+  "poses_arquivos": {
+    "P1": "assets/personagem/poses/P1-ola.png",
+    "P2": "assets/personagem/poses/P2-aponta-esquerda.png",
+    "P3": "assets/personagem/poses/P3-aponta-direita.png",
+    "P4": "assets/personagem/poses/P4-explica.png",
+    "P5": "assets/personagem/poses/P5-legal.png",
+    "P6": "assets/personagem/poses/P6-prancheta.png",
+    "P7": "assets/personagem/poses/P7-aponta-cima-esquerda.png",
+    "P8": "assets/personagem/poses/P8-aponta-cima-direita.png",
+    "P9": "assets/personagem/poses/P9-aponta-diagonal-esquerda.png",
+    "P10": "assets/personagem/poses/P10-aponta-diagonal-direita.png",
+    "P11": "assets/personagem/poses/P11-vistoria.png"
+  },
+  "telas": {
+    "T1": {
+      "nome": "Visão geral",
+      "figma_tela": "387:4824",
+      "passos": [
+        {
+          "n": 1,
+          "id": "BOASVINDAS",
+          "tipo": "comum",
+          "pose": "P1",
+          "lado": "abaixo",
+          "titulo": "Olá! Esta é a Visão geral",
+          "texto": "Eu vou te acompanhar pelas telas do painel. Esta aqui responde a uma pergunta: quais obras pedem atenção neste mês, e por quê? Em poucos passos, mostro onde olhar e o que cada parte quer dizer.",
+          "dica": "Use Seguir e Voltar para andar. O “?” redondo, no alto, reabre o tour.",
+          "foco": {
+            "alvo": "título e pergunta do cabeçalho",
+            "x": 352,
+            "y": 38,
+            "w": 766,
+            "h": 44
+          },
+          "foco_fonte": "figma",
+          "card": {
+            "x": 344,
+            "y": 130,
+            "w": 720,
+            "h": 444
+          },
+          "personagem": "esquerda",
+          "layout": "lado a lado",
+          "lado_final": "abaixo",
+          "figma_frame": "433:11295"
+        },
+        {
+          "n": 2,
+          "id": "CARTOES",
+          "tipo": "comum",
+          "pose": "P9",
+          "lado": "abaixo",
+          "titulo": "Os números do mês",
+          "texto": "Os cinco cartões resumem a carteira no mês, um por dimensão: as obras por status, o custo, o prazo, o caixa e o canteiro. O cartão escuro é o custo, que mais pesa na nota; vermelho indica valor que perde pontos.",
+          "dica": "Passe o mouse num cartão: ele vira e mostra como o número é calculado e de onde vem.",
+          "foco": {
+            "alvo": "os cinco cartões",
+            "x": 352,
+            "y": 109,
+            "w": 1508,
+            "h": 140
+          },
+          "foco_fonte": "figma",
+          "card": {
+            "x": 344,
+            "y": 297,
+            "w": 720,
+            "h": 444
+          },
+          "personagem": "esquerda",
+          "layout": "lado a lado",
+          "lado_final": "abaixo",
+          "figma_frame": "433:11654"
+        },
+        {
+          "n": 3,
+          "id": "PONTUACAO",
+          "tipo": "grande",
+          "pose": "P2",
+          "lado": "direita",
+          "titulo": "Como a nota da obra funciona",
+          "foco": {
+            "alvo": "colunas STATUS e NOTA · 0 A 10 da lista (do cabeçalho de colunas até a última linha)",
+            "x": 708,
+            "y": 345,
+            "w": 400,
+            "h": 552
+          },
+          "foco_fonte": "figma",
+          "card": {
+            "x": 1156,
+            "y": 38,
+            "w": 748,
+            "h": 1026
+          },
+          "personagem": "esquerda",
+          "layout": "grande",
+          "lado_final": "direita",
+          "figma_frame": "433:12013",
+          "conteudo": {
+            "abertura": "Para saber quem pede mais atenção, cada obra recebe a Nota da obra, de 0 a {NOTA:nota_max}. Ela soma os pontos de {NOTA:n_itens} itens objetivos: custo, prazo, caixa, qualidade, segurança, suprimentos e a própria análise crítica.",
+            "itens_nota": true,
+            "regra_sinal": "Cada item tem faixas com base em critérios públicos (valor agregado, Last Planner, NBR 14280, NR-18): quanto mais perto da meta, mais pontos. Custo e prazo pesam mais: até {NOTA:custo_max} e {NOTA:prazo_max} pontos.",
+            "exemplo": "Exemplo: uma obra com IDC de {NOTA:ex_idc} ({NOTA:ex_p_idc} dos {NOTA:custo_max} pontos) e {NOTA:ex_atraso} de atraso ({NOTA:ex_p_atraso} dos {NOTA:prazo_max}), com o resto cheio, tem nota {NOTA:ex_nota}: {NOTA:ex_status}.",
+            "faixas": "status_nota",
+            "pendente": "Enquanto falta algum item na base ou na planilha, a obra fica pendente: mostra os pontos que já dá para calcular, sem nota e sem status.",
+            "nota": "Trava: IDC abaixo de {NOTA:idc_trava} ou atraso acima de {NOTA:atraso_trava} meses deixa a obra crítica, qualquer que seja a nota."
+          }
+        },
+        {
+          "n": 4,
+          "id": "OBRAS",
+          "tipo": "comum",
+          "pose": "P2",
+          "lado": "direita",
+          "titulo": "Obras pela nota",
+          "texto": "As obras aparecem da que mais perde pontos para a que menos perde, pela Nota da obra no mês. Cada linha traz o status, a barra da nota com as marcas de {NOTA:atencao} e {NOTA:estavel} e sete quadradinhos, um por dimensão, cheios pelos pontos feitos. Obra crítica ganha fundo vermelho claro.",
+          "dica": "Passe o mouse numa obra para ver os itens da nota e a nota mês a mês.",
+          "foco": {
+            "alvo": "painel Obras pela nota",
+            "x": 352,
+            "y": 273,
+            "w": 1004,
+            "h": 631
+          },
+          "foco_fonte": "figma",
+          "card": {
+            "x": 1404,
+            "y": 265,
+            "w": 500,
+            "h": 681
+          },
+          "personagem": "esquerda",
+          "layout": "empilhado",
+          "lado_final": "direita",
+          "figma_frame": "433:12372"
+        },
+        {
+          "n": 5,
+          "id": "PESA",
+          "tipo": "comum",
+          "pose": "P10",
+          "lado": "esquerda",
+          "titulo": "Onde a carteira perde pontos",
+          "texto": "Aqui os pontos perdidos de todas as obras são somados por dimensão da nota, para mostrar onde a carteira perde mais. Cada linha diz quantas obras perderam pontos e, se a dimensão tem dois itens, qual pesa mais; a barra mostra o tamanho da perda.",
+          "dica": "Passe o mouse numa dimensão para ver as faixas e a conta obra por obra.",
+          "foco": {
+            "alvo": "painel Onde a carteira perde pontos",
+            "x": 1396,
+            "y": 273,
+            "w": 464,
+            "h": 406
+          },
+          "foco_fonte": "figma",
+          "card": {
+            "x": 628,
+            "y": 265,
+            "w": 720,
+            "h": 444
+          },
+          "personagem": "direita",
+          "layout": "lado a lado",
+          "lado_final": "esquerda",
+          "figma_frame": "433:12731"
+        },
+        {
+          "n": 6,
+          "id": "MESES",
+          "tipo": "comum",
+          "pose": "P3",
+          "lado": "esquerda",
+          "titulo": "Como os meses evoluíram",
+          "texto": "Cada linha é uma obra e cada coluna, um mês: a cor é o status da nota naquele mês (vermelho crítica, ocre atenção, verde-claro estável, tracejado pendente) e o número é a nota. Dá para ver quem piorou e quando. A janela vai de 3 a 12 meses, no filtro.",
+          "dica": "Passe o mouse num mês para ver quem estava em cada faixa e o que mudou.",
+          "foco": {
+            "alvo": "painel Como os meses evoluíram",
+            "x": 1396,
+            "y": 719,
+            "w": 464,
+            "h": 321
+          },
+          "foco_fonte": "figma",
+          "card": {
+            "x": 628,
+            "y": 620,
+            "w": 720,
+            "h": 444
+          },
+          "personagem": "direita",
+          "layout": "lado a lado",
+          "lado_final": "esquerda",
+          "figma_frame": "433:13090"
+        },
+        {
+          "n": 7,
+          "id": "LEITURA",
+          "tipo": "comum",
+          "pose": "P2",
+          "lado": "acima",
+          "titulo": "A leitura do mês",
+          "texto": "Esta faixa traz o resumo escrito do mês: quantas obras estão em cada status da nota, inclusive as pendentes, e qual obra mais perde pontos, com os itens em que ela perde. O texto é montado com os números da tela e muda junto com os filtros.",
+          "foco": {
+            "alvo": "faixa preta Leitura do mês",
+            "x": 352,
+            "y": 944,
+            "w": 1004,
+            "h": 96
+          },
+          "foco_fonte": "figma",
+          "card": {
+            "x": 344,
+            "y": 493,
+            "w": 720,
+            "h": 403
+          },
+          "personagem": "esquerda",
+          "layout": "lado a lado",
+          "lado_final": "acima",
+          "figma_frame": "433:13449"
+        },
+        {
+          "n": 8,
+          "id": "FILTROS",
+          "tipo": "comum",
+          "pose": "P10",
+          "lado": "abaixo",
+          "titulo": "Filtros e ajuda",
+          "texto": "No alto ficam o mês e as obras em uso. O funil abre os filtros: o mês de referência, a janela de meses e as obras. Cada painel tem um “?” que explica o gráfico com os números do mês, e o “?” redondo daqui reabre este tour.",
+          "dica": "Mês e janela valem em todas; as obras, no Resultado.",
+          "foco": {
+            "alvo": "recorte em uso, funil e “?” redondo do cabeçalho",
+            "x": 1415,
+            "y": 38,
+            "w": 445,
+            "h": 44
+          },
+          "foco_fonte": "figma",
+          "card": {
+            "x": 1184,
+            "y": 130,
+            "w": 720,
+            "h": 422
+          },
+          "personagem": "esquerda",
+          "layout": "lado a lado",
+          "lado_final": "abaixo",
+          "figma_frame": "433:13808"
+        },
+        {
+          "n": 9,
+          "id": "NAVEGACAO",
+          "tipo": "comum",
+          "pose": "P5",
+          "lado": "direita",
+          "titulo": "As outras telas",
+          "texto": "Pela barra lateral você chega às outras três telas: a Análise crítica, com o quadradinho de cada obra; o Avanço físico, com a curva S; e o Resultado no tempo, com a evolução da carteira. O mês escolhido vale para todas.",
+          "dica": "Cada tela tem o seu próprio tour no “?” redondo do alto.",
+          "foco": {
+            "alvo": "itens de página da sidebar",
+            "x": 32,
+            "y": 234,
+            "w": 248,
+            "h": 200
+          },
+          "foco_fonte": "figma",
+          "card": {
+            "x": 328,
+            "y": 226,
+            "w": 720,
+            "h": 444
+          },
+          "personagem": "esquerda",
+          "layout": "lado a lado",
+          "lado_final": "direita",
+          "figma_frame": "433:14167"
+        }
+      ]
+    },
+    "T2": {
+      "nome": "Análise crítica",
+      "figma_tela": "386:847",
+      "passos": [
+        {
+          "n": 1,
+          "id": "BOASVINDAS",
+          "tipo": "comum",
+          "pose": "P1",
+          "lado": "abaixo",
+          "titulo": "Esta é a Análise crítica",
+          "texto": "Aqui a gente olha uma obra de cada vez, no mês escolhido. A pergunta da tela é: por que a obra tem essa nota? Vou te mostrar de onde vêm os pontos e como a conta da planilha aparece no painel.",
+          "dica": "Troque a obra e o mês pelo funil, no alto da tela.",
+          "foco": {
+            "alvo": "título e pergunta do cabeçalho",
+            "x": 352,
+            "y": 38,
+            "w": 839,
+            "h": 62
+          },
+          "foco_fonte": "medir"
+        },
+        {
+          "n": 2,
+          "id": "CARTOES",
+          "tipo": "comum",
+          "pose": "P9",
+          "lado": "abaixo",
+          "titulo": "Os números da obra",
+          "texto": "Os cinco cartões trazem a Nota da obra no mês (o cartão escuro), o custo pelo IDC, o resultado da planilha, o resultado sem estoque e adiantamentos e o atraso em meses. Vermelho indica valor negativo; a marca colorida são os pontos do item na nota.",
+          "dica": "Passe o mouse num cartão: ele vira e mostra a conta e a origem na planilha.",
+          "foco": {
+            "alvo": "os cinco cartões",
+            "x": 352,
+            "y": 109,
+            "w": 1508,
+            "h": 140
+          },
+          "foco_fonte": "inventario"
+        },
+        {
+          "n": 3,
+          "id": "ITENS",
+          "tipo": "comum",
+          "pose": "P2",
+          "lado": "direita",
+          "titulo": "Os itens da nota",
+          "texto": "São os {NOTA:n_itens} itens da Nota da obra, só desta obra: cada um com o valor do mês, a faixa em que caiu e os pontos que fez dos possíveis. Quem mais perde pontos vem primeiro. À direita, os pontos mês a mês mostram se o item piorou ou melhorou.",
+          "dica": "Passe o mouse num item para ver as faixas completas e o que mudou desde o mês anterior.",
+          "foco": {
+            "alvo": "painel Itens da nota",
+            "x": 352,
+            "y": 273,
+            "w": 548,
+            "h": 767
+          },
+          "foco_fonte": "inventario",
+          "lado_final": "direita"
+        },
+        {
+          "n": 4,
+          "id": "CASCATA",
+          "tipo": "grande",
+          "pose": "P10",
+          "lado": "esquerda",
+          "titulo": "Como o resultado se forma",
+          "foco": {
+            "alvo": "painel Como o resultado se forma",
+            "x": 940,
+            "y": 273,
+            "w": 508,
+            "h": 350
+          },
+          "foco_fonte": "inventario",
+          "conteudo": {
+            "abertura": "A cascata separa o que a obra já fez do que a planilha ainda conta como ganho. Cada degrau é uma parte da conta, na ordem:",
+            "conta": [
+              [
+                "Valor agregado",
+                "o executado acumulado vezes o orçamento: o que a obra entregou",
+                "+"
+              ],
+              [
+                "Custo aplicado",
+                "o que já virou obra: desembolso, contas a pagar e dívida, sem estoque e adiantamentos",
+                "−"
+              ],
+              [
+                "Resultado aplicado",
+                "agregado menos custo; o IDC é a divisão dos dois",
+                "="
+              ],
+              [
+                "A realizar",
+                "saldo de contrato e equipamentos: a planilha conta e ainda não aconteceu",
+                "+"
+              ],
+              [
+                "Resultado da planilha",
+                "o que a análise crítica apresenta",
+                "="
+              ]
+            ],
+            "fecho": "Se o resultado da planilha só fica positivo por causa do que falta realizar, o custo da obra não está pagando o que ela executa. É o IDC que entra na nota.",
+            "dica": "Passe o mouse num degrau para ver as linhas da planilha que o formam."
+          }
+        },
+        {
+          "n": 5,
+          "id": "IDC",
+          "tipo": "comum",
+          "pose": "P3",
+          "lado": "esquerda",
+          "titulo": "O IDC mês a mês",
+          "texto": "Cada barra sai da linha de 1,00 e vai até o IDC do mês: acima, a obra agregou mais do que gastou; abaixo, gastou mais. Abaixo da linha tracejada, a trava de {NOTA:idc_trava}, a obra fica crítica com qualquer nota.",
+          "dica": "Passe o mouse num mês para ver a conta daquele mês em reais.",
+          "foco": {
+            "alvo": "painel IDC, mês a mês",
+            "x": 940,
+            "y": 663,
+            "w": 508,
+            "h": 377
+          },
+          "foco_fonte": "inventario"
+        },
+        {
+          "n": 6,
+          "id": "NOTA",
+          "tipo": "comum",
+          "pose": "P10",
+          "lado": "esquerda",
+          "titulo": "A nota mês a mês",
+          "texto": "A nota da obra em cada mês da janela, na cor do status: vermelho crítica, ocre atenção, verde-claro estável e tracejado pendente. As linhas marcam {NOTA:estavel} e {NOTA:atencao}. Assim dá para ver quando a obra mudou de faixa.",
+          "foco": {
+            "alvo": "painel A nota, mês a mês",
+            "x": 1488,
+            "y": 273,
+            "w": 372,
+            "h": 388
+          },
+          "foco_fonte": "inventario",
+          "lado_final": "esquerda"
+        },
+        {
+          "n": 7,
+          "id": "DESEMBOLSO",
+          "tipo": "comum",
+          "pose": "P3",
+          "lado": "esquerda",
+          "titulo": "O desembolso do mês",
+          "texto": "Compara o previsto (creme) com o desembolsado (preto) no mês e mostra a diferença e o desvio, com os pontos do item Previsão de caixa na nota. Quando o desvio passa de {NOTA:caixa_lim}, para mais ou para menos, a planilha pede uma justificativa, que aparece aqui.",
+          "foco": {
+            "alvo": "painel Desembolso do mês",
+            "x": 1488,
+            "y": 701,
+            "w": 372,
+            "h": 339
+          },
+          "foco_fonte": "inventario"
+        },
+        {
+          "n": 8,
+          "id": "FILTROS",
+          "tipo": "comum",
+          "pose": "P5",
+          "lado": "abaixo",
+          "titulo": "Filtros e ajuda",
+          "texto": "No alto ficam a obra e o mês em uso; o funil abre os filtros para trocar. Cada painel tem um “?” que explica o gráfico com os números da obra, e o “?” redondo daqui reabre este tour quando você quiser.",
+          "dica": "Mês e janela valem em todas; obra em foco, no Avanço.",
+          "foco": {
+            "alvo": "recorte em uso, funil e “?” redondo do cabeçalho",
+            "x": 1415,
+            "y": 38,
+            "w": 445,
+            "h": 44
+          },
+          "foco_fonte": "medir"
+        }
+      ]
+    },
+    "T3": {
+      "nome": "Avanço físico",
+      "figma_tela": "387:5627",
+      "passos": [
+        {
+          "n": 1,
+          "id": "BOASVINDAS",
+          "tipo": "comum",
+          "pose": "P1",
+          "lado": "abaixo",
+          "titulo": "Este é o Avanço físico",
+          "texto": "Esta tela responde: a obra está no ritmo do que foi previsto? Em cima, a obra em foco: quantos meses atrás do cronograma ela está e quando deve terminar; embaixo e à direita, a carteira inteira, com o atraso de cada obra e as datas de entrega.",
+          "dica": "A obra em foco é escolhida pelo funil, no alto da tela.",
+          "foco": {
+            "alvo": "título e pergunta do cabeçalho",
+            "x": 352,
+            "y": 38,
+            "w": 820,
+            "h": 62
+          },
+          "foco_fonte": "medir"
+        },
+        {
+          "n": 2,
+          "id": "CARTOES",
+          "tipo": "comum",
+          "pose": "P9",
+          "lado": "abaixo",
+          "titulo": "Os números da obra",
+          "texto": "O cartão escuro é o atraso em meses: o executado de hoje é o previsto de quantos meses atrás. Depois vêm o executado acumulado, o avanço no mês, o PPC do mês (o plano semanal cumprido, meta de {NOTA:ppc_meta}) e o término projetado, com a entrega contratual e os 180 dias de tolerância.",
+          "dica": "Passe o mouse num cartão para ver como é calculado e de onde vem.",
+          "foco": {
+            "alvo": "os cinco cartões",
+            "x": 352,
+            "y": 109,
+            "w": 1508,
+            "h": 140
+          },
+          "foco_fonte": "inventario"
+        },
+        {
+          "n": 3,
+          "id": "CURVA",
+          "tipo": "grande",
+          "pose": "P9",
+          "lado": "abaixo",
+          "titulo": "A curva S",
+          "foco": {
+            "alvo": "painel Curva S",
+            "x": 352,
+            "y": 273,
+            "w": 900,
+            "h": 370
+          },
+          "foco_fonte": "inventario",
+          "conteudo": {
+            "abertura": "A curva S mostra o avanço acumulado da obra, mês a mês: o previsto pelo cronograma (linha tracejada) e o executado de fato (linha sólida). Quando o executado fica abaixo do previsto, a área entre as linhas é o atraso.",
+            "faixas_titulo": "O prazo na nota",
+            "faixas": [
+              [
+                "Ponto cheio",
+                "atraso até {NOTA:prazo_cheio}: {NOTA:prazo_max} pontos"
+              ],
+              [
+                "Trava",
+                "atraso acima de {NOTA:atraso_trava} meses: obra crítica"
+              ]
+            ],
+            "fecho": "O atraso em meses é o item Prazo da nota, até {NOTA:prazo_max} dos {NOTA:nota_max} pontos: quantos meses atrás do cronograma está o executado de hoje.",
+            "dica": "Passe o mouse num mês para ver o acumulado, o ritmo e o dinheiro daquele mês."
+          }
+        },
+        {
+          "n": 4,
+          "id": "PPC",
+          "tipo": "comum",
+          "pose": "P10",
+          "lado": "esquerda",
+          "titulo": "O PPC mês a mês",
+          "texto": "O PPC é a parte do plano da semana que a obra cumpriu, na média do mês. A linha tracejada é a meta de {NOTA:ppc_meta}; a cor segue os pontos do item PPC da nota. Quando o PPC fica abaixo da meta por vários meses, o atraso costuma vir depois.",
+          "dica": "Passe o mouse num mês para ver o PPC, o atraso e o ritmo daquele mês.",
+          "foco": {
+            "alvo": "painel PPC mês a mês",
+            "x": 1292,
+            "y": 273,
+            "w": 568,
+            "h": 290
+          },
+          "foco_fonte": "inventario"
+        },
+        {
+          "n": 5,
+          "id": "AVANCO",
+          "tipo": "comum",
+          "pose": "P3",
+          "lado": "esquerda",
+          "titulo": "O avanço das obras",
+          "texto": "Cada obra em andamento aparece com o executado e o previsto acumulados e, à direita, o atraso em meses. A cor da barra segue os pontos do item Prazo da nota: cheio até {NOTA:prazo_cheio} de atraso, e a trava acima de {NOTA:atraso_trava} meses. A obra em foco vem destacada.",
+          "dica": "Passe o mouse numa obra para ver o atraso mês a mês.",
+          "foco": {
+            "alvo": "painel Avanço das obras",
+            "x": 1292,
+            "y": 603,
+            "w": 568,
+            "h": 437
+          },
+          "foco_fonte": "inventario"
+        },
+        {
+          "n": 6,
+          "id": "LINHA",
+          "tipo": "comum",
+          "pose": "P2",
+          "lado": "direita",
+          "titulo": "A linha do tempo",
+          "texto": "Mostra o início e o término previsto de cada obra. O executado vem na cor do item Prazo da nota, o losango marca o término projetado pelo ritmo de hoje e a hachura são os 180 dias de tolerância depois da entrega contratual. A linha vertical marca o mês escolhido.",
+          "dica": "Passe o mouse numa obra para ver prazo, término projetado e físico contra financeiro.",
+          "foco": {
+            "alvo": "painel Linha do tempo das obras",
+            "x": 352,
+            "y": 683,
+            "w": 900,
+            "h": 357
+          },
+          "foco_fonte": "inventario"
+        },
+        {
+          "n": 7,
+          "id": "FILTROS",
+          "tipo": "comum",
+          "pose": "P5",
+          "lado": "abaixo",
+          "titulo": "Filtros e ajuda",
+          "texto": "No alto ficam a obra e o mês em uso; o funil abre os filtros para trocar. Cada painel tem um “?” que explica o gráfico com os números da obra, e o “?” redondo daqui reabre este tour quando você quiser.",
+          "dica": "Mês e janela valem em todas; obra em foco, na Análise.",
+          "foco": {
+            "alvo": "recorte em uso, funil e “?” redondo do cabeçalho",
+            "x": 1415,
+            "y": 38,
+            "w": 445,
+            "h": 44
+          },
+          "foco_fonte": "medir"
+        }
+      ]
+    },
+    "T4": {
+      "nome": "Resultado no tempo",
+      "figma_tela": "387:5688",
+      "passos": [
+        {
+          "n": 1,
+          "id": "BOASVINDAS",
+          "tipo": "comum",
+          "pose": "P1",
+          "lado": "abaixo",
+          "titulo": "Este é o Resultado no tempo",
+          "texto": "Esta tela olha a carteira ao longo dos meses e responde duas perguntas: o resultado está piorando? E cada obra gastou fora do previsto no mês e justificou? À esquerda ficam o resultado e o desembolso da carteira; à direita, cada obra no mês.",
+          "dica": "Escolha o mês e as obras pelo funil, no alto da tela.",
+          "foco": {
+            "alvo": "título e pergunta do cabeçalho",
+            "x": 352,
+            "y": 38,
+            "w": 858,
+            "h": 62
+          },
+          "foco_fonte": "medir"
+        },
+        {
+          "n": 2,
+          "id": "CARTOES",
+          "tipo": "comum",
+          "pose": "P9",
+          "lado": "abaixo",
+          "titulo": "Os números do mês",
+          "texto": "Os cartões trazem o resultado da carteira como a planilha apresenta (o cartão escuro), o IDC da carteira com o resultado aplicado, o resultado sem estoque e adiantamentos, o desembolso do mês e a situação das justificativas. Vermelho indica valor negativo.",
+          "dica": "Passe o mouse num cartão: ele vira e mostra como é calculado e de onde vem.",
+          "foco": {
+            "alvo": "os cinco cartões",
+            "x": 352,
+            "y": 109,
+            "w": 1508,
+            "h": 140
+          },
+          "foco_fonte": "inventario"
+        },
+        {
+          "n": 3,
+          "id": "MES",
+          "tipo": "grande",
+          "pose": "P9",
+          "lado": "abaixo",
+          "titulo": "O resultado, mês a mês",
+          "foco": {
+            "alvo": "painel Resultado da carteira, mês a mês",
+            "x": 352,
+            "y": 273,
+            "w": 1068,
+            "h": 380
+          },
+          "foco_fonte": "inventario",
+          "conteudo": {
+            "abertura": "Cada mês tem uma barra: o resultado aplicado da carteira (valor agregado − custo aplicado). O traço é o resultado da planilha, que já conta o que ainda vai se realizar.",
+            "leitura": "A distância entre a barra e o traço é o que falta realizar. Vermelho indica negativo.",
+            "fecho": "Na nota, o custo entra pelo IDC (valor agregado ÷ custo aplicado): a partir de 1,00 vale os {NOTA:custo_max} pontos; abaixo de {NOTA:idc_trava}, a obra fica crítica.",
+            "dica": "Passe o mouse num mês para ver o aplicado de cada obra e o que falta realizar."
+          }
+        },
+        {
+          "n": 4,
+          "id": "OBRA",
+          "tipo": "comum",
+          "pose": "P3",
+          "lado": "esquerda",
+          "titulo": "Obras no mês",
+          "texto": "Uma linha por obra, na ordem da nota: o IDC com a marca dos pontos do item Custo, a variação dele no mês, o desvio de caixa com a marca da Previsão de caixa e, embaixo, a justificativa da planilha. Acima de {NOTA:caixa_lim} a justificativa é exigida; em branco, ela aparece em vermelho.",
+          "dica": "Passe o mouse numa obra para ver o caixa mês a mês e as justificativas anteriores.",
+          "foco": {
+            "alvo": "painel Obras no mês",
+            "x": 1460,
+            "y": 273,
+            "w": 400,
+            "h": 767
+          },
+          "foco_fonte": "inventario"
+        },
+        {
+          "n": 5,
+          "id": "DESCART",
+          "tipo": "comum",
+          "pose": "P2",
+          "lado": "acima",
+          "titulo": "O desembolso da carteira",
+          "texto": "Compara, mês a mês, o previsto (creme) com o desembolsado (preto) de todas as obras juntas. O número em cima de cada par é o desvio: quanto se gastou acima ou abaixo do previsto.",
+          "dica": "Passe o mouse num mês para ver previsto e desembolsado obra por obra.",
+          "foco": {
+            "alvo": "painel Desembolso da carteira",
+            "x": 352,
+            "y": 693,
+            "w": 1068,
+            "h": 347
+          },
+          "foco_fonte": "inventario"
+        },
+        {
+          "n": 6,
+          "id": "FILTROS",
+          "tipo": "comum",
+          "pose": "P5",
+          "lado": "abaixo",
+          "titulo": "Filtros e ajuda",
+          "texto": "No alto ficam o mês e as obras em uso; o funil abre os filtros para trocar. Cada painel tem um “?” que explica o gráfico com os números do mês, e o “?” redondo daqui reabre este tour quando você quiser.",
+          "dica": "Mês e janela valem em todas; as obras, na Visão geral.",
+          "foco": {
+            "alvo": "recorte em uso, funil e “?” redondo do cabeçalho",
+            "x": 1415,
+            "y": 38,
+            "w": 445,
+            "h": 44
+          },
+          "foco_fonte": "medir"
+        }
+      ]
+    },
+    "T5": {
+      "nome": "Canteiro",
+      "figma_tela": "(provisória)",
+      "passos": [
+        {
+          "n": 1,
+          "id": "BOASVINDAS",
+          "tipo": "comum",
+          "pose": "P11",
+          "lado": "abaixo",
+          "titulo": "Este é o Canteiro",
+          "texto": "Esta tela olha o dia a dia das obras da carteira: o canteiro está seguro, faz certo da primeira vez e recebe material no prazo? À esquerda ficam a qualidade e a chuva, mês a mês; à direita, cada obra na segurança e nos suprimentos.",
+          "dica": "Escolha o mês e as obras pelo funil, no alto da tela.",
+          "foco": {
+            "alvo": "título e pergunta do cabeçalho",
+            "x": 352,
+            "y": 38,
+            "w": 712,
+            "h": 62
+          },
+          "foco_fonte": "medir"
+        },
+        {
+          "n": 2,
+          "id": "CARTOES",
+          "tipo": "comum",
+          "pose": "P9",
+          "lado": "abaixo",
+          "titulo": "Os números do mês",
+          "texto": "O cartão escuro conta os meses seguidos sem acidente com afastamento. Depois vêm a frequência de acidentes em 12 meses (com a média do setor), o canteiro conforme a NR-18, a aprovação na 1.ª inspeção e as entregas no prazo, cada um com a meta da nota.",
+          "dica": "Passe o mouse num cartão: ele vira e mostra como é calculado e de onde vem.",
+          "foco": {
+            "alvo": "os cinco cartões",
+            "x": 352,
+            "y": 109,
+            "w": 1508,
+            "h": 140
+          },
+          "foco_fonte": "inventario"
+        },
+        {
+          "n": 3,
+          "id": "QUALIDADE",
+          "tipo": "grande",
+          "pose": "P9",
+          "lado": "abaixo",
+          "titulo": "A qualidade, mês a mês",
+          "foco": {
+            "alvo": "painel Qualidade, mês a mês",
+            "x": 352,
+            "y": 273,
+            "w": 1068,
+            "h": 380
+          },
+          "foco_fonte": "inventario",
+          "conteudo": {
+            "abertura": "Cada linha fina é uma obra: a parte dos serviços que passou na primeira inspeção. A preta é a carteira; a grafite, a obra com a menor aprovação no mês.",
+            "leitura": "O tracejado é a meta. Abaixo dele, a obra está refazendo serviço.",
+            "fecho": "Na nota, a aprovação na 1.ª inspeção vale o ponto cheio a partir de {NOTA:inspecao_meta}.",
+            "dica": "Abra o “?” do painel para ver cada obra no mês."
+          }
+        },
+        {
+          "n": 4,
+          "id": "SEGURANCA",
+          "tipo": "comum",
+          "pose": "P10",
+          "lado": "esquerda",
+          "titulo": "Segurança por obra",
+          "texto": "Uma linha por obra, da maior frequência de acidentes para a menor: a barra é a taxa de 12 meses (acidentes com afastamento por milhão de horas trabalhadas) e o traço, a média do setor, {NOTA:acid_setor}. À direita, o checklist NR-18 do mês.",
+          "dica": "A cor da barra e da marca diz quantos pontos a obra leva no item.",
+          "foco": {
+            "alvo": "painel Segurança por obra",
+            "x": 1460,
+            "y": 273,
+            "w": 400,
+            "h": 380
+          },
+          "foco_fonte": "inventario"
+        },
+        {
+          "n": 5,
+          "id": "CHUVA",
+          "tipo": "comum",
+          "pose": "P2",
+          "lado": "acima",
+          "titulo": "Chuva e ritmo",
+          "texto": "Em cima, os dias em que a chuva parou o serviço externo, na média das obras; embaixo, quanto da carteira foi executado no mês. De março a julho é a quadra chuvosa de Natal: o ritmo cai junto.",
+          "dica": "Passe o mouse num mês para ver a chuva e o executado de cada obra.",
+          "foco": {
+            "alvo": "painel Chuva e ritmo",
+            "x": 352,
+            "y": 693,
+            "w": 1068,
+            "h": 347
+          },
+          "foco_fonte": "inventario"
+        },
+        {
+          "n": 6,
+          "id": "SUPRIMENTOS",
+          "tipo": "comum",
+          "pose": "P3",
+          "lado": "esquerda",
+          "titulo": "Suprimentos por obra",
+          "texto": "Pedidos que chegaram no prazo e completos sobre os previstos no mês, da pior obra para a melhor. O traço é a meta de {NOTA:entregas_meta}; a cor do ponto diz quantos pontos a obra leva no item.",
+          "dica": "Abra o “?” do painel para ver os pedidos da carteira.",
+          "foco": {
+            "alvo": "painel Suprimentos por obra",
+            "x": 1460,
+            "y": 693,
+            "w": 400,
+            "h": 347
+          },
+          "foco_fonte": "inventario"
+        },
+        {
+          "n": 7,
+          "id": "FILTROS",
+          "tipo": "comum",
+          "pose": "P5",
+          "lado": "abaixo",
+          "titulo": "Filtros e ajuda",
+          "texto": "No alto ficam o mês e as obras em uso; o funil abre os filtros para trocar. Cada painel tem um “?” que explica o gráfico com os números do mês, e o “?” redondo daqui reabre este tour quando você quiser.",
+          "dica": "Mês e janela valem em todas; as obras, na Visão geral.",
+          "foco": {
+            "alvo": "recorte em uso, funil e “?” redondo do cabeçalho",
+            "x": 1415,
+            "y": 38,
+            "w": 445,
+            "h": 44
+          },
+          "foco_fonte": "medir"
+        }
+      ]
+    }
+  }
+}

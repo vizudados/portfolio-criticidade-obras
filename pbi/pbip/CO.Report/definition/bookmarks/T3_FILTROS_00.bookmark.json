@@ -1,0 +1,110 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T3_FILTROS_00",
+  "displayName": "T3 · filtros fechados",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T3_Drw_Estado",
+      "T3_Drw_Fechar",
+      "T3_Drw_Foco",
+      "T3_Drw_FocoNota",
+      "T3_Drw_Fora",
+      "T3_Drw_Fundo",
+      "T3_Drw_Janela",
+      "T3_Drw_JanelaNota",
+      "T3_Drw_Limpar",
+      "T3_Drw_Mes",
+      "T3_Drw_Recorte"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T3",
+    "sections": {
+      "T3": {
+        "visualContainers": {
+          "T3_Drw_Estado": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_Drw_Fechar": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_Drw_Foco": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_Drw_FocoNota": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_Drw_Fora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_Drw_Fundo": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_Drw_Janela": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_Drw_JanelaNota": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_Drw_Limpar": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_Drw_Mes": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_Drw_Recorte": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

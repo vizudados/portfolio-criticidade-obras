@@ -1,0 +1,10 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: 0
+@descricao: Lado do cronograma pelo desvio físico acumulado arredondado a uma casa, como a tela mostra: −1 atrás, 0 no previsto (previsto igual ao executado na planilha), 1 à frente; vazio sem previsto (JANGADA). Obra do contexto.
+@oraculo: sinal de obras[].serie[].indicadores.desvio_fisico_pp
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _d = [Físico · desvio acumulado p.p.]
+RETURN
+    IF ( NOT ISBLANK ( _d ), SIGN ( ROUND ( _d, 1 ) ) )

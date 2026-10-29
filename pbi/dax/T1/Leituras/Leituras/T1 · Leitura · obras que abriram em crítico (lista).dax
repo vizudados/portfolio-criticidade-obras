@@ -1,0 +1,27 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: texto
+@descricao: Obras críticas na nota no mês do contexto cuja primeira nota completa é a deste mês (antes, só meses pendentes ou sem planilha). Não contam como entrada; crítico → pendente → crítico não abre. Bases de teste, mai/26: DUNAS.
+@oraculo: oráculo da régua antiga (status mês a mês)
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _m = SELECTEDVALUE ( dMes[Mes] )
+VAR _ant = EDATE ( _m, -1 )
+VAR _recorte = VALUES ( dObra[Obra] )
+VAR _obras =
+    ADDCOLUMNS (
+        FILTER ( dRankingNota, dRankingNota[Mes] = _m && dRankingNota[TemAC] = 1 && dRankingNota[Obra] IN _recorte ),
+        "@s", dRankingNota[Status],
+        "@a",
+            VAR _o = dRankingNota[Obra]
+            RETURN
+                MAXX ( FILTER ( ALL ( dRankingNota ), dRankingNota[Obra] = _o && dRankingNota[Mes] = _ant && dRankingNota[TemAC] = 1 ), dRankingNota[Status] ),
+        "@ja",
+            VAR _o = dRankingNota[Obra]
+            RETURN
+                IF ( ISEMPTY ( FILTER ( ALL ( dRankingNota ), dRankingNota[Obra] = _o && dRankingNota[Mes] < _m && dRankingNota[TemAC] = 1 && dRankingNota[Pendente] == 0 ) ), 0, 1 ),
+        "@p", dRankingNota[Perdidos],
+        "@n", dRankingNota[NotaOrdem]
+    )
+RETURN
+    CONCATENATEX ( FILTER ( _obras, [@s] == 2 && [@ja] = 0 ), dRankingNota[Obra], "|", [@p], DESC, [@n], ASC, dRankingNota[Obra], ASC )

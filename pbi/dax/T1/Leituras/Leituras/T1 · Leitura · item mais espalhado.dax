@@ -1,0 +1,16 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: texto
+@descricao: Código (dItemNota) do item em que mais obras perderam pontos no mês de referência (empate: mais pontos perdidos, depois a ordem da nota); vazio quando nenhum item perdeu pontos.
+@oraculo: oráculo da régua antiga · ago/26: fluxo_caixa (4 obras)
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _itens =
+    ADDCOLUMNS (
+        ALL ( dItemNota ),
+        "@o", [Nota · item · obras que perderam pontos · ref] + 0,
+        "@p", [Nota · item · perdidos · ref] + 0
+    )
+VAR _top = TOPN ( 1, FILTER ( _itens, [@o] > 0 ), [@o], DESC, [@p], DESC, dItemNota[Ordem], ASC )
+RETURN
+    MAXX ( _top, dItemNota[Item] )

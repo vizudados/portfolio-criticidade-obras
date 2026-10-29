@@ -1,0 +1,66 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T5_FILTROS_01",
+  "displayName": "T5 · filtros abertos",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T5_Drw_Estado",
+      "T5_Drw_Fechar",
+      "T5_Drw_Fora",
+      "T5_Drw_Fundo",
+      "T5_Drw_Janela",
+      "T5_Drw_JanelaNota",
+      "T5_Drw_Limpar",
+      "T5_Drw_Mes",
+      "T5_Drw_Obras",
+      "T5_Drw_Recorte",
+      "T5_Drw_Status"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T5",
+    "sections": {
+      "T5": {
+        "visualContainers": {
+          "T5_Drw_Estado": {
+            "singleVisual": {}
+          },
+          "T5_Drw_Fechar": {
+            "singleVisual": {}
+          },
+          "T5_Drw_Fora": {
+            "singleVisual": {}
+          },
+          "T5_Drw_Fundo": {
+            "singleVisual": {}
+          },
+          "T5_Drw_Janela": {
+            "singleVisual": {}
+          },
+          "T5_Drw_JanelaNota": {
+            "singleVisual": {}
+          },
+          "T5_Drw_Limpar": {
+            "singleVisual": {}
+          },
+          "T5_Drw_Mes": {
+            "singleVisual": {}
+          },
+          "T5_Drw_Obras": {
+            "singleVisual": {}
+          },
+          "T5_Drw_Recorte": {
+            "singleVisual": {}
+          },
+          "T5_Drw_Status": {
+            "singleVisual": {}
+          }
+        }
+      }
+    }
+  }
+}

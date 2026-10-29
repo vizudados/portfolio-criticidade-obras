@@ -1,0 +1,10 @@
+/*
+@pasta: T2 Análise crítica\Tooltips\Contas
+@formato: 0.00
+@descricao: Pontos possíveis do item da nota da linha (dItemNota) na obra em foco, no mês anterior ao de referência (rodapé do tooltip do item).
+@oraculo: oráculo da régua antiga (pontos por item)
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _mes = EDATE ( [Mês de referência], -1 )
+RETURN
+    CALCULATE ( [Nota · item · possíveis · foco no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

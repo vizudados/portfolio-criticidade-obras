@@ -1,0 +1,22 @@
+/*
+@pasta: T3 Avanço físico\Avanço das sete obras\Contas
+@formato: texto
+@descricao: Obra com o menor % executado acumulado no mês de referência.
+@oraculo: min(executado acumulado) → TIROL
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obras =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@e", [Físico · executado acumulado · ref],
+            "@d", [Físico · desvio acumulado p.p. · ref],
+            "@ini", [Obra · início],
+            "@fim", [Obra · término previsto],
+            "@orc", [Orçamento · ref],
+            "@tipo", [Tipo de orçamento · ref]
+        ),
+        NOT ISBLANK ( [@e] )
+    )
+RETURN
+    MAXX ( TOPN ( 1, _obras, [@e], ASC, dObra[Obra], ASC ), dObra[Obra] )

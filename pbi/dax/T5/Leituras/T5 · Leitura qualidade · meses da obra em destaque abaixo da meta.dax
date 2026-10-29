@@ -1,0 +1,22 @@
+/*
+@pasta: T5 Canteiro\Leituras\Contas
+@formato: 0
+@descricao: Meses da janela em que a obra em destaque ficou abaixo do ponto cheio da 1.ª inspeção. Ex. set/26: 12 (REDINHA).
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 12
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _ini = [Série · primeiro mês]
+VAR _ref = [Mês de referência]
+VAR _obra = [T5 · Qualidade · obra em destaque · ref]
+VAR _lim = [Nota · limite inspeção · ponto cheio]
+RETURN
+    IF (
+        NOT ISBLANK ( _obra ),
+        CALCULATE (
+            COUNTROWS ( FILTER ( ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ),
+        "@v", [Canteiro · aprovação na 1.ª inspeção]
+    ), NOT ISBLANK ( [@v] ) && [@v] < _lim ) ),
+            dObra[Obra] = _obra
+        ) + 0
+    )

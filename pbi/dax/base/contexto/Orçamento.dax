@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Obra
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Orçamento da obra projetado (passo 3), somado no recorte.
+@gerado: pbi/scripts/contas_base.py
+*/
+SUM ( fAnaliseCritica[Orcamento] )

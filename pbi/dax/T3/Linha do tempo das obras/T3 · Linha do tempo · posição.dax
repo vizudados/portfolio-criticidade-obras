@@ -1,0 +1,24 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: 0
+@descricao: Ordem da obra na linha do tempo: as em andamento na ordem do avanço (as sem aba no mês depois delas, pelo início); depois as a iniciar, pelo início previsto. Vazio para as concluídas.
+@oraculo: ordem de obras[] + proximas[] (Figma 277:1261…1297)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _sit = SELECTEDVALUE ( dObra[Situacao] )
+VAR _obra = SELECTEDVALUE ( dObra[Obra] )
+VAR _ini = SELECTEDVALUE ( dObra[Inicio] )
+VAR _pos = [T3 · Avanço · posição]
+VAR _mesma =
+    CALCULATETABLE (
+        SUMMARIZE ( dObra, dObra[Obra], dObra[Inicio] ),
+        REMOVEFILTERS ( dObra[Obra] ),
+        dObra[Situacao] = _sit
+    )
+VAR _antes = COUNTROWS ( FILTER ( _mesma, dObra[Inicio] < _ini || ( dObra[Inicio] = _ini && dObra[Obra] < _obra ) ) ) + 0
+RETURN
+    SWITCH (
+        TRUE (),
+        _sit = "Em andamento", IF ( NOT ISBLANK ( _pos ), _pos, 50 + _antes ),
+        _sit = "A iniciar", 100 + _antes
+    )

@@ -1,0 +1,14 @@
+/*
+@pasta: T3 Avanço físico\PPC mês a mês\Contas
+@formato: 0
+@descricao: Meses da janela em que o PPC da obra em foco chegou à meta (o ponto cheio do item PPC da nota).
+@oraculo: dados/_gabarito/nota_previa.csv (x_ppc ≥ 0,80)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses = ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), "@v", VAR _v = [Canteiro · PPC · foco no mês] RETURN IF ( NOT ISBLANK ( _v ), ROUND ( _v, 2 ) ) )
+VAR _com = FILTER ( _meses, NOT ISBLANK ( [@v] ) )
+VAR _meta = [Nota · limite PPC · ponto cheio]
+RETURN
+    COUNTROWS ( FILTER ( _com, [@v] >= _meta ) ) + 0

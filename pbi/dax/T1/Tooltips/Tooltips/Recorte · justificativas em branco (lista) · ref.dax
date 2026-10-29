@@ -1,0 +1,20 @@
+/*
+@pasta: T1 Visão geral\Tooltips\Contas
+@formato: texto
+@descricao: Obras do recorte com justificativa exigida e em branco no mês de referência, do maior para o menor |desvio| do desembolso (empate: ordem alfabética), separadas por '|'. O rodapé do tooltip do item fluxo de caixa escreve quantas couberem numa linha (justificativas_rodape.py); a leitura do desembolso por obra (T4) lista todas.
+@oraculo: obras[].ultimo.justificativa_ausente · ago/26 real: JANGADA|POTENGI|REDINHA|CAJUEIRO (−31%, −21%, +17%, +15%)
+@gerado: pbi/scripts/tooltips_t1.py
+*/
+VAR _mes = [Mês de referência]
+VAR _obras =
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            VALUES ( fAnaliseCritica[Obra] ),
+            "@b", [Justificativa · em branco],
+            "@d", ABS ( [Desembolso · desvio no mês] )
+        ),
+        REMOVEFILTERS ( dMes ),
+        dMes[Mes] = _mes
+    )
+RETURN
+    CONCATENATEX ( FILTER ( _obras, [@b] = 1 ), fAnaliseCritica[Obra], "|", [@d], DESC, fAnaliseCritica[Obra], ASC )

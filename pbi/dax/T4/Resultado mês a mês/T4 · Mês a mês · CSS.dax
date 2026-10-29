@@ -1,0 +1,14 @@
+/*
+@pasta: T4 Resultado no tempo\Resultado mês a mês
+@formato: texto
+@descricao: CSS das colunas do painel Resultado da carteira, mês a mês (uma entrada por mês).
+@gerado: pbi/scripts/desenho_t4.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & "#htmlContent{display:flex!important;align-items:flex-start;width:100vw;height:100vh;margin:0!important;padding:0!important}.htmlViewerEntry{display:block!important;flex:1 1 0;min-w"
+    & "idth:0;margin:0!important;padding:0!important}.mc{position:relative;height:312px;transition:background .15s}.mc:hover,.htmlViewerEntry.hover .mc{background:rgba(233,224,207,.3)}.mc"
+    & " .rz{position:absolute;left:0;right:0;height:1px;background:#6B6B70}.mc .br{position:absolute;background:#0B0B0C}.mc .br.ng{background:#C43737}.mc .tq{position:absolute;z-index:1;h"
+    & "eight:3px;background:#0B0B0C;box-shadow:0 0 0 1px #FFFFFF}.mc .vl{position:absolute;z-index:2;text-align:center;font-size:14px;line-height:17px;white-space:nowrap;color:#0B0B0C;tex"
+    & "t-shadow:0 0 2px #FFFFFF,0 0 4px #FFFFFF,0 0 6px #FFFFFF}.mc .ms{position:absolute;left:0;right:0;top:296px;text-align:center;font-size:13px;line-height:16px;color:#3B3B3F;white-sp"
+    & "ace:nowrap}.mc .ms.ref{font-weight:600;color:#0B0B0C}.mc .ms.sem{opacity:.35}"

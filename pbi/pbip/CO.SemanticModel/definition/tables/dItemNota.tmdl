@@ -1,0 +1,154 @@
+/// Os 9 itens da Nota da obra (docs/08 §3), com a dimensão, o máximo, a fonte, a unidade do X, o texto das faixas e a explicação de uma linha. Eixo das listas e dos tooltips por item (e, por Dimensao, das listas por dimensão). GERADA por pbi/scripts/contas_base.py a partir do dicionário NOTA (fonte única): não edite à mão.
+table dItemNota
+	lineageTag: 2c17e108-13fe-5ac9-a283-7d6805ce3b69
+
+	/// Código do item.
+	column Item
+		dataType: string
+		isKey
+		lineageTag: 64028cb0-0c02-5185-b62e-0ac3d2bd948d
+		summarizeBy: none
+		sourceColumn: Item
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem do item na régua (1 = custo).
+	column Ordem
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ddff241-36c7-50dc-8fc6-d3dd64c48712
+		summarizeBy: none
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Dimensão (Custo, Prazo, Caixa, Qualidade, Segurança, Suprimentos, Gestão).
+	column Dimensao
+		dataType: string
+		lineageTag: d6b315ff-cd50-5bda-a4d4-3413b68efeed
+		summarizeBy: none
+		sourceColumn: Dimensao
+		sortByColumn: OrdemDimensao
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem da dimensão.
+	column OrdemDimensao
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 27727563-358a-5ee7-a2f4-4496ea31941f
+		summarizeBy: none
+		sourceColumn: OrdemDimensao
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome do item.
+	column Rotulo
+		dataType: string
+		lineageTag: 57a99f15-847f-531d-aa7b-705ae9ba447f
+		summarizeBy: none
+		sourceColumn: Rotulo
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome curto, para listas.
+	column RotuloCurto
+		dataType: string
+		lineageTag: 0ec154a4-157d-5a4e-81f6-8dc9b13ff843
+		summarizeBy: none
+		sourceColumn: RotuloCurto
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome médio, para tabelas de tooltip.
+	column RotuloMedio
+		dataType: string
+		lineageTag: 2b126f31-a281-51a7-b605-59d108b8be70
+		summarizeBy: none
+		sourceColumn: RotuloMedio
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome dentro de frase, com artigo (o custo, a previsão de caixa).
+	column RotuloFrase
+		dataType: string
+		lineageTag: 95cd814a-b71a-54e6-abfd-ff0c70ca5e76
+		summarizeBy: none
+		sourceColumn: RotuloFrase
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Pontos máximos do item (a soma dá 10).
+	column Maximo
+		dataType: double
+		formatString: 0.00
+		lineageTag: 80a85896-2000-539c-ae79-9ecde0678ba1
+		summarizeBy: none
+		sourceColumn: Maximo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Análise Crítica ou Base complementar.
+	column Fonte
+		dataType: string
+		lineageTag: 5226c726-a9c5-5b3a-a672-6af98895f8c9
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Unidade do X: indice, meses, pct, taxa ou checagens.
+	column Unidade
+		dataType: string
+		lineageTag: f928f4cd-de4d-5f34-ba5d-e19e6cb43940
+		summarizeBy: none
+		sourceColumn: Unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Faixas → pontos, para exibição.
+	column FaixaTexto
+		dataType: string
+		lineageTag: d74f8862-7ac6-5ac5-8922-8c1bf9f4951e
+		summarizeBy: none
+		sourceColumn: FaixaTexto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// O que o item mede, em uma linha.
+	column Explica
+		dataType: string
+		lineageTag: 15ca9fa2-5c0d-5036-895e-2c516bbba5ae
+		summarizeBy: none
+		sourceColumn: Explica
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dItemNota = m
+		mode: import
+		source =
+				let
+				    Tabela = #table(
+				        type table [Item = text, Ordem = Int64.Type, Dimensao = text, OrdemDimensao = Int64.Type, Rotulo = text,
+				            RotuloCurto = text, RotuloMedio = text, RotuloFrase = text, Maximo = number, Fonte = text, Unidade = text,
+				            FaixaTexto = text, Explica = text],
+				        {
+				            {"custo", 1, "Custo", 1, "Custo (IDC)", "Custo", "Custo · IDC", "o custo", 3, "Análise Crítica", "indice", "IDC ≥ 1,00 → 3 · 0,98 ≤ IDC < 1,00 → 2,5 · 0,96 ≤ IDC < 0,98 → 2 · 0,94 ≤ IDC < 0,96 → 1,5 · 0,92 ≤ IDC < 0,94 → 1 · 0,90 ≤ IDC < 0,92 → 0,5 · IDC < 0,90 → 0", "Para cada R$ 1,00 aplicado, quanto de orçamento a obra entregou (valor agregado ÷ custo aplicado)."},
+				            {"prazo", 2, "Prazo", 2, "Atraso em meses", "Atraso", "Prazo · atraso", "o atraso", 2, "Análise Crítica", "meses", "atraso ≤ 0,5 mês → 2 · 0,5 mês < atraso ≤ 1 mês → 1,5 · 1 mês < atraso ≤ 2 meses → 1 · 2 meses < atraso ≤ 3 meses → 0,5 · atraso > 3 meses → 0", "Quantos meses a obra está atrás do cronograma: o executado de hoje é o previsto de quantos meses atrás."},
+				            {"ppc", 3, "Prazo", 2, "Plano semanal cumprido (PPC)", "PPC", "Prazo · PPC", "o plano semanal", 1, "Base complementar", "pct", "PPC ≥ 80% → 1 · 70% ≤ PPC < 80% → 0,5 · 60% ≤ PPC < 70% → 0,25 · PPC < 60% → 0", "De cada 10 tarefas prometidas na semana, quantas foram feitas (média do mês)."},
+				            {"caixa", 4, "Caixa", 3, "Acerto da previsão de caixa", "Caixa", "Previsão de caixa", "a previsão de caixa", 1, "Análise Crítica", "pct", "desvio < 10% → 1 · 10% ≤ desvio ≤ 20% → 0,5 · desvio > 20% → 0", "Quanto o desembolso do mês fugiu do previsto, para mais ou para menos."},
+				            {"inspecao", 5, "Qualidade", 4, "Aprovação na 1.ª inspeção", "1.ª inspeção", "Qualidade · 1.ª inspeção", "a aprovação na 1.ª inspeção", 1, "Base complementar", "pct", "aprovação ≥ 95% → 1 · 90% ≤ aprovação < 95% → 0,75 · 85% ≤ aprovação < 90% → 0,5 · 80% ≤ aprovação < 85% → 0,25 · aprovação < 80% → 0", "Serviços aprovados na primeira inspeção, sem retrabalho, entre os verificados no mês."},
+				            {"acidentes", 6, "Segurança", 5, "Frequência de acidentes", "Acidentes", "Segurança · acidentes", "a frequência de acidentes", 0.5, "Base complementar", "taxa", "TF = 0 → 0,5 · 0 < TF ≤ 7,5 → 0,25 · TF > 7,5 → 0", "Acidentes com afastamento por milhão de horas trabalhadas, nos últimos 12 meses (NBR 14280)."},
+				            {"nr18", 7, "Segurança", 5, "Canteiro conforme NR-18", "NR-18", "Segurança · NR-18", "o canteiro (NR-18)", 0.5, "Base complementar", "pct", "conformidade ≥ 95% → 0,5 · 85% ≤ conformidade < 95% → 0,25 · conformidade < 85% → 0", "Itens do checklist da NR-18 conformes, entre os aplicáveis no mês."},
+				            {"entregas", 8, "Suprimentos", 6, "Entregas no prazo e completas", "Entregas", "Suprimentos · entregas", "as entregas de material", 0.5, "Base complementar", "pct", "entregas ≥ 90% → 0,5 · 80% ≤ entregas < 90% → 0,25 · entregas < 80% → 0", "Pedidos de material entregues no prazo e completos, entre os previstos no mês."},
+				            {"analise", 9, "Gestão", 7, "Análise crítica sem pendência", "Análise crítica", "Gestão · análise crítica", "a análise crítica", 0.5, "Análise Crítica", "checagens", "3 de 3 → 0,5 · 2 de 3 → 0,25 · 0 ou 1 de 3 → 0", "Checagens da planilha do mês: a conta fecha, há justificativa quando o caixa desvia e o previsto não caiu."}
+				        })
+				in
+				    Tabela
+
+	annotation PBI_ResultType = Table
+

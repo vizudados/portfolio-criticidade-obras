@@ -1,0 +1,20 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: texto
+@descricao: Tipo de orçamento das obras a iniciar quando é o mesmo em todas (legal); vazio quando varia.
+@oraculo: proximas[].tipo_orcamento
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _aIniciar =
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@ini", [Obra · início],
+            "@tipo", [T3 · Obra · tipo de orçamento cronograma]
+        ),
+        REMOVEFILTERS ( dObra[Obra] ),
+        dObra[Situacao] = "A iniciar"
+    )
+VAR _tipos = DISTINCT ( SELECTCOLUMNS ( _aIniciar, "@t", [@tipo] ) )
+RETURN
+    IF ( COUNTROWS ( _tipos ) = 1, MAXX ( _tipos, [@t] ) )

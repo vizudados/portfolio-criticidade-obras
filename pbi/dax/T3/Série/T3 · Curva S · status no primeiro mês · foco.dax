@@ -1,0 +1,10 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: 0
+@descricao: Status do físico na nota (dentro ou fora do limite) da obra em foco no primeiro mês da série.
+@oraculo: oráculo da nota (coluna F-F, primeiro mês)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ini = [T3 · Série · primeiro mês da obra · foco]
+RETURN
+    CALCULATE ( [T3 · Status desvio físico · foco no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _ini )

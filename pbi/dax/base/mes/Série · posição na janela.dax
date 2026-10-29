@@ -1,0 +1,10 @@
+/*
+@pasta: Base\Mês
+@formato: 0
+@descricao: Posição do mês do eixo dentro da janela (1 = primeiro mês da janela); vazio fora dela. Para a geometria das séries (x de cada coluna ou ponto).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = MAX ( dMes[Mes] )
+VAR _ini = [Série · primeiro mês]
+RETURN
+    IF ( _mes >= _ini && _mes <= [Mês de referência], DATEDIFF ( _ini, _mes, MONTH ) + 1 )

@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Mês
+@formato: 0
+@descricao: 1 no mês do eixo que está na janela (do primeiro mês da janela ao de referência); vazio fora dela. Os gráficos mês a mês filtram por esta conta.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = MAX ( dMes[Mes] )
+RETURN
+    IF ( _mes >= [Série · primeiro mês] && _mes <= [Mês de referência], 1 )

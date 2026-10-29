@@ -1,0 +1,22 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: texto
+@descricao: Obras cujo orçamento na aba do mês de referência é do tipo final, da mais executada para a menos. Obras com aba no mês de referência, separadas por '|'.
+@oraculo: obras[].tipo_orcamento
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obras =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@e", [Físico · executado acumulado · ref],
+            "@d", [Físico · desvio acumulado p.p. · ref],
+            "@ini", [Obra · início],
+            "@fim", [Obra · término previsto],
+            "@orc", [Orçamento · ref],
+            "@tipo", [Tipo de orçamento · ref]
+        ),
+        NOT ISBLANK ( [@e] )
+    )
+RETURN
+    CONCATENATEX ( FILTER ( _obras, [@tipo] = "final" ), dObra[Obra], "|", [@e], DESC, dObra[Obra], ASC )

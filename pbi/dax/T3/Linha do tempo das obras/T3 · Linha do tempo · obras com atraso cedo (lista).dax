@@ -1,0 +1,23 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: texto
+@descricao: Obras atrás do cronograma que só terminam dois anos ou mais depois do mês de referência, pelo início. Obras com aba no mês de referência, separadas por '|'.
+@oraculo: REDINHA|JANGADA|TIROL
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _obras =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@e", [Físico · executado acumulado · ref],
+            "@d", [Físico · desvio acumulado p.p. · ref],
+            "@ini", [Obra · início],
+            "@fim", [Obra · término previsto],
+            "@orc", [Orçamento · ref],
+            "@tipo", [Tipo de orçamento · ref]
+        ),
+        NOT ISBLANK ( [@e] )
+    )
+RETURN
+    CONCATENATEX ( FILTER ( _obras, [@d] < 0 && [@fim] >= EDATE ( _ref, 24 ) ), dObra[Obra], "|", [@ini], ASC, dObra[Obra], ASC )

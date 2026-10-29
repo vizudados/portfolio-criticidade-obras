@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Obra
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Pago e ainda não virou obra: saldo de contrato + adiantamentos + estoque + equipamentos.
+@oraculo: obras[].ultimo.ativos_nao_consumidos · carteira.ativos_nao_consumidos
+@gerado: pbi/scripts/contas_base.py
+*/
+[Saldo de contrato] + [Adiantamento de serviços] + [Adiantamento de materiais] + [Estoque de materiais] + [Equipamentos (valor de mercado)]

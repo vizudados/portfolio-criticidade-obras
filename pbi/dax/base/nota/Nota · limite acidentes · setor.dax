@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: 0.0
+@descricao: Taxa de frequência até a qual o item vale metade (≈ média do setor). Do dicionário NOTA. Constante.
+@oraculo: dicionário NOTA
+@gerado: pbi/scripts/contas_base.py
+*/
+7.5

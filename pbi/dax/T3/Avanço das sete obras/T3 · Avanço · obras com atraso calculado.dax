@@ -1,0 +1,23 @@
+/*
+@pasta: T3 Avanço físico\Avanço das sete obras\Contas
+@formato: 0
+@descricao: Obras com o atraso em meses calculado (curva prevista e executado no mês de referência). Obras com aba no mês de referência.
+@oraculo: nota_previa.csv x_atraso preenchido (set/26: 7)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obras =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@e", [Físico · executado acumulado · ref],
+            "@d", [Físico · desvio acumulado p.p. · ref],
+            "@ini", [Obra · início],
+            "@fim", [Obra · término previsto],
+            "@orc", [Orçamento · ref],
+            "@tipo", [Tipo de orçamento · ref],
+            "@a", [Prazo · atraso (meses) · ref]
+        ),
+        NOT ISBLANK ( [@e] )
+    )
+RETURN
+    COUNTROWS ( FILTER ( _obras, NOT ISBLANK ( [@a] ) ) ) + 0

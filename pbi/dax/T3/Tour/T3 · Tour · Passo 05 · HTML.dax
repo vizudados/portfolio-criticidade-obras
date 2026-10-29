@@ -1,0 +1,41 @@
+/*
+@pasta: T3 Avanço físico\Tour
+@formato: texto
+@descricao: Passo 5 de 7 do tour da Avanço físico (O avanço das obras): gestor (pose P3) no canto direita, balão de 560 px, ligação ao anel. Só desenha; lê a medida da pose.
+@gerado: pbi/scripts/tour_lib.py
+*/
+-- 4 · Marcação
+"<div class='u tr'>"
+    & "<div class='rc' style='left:1284px;top:595px;width:584px;height:453px'></div>"
+    & "<svg class='sv' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M1302 589H1298A20 20 0 0 0 1278 609V613M1850 589H1854A20 20 0 0 1 1874 609V613M1302 105"
+    & "4H1298A20 20 0 0 1 1278 1034V1030M1850 1054H1854A20 20 0 0 0 1874 1034V1030' fill='none' stroke='#FF"
+    & "FFFF' stroke-width='3' stroke-linecap='round'/><path d='M1165 703L1284 703' fill='none' stroke='#E9E"
+    & "0CF' stroke-width='2' stroke-dasharray='2 6' stroke-linecap='round'/><circle cx='1284' cy='703' r='3"
+    & "' fill='#E9E0CF' stroke='#0B0B0C' stroke-width='2'/></svg>"
+    & "<div class='nr' style='left:748px;top:744px;width:511px;height:336px'>"
+    & [Comum · Tour · Pose P3 · HTML]
+    & "</div>"
+    & "<svg class='bq' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M1065 723L1065 727Q1068.13 832.337 1004.84 911.035L1007.16 911.965Q1084.29 832.803 1095"
+    & " 727L1095 723Z' fill='#FFFFFF'/></svg>"
+    & "<section class='bl' role='dialog' aria-label='Tour guiado, passo 5 de 7: O avanço das obras' style='"
+    & "left:605px;top:381px;width:560px;height:346px'>"
+    & "<span class='sl' style='left:32px;top:28px'>Passo 5 de 7</span>"
+    & "<h2 class='tt' style='left:32px;top:68px;width:496px'>O avanço das obras</h2>"
+    & "<p class='tx' style='left:32px;top:116px;width:496px'>Cada obra em andamento aparece com o executado"
+    & " e o previsto acumulados e, à direita, o atraso em meses. A cor da barra segue os pontos do item Pra"
+    & "zo da nota: cheio até 0,5 mês de atraso, e a trava acima de 3 meses. A obra em foco vem destacada.</"
+    & "p>"
+    & "<div class='dc' style='left:32px;top:234px;width:496px'><svg class='cur' width='16' height='16' view"
+    & "Box='0 0 18 18' aria-hidden='true'><path d='M4 2L4 14L7.2 11L9.4 16L11.3 15.2L9.1 10.3L13.6 10.3Z' f"
+    & "ill='#0B0B0C'/></svg><p class='dt'>Passe o mouse numa obra para ver o atraso mês a mês.</p></div>"
+    & "<div class='rg' style='left:32px;top:298px;width:176px;gap:6px'><i style='width:20px;background:rgba"
+    & "(11,11,12,.45)'></i><i style='width:20px;background:rgba(11,11,12,.45)'></i><i style='width:20px;bac"
+    & "kground:rgba(11,11,12,.45)'></i><i style='width:20px;background:rgba(11,11,12,.45)'></i><i style='wi"
+    & "dth:20px;background:#0B0B0C'></i><i style='width:20px;background:#E1E1E1'></i><i style='width:20px;b"
+    & "ackground:#E1E1E1'></i></div>"
+    & "<span class='bt pl' style='left:228px;top:272px;width:64px;height:56px'>Pular</span>"
+    & "<span class='bt s' style='left:302px;top:278px;width:92px'>← Voltar</span>"
+    & "<span class='bt p' style='left:404px;top:278px;width:124px'>Seguir →</span>"
+    & "</section></div>"

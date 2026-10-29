@@ -1,0 +1,14 @@
+/*
+@pasta: T5 Canteiro\Leituras\Contas
+@formato: 0
+@descricao: Meses da janela com base complementar de alguma obra do recorte. Ex. set/26, 12 meses: 12.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 12
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _ini = [Série · primeiro mês]
+VAR _ref = [Mês de referência]
+RETURN
+    COUNTROWS ( FILTER ( ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ),
+        "@v", [Canteiro · serviços verificados]
+    ), [@v] > 0 ) ) + 0

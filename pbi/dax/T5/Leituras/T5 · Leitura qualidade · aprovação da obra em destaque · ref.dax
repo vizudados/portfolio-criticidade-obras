@@ -1,0 +1,10 @@
+/*
+@pasta: T5 Canteiro\Leituras\Contas
+@formato: 0.00%
+@descricao: Aprovação na 1.ª inspeção da obra em destaque no mês de referência. Ex. set/26: 89,6% (REDINHA).
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 0,896
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _obra = [T5 · Qualidade · obra em destaque · ref]
+RETURN
+    IF ( NOT ISBLANK ( _obra ), CALCULATE ( [Canteiro · aprovação na 1.ª inspeção · ref], dObra[Obra] = _obra ) )

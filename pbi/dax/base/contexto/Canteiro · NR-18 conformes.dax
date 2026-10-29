@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Canteiro
+@formato: 0
+@descricao: Itens conformes do checklist NR-18 (base complementar).
+@gerado: pbi/scripts/contas_base.py
+*/
+SUM ( fBaseObra[NR18Conformes] )

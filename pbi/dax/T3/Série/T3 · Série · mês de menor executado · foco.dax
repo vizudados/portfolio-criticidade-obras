@@ -1,0 +1,9 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: dd/mm/yyyy
+@descricao: [T3 · Série · mês de menor executado] da obra em foco.
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    CALCULATE ( [T3 · Série · mês de menor executado], dObra[Obra] = _obra )

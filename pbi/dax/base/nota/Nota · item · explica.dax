@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: texto
+@descricao: O que o item da linha mede, em uma linha.
+@oraculo: dItemNota (gerada do dicionário NOTA)
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( dItemNota[Explica] )

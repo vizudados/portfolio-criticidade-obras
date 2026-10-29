@@ -1,0 +1,18 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: Pontos do canteiro (NR-18) (máx. 0,5): conformidade ≥ 95% → 0,5 · 85% ≤ conformidade < 95% → 0,25 · conformidade < 85% → 0; vazio sem dado. Uma obra; com várias, soma.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+SUMX (
+    VALUES ( dObra[Obra] ),
+    VAR _x = [Nota · X NR-18]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), SWITCH (
+            TRUE (),
+            _x >= 0.95, 0.5,
+            _x >= 0.85, 0.25,
+            0
+        ) )
+)

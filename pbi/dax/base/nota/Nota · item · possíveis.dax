@@ -1,0 +1,19 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: Máximo dos itens do contexto nas obras com dado, somado. Lidos de dItemRankingNota (as medidas da regra de cada item, guardadas no refresh).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _p =
+    SUMX (
+        FILTER (
+        dItemRankingNota,
+        dItemRankingNota[Item] IN VALUES ( dItemNota[Item] )
+            && dItemRankingNota[Obra] IN VALUES ( dObra[Obra] )
+            && dItemRankingNota[Mes] IN VALUES ( dMes[Mes] )
+    ),
+        dItemRankingNota[Possiveis]
+    )
+RETURN
+    IF ( NOT ISBLANK ( _p ), ROUND ( _p, 8 ) )

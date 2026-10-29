@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Criticidade de Obras - Analise Critica"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f24b8067-729c-5999-bfe5-bcd16bd11dde"
+  }
+}

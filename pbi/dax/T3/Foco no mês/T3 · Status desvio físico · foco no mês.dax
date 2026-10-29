@@ -1,0 +1,10 @@
+/*
+@pasta: T3 Avanço físico\Foco no mês\Contas
+@formato: 0
+@descricao: [T3 · Status desvio físico] da obra em foco no mês do eixo (tooltips do mês).
+@oraculo: oráculo da nota (coluna F-F)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    CALCULATE ( [T3 · Status desvio físico], dObra[Obra] = _obra )

@@ -1,0 +1,41 @@
+/*
+@pasta: T1 Visão geral\Tour
+@formato: texto
+@descricao: Passo 2 de 9 do tour da Visão geral (Os números do mês): gestor (pose P9) no canto direita, balão de 560 px, ligação ao anel. Só desenha; lê a medida da pose.
+@gerado: pbi/scripts/tour_lib.py
+*/
+-- 4 · Marcação
+"<div class='u tr'>"
+    & "<div class='rc' style='left:344px;top:101px;width:1524px;height:156px'></div>"
+    & "<svg class='sv' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M362 95H358A20 20 0 0 0 338 115V119M1850 95H1854A20 20 0 0 1 1874 115V119M362 263H358A2"
+    & "0 20 0 0 1 338 243V239M1850 263H1854A20 20 0 0 0 1874 243V239' fill='none' stroke='#FFFFFF' stroke-w"
+    & "idth='3' stroke-linecap='round'/><path d='M1106 365L1106 257' fill='none' stroke='#E9E0CF' stroke-wi"
+    & "dth='2' stroke-dasharray='2 6' stroke-linecap='round'/><circle cx='1106' cy='257' r='3' fill='#E9E0C"
+    & "F' stroke='#0B0B0C' stroke-width='2'/></svg>"
+    & "<div class='nr' style='left:792px;top:750px;width:453px;height:330px'>"
+    & [Comum · Tour · Pose P9 · HTML]
+    & "</div>"
+    & "<svg class='bq' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M880 729L880 733Q888.706 838.072 963.831 917.943L966.169 917.057Q904.874 837.628 910 73"
+    & "3L910 729Z' fill='#FFFFFF'/></svg>"
+    & "<section class='bl' role='dialog' aria-label='Tour guiado, passo 2 de 9: Os números do mês' style='l"
+    & "eft:620px;top:365px;width:560px;height:368px'>"
+    & "<span class='sl' style='left:32px;top:28px'>Passo 2 de 9</span>"
+    & "<h2 class='tt' style='left:32px;top:68px;width:496px'>Os números do mês</h2>"
+    & "<p class='tx' style='left:32px;top:116px;width:496px'>Os cinco cartões resumem a carteira no mês, um"
+    & " por dimensão: as obras por status, o custo, o prazo, o caixa e o canteiro. O cartão escuro é o cust"
+    & "o, que mais pesa na nota; vermelho indica valor que perde pontos.</p>"
+    & "<div class='dc' style='left:32px;top:234px;width:496px'><svg class='cur' width='16' height='16' view"
+    & "Box='0 0 18 18' aria-hidden='true'><path d='M4 2L4 14L7.2 11L9.4 16L11.3 15.2L9.1 10.3L13.6 10.3Z' f"
+    & "ill='#0B0B0C'/></svg><p class='dt'>Passe o mouse num cartão: ele vira e mostra como o número é calcu"
+    & "lado e de onde vem.</p></div>"
+    & "<div class='rg' style='left:32px;top:320px;width:174px;gap:6px'><i style='width:14px;background:rgba"
+    & "(11,11,12,.45)'></i><i style='width:14px;background:#0B0B0C'></i><i style='width:14px;background:#E1"
+    & "E1E1'></i><i style='width:14px;background:#E1E1E1'></i><i style='width:14px;background:#E1E1E1'></i>"
+    & "<i style='width:14px;background:#E1E1E1'></i><i style='width:14px;background:#E1E1E1'></i><i style='"
+    & "width:14px;background:#E1E1E1'></i><i style='width:14px;background:#E1E1E1'></i></div>"
+    & "<span class='bt pl' style='left:228px;top:294px;width:64px;height:56px'>Pular</span>"
+    & "<span class='bt s' style='left:302px;top:300px;width:92px'>← Voltar</span>"
+    & "<span class='bt p' style='left:404px;top:300px;width:124px'>Seguir →</span>"
+    & "</section></div>"

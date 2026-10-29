@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Desembolso
+@formato: texto
+@descricao: Justificativa digitada na aba para a diferença do desembolso (uma obra e um mês no contexto).
+@oraculo: obras[].ultimo.justificativa
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( fAnaliseCritica[Justificativa] )

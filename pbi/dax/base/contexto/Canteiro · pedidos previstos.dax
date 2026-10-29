@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Canteiro
+@formato: 0
+@descricao: Pedidos com entrega prevista no mês (base complementar).
+@gerado: pbi/scripts/contas_base.py
+*/
+SUM ( fBaseObra[PedidosPrevistos] )

@@ -1,0 +1,12 @@
+/*
+@pasta: T2 Análise crítica\IDC, mês a mês\Contas
+@formato: 0
+@descricao: Meses da janela em que a obra em foco esteve crítica na nota.
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _obra = [Nota · obra em foco]
+VAR _meses = ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), "@s", CALCULATE ( [Nota · status · um mês], dObra[Obra] = _obra ) )
+RETURN
+    COUNTROWS ( FILTER ( _meses, [@s] == 2 ) ) + 0

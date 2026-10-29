@@ -1,0 +1,23 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: Nota sob o seletor de janela (Figma: nota da janela na Tela 01 · Filtros abertos 281:724): de que mês a que mês as séries vão e quantos meses mostram; quando a janela pede mais meses do que o histórico tem, diz que a série começa no início do histórico.
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 1 · Leituras
+VAR _ini = [Série · primeiro mês]
+VAR _ref = [Mês de referência]
+VAR _n = [Série · meses até a referência]
+VAR _janela = [Série · janela (meses)]
+-- 2 · Textos
+VAR _txtIni = FORMAT ( _ini, "mmm/yy", "pt-BR" )
+VAR _txtRef = FORMAT ( _ref, "mmm/yy", "pt-BR" )
+VAR _txtMeses = IF ( _n = 1, "1 mês", _n & " meses" )
+VAR _txtFaixa = IF ( _n = 1, "só " & _txtRef, _txtIni & " a " & _txtRef & " · " & _txtMeses )
+VAR _txtCorte = IF ( _n < _janela, ", desde o início do histórico", "" )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _ref ),
+        "<div class='u dw'>Mostrando " & _txtFaixa & _txtCorte & ".</div>"
+    )

@@ -1,0 +1,64 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras
+@formato: texto
+@descricao: Uma linha por obra em andamento e a iniciar (granularidade dObra[Obra], ordem T3 · Linha do tempo · posição): nome, a faixa hachurada dos 180 dias depois da entrega contratual (por baixo), barra do início ao término previsto, preenchimento do executado (cor pelos pontos do item prazo da nota: cheio sálvia, perde parte ocre, zera vermelho; grafite sem curva prevista), traço do previsto (só quando a aba traz o previsto) e o losango do término projetado na cor de onde cai (até a entrega sálvia, nos 180 dias ocre, depois vermelho); as a iniciar só com o contorno tracejado. A barra corre do início ao término, o executado corre em seguida e o losango aparece no fim.
+@gerado: pbi/scripts/desenho_t3.py
+*/
+-- 1 · Leituras
+VAR _pos = [T3 · Linha do tempo · posição]
+VAR _sit = [T3 · Obra · situação]
+VAR _obra = [Obra · nome]
+VAR _ini = [Obra · início]
+VAR _fim = [Obra · término previsto]
+VAR _pi = [T3 · Linha do tempo · primeiro início]
+VAR _ut = [T3 · Linha do tempo · último término]
+VAR _e = [Físico · executado acumulado · ref]
+VAR _p = [Físico · previsto acumulado · ref]
+VAR _pt = [Nota · pontos prazo · ref]
+VAR _ps = [Nota · possíveis · prazo · ref]
+VAR _proj = [Prazo · término projetado · ref]
+VAR _ent = [Prazo · entrega contratual]
+VAR _sitT = [T3 · Término · situação · ref]
+VAR _nAnd = [Obras com análise · ref]
+VAR _nL = [T3 · Linha do tempo · linhas]
+-- 2 · Textos
+VAR _chave = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _obra, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _aIniciar = _sit = "A iniciar"
+VAR _clsFl = "s" & IF ( ISBLANK ( _pt ), "x", IF ( _pt >= _ps, "0", IF ( _pt = 0, "2", "1" ) ) )
+-- 3 · Geometria
+VAR _y0 = YEAR ( _pi ) + IF ( MONTH ( _pi ) = 1, 0, 1 ) -- geometria
+VAR _y1 = YEAR ( _ut ) + 1 -- geometria
+VAR _pxm = DIVIDE ( 723.60, ( _y1 - _y0 ) * 12 ) /* geometria */
+VAR _jan0 = DATE ( _y0, 1, 1 ) -- geometria
+VAR _x = ROUND ( 152.24 + DATEDIFF ( _jan0, _ini, MONTH ) * _pxm, 0 ) -- geometria
+VAR _w = ROUND ( ( DATEDIFF ( _ini, _fim, MONTH ) + 1 ) * _pxm, 0 ) -- geometria
+VAR _wf = ROUND ( _w * MIN ( _e, 1 ), 0 ) -- geometria
+VAR _xp = _x + ROUND ( _w * MIN ( _p, 1 ), 0 ) - 1 -- geometria
+VAR _xEnt = ROUND ( 152.24 + ( DATEDIFF ( _jan0, _ent, MONTH ) + 1 ) * _pxm, 0 ) -- geometria
+VAR _wTol = ROUND ( 6 * _pxm, 0 ) -- geometria
+VAR _xProj = ROUND ( 152.24 + ( DATEDIFF ( _jan0, _proj, MONTH ) + 1 ) * _pxm, 0 ) -- geometria
+VAR _ordem = IF ( _pos >= 100, _nAnd + _pos - 99, _pos ) -- geometria
+VAR _atraso = ( _ordem - 1 ) * 60 -- geometria
+/* F4: a linha k ocupa de INT((k−1)·A/n) a INT(k·A/n), até o teto por linha; --k em centésimos da linha de antes */
+VAR _hU = MIN ( 46, DIVIDE ( 230, MAX ( 1, _nL ) ) ) -- geometria
+VAR _h = INT ( _ordem * _hU ) - INT ( ( _ordem - 1 ) * _hU ) -- geometria
+VAR _k = ROUND ( _hU / 23 * 100, 0 ) -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _pos ) && NOT ISBLANK ( _ini ) && NOT ISBLANK ( _fim ),
+        "<div class='u lt" & IF ( _aIniciar, " ai", "" ) & "' style='height:" & _h & "px;--k:" & _k & "'>"
+            & "<b class='nm'>" & _chave & "</b>"
+            & IF ( ISBLANK ( _ent ), "", "<i class='tl a-gx' style='left:" & _xEnt & "px;width:" & _wTol
+                & "px;animation-delay:" & ( _atraso + 300 ) & "ms'></i>" )
+            & "<i class='tk' style='left:" & _x & "px;width:" & _w & "px' data-rk='t|" & _chave & "' data-rd='"
+            & _atraso & "'></i>"
+            & IF (
+                NOT _aIniciar && NOT ISBLANK ( _e ),
+                "<i class='fl " & _clsFl & "' style='left:" & _x & "px;width:" & _wf & "px' data-rk='f|" & _chave
+                    & "' data-rd='" & ( _atraso + 500 ) & "'></i>"
+                    & IF ( NOT ISBLANK ( _p ), "<i class='pv a-pop' style='left:" & _xp & "px;animation-delay:" & ( _atraso + 1000 ) & "ms'></i>" )
+            )
+            & IF ( _aIniciar || ISBLANK ( _proj ), "", "<i class='tp a-pop t" & _sitT & "' style='left:" & ( _xProj - 6 ) & "px;animation-delay:" & ( _atraso + 1200 ) & "ms'></i>" )
+        & "</div>" & [Comum · JS corrida]
+    )

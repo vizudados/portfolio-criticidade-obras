@@ -1,0 +1,112 @@
+/*
+@pasta: T1 Visão geral\Como os meses evoluíram
+@formato: texto
+@descricao: Mapa obra × mês: uma entrada por mês da janela (granularidade dMes[Mes], de 1 a 12 meses até o de referência) com a coluna do mês, uma célula por obra na ordem da lista de obras (Nota · recorte · obras por pontos perdidos (lista), mês de referência), pintada pelo status da obra no mês (crítico, atenção, estável, pendente tracejado, sem aba em creme) e com a nota (ou os pontos obtidos, na pendente) quando a célula tem 24 px ou mais. A primeira coluna escreve os nomes das obras à esquerda; o rótulo do mês segue a regra da janela e o de referência fica em Semibold preto.
+@gerado: pbi/scripts/desenho_t1.py
+*/
+-- 1 · Leituras
+VAR _noRecorte = [Série · mês até a referência]
+VAR _lista = [Nota · recorte · obras por pontos perdidos (lista)]
+VAR _n = [Série · meses até a referência]
+VAR _pos = [Série · posição na janela]
+VAR _mesAno = [Mês · rótulo curto]
+VAR _mesAbrev = [Mês · abreviado]
+VAR _ehRef = [Série · é o mês de referência]
+VAR _nOb = IF ( _lista = "", 0, PATHLENGTH ( _lista ) )
+-- 3 · Geometria
+VAR _slot = DIVIDE ( 360, _n ) -- geometria
+VAR _x = 104 + ROUND ( ( _pos - 1 ) * _slot, 0 ) -- geometria
+VAR _w = ROUND ( _slot, 0 ) -- geometria
+VAR _cw = MAX ( 4, ROUND ( _slot, 0 ) - 2 ) -- geometria
+VAR _h = MIN ( 28, INT ( DIVIDE ( 196, _nOb ) ) ) -- geometria
+VAR _yMes = _nOb * _h + 6 -- geometria
+VAR _passo = ROUND ( DIVIDE ( 420, _n ), 0 ) -- geometria
+VAR _atraso = ( _pos - 1 ) * _passo -- geometria
+-- 2 · Textos
+VAR _comAno = _slot >= 48 || _pos = 1 || _mesAbrev = "jan"
+VAR _mostraMes = _slot >= 40 || MOD ( _n - _pos, 2 ) = 0
+VAR _rotMes = IF ( _mostraMes, IF ( _comAno, _mesAno, _mesAbrev ), "" )
+VAR _cabe = _cw >= 24 && _h >= 18
+-- 4 · Marcação
+VAR _celulas =
+    CONCATENATEX (
+        GENERATESERIES ( 1, _nOb ),
+        VAR _o = PATHITEM ( _lista, [Value] )
+        VAR _st = CALCULATE ( [Nota · status · um mês], dObra[Obra] = _o )
+        VAR _pd = CALCULATE ( [Nota · pendente · um mês], dObra[Obra] = _o )
+        VAR _nt = CALCULATE ( [Nota · nota final · um mês], dObra[Obra] = _o )
+        VAR _ob = CALCULATE ( [Nota · pontos obtidos · um mês], dObra[Obra] = _o )
+        VAR _cls = SWITCH ( TRUE (), _pd = 1, "sm", NOT ISBLANK ( _st ), "s" & _st, "sx" )
+        VAR _v = IF ( _pd = 1, _ob, _nt )
+        VAR _txt = IF ( _cabe && NOT ISBLANK ( _v ), "⁅" & IF ( ROUND ( _v, 1 ) >= 10, "10", FORMAT ( _v, "0.0", "pt-BR" ) ) & "⁆", "" )
+        VAR _y = ( [Value] - 1 ) * _h /* geometria */
+        RETURN
+            IF ( _pos = 1, "<p class='nm a-fd' style='top:" & _y & "px;height:" & ( _h - 2 ) & "px;animation-delay:" & ( [Value] - 1 ) * 30 & "ms'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _o, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "</p>" )
+                & "<i class='cl " & _cls & "' style='left:0;top:" & _y & "px;width:" & _cw & "px;height:" & ( _h - 2 )
+                & "px;animation-delay:" & ( _atraso + ( [Value] - 1 ) * 30 ) & "ms' data-rk='" & _mesAno & "|" & [Value]
+                & "'>" & _txt & "</i>",
+        "",
+        [Value], ASC
+    )
+VAR _saidaHtml =
+    IF (
+        _noRecorte = 1 && _nOb > 0,
+        "<div class='u cm' style='left:" & _x & "px;width:" & _w & "px'>" & _celulas
+            & "<p class='ms a-fd" & IF ( _ehRef = 1, " ref", "" ) & "' style='top:" & _yMes & "px;animation-delay:" & _atraso & "ms'>" & _rotMes & "</p>"
+        & "</div>" & [Comum · JS contador]
+    )
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 12, fração f do easing 1−(1−t)³ em milésimos inteiros, tabela densa de 12 passos (C8) */
+VAR _odQ12 =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 230 ), ( 2, 421 ), ( 3, 578 ), ( 4, 704 ), ( 5, 802 ), ( 6, 875 ), ( 7, 928 ), ( 8, 963 ), ( 9, 984 ), ( 10, 995 ), ( 11, 999 ), ( 12, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ12,
+                                IF ( [@odk] = 12, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

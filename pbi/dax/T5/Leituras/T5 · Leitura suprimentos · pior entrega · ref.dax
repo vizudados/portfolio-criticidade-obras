@@ -1,0 +1,10 @@
+/*
+@pasta: T5 Canteiro\Leituras\Contas
+@formato: 0.00%
+@descricao: Entregas no prazo e completas da pior obra no mês de referência. Ex. set/26: 76,9% (POTENGI, 20 de 26).
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 0,769
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _obra = [T5 · Leitura suprimentos · pior obra · ref]
+RETURN
+    IF ( NOT ISBLANK ( _obra ), CALCULATE ( [Canteiro · entregas no prazo · ref], dObra[Obra] = _obra ) )

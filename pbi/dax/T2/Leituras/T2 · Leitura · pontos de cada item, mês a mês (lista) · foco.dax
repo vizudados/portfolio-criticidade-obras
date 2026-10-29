@@ -1,0 +1,41 @@
+/*
+@pasta: T2 Análise crítica\Leituras\Contas
+@formato: texto
+@descricao: Matriz item × mês da obra em foco na janela (do primeiro mês da janela ao de referência), como lista 'item@AAAAMM=classe' separada por '|': c cheio (todos os pontos possíveis), p parcial, z zero, f sem dado, x valor fora da faixa (sem pontos, mas não por falta; Fase 3, rodada 3), n neutro (item que vale 0 de 0); no fim, a linha da obra 'obra@AAAAMM=status' (2, 1, 0, m pendente). A obra em foco é lida uma vez só: cada leitura de uma conta · foco no mês recalcula a obra em foco, e a matriz faria mais de 80 delas.
+@oraculo: oráculo da régua antiga (pontos por item e mês; status da obra)
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _obra = [Nota · obra em foco]
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _cel =
+    ADDCOLUMNS (
+        CROSSJOIN ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), ALL ( dItemNota[Item] ) ),
+        "@pt", CALCULATE ( [Nota · item · pontos], dObra[Obra] = _obra ),
+        "@ps", CALCULATE ( [Nota · item · possíveis], dObra[Obra] = _obra ),
+        "@fx", CALCULATE ( [Nota · item · fora da faixa], dObra[Obra] = _obra )
+    )
+RETURN
+    CONCATENATEX (
+        _cel,
+        dItemNota[Item] & "@" & FORMAT ( dMes[Mes], "yyyymm" ) & "="
+            & SWITCH (
+                TRUE (),
+                ISBLANK ( [@pt] ) && [@fx] = 1, "x",
+                ISBLANK ( [@pt] ), "f",
+                [@ps] = 0, "n",
+                [@pt] >= [@ps], "c",
+                [@pt] = 0, "z",
+                "p"
+            ),
+        "|"
+    )
+        & "|"
+        & CONCATENATEX (
+            FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ),
+            VAR _st = CALCULATE ( [Nota · status · ranking], dObra[Obra] = _obra )
+            VAR _pd = CALCULATE ( [Nota · pendente · ranking], dObra[Obra] = _obra )
+            RETURN
+                "obra@" & FORMAT ( dMes[Mes], "yyyymm" ) & "=" & IF ( _pd = 1, "m", IF ( ISBLANK ( _st ), "", _st & "" ) ),
+            "|"
+        )

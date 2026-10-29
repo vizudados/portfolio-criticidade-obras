@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Prazo
+@formato: 0.00
+@descricao: Índice de desempenho de prazo pelo cronograma agregado: meses agregados ÷ meses decorridos (Lipke, SPI(t)).
+@gerado: pbi/scripts/contas_base.py
+*/
+DIVIDE ( [Prazo · meses agregados], [Prazo · meses decorridos] )

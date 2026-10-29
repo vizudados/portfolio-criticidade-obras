@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Mês
+@formato: texto
+@descricao: Mês do eixo por extenso, minúsculo (junho).
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( dMes[MesNome] )

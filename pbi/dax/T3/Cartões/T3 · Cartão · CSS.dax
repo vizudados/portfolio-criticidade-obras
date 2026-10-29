@@ -1,0 +1,9 @@
+/*
+@pasta: T3 Avanço físico\Cartões
+@formato: texto
+@descricao: CSS dos cartões da Tela 03: o do cartão com flip (Comum · CSS cartão) mais a marca da faixa no contexto.
+@gerado: pbi/scripts/desenho_t3.py
+*/
+-- 4 · Marcação
+[Comum · CSS cartão]
+    & ".kc .ctx .mk{margin-right:6px;vertical-align:-1px}"

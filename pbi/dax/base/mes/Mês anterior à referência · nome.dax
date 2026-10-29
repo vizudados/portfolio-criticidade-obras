@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Mês
+@formato: texto
+@descricao: Nome do mês anterior ao de referência, minúsculo (maio), para as frases de comparação.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = EDATE ( [Mês de referência], -1 )
+RETURN
+    FORMAT ( _mes, "mmmm", "pt-BR" )

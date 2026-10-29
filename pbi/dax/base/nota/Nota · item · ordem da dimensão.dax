@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: Ordem da dimensão (1 = Custo).
+@oraculo: dItemNota (gerada do dicionário NOTA)
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( dItemNota[OrdemDimensao] )

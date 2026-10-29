@@ -1,0 +1,11 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: texto
+@descricao: Código (dItemNota) do item em que a carteira mais perde pontos no mês de referência (empate: o de maior máximo, depois a ordem da nota); vazio quando nenhum item perdeu pontos.
+@oraculo: oráculo da régua antiga · ago/26: orcamento (3,0; empata com o fluxo de caixa)
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _itens = ADDCOLUMNS ( ALL ( dItemNota ), "@p", [Nota · item · perdidos · ref] )
+VAR _top = TOPN ( 1, FILTER ( _itens, [@p] > 0 ), [@p], DESC, dItemNota[Maximo], DESC, dItemNota[Ordem], ASC )
+RETURN
+    MAXX ( _top, dItemNota[Item] )

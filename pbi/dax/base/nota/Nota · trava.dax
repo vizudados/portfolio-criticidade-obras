@@ -1,0 +1,17 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: 1 quando a trava da régua vale: IDC abaixo de 0,9 ou atraso acima de 3 meses (crítico com qualquer nota); 0 senão; vazio sem nota. Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _idc = [Nota · X custo]
+    VAR _atraso = [Nota · X prazo]
+    RETURN
+        IF (
+            [Nota · completa] = 1,
+            IF ( _idc < 0.9 || _atraso > 3, 1, 0 )
+        )
+)

@@ -1,0 +1,41 @@
+/*
+@pasta: T5 Canteiro\Tour
+@formato: texto
+@descricao: Passo 4 de 7 do tour do Canteiro (Segurança por obra): gestor (pose P10) no canto direita, balão de 560 px, ligação ao anel. Só desenha; lê a medida da pose.
+@gerado: pbi/scripts/tour_lib.py
+*/
+-- 4 · Marcação
+"<div class='u tr'>"
+    & "<div class='rc' style='left:1452px;top:265px;width:416px;height:396px'></div>"
+    & "<svg class='sv' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M1470 259H1466A20 20 0 0 0 1446 279V283M1850 259H1854A20 20 0 0 1 1874 279V283M1470 667"
+    & "H1466A20 20 0 0 1 1446 647V643M1850 667H1854A20 20 0 0 0 1874 647V643' fill='none' stroke='#FFFFFF' "
+    & "stroke-width='3' stroke-linecap='round'/><path d='M1416 463L1452 463' fill='none' stroke='#E9E0CF' s"
+    & "troke-width='2' stroke-dasharray='2 6' stroke-linecap='round'/><circle cx='1452' cy='463' r='3' fill"
+    & "='#E9E0CF' stroke='#0B0B0C' stroke-width='2'/></svg>"
+    & "<div class='nr' style='left:1014px;top:746px;width:441px;height:334px'>"
+    & [Comum · Tour · Pose P10 · HTML]
+    & "</div>"
+    & "<svg class='bq' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M948 725L948 729Q957.708 834.437 1033.84 913.954L1036.16 913.046Q973.872 833.983 978 72"
+    & "9L978 725Z' fill='#FFFFFF'/></svg>"
+    & "<section class='bl' role='dialog' aria-label='Tour guiado, passo 4 de 7: Segurança por obra' style='"
+    & "left:856px;top:383px;width:560px;height:346px'>"
+    & "<span class='sl' style='left:32px;top:28px'>Passo 4 de 7</span>"
+    & "<h2 class='tt' style='left:32px;top:68px;width:496px'>Segurança por obra</h2>"
+    & "<p class='tx' style='left:32px;top:116px;width:496px'>Uma linha por obra, da maior frequência de aci"
+    & "dentes para a menor: a barra é a taxa de 12 meses (acidentes com afastamento por milhão de horas tra"
+    & "balhadas) e o traço, a média do setor, 7,5. À direita, o checklist NR-18 do mês.</p>"
+    & "<div class='dc' style='left:32px;top:234px;width:496px'><svg class='cur' width='16' height='16' view"
+    & "Box='0 0 18 18' aria-hidden='true'><path d='M4 2L4 14L7.2 11L9.4 16L11.3 15.2L9.1 10.3L13.6 10.3Z' f"
+    & "ill='#0B0B0C'/></svg><p class='dt'>A cor da barra e da marca diz quantos pontos a obra leva no item."
+    & "</p></div>"
+    & "<div class='rg' style='left:32px;top:298px;width:176px;gap:6px'><i style='width:20px;background:rgba"
+    & "(11,11,12,.45)'></i><i style='width:20px;background:rgba(11,11,12,.45)'></i><i style='width:20px;bac"
+    & "kground:rgba(11,11,12,.45)'></i><i style='width:20px;background:#0B0B0C'></i><i style='width:20px;ba"
+    & "ckground:#E1E1E1'></i><i style='width:20px;background:#E1E1E1'></i><i style='width:20px;background:#"
+    & "E1E1E1'></i></div>"
+    & "<span class='bt pl' style='left:228px;top:272px;width:64px;height:56px'>Pular</span>"
+    & "<span class='bt s' style='left:302px;top:278px;width:92px'>← Voltar</span>"
+    & "<span class='bt p' style='left:404px;top:278px;width:124px'>Seguir →</span>"
+    & "</section></div>"

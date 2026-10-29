@@ -1,0 +1,17 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: dd/mm/yyyy
+@descricao: Primeiro mês da sequência, na janela e terminando no de referência, em que a carteira desembolsou acima do previsto; vazio quando o mês de referência ficou abaixo.
+@oraculo: carteira.serie[].desvio_desembolso: jan/26
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses = ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), "@v", [T4 · Desembolso · desvio no mês · com previsto] )
+VAR _vRef = MAXX ( FILTER ( _meses, dMes[Mes] = _ref ), [@v] )
+VAR _vale = ADDCOLUMNS ( _meses, "@ok", IF ( NOT ISBLANK ( [@v] ) && [@v] > 0, 1, 0 ) )
+VAR _noRef = MAXX ( FILTER ( _vale, dMes[Mes] = _ref ), [@ok] ) = 1
+VAR _quebra = MAXX ( FILTER ( _vale, [@ok] = 0 ), dMes[Mes] )
+VAR _inicio = MINX ( FILTER ( _vale, ISBLANK ( _quebra ) || dMes[Mes] > _quebra ), dMes[Mes] )
+RETURN
+    IF ( _noRef, _inicio )

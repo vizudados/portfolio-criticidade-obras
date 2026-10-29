@@ -1,0 +1,20 @@
+/*
+@pasta: Base\Nota
+@formato: texto
+@descricao: Faixa do atraso em que o X caiu (rótulo gerado dos limites). Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _x = [Nota · X prazo]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), SWITCH (
+            TRUE (),
+            _x <= 0.5, "atraso ≤ 0,5 mês",
+            _x <= 1, "0,5 mês < atraso ≤ 1 mês",
+            _x <= 2, "1 mês < atraso ≤ 2 meses",
+            _x <= 3, "2 meses < atraso ≤ 3 meses",
+            "atraso > 3 meses"
+        ) )
+)

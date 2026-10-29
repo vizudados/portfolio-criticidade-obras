@@ -1,0 +1,18 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: Corrida das barras, colunas e linhas (corrida.py): na primeira aparição crescem do zero em cascata; quando o filtro muda, saem do valor anterior e as linhas que trocam de lugar deslizam. Só anima a geometria que o DAX escreveu.
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 4 · Marcação
+"<script>/*corrida*/(function(){try{var W=window,d=document;var Fz=function(){try{if(d.getAnimations){d.getAnimations().forEach(function(a){try{a.finish();}catch(y){}});}}catch(x){}"
+    & "};if(!W.__fimO){W.__fimO=1;d.addEventListener('visibilitychange',function(){if(d.visibilityState==='hidden'){Fz();}});}if(W.__rcP){return;}W.__rcP=1;setTimeout(function(){W.__rcP=0"
+    & ";try{var M=W.__rcM||{},N={},R=W.__rcR||{},Q={},red=!!(W.matchMedia&&W.matchMedia('(prefers-reduced-motion: reduce)').matches),ez='cubic-bezier(.2,.7,.2,1)',du=700,sl=Array.prototyp"
+    & "e.slice;sl.call(d.querySelectorAll('[data-rk]')).forEach(function(e){var k=e.getAttribute('data-rk'),ps=(e.getAttribute('data-rp')||'width').split(','),novo=!Object.prototype.hasOw"
+    & "nProperty.call(M,k),vs={},kf={},muda=false;ps.forEach(function(p){var v=e.style[p]||'0px';vs[p]=v;var de=novo?(e.getAttribute('data-r0-'+p)||'0px'):(M[k][p]||v);if(de!==v){muda=tru"
+    & "e;}kf[p]=[de,v];});N[k]=vs;if(red||!e.animate||!muda){return;}e.animate(kf,{duration:du,delay:novo?(+e.getAttribute('data-rd')||0):0,easing:ez,fill:'backwards'});});sl.call(d.query"
+    & "SelectorAll('[data-rr]')).forEach(function(e){var k=e.getAttribute('data-rr'),t=e.getBoundingClientRect().top;Q[k]=t;if(!red&&e.animate&&Object.prototype.hasOwnProperty.call(R,k)&&"
+    & "Math.abs(R[k]-t)>1){e.animate([{transform:'translateY('+(R[k]-t)+'px)'},{transform:'none'}],{duration:du,easing:ez});}});sl.call(d.querySelectorAll('path[data-rl]')).forEach(functi"
+    & "on(e){if(red||!e.getTotalLength||!e.animate){return;}var L=e.getTotalLength();e.style.strokeDasharray=L;e.animate([{strokeDashoffset:L},{strokeDashoffset:0}],{duration:du+300,delay"
+    & ":(+e.getAttribute('data-rd')||0),easing:ez,fill:'backwards'});});W.__rcM=N;W.__rcR=Q;if(d.visibilityState==='hidden'){Fz();}setTimeout(Fz,2500);}catch(x){}},0);}catch(x){}})();</sc"
+    & "ript>"

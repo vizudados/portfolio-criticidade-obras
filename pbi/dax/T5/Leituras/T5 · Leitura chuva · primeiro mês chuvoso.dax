@@ -1,0 +1,23 @@
+/*
+@pasta: T5 Canteiro\Leituras\Contas
+@formato: dd/mm/yyyy
+@descricao: Primeiro mês chuvoso da janela. Ex. set/26: mar/26.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 01/03/2026
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _ini = [Série · primeiro mês]
+VAR _ref = [Mês de referência]
+VAR _lim = [T5 · Chuva · limite de mês chuvoso]
+VAR _t =
+    FILTER (
+        ADDCOLUMNS (
+            FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ),
+            "@ch", [Canteiro · dias de chuva],
+            "@ex", [Físico · executado no mês]
+        ),
+        NOT ISBLANK ( [@ch] ) && NOT ISBLANK ( [@ex] )
+    )
+VAR _chuv = FILTER ( _t, [@ch] >= _lim )
+VAR _out = FILTER ( _t, [@ch] < _lim )
+RETURN
+    MINX ( _chuv, dMes[Mes] )

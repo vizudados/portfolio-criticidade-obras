@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: 0.0#
+@descricao: Menor nota com o status estável (8), do dicionário NOTA. Constante.
+@oraculo: dicionário NOTA (status)
+@gerado: pbi/scripts/contas_base.py
+*/
+8

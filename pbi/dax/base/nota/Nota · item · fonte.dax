@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: texto
+@descricao: Fonte do item da linha: Análise Crítica ou Base complementar.
+@oraculo: dItemNota (gerada do dicionário NOTA)
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( dItemNota[Fonte] )

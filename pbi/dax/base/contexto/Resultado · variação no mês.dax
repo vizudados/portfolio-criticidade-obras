@@ -1,0 +1,10 @@
+/*
+@pasta: Base\Obra
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Resultado − resultado do mês anterior, em R$; compara só as obras com aba no mês e no mês anterior (vazio sem nenhuma).
+@oraculo: carteira.variacao_resultado
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _comp = FILTER ( VALUES ( fAnaliseCritica[Obra] ), NOT ISBLANK ( [Resultado · mês anterior] ) )
+RETURN
+    IF ( NOT ISEMPTY ( _comp ), SUMX ( _comp, [Resultado da obra] - [Resultado · mês anterior] ) )

@@ -1,0 +1,10 @@
+/*
+@pasta: Base\Obra
+@formato: 0.000
+@descricao: Índice de desempenho de custo: valor agregado ÷ custo aplicado (na carteira, soma ÷ soma). Acima de 1, a obra gastou menos do que o orçamento previa para o que executou.
+@oraculo: pipeline/conferir_ficticios.py (x_idc)
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _ca = [Custo aplicado]
+RETURN
+    IF ( _ca > 0, DIVIDE ( [Crédito do orçamento], _ca ) )

@@ -1,0 +1,82 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T5_LEITURA_QUA_01",
+  "displayName": "T5 · leitura · Qualidade, mês a mês",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T5_LeiX_Chuva",
+      "T5_LeiX_Qua",
+      "T5_LeiX_Seg",
+      "T5_LeiX_Sup",
+      "T5_Lei_Chuva",
+      "T5_Lei_Fora",
+      "T5_Lei_Qua",
+      "T5_Lei_Seg",
+      "T5_Lei_Sup"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T5",
+    "sections": {
+      "T5": {
+        "visualContainers": {
+          "T5_LeiX_Chuva": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_LeiX_Qua": {
+            "singleVisual": {}
+          },
+          "T5_LeiX_Seg": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_LeiX_Sup": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_Lei_Chuva": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_Lei_Fora": {
+            "singleVisual": {}
+          },
+          "T5_Lei_Qua": {
+            "singleVisual": {}
+          },
+          "T5_Lei_Seg": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T5_Lei_Sup": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

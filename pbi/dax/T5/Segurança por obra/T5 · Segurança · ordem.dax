@@ -1,0 +1,11 @@
+/*
+@pasta: T5 Canteiro\Segurança por obra\Contas
+@formato: 0.00
+@descricao: Ordem das linhas de Segurança por obra (crescente): a maior taxa de frequência de 12 meses primeiro e, no empate (zero acidente), a menor conformidade NR-18 do mês. Vazio sem base no mês de referência (a linha some). Ex. set/26: REDINHA, POTENGI, JANGADA, TIROL, PONTA NEGRA, DUNAS, CAJUEIRO.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: REDINHA −1095,6
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _tf = [Canteiro · taxa de frequência (12 meses) · ref]
+VAR _nr = [Canteiro · conformidade NR-18 · ref]
+RETURN
+    IF ( NOT ISBLANK ( _tf ) || NOT ISBLANK ( _nr ), - _tf * 100 + _nr )

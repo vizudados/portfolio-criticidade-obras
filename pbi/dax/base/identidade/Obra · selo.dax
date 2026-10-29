@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Obra
+@formato: texto
+@descricao: REAL ou ILUSTR. (uma obra).
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( dObra[Selo] )

@@ -1,0 +1,178 @@
+/// Ranking da nota por obra × mês (obras com aba da Análise Crítica ou com a base complementar no mês): pontos perdidos, nota para desempate (pendente = 99), status, pendente, pontos obtidos e possíveis e a trava, copiados das medidas Nota no refresh. TemAC = 1 nas linhas com aba da Análise Crítica: a obra em foco, a posição, as listas e a carteira leem só essas; as leituras · ranking leem todas. GERADA por pbi/scripts/contas_base.py; a regra fica nas medidas.
+table dRankingNota
+	lineageTag: 081b164a-664c-5c7f-91a1-d67daa73b0cc
+	isHidden
+
+	/// Obra.
+	column Obra
+		dataType: string
+		lineageTag: f78bc230-f289-5cfd-93c3-2bee93eef2ac
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Obra]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Mês.
+	column Mes
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 3f4644d2-f035-5e3a-9654-b1ad7939452d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mes]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// 1 quando a obra tem aba da Análise Crítica no mês.
+	column TemAC
+		dataType: int64
+		formatString: 0
+		lineageTag: 5051d4d4-ab2f-5c93-b2b4-df7a6bc7519b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [TemAC]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// [Nota · pontos perdidos] da obra no mês.
+	column Perdidos
+		dataType: double
+		formatString: 0.00
+		lineageTag: ea106b87-445b-5f11-8e63-276b6b18c36b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Perdidos]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// [Nota · nota final] da obra no mês; 99 quando pendente (desempate: a pendente vai depois).
+	column NotaOrdem
+		dataType: double
+		formatString: 0.00
+		lineageTag: f7de0a2d-f1d5-5b89-aec5-bd31ca6815ce
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [NotaOrdem]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// [Nota · status] (vazio quando pendente).
+	column Status
+		dataType: int64
+		formatString: 0
+		lineageTag: 72f2b0dd-1ce5-5865-a05c-b35503127ffa
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Status]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// [Nota · pendente].
+	column Pendente
+		dataType: int64
+		formatString: 0
+		lineageTag: 80b2d61a-835f-5963-b709-2d26c817de78
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Pendente]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// [Nota · pontos obtidos] da obra no mês.
+	column Obtidos
+		dataType: double
+		formatString: 0.00
+		lineageTag: 1534e90d-adc7-5361-8fbc-2fc45f5c56fc
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Obtidos]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// [Nota · pontos possíveis] da obra no mês.
+	column Possiveis
+		dataType: double
+		formatString: 0.00
+		lineageTag: 23a52d36-32a0-5cdf-a3b5-b7b02c8de750
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Possiveis]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// [Nota · trava] da obra no mês.
+	column Trava
+		dataType: int64
+		formatString: 0
+		lineageTag: 0bc76392-f6d5-5864-bdec-35db1e751ea4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Trava]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dRankingNota = calculated
+		mode: import
+		source =
+				VAR _ac = SELECTCOLUMNS ( SUMMARIZE ( fAnaliseCritica, fAnaliseCritica[Obra], fAnaliseCritica[Mes] ),
+				    "Obra", fAnaliseCritica[Obra] & "", "Mes", fAnaliseCritica[Mes] + 0 )
+				VAR _base = SELECTCOLUMNS ( SUMMARIZE ( fBaseObra, fBaseObra[Obra], fBaseObra[Mes] ), "Obra", fBaseObra[Obra] & "", "Mes", fBaseObra[Mes] + 0 )
+				VAR _obraMes =
+				    SELECTCOLUMNS (
+				        DISTINCT ( UNION ( _ac, _base ) ),
+				        "Obra", [Obra],
+				        "Mes", DATE ( YEAR ( [Mes] ), MONTH ( [Mes] ), 1 )
+				    )
+				RETURN
+				    SELECTCOLUMNS (
+				        _obraMes,
+				        "Obra", [Obra],
+				        "Mes", [Mes],
+				        "TemAC",
+				            VAR _o = [Obra]
+				            VAR _m = [Mes]
+				            RETURN
+				                IF ( NOT ISEMPTY ( FILTER ( fAnaliseCritica, fAnaliseCritica[Obra] = _o && fAnaliseCritica[Mes] = _m ) ), 1, 0 ),
+				        "Perdidos",
+				            VAR _o = [Obra]
+				            VAR _m = [Mes]
+				            RETURN
+				                CALCULATE ( [Nota · pontos perdidos], REMOVEFILTERS ( fAnaliseCritica ), REMOVEFILTERS ( fBaseObra ), dObra[Obra] = _o, dMes[Mes] = _m ),
+				        "NotaOrdem",
+				            VAR _o = [Obra]
+				            VAR _m = [Mes]
+				            RETURN
+				                COALESCE (
+				                    CALCULATE ( [Nota · nota final], REMOVEFILTERS ( fAnaliseCritica ), REMOVEFILTERS ( fBaseObra ), dObra[Obra] = _o, dMes[Mes] = _m ),
+				                    99
+				                ),
+				        "Status",
+				            VAR _o = [Obra]
+				            VAR _m = [Mes]
+				            RETURN
+				                CALCULATE ( [Nota · status], REMOVEFILTERS ( fAnaliseCritica ), REMOVEFILTERS ( fBaseObra ), dObra[Obra] = _o, dMes[Mes] = _m ),
+				        "Pendente",
+				            VAR _o = [Obra]
+				            VAR _m = [Mes]
+				            RETURN
+				                CALCULATE ( [Nota · pendente], REMOVEFILTERS ( fAnaliseCritica ), REMOVEFILTERS ( fBaseObra ), dObra[Obra] = _o, dMes[Mes] = _m ),
+				        "Obtidos",
+				            VAR _o = [Obra]
+				            VAR _m = [Mes]
+				            RETURN
+				                CALCULATE ( [Nota · pontos obtidos], REMOVEFILTERS ( fAnaliseCritica ), REMOVEFILTERS ( fBaseObra ), dObra[Obra] = _o, dMes[Mes] = _m ),
+				        "Possiveis",
+				            VAR _o = [Obra]
+				            VAR _m = [Mes]
+				            RETURN
+				                CALCULATE ( [Nota · pontos possíveis], REMOVEFILTERS ( fAnaliseCritica ), REMOVEFILTERS ( fBaseObra ), dObra[Obra] = _o, dMes[Mes] = _m ),
+				        "Trava",
+				            VAR _o = [Obra]
+				            VAR _m = [Mes]
+				            RETURN
+				                CALCULATE ( [Nota · trava], REMOVEFILTERS ( fAnaliseCritica ), REMOVEFILTERS ( fBaseObra ), dObra[Obra] = _o, dMes[Mes] = _m )
+				    )
+

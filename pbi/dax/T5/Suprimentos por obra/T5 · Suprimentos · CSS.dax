@@ -1,0 +1,14 @@
+/*
+@pasta: T5 Canteiro\Suprimentos por obra
+@formato: texto
+@descricao: CSS das linhas de Suprimentos por obra.
+@gerado: pbi/scripts/desenho_t5.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".htmlViewerEntry{display:block!important;margin:0!important;padding:0!important}.sp{position:relative;height:35px;border-bottom:1px solid #E1E1E1;background:#FFFFFF;transition:back"
+    & "ground .15s}.sp:hover,.htmlViewerEntry.hover .sp{background:#F7F4EE}.sp .nm{position:absolute;left:14px;top:7px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-si"
+    & "ze:15px;line-height:20px;white-space:nowrap}.sp .tr{position:absolute;left:116px;top:17px;width:134px;height:2px;background:#E1E1E1}.sp .mt{position:absolute;top:-8px;width:2px;hei"
+    & "ght:18px;background:#0B0B0C}.sp .pt{position:absolute;top:-5px;width:12px;height:12px;border-radius:50%;box-sizing:border-box}.sp .pt.s0{background:#A9CDB9;border:1px solid #6E9F85"
+    & "}.sp .pt.s1{background:#C9821F}.sp .pt.s2{background:#C43737}.sp .pd{position:absolute;left:258px;top:8px;font-size:13px;line-height:18px;color:#3B3B3F;white-space:nowrap}.sp .v{po"
+    & "sition:absolute;right:14px;top:7px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:15px;line-height:20px;white-space:nowrap}"

@@ -1,0 +1,9 @@
+/*
+@pasta: T3 Avanço físico\Prazo\Contas
+@formato: 0
+@descricao: [T3 · Término · situação] no mês de referência.
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE ( [T3 · Término · situação], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

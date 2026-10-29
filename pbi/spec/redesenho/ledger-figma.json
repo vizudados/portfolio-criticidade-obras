@@ -1,0 +1,77 @@
+{
+  "arquivo": "FjBWDk5odF9HaZ2pwhGosl",
+  "pagina_v2": "372:685",
+  "pagina_v1": "269:685",
+  "colecao": {
+    "id": "VariableCollectionId:372:686",
+    "modo_claro": "372:0"
+  },
+  "variaveis": {
+    "base/preto": "VariableID:372:687",
+    "base/grafite": "VariableID:372:688",
+    "base/creme": "VariableID:372:689",
+    "base/offwhite": "VariableID:372:690",
+    "base/branco": "VariableID:372:691",
+    "texto/terciario": "VariableID:372:692",
+    "linha/divisor": "VariableID:372:693",
+    "linha/regra": "VariableID:372:694",
+    "linha/trilha": "VariableID:372:695",
+    "status/critico": "VariableID:372:696",
+    "status/critico-claro": "VariableID:372:697",
+    "status/atencao": "VariableID:372:698",
+    "status/atencao-claro": "VariableID:372:699",
+    "status/atencao-texto": "VariableID:372:700",
+    "status/estavel": "VariableID:372:701",
+    "status/estavel-claro": "VariableID:372:702",
+    "status/estavel-texto": "VariableID:372:703",
+    "status/estavel-borda": "VariableID:372:704",
+    "valor/negativo": "VariableID:372:705",
+    "valor/negativo-sobre-creme": "VariableID:372:706",
+    "valor/negativo-sobre-preto": "VariableID:372:707"
+  },
+  "estilos_texto": {
+    "v2/Página · título": "S:a2e7155075faaaff50898bfb57fd6dfcbc2f270b,",
+    "v2/Painel · título": "S:6c5295d552075c7c244e259f7c5876fdc9a78dd9,",
+    "v2/Cartão · rótulo": "S:82ec1a487bb93f12db3336eb8efcf8de86daf490,",
+    "v2/Cartão · número": "S:03e507202a4ba60e8d097788b1e8597adf63eb8f,",
+    "v2/Cartão · lado": "S:213f94f9123db9e89d021dac9e09cbcfb16ed697,",
+    "v2/Destaque · nome": "S:1643bf18e1217dcd42ef361b27236559d2ab9756,",
+    "v2/Valor": "S:ab1c7b7cb65c3c9778b2e17fa74011dc62363317,",
+    "v2/Valor · gráfico": "S:0b6c5063707b239f958117c50021fe29cda071d4,",
+    "v2/Chip": "S:8ce268aaf6aa4bec1fade274da5d27165dfd0141,",
+    "v2/Versalete": "S:a5ccfa7476b104cd080e32ccf307644ded32b8bd,",
+    "v2/Achado": "S:7c4b51177693e09082f9cbdb51d0b95f1a506186,",
+    "v2/Pergunta": "S:93426094da999d26bfd286eb0e0cc9b2d1cc06cc,",
+    "v2/Subtítulo": "S:3945e0a52c277252e70696e50322527a54adc63d,",
+    "v2/Texto": "S:856c052785de4fda739722bcbe4f78a063894fe8,",
+    "v2/Texto · forte": "S:5f010317c1117c3c5499833394b3f3433686998e,",
+    "v2/Texto · apoio": "S:693528807256b9b5e2a5235b392f2eed4a3fe604,",
+    "v2/Eixo": "S:c2d8a3514fae8064ce87fc073f7d0d044f0bc7d3,",
+    "v2/Leitura": "S:5ace74fba9f617afff11bdd32d67d98e12a0ad46,",
+    "v2/Sidebar · item": "S:0b33284981def44582ed904c4d7e96ae587fd97b,",
+    "v2/Sidebar · ativo": "S:05069fa7f8f3dbb5e12baa53fcad20f1df64ccd4,",
+    "v2/Filtro · valor": "S:5949e9f6cd903344eeca6aae14bae8af1f1df782,"
+  },
+  "componentes": {
+    "Sistema v2 (quadro)": "373:685",
+    "Marca · v2": "373:734",
+    "Chip · v2": "373:747",
+    "Hachura · v2": "373:752",
+    "Sidebar · v2": "376:15025",
+    "Cartão · v2": "377:726",
+    "Ajuda · v2": "377:727",
+    "Casca v2 · modelo (frame)": "377:10485"
+  },
+  "props_cartao": {
+    "rótulo": "rótulo#377:0",
+    "número": "número#377:3",
+    "lado": "lado#377:6",
+    "contexto": "contexto#377:9"
+  },
+  "secoes": {
+    "T1": "379:788",
+    "T2": "379:789",
+    "T3": "379:790",
+    "T4": "379:791"
+  }
+}

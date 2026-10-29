@@ -1,0 +1,22 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: texto
+@descricao: Causa da justificativa do desembolso (uma obra e um mês no contexto), lida do texto da planilha: efetivo, aditivo, medicao (medição concentrada), postergada (medição postergada), compra (compra antecipada), sinal (sinal de contrato) ou outra; vazio sem texto.
+@oraculo: obras[].serie[].justificativa
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _t = TRIM ( [Justificativa do desembolso] )
+RETURN
+    IF (
+        NOT ISBLANK ( _t ) && _t <> "",
+        SWITCH (
+            TRUE (),
+            CONTAINSSTRING ( _t, "efetivo" ), "efetivo",
+            CONTAINSSTRING ( _t, "aditivo" ), "aditivo",
+            CONTAINSSTRING ( _t, "duas parcelas" ), "medicao",
+            CONTAINSSTRING ( _t, "postergad" ), "postergada",
+            CONTAINSSTRING ( _t, "compra antecipada" ), "compra",
+            CONTAINSSTRING ( _t, "sinal de contrato" ), "sinal",
+            "outra"
+        )
+    )

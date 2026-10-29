@@ -1,0 +1,16 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: 0
+@descricao: Pior status do físico na nota na série da obra do contexto, na janela (0 = sempre dentro do limite; 2 = passou dele em algum mês).
+@oraculo: oráculo da nota (coluna F-F, pior mês)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ref ),
+        "@s", VAR _m = dMes[Mes] RETURN CALCULATE ( [T3 · Status desvio físico], REMOVEFILTERS ( dMes ), dMes[Mes] = _m )
+    )
+RETURN
+    MAXX ( _meses, [@s] )

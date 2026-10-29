@@ -1,0 +1,12 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: 0
+@descricao: Meses da janela, depois do primeiro dela e até o de referência, em que a carteira tem obra com aba no mês e na anterior (a variação existe; 5 em jun/26).
+@oraculo: len(carteira.serie) − 1
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses = ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] > _ini && dMes[Mes] <= _ref ), "@v", [T4 · Resultado aplicado · variação no mês] )
+RETURN
+    COUNTROWS ( FILTER ( _meses, NOT ISBLANK ( [@v] ) ) ) + 0

@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Mês
+@formato: 0
+@descricao: Ordem do mês do eixo no histórico (1 = primeiro mês).
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( dMes[Ordem] )

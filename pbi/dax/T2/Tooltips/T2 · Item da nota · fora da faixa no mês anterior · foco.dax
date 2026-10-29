@@ -1,0 +1,11 @@
+/*
+@pasta: T2 Análise crítica\Tooltips\Contas
+@formato: 0
+@descricao: 1 quando o item da nota da linha (dItemNota) tinha, na obra em foco e no mês anterior ao de referência, valor na base fora da faixa válida; 0 nos demais casos (rodapé do tooltip do item).
+@oraculo: pbi/qa/nota/casos_auditoria.py teste · DUNAS, médio prazo em jul/26: 0 (sem dado, não fora da faixa)
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _mes = EDATE ( [Mês de referência], -1 )
+VAR _obra = [Nota · obra em foco]
+RETURN
+    CALCULATE ( [Nota · item · fora da faixa], dObra[Obra] = _obra, REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

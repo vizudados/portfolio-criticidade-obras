@@ -1,0 +1,241 @@
+/*
+@pasta: T1 Visão geral\Tooltips
+@formato: texto
+@descricao: Tooltip de página da obra (linha da lista de obras): no cabeçalho a nota e o status da nota (ou 'pendente · X de Y') e o gestor, se houver; os 9 itens da nota com o valor, a faixa atingida e os pontos de possíveis ('falta na base' quando não há dado); a nota mês a mês na janela (pendente tracejado até os pontos obtidos; rótulo no mês de referência, na maior e na menor nota); no pé, o que mudou desde o mês anterior, só entre notas completas, ou quantos itens faltam para a nota sair.
+@gerado: pbi/scripts/tooltips_t1.py
+*/
+-- 1 · Leituras
+VAR _ref = [Mês de referência]
+VAR _mesCM = [Mês de referência · curto maiúsculo]
+VAR _mesAnt = [Mês anterior à referência · nome]
+VAR _obra = [Obra · nome]
+VAR _cod = [Obra · código]
+VAR _selo = [Obra · selo]
+VAR _gestor = [Nota · gestor · ref]
+VAR _st = [Nota · status · ranking · ref]
+VAR _pend = [Nota · pendente · ranking · ref]
+VAR _nota = [Nota · nota final · ranking · ref]
+VAR _obt = [Nota · pontos obtidos · ranking · ref]
+VAR _poss = [Nota · pontos possíveis · ranking · ref]
+VAR _falta = [Nota · itens faltando · ref] + 0
+VAR _fora = [Nota · itens fora da faixa · ref] + 0
+VAR _fal = _falta - _fora
+VAR _max = [Nota · nota · máximo]
+VAR _stAnt = [T1 · Obra · status no mês anterior · ref]
+VAR _notaAnt = [T1 · Obra · nota no mês anterior · ref]
+VAR _pendAnt = [T1 · Obra · pendente no mês anterior · ref]
+VAR _itens =
+    ADDCOLUMNS (
+        VALUES ( dItemNota[Item] ),
+        "@ord", [Nota · item · ordem],
+        "@rot", [Nota · item · nome médio],
+        "@fonte", [Nota · item · fonte],
+        "@fora", [Nota · item · fora da faixa · ref],
+        "@x", [Nota · item · X · ref],
+        "@fx", [Nota · item · faixa atingida · ref],
+        "@pts", [Nota · item · pontos · ref],
+        "@poss", [Nota · item · possíveis · ref]
+    )
+VAR _nIt = COUNTROWS ( _itens ) /* lista */
+VAR _n = [Série · meses até a referência]
+VAR _meses =
+    ADDCOLUMNS (
+        VALUES ( dMes[Mes] ),
+        "@ate", [Série · mês até a referência],
+        "@ord", [Mês · ordem],
+        "@pos", [Série · posição na janela],
+        "@rotAno", [Mês · rótulo curto],
+        "@nota", [Nota · nota final · um mês],
+        "@st", [Nota · status · um mês],
+        "@pend", [Nota · pendente · um mês],
+        "@obt", [Nota · pontos obtidos · um mês],
+        "@poss", [Nota · pontos possíveis · um mês],
+        "@rot", [Mês · abreviado]
+    )
+-- 2 · Textos
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _txtSob = "NOTA DA OBRA · " & _mesCM & IF ( _gestor = "" || ISBLANK ( _gestor ), "", " · GESTOR: " & UPPER ( _gestor ) )
+VAR _txtDir =
+    IF (
+        _pend = 1,
+        "PENDENTE · " & "⁅" & FORMAT ( _obt, "0.0#", "pt-BR" ) & "⁆" & " DE " & FORMAT ( _poss, "0.0#", "pt-BR" ),
+        "NOTA " & "⁅" & FORMAT ( _nota, "0.0#", "pt-BR" ) & "⁆" & " · " & UPPER ( SWITCH ( TRUE (), _pend = 1, "pendente", ISBLANK ( _st ), "", _st = 2, "crítico", _st = 1, "atenção", "estável" ) )
+    )
+VAR _htmlLinhas =
+    CONCATENATEX (
+        _itens,
+        VAR _c = dItemNota[Item]
+        VAR _x = [@x]
+        VAR _fx = [@fx]
+        VAR _pts = [@pts]
+        VAR _possI = [@poss]
+        VAR _vA = ABS ( _x )
+        VAR _vTxt =
+            SWITCH (
+                TRUE (),
+                ISBLANK ( _x ), "—",
+                _c = "custo", "IDC " & FORMAT ( _x, "0.00", "pt-BR" ),
+                _c = "prazo", IF ( ROUND ( _x, 1 ) > 0, "atraso ", IF ( ROUND ( _x, 1 ) < 0, "adiantada ", "em dia" ) )
+                    & IF ( ROUND ( _x, 1 ) = 0, "", FORMAT ( _vA, "0.0", "pt-BR" ) & IF ( ROUND ( _vA, 1 ) <= 1, " mês", " meses" ) ),
+                _c = "acidentes", "TF " & FORMAT ( _x, "0.0", "pt-BR" ),
+                _c = "analise", FORMAT ( _x, "0" ) & " de 3",
+                FORMAT ( TRUNC ( _vA * 100, 1 ), "0.0", "pt-BR" ) & "%"
+            )
+        VAR _vNg = IF ( ( _c = "custo" && _x < 1 ) || ( _c = "prazo" && ROUND ( _x, 1 ) > 0 ), " ng", "" )
+        VAR _kTxt = IF ( ISBLANK ( _pts ), "falta na base", FORMAT ( _pts, "0.0#", "pt-BR" ) & " de " & FORMAT ( _possI, "0.0#", "pt-BR" ) )
+        VAR _kCls = SWITCH ( TRUE (), ISBLANK ( _pts ), "f", _pts >= _possI, "c", _pts = 0, "z", "p" )
+        VAR _kHtml = "<span class='chi chi-" & _kCls & "'>" & _kTxt & "</span>"
+        VAR _txtFalta = IF ( [@fora] = 1, "fora da faixa", IF ( [@fonte] = "Análise Crítica", "sem dado na planilha", "falta na base" ) )
+        VAR _clsK = SWITCH ( TRUE (), ISBLANK ( _pts ), "f", _pts >= _possI, "c", _pts = 0, "z", "p" )
+        VAR _chip = "<span class='chi chi-" & _clsK & "'>" & IF ( ISBLANK ( _pts ), _txtFalta, "⁅" & _kTxt & "⁆" ) & "</span>"
+        VAR _det = IF ( ISBLANK ( _pts ), "", _fx )
+        RETURN
+            "<div class='lin'><span class='n'>" & [@rot] & "</span><span class='v" & _vNg & "'>" & "⁅" & _vTxt & "⁆"
+                & "</span><span class='d'>" & _det & "</span><span class='p'>" & _chip & "</span></div>",
+        "",
+        [@ord], ASC
+    )
+VAR _serie = FILTER ( _meses, [@ate] = 1 ) /* lista */
+VAR _comNota = FILTER ( _serie, NOT ISBLANK ( [@nota] ) ) /* lista */
+VAR _vMax = MAXX ( _comNota, [@nota] ) /* geometria */
+VAR _vMin = MINX ( _comNota, [@nota] ) /* geometria */
+VAR _mesMax = MINX ( FILTER ( _comNota, [@nota] = _vMax ), dMes[Mes] ) /* geometria */
+VAR _mesMin = MINX ( FILTER ( _comNota, [@nota] = _vMin ), dMes[Mes] ) /* geometria */
+VAR _rotMax = _vMax <> _nota
+VAR _rotMin = _vMin <> _nota && _vMin <> _vMax
+VAR _slot = MIN ( 65, DIVIDE ( 518, _n ) ) -- geometria
+VAR _larg = MIN ( 32, ROUND ( _slot - 12, 0 ) ) -- geometria
+VAR _w = ROUND ( _slot, 0 ) -- geometria
+VAR _xb = ROUND ( ( _slot - _larg ) / 2, 0 ) -- geometria
+VAR _passo = ROUND ( DIVIDE ( 420, _n ), 0 ) -- geometria
+VAR _escala = DIVIDE ( 40, _max ) -- geometria
+VAR _htmlSerie =
+    CONCATENATEX (
+        _serie,
+        VAR _pd = [@pend] = 1
+        VAR _v = IF ( _pd, [@obt], [@nota] )
+        VAR _tem = NOT ISBLANK ( [@pend] ) && NOT ISBLANK ( _v )
+        VAR _h = IF ( _tem, MAX ( ROUND ( _v * _escala, 0 ), 2 ), 0 ) /* geometria */
+        VAR _x = ROUND ( ( [@pos] - 1 ) * _slot, 0 ) /* geometria */
+        VAR _atraso = ( [@pos] - 1 ) * _passo /* geometria */
+        VAR _cls = IF ( _pd, "sm", "s" & [@st] )
+        VAR _txtV = IF ( _pd, FORMAT ( [@obt], "0.0#", "pt-BR" ) & " de " & FORMAT ( [@poss], "0.0#", "pt-BR" ), FORMAT ( [@nota], "0.0#", "pt-BR" ) )
+        VAR _ehRef = dMes[Mes] = _ref
+        VAR _ehExt = NOT _pd && ( ( _rotMax && dMes[Mes] = _mesMax ) || ( _rotMin && dMes[Mes] = _mesMin ) )
+        VAR _rotMes = IF ( [@rot] = "jan" && [@pos] > 1, [@rotAno], [@rot] )
+        VAR _rot =
+            SWITCH (
+                TRUE (),
+                _tem && _ehRef, "<span class='val fim' style='bottom:" & ( 24 + _h ) & "px;animation-delay:"
+                    & ( _atraso + 700 ) & "ms'>" & "⁅" & _txtV & "⁆" & "</span>",
+                _tem && _ehExt, "<span class='val ext' style='bottom:" & ( 24 + _h ) & "px'>" & "⁅" & _txtV & "⁆" & "</span>",
+                ""
+            )
+        RETURN
+            "<div class='c" & IF ( [@pos] = 1, " ini", IF ( [@pos] = _n, " fim" ) ) & "' style='left:" & _x & "px;width:" & _w & "px'>" & _rot
+                & IF ( _tem, "<i class='bar " & _cls & "' style='left:" & _xb & "px;width:" & _larg
+                    & "px;height:" & _h & "px' data-rk='m" & [@ord] & "' data-rp='height' data-rd='" & _atraso
+                    & "'></i>" )
+                & "<span class='ms" & IF ( _ehRef, " ref", IF ( _tem, "", " sem" ) ) & "'>" & _rotMes & "</span></div>",
+        "",
+        dMes[Mes], ASC
+    )
+VAR _txtNota = "⁅" & FORMAT ( _nota, "0.0#", "pt-BR" ) & "⁆"
+VAR _txtNotaAnt = "⁅" & FORMAT ( _notaAnt, "0.0#", "pt-BR" ) & "⁆"
+VAR _txtFalta =
+    SWITCH (
+        TRUE (),
+        _fal > 0 && _fora > 0, "falta dado em " & _fal & IF ( _fal = 1, " item", " itens" ) & " e " & _fora & " está"
+            & IF ( _fora > 1, "ão", "" ) & " fora da faixa",
+        _fal > 0, IF ( _fal = 1, "falta dado em 1 item", "falta dado em " & _fal & " itens" ),
+        IF ( _fora = 1, "1 item está fora da faixa", _fora & " itens estão fora da faixa" )
+    )
+VAR _txtSai =
+    SWITCH (
+        TRUE (),
+        _fal = 0, IF ( _fora = 1, "; a nota sai quando ele for corrigido", "; a nota sai quando forem corrigidos" ),
+        _fora > 0, "; sem nota por enquanto",
+        _falta = 1, "; a nota sai quando ele tiver dado",
+        "; a nota sai quando todos tiverem dado"
+    )
+VAR _txtMud =
+    SWITCH (
+        TRUE (),
+        _pend = 1, _txtFalta & _txtSai,
+        _pendAnt = 1, "em " & _mesAnt & " a obra estava pendente: sem nota para comparar",
+        ISBLANK ( _notaAnt ), "",
+        _stAnt = _st, "seguiu em " & SWITCH ( _st, 2, "crítico", 1, "atenção", "estável" ) & IF ( _txtNotaAnt = _txtNota, ", com a mesma nota", ": nota de " & _txtNotaAnt & " para " & _txtNota ),
+        _st = 2, "entrou em crítico: nota de " & _txtNotaAnt & " para " & _txtNota,
+        _stAnt = 2, "saiu de crítico para " & SWITCH ( _st, 2, "crítico", 1, "atenção", "estável" ) & ": nota de " & _txtNotaAnt & " para " & _txtNota,
+        "passou de " & SWITCH ( _stAnt, 2, "crítico", 1, "atenção", "estável" ) & " para " & SWITCH ( _st, 2, "crítico", 1, "atenção", "estável" ) & ": nota de " & _txtNotaAnt & " para " & _txtNota
+    )
+VAR _tituloMud = IF ( _pend = 1, "POR QUE ESTÁ PENDENTE", "DESDE " & UPPER ( _mesAnt ) )
+-- 4 · Marcação
+VAR _saidaHtml =
+    IF (
+        NOT ISBLANK ( _pend ),
+        "<div class='u tt'><div class='cab'><p class='vs'>" & _txtSob & "</p>"
+            & "<div class='tit'><b>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _obra, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "</b><em>" & _cod & "</em>" & "<span class='selo " & IF ( _selo = "REAL", "selo-r", "selo-i" ) & "'>" & _selo & "</span>" & "</div>"
+            & "<p class='vs dir'>" & _txtDir & "</p></div>"
+            & "<div class='corpo'><div class='bh'><span class='vs'>ITENS DA NOTA</span>"
+            & "<span class='vs'>PONTOS</span></div><div class='tab" & " ls " & SWITCH ( TRUE (), _nIt <= 3, "e1", _nIt <= 6, "e2", _nIt <= 9, "e3", _nIt <= 12, "e4", "e5" ) & "' style='--n:" & _nIt & "'>" & _htmlLinhas & "</div>"
+            & "<div class='rg s'></div><span class='vs'>NOTA, MÊS A MÊS</span>"
+            & "<div class='ser'>" & _htmlSerie & "</div></div>"
+            & IF ( _txtMud <> "", "<div class='pe'><div class='rg'></div><span class='vs'>" & _tituloMud & "</span>"
+                & "<p class='rod'>" & _txtMud & "</p></div>" )
+        & "</div>" & [Comum · JS contador tooltip] & [Comum · JS corrida]
+    )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

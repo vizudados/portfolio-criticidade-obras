@@ -1,0 +1,16 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: 0
+@descricao: Meses da série da obra do contexto, na janela, que trazem o previsto do mês na planilha (a JANGADA traz só jan/26).
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ref ),
+        "@e", VAR _m = dMes[Mes] RETURN CALCULATE ( [Físico · executado no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _m ),
+        "@p", VAR _m = dMes[Mes] RETURN CALCULATE ( [Físico · previsto no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _m )
+    )
+RETURN
+    COUNTROWS ( FILTER ( _meses, NOT ISBLANK ( [@e] ) && NOT ISBLANK ( [@p] ) ) ) + 0

@@ -1,0 +1,11 @@
+/*
+@pasta: Base\Desembolso
+@formato: 0
+@descricao: 1 quando a justificativa é exigida e a aba não traz texto; 0 senão.
+@oraculo: obras[].ultimo.justificativa_ausente
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _exigida = [Justificativa · exigida]
+VAR _texto = TRIM ( [Justificativa do desembolso] )
+RETURN
+    IF ( NOT ISBLANK ( _exigida ), IF ( _exigida = 1 && ( ISBLANK ( _texto ) || _texto = "" ), 1, 0 ) )

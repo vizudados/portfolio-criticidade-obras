@@ -1,0 +1,283 @@
+/*
+@pasta: T3 Avanço físico\Leituras
+@formato: texto
+@descricao: Leitura do "?" do Avanço das obras, sobre o próprio painel (L065, Figma 317:5214, 461 × 468, condensada): quantas obras estão atrás do cronograma (atraso em meses acima de zero) e quais perdem pontos no item prazo da nota, o atraso médio da carteira (ponderado pelo orçamento), três destaques que contam (o executado compara o mesmo grupo do previsto; a obra de menor atraso) e a trajetória do físico de cada obra na janela, na ordem da nota — atrás, no previsto ou à frente, e quando cruzou o limite (as linhas entram de cima para baixo; Figma 352:8054). Lê a carteira (não muda com a obra em foco). Só lê contas.
+@gerado: pbi/scripts/leituras_t3.py
+*/
+-- 1 · Leituras
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _mesL = [Mês de referência · longo]
+VAR _mesN = [Mês de referência · nome]
+VAR _nObras = [Obras com análise · ref] + 0
+VAR _nComP = [T3 · Avanço · obras com atraso calculado] + 0
+VAR _atras = [T3 · Avanço · obras atrás do cronograma] + 0
+VAR _fora = [T3 · Avanço · obras fora do limite do físico] + 0
+VAR _lFora = [T3 · Avanço · obras fora do limite do físico (lista)]
+VAR _aCart = [Prazo · atraso médio (meses) · ref]
+VAR _eCart = [T3 · Avanço · executado acumulado das obras com previsto]
+VAR _pCart = [Físico · previsto acumulado · ref]
+VAR _lSem = [T3 · Avanço · obras sem previsto (lista)]
+VAR _adiant = [T3 · Avanço · obra de menor atraso]
+VAR _minA = [T3 · Avanço · menor atraso]
+VAR _comeco = [T3 · Avanço · obra mais no começo]
+VAR _comecoE = [T3 · Avanço · executado da obra mais no começo]
+VAR _obras =
+    ADDCOLUMNS (
+        VALUES ( dObra[Obra] ),
+        "@pos", [T3 · Avanço · posição],
+        "@d", [Físico · desvio acumulado p.p. · ref],
+        "@s", [T3 · Status desvio físico · ref],
+        "@ld", [T3 · Físico · lado do cronograma · ref],
+        "@sg", [T3 · Físico · sinal · início da sequência],
+        "@sga", [T3 · Físico · sinal · início da sequência anterior],
+        "@lda", [T3 · Físico · lado da sequência anterior],
+        "@mud", [T3 · Físico · mudanças de faixa (lista)],
+        "@ms", [T3 · Físico · maior status na série],
+        "@pm1", [T3 · Série · primeiro mês da obra],
+        "@n", [T3 · Série · meses da obra],
+        "@fim", [Obra · término previsto]
+    )
+-- 2 · Textos
+VAR _aCartA = ROUND ( ABS ( _aCart ), 1 )
+VAR _minAA = ROUND ( ABS ( _minA ), 1 )
+VAR _tecN = FORMAT ( ABS ( _eCart ) * 100, "0.0", "pt-BR" )
+VAR _tecS = IF ( ROUND ( _eCart * 100, 1 ) < 0, "−", "" )
+VAR _tecTxt = IF ( ISBLANK ( _eCart ), "—", _tecS & _tecN & "%" )
+VAR _tpcN = FORMAT ( ABS ( _pCart ) * 100, "0.0", "pt-BR" )
+VAR _tpcS = IF ( ROUND ( _pCart * 100, 1 ) < 0, "−", "" )
+VAR _tpcTxt = IF ( ISBLANK ( _pCart ), "—", _tpcS & _tpcN & "%" )
+VAR _tcoN = FORMAT ( ABS ( _comecoE ) * 100, "0.0", "pt-BR" )
+VAR _tcoS = IF ( ROUND ( _comecoE * 100, 1 ) < 0, "−", "" )
+VAR _tcoTxt = IF ( ISBLANK ( _comecoE ), "—", _tcoS & _tcoN & "%" )
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _tacN = FORMAT ( _aCartA, "0.0", "pt-BR" )
+VAR _tacTxt = IF ( ISBLANK ( _aCart ), "—", _tacN )
+VAR _tmaN = FORMAT ( _minAA, "0.0", "pt-BR" )
+VAR _tmaTxt = IF ( ISBLANK ( _minA ), "—", _tmaN )
+VAR _tacKP = LEN ( _tacN ) > 0
+VAR _tacKN = IF ( _tacKP, _tacN )
+VAR _tacKS = SUBSTITUTE ( SUBSTITUTE ( _tacKN, ".", "" ), ",", "" )
+VAR _tacKT = IFERROR ( VALUE ( _tacKS ), -1 )
+VAR _tacKOk = _tacKP && _tacKT >= 2 && FORMAT ( _tacKT, REPT ( "0", LEN ( _tacKS ) ) ) = _tacKS
+VAR _tacKD = IF ( CONTAINSSTRING ( _tacKN, "," ), LEN ( _tacKN ) - SEARCH ( ",", _tacKN ), 0 )
+VAR _tacKM = IF ( CONTAINSSTRING ( _tacKN, "." ), "#,##0", "0" ) & IF ( _tacKD > 0, "." & REPT ( "0", _tacKD ) )
+VAR _tacKOd =
+    IF (
+        _tacKOk,
+        "<o-d><o-v>" & _tacKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tacKN, FORMAT ( ROUND ( _tacKT * [@odf] / 1000, 0 ) / POWER ( 10, _tacKD ), _tacKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tacN
+    )
+VAR _tacOd = IF ( ISBLANK ( _aCart ), _tacTxt, _tacKOd )
+VAR _tmaKP = LEN ( _tmaN ) > 0
+VAR _tmaKN = IF ( _tmaKP, _tmaN )
+VAR _tmaKS = SUBSTITUTE ( SUBSTITUTE ( _tmaKN, ".", "" ), ",", "" )
+VAR _tmaKT = IFERROR ( VALUE ( _tmaKS ), -1 )
+VAR _tmaKOk = _tmaKP && _tmaKT >= 2 && FORMAT ( _tmaKT, REPT ( "0", LEN ( _tmaKS ) ) ) = _tmaKS
+VAR _tmaKD = IF ( CONTAINSSTRING ( _tmaKN, "," ), LEN ( _tmaKN ) - SEARCH ( ",", _tmaKN ), 0 )
+VAR _tmaKM = IF ( CONTAINSSTRING ( _tmaKN, "." ), "#,##0", "0" ) & IF ( _tmaKD > 0, "." & REPT ( "0", _tmaKD ) )
+VAR _tmaKOd =
+    IF (
+        _tmaKOk,
+        "<o-d><o-v>" & _tmaKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tmaKN, FORMAT ( ROUND ( _tmaKT * [@odf] / 1000, 0 ) / POWER ( 10, _tmaKD ), _tmaKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tmaN
+    )
+VAR _tmaOd = IF ( ISBLANK ( _minA ), _tmaTxt, _tmaKOd )
+VAR _tecKP = LEN ( _tecN ) > 0
+VAR _tecKN = IF ( _tecKP, _tecN )
+VAR _tecKS = SUBSTITUTE ( SUBSTITUTE ( _tecKN, ".", "" ), ",", "" )
+VAR _tecKT = IFERROR ( VALUE ( _tecKS ), -1 )
+VAR _tecKOk = _tecKP && _tecKT >= 2 && FORMAT ( _tecKT, REPT ( "0", LEN ( _tecKS ) ) ) = _tecKS
+VAR _tecKD = IF ( CONTAINSSTRING ( _tecKN, "," ), LEN ( _tecKN ) - SEARCH ( ",", _tecKN ), 0 )
+VAR _tecKM = IF ( CONTAINSSTRING ( _tecKN, "." ), "#,##0", "0" ) & IF ( _tecKD > 0, "." & REPT ( "0", _tecKD ) )
+VAR _tecKOd =
+    IF (
+        _tecKOk,
+        "<o-d><o-v>" & _tecKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tecKN, FORMAT ( ROUND ( _tecKT * [@odf] / 1000, 0 ) / POWER ( 10, _tecKD ), _tecKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tecN
+    )
+VAR _tecOd = IF ( ISBLANK ( _eCart ), _tecTxt, _tecS & _tecKOd & "%" )
+VAR _tcoKP = LEN ( _tcoN ) > 0
+VAR _tcoKN = IF ( _tcoKP, _tcoN )
+VAR _tcoKS = SUBSTITUTE ( SUBSTITUTE ( _tcoKN, ".", "" ), ",", "" )
+VAR _tcoKT = IFERROR ( VALUE ( _tcoKS ), -1 )
+VAR _tcoKOk = _tcoKP && _tcoKT >= 2 && FORMAT ( _tcoKT, REPT ( "0", LEN ( _tcoKS ) ) ) = _tcoKS
+VAR _tcoKD = IF ( CONTAINSSTRING ( _tcoKN, "," ), LEN ( _tcoKN ) - SEARCH ( ",", _tcoKN ), 0 )
+VAR _tcoKM = IF ( CONTAINSSTRING ( _tcoKN, "." ), "#,##0", "0" ) & IF ( _tcoKD > 0, "." & REPT ( "0", _tcoKD ) )
+VAR _tcoKOd =
+    IF (
+        _tcoKOk,
+        "<o-d><o-v>" & _tcoKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tcoKN, FORMAT ( ROUND ( _tcoKT * [@odf] / 1000, 0 ) / POWER ( 10, _tcoKD ), _tcoKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tcoN
+    )
+VAR _tcoOd = IF ( ISBLANK ( _comecoE ), _tcoTxt, _tcoS & _tcoKOd & "%" )
+VAR _txtSob = "LEITURA · AVANÇO DAS OBRAS · " & UPPER ( _mesL )
+VAR _parcial = _nComP < _nObras
+VAR _txtGrupo = SWITCH ( _nComP, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _nComP, "0" ) ) & IF ( _parcial, " obras com curva prevista", " obras" )
+VAR _txtAtras =
+    SWITCH (
+        TRUE (),
+        _atras = 0, "Nenhuma das " & _txtGrupo & " está atrás do cronograma",
+        _atras = 1 && _nComP = 1, "A única obra está atrás do cronograma",
+        _atras = 1, "Uma das " & _txtGrupo & " está atrás do cronograma",
+        _atras = _nComP, "As " & _txtGrupo & " estão atrás do cronograma",
+        UPPER ( LEFT ( SWITCH ( _atras, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _atras, "0" ) ), 1 ) ) & MID ( SWITCH ( _atras, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _atras, "0" ) ), 2, 1000 ) & " das " & _txtGrupo & " estão atrás do cronograma"
+    )
+VAR _lfoN = _fora
+VAR _lfoPos = IF ( _lfoN >= 2, FIND ( "§", SUBSTITUTE ( _lFora, "|", "§", _lfoN - 1 ) ) )
+VAR _lfoTxt = SWITCH ( TRUE (), _lfoN = 0, "", _lfoN = 1, _lFora, SUBSTITUTE ( LEFT ( _lFora, _lfoPos - 1 ), "|", ", " ) & " e " & MID ( _lFora, _lfoPos + 1, 999 ) )
+VAR _txtFora =
+    SWITCH (
+        TRUE (),
+        _fora = 0, ", nenhuma perdendo pontos no prazo da nota",
+        _fora = 1, ", a " & _lfoTxt & " perdendo pontos no prazo da nota",
+        _fora = 2, ", " & _lfoTxt & " perdendo pontos no prazo da nota",
+        ", " & SWITCH ( _fora, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _fora, "0" ) ) & " perdendo pontos no prazo da nota"
+    )
+VAR _achado =
+    _txtAtras & _txtFora & "; o atraso médio da carteira é de " & _tacOd
+        & IF ( _aCartA <= 1, " mês", " meses" ) & IF ( ROUND ( _aCart, 1 ) < 0, " à frente.", "." )
+VAR _lsN = IF ( ISBLANK ( _lSem ) || _lSem = "", 0, PATHLENGTH ( _lSem ) )
+VAR _lsPos = IF ( _lsN >= 2, FIND ( "§", SUBSTITUTE ( _lSem, "|", "§", _lsN - 1 ) ) )
+VAR _lsTxt = SWITCH ( TRUE (), _lsN = 0, "", _lsN = 1, _lSem, SUBSTITUTE ( LEFT ( _lSem, _lsPos - 1 ), "|", ", " ) & " e " & MID ( _lSem, _lsPos + 1, 999 ) )
+VAR _rotD1 = "executado × " & "⁅" & _tpcTxt & "⁆" & " previsto" & IF ( _lsN = 1, ", sem a " & _lSem, IF ( _lsN > 1, ", só obras com previsto", "" ) )
+VAR _rotD2 = IF ( ROUND ( _minA, 1 ) < 0, "meses à frente: " & _adiant & ", a mais adiantada", IF ( _minAA <= 1, "mês de atraso: ", "meses de atraso: " ) & _adiant & ", a menos atrasada" )
+VAR _rotD3 = _comeco & ", a obra mais no começo"
+VAR _txtJanela = UPPER ( FORMAT ( _jan, "mmm/yy", "pt-BR" ) & " A " & FORMAT ( _ref, "mmm/yy", "pt-BR" ) )
+VAR _lista = FILTER ( _obras, NOT ISBLANK ( [@pos] ) ) /* lista */
+VAR _htmlTraj =
+    CONCATENATEX (
+        _lista,
+        VAR _d = [@d]
+        VAR _ld = [@ld]
+        VAR _sg = [@sg]
+        VAR _sga = [@sga]
+        VAR _mud = [@mud]
+        VAR _semP = ISBLANK ( _d )
+        VAR _nMud = IF ( ISBLANK ( _mud ) || _mud = "", 0, PATHLENGTH ( _mud ) )
+        VAR _sempreEst = _ld = -1 && [@ms] = 0
+        VAR _txtSinal =
+            SWITCH (
+                TRUE (),
+                _semP, "sem previsto na planilha",
+                _sempreEst, "atrás, sempre dentro do limite",
+                NOT ISBLANK ( _sga ),
+                    SWITCH ( [@lda], -1, "atrás", 0, "no previsto", 1, "à frente" ) & " " & IF ( EDATE ( _sg, -1 ) = _sga, "em " & FORMAT ( _sga, "mmm", "pt-BR" ), "de " & FORMAT ( _sga, "mmm", "pt-BR" ) & " a " & FORMAT ( EDATE ( _sg, -1 ), "mmm", "pt-BR" ) ) & "; " & SWITCH ( _ld, -1, "atrás", 0, "no previsto", 1, "à frente" ) & " desde " & FORMAT ( _sg, "mmm", "pt-BR" ),
+                _ld = -1, "atrás desde " & IF ( _sg = [@pm1] && [@pm1] > _jan, "a 1.ª aba, " & FORMAT ( _sg, "mmm", "pt-BR" ), FORMAT ( _sg, "mmm", "pt-BR" ) ),
+                _sg = [@pm1] && [@n] > 1, SWITCH ( _ld, -1, "atrás", 0, "no previsto", 1, "à frente" ) & " nos " & SWITCH ( [@n], 0, "nenhum", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( [@n], "0" ) ) & " meses",
+                SWITCH ( _ld, -1, "atrás", 0, "no previsto", 1, "à frente" ) & " desde " & FORMAT ( _sg, "mmm", "pt-BR" )
+            )
+        VAR _txtFaixa =
+            IF (
+                _semP || _sempreEst || _nMud = 0,
+                "",
+                "; " & CONCATENATEX (
+                    GENERATESERIES ( 1, _nMud ),
+                    VAR _it = SUBSTITUTE ( PATHITEM ( _mud, [Value] ), "§", "|" )
+                    VAR _para = PATHITEM ( _it, 4, INTEGER )
+                    VAR _nf = PATHITEM ( _it, 5, INTEGER )
+                    RETURN
+                        IF ( _para = 2, "fora do limite", "dentro do limite" ) & IF ( [Value] = _nMud && _nf > 1, " desde ", " em " ) & PATHITEM ( _it, 2 ),
+                    ", ",
+                    [Value], ASC
+                )
+            )
+        VAR _txtFim = IF ( [@fim] = _ref, "; termina em " & FORMAT ( _ref, "mmm", "pt-BR" ), "" )
+        VAR _mk = IF ( _semP, "sm", "mk mk" & [@s] )
+        RETURN
+            "<div class='tj" & IF ( _semP, " sp", "" ) & "' style='animation-delay:" & ( 400 + ( [@pos] - 1 ) * 80 )
+                & "ms'><i class='a-pop " & _mk & "' style='animation-delay:" & ( 500 + ( [@pos] - 1 ) * 80 ) & "ms'></i>"
+                & "<b>" & dObra[Obra] & "</b><span>" & _txtSinal & _txtFaixa & _txtFim
+                & "</span></div>",
+        "",
+        [@pos], ASC
+    )
+-- 4 · Marcação
+VAR _corpo =
+    "<span class='vs sob'>" & _txtSob & "</span><h2 class='ach'>" & _achado & "</h2>"
+        & "<div class='dst sobre-creme'>" & "<div><b>" & _tecOd & "</b><span>" & _rotD1 & "</span></div>" & "<div><b>" & _tmaOd & "</b><span>" & _rotD2 & "</span></div>" & "<div><b>" & _tcoOd & "</b><span>" & _rotD3 & "</span></div>" & "</div>"
+        & "<div class='sec'><span class='vs'>" & "DETALHE · TRAJETÓRIA · " & _txtJanela & "</span>" & _htmlTraj & "</div>"
+VAR _saidaHtml =
+    IF ( _nObras > 0, "<div class='u lv' role='dialog' aria-label='" & "Leitura do Avanço das obras" & "'><div class='pn pn-p av'>" & _corpo & "</div><svg class='x' width='26' height='26' viewBox='0 0 26 26' aria-hidden='true'><circle cx='13' cy='13' r='12.375' fill='#FFFFFF' stroke='#3B3B3F' stroke-width='1.25'/><path d='M9 9L17 17M17 9L9 17' fill='none' stroke='#0B0B0C' stroke-width='1.5' stroke-linecap='round'/></svg></div>" & [Comum · JS contador tooltip] )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

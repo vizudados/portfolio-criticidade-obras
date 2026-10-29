@@ -1,0 +1,10 @@
+/*
+@pasta: T2 Análise crítica\Tooltips\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Estoque de materiais da obra em foco no mês anterior ao do eixo (vazio sem aba no mês anterior).
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _obra = [Nota · obra em foco]
+VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+RETURN
+    CALCULATE ( [Estoque de materiais], dObra[Obra] = _obra, REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

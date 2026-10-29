@@ -1,0 +1,19 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: Soma dos pontos dos itens com dado.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _p =
+    [Nota · pontos custo]
+        + [Nota · pontos prazo]
+        + [Nota · pontos PPC]
+        + [Nota · pontos caixa]
+        + [Nota · pontos inspeção]
+        + [Nota · pontos acidentes]
+        + [Nota · pontos NR-18]
+        + [Nota · pontos entregas]
+        + [Nota · pontos análise crítica]
+RETURN
+    IF ( NOT ISBLANK ( _p ), ROUND ( _p, 8 ) )

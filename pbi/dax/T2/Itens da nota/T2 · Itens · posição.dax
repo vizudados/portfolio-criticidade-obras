@@ -1,0 +1,27 @@
+/*
+@pasta: T2 Análise crítica\Itens da nota\Contas
+@formato: 0
+@descricao: Ordem do item da nota da linha (dItemNota) no painel Itens da nota, para a obra em foco no mês de referência: primeiro os que perdem pontos (mais pontos perdidos antes), depois os cheios e depois os sem dado; empate pela ordem da régua.
+@oraculo: oráculo da régua antiga (pontos por item)
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _grupo =
+    IF ( ISBLANK ( [Nota · item · pontos · foco] ), 2, IF ( [Nota · item · perdidos · foco] > 0, 0, 1 ) )
+VAR _perd = [Nota · item · perdidos · foco] + 0
+VAR _ordem = [Nota · item · ordem]
+VAR _todos =
+    ADDCOLUMNS (
+        ALL ( dItemNota[Item] ),
+        "@g", IF ( ISBLANK ( [Nota · item · pontos · foco] ), 2, IF ( [Nota · item · perdidos · foco] > 0, 0, 1 ) ),
+        "@p", [Nota · item · perdidos · foco] + 0,
+        "@o", [Nota · item · ordem]
+    )
+VAR _antes =
+    COUNTROWS (
+        FILTER (
+            _todos,
+            [@g] < _grupo || ( [@g] = _grupo && ( [@p] > _perd || ( [@p] = _perd && [@o] < _ordem ) ) )
+        )
+    )
+RETURN
+    IF ( HASONEVALUE ( dItemNota[Item] ), _antes + 1 )

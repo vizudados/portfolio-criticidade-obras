@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Recorte
+@formato: 0
+@descricao: Obras com aba no mês de referência, sem o seletor de obras.
+@gerado: pbi/scripts/contas_base.py
+*/
+CALCULATE ( [Obras com análise · ref], REMOVEFILTERS ( dObra ) )

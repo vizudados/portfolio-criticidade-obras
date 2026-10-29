@@ -1,0 +1,12 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: texto
+@descricao: Códigos (dItemNota) de todos os itens empatados no topo dos pontos perdidos pela carteira no mês de referência (empate: maior máximo, depois a ordem da nota), separados por '|'; vazio sem perda. A frase cita todos (auditoria da Fase 2, minor 2).
+@oraculo: bases reais, ago/26: orcamento|fluxo_caixa (3,0 cada)
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _itens = ADDCOLUMNS ( ALL ( dItemNota ), "@p", ROUND ( [Nota · item · perdidos · ref], 8 ) )
+VAR _max = MAXX ( FILTER ( _itens, [@p] > 0 ), [@p] )
+RETURN
+    CONCATENATEX ( FILTER ( _itens, [@p] > 0 && [@p] = _max ), dItemNota[Item], "|", dItemNota[Maximo], DESC,
+        dItemNota[Ordem], ASC )

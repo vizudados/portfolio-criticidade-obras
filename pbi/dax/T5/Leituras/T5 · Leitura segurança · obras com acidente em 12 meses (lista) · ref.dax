@@ -1,0 +1,11 @@
+/*
+@pasta: T5 Canteiro\Leituras\Contas
+@formato: texto
+@descricao: Obras com acidente com afastamento nos 12 meses até o de referência, da maior para a menor taxa de frequência. Ex. set/26: REDINHA|POTENGI|JANGADA.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: REDINHA|POTENGI|JANGADA
+@gerado: pbi/scripts/contas_t5.py
+*/
+CONCATENATEX (
+    FILTER ( VALUES ( dObra[Obra] ), [Canteiro · acidentes 12 meses · ref] > 0 ),
+    dObra[Obra], "|", - [Canteiro · taxa de frequência (12 meses) · ref], ASC, dObra[Obra], ASC
+)

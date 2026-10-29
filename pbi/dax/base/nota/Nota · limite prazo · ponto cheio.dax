@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: 0.0
+@descricao: Atraso (meses) até o qual o prazo vale o máximo. Do dicionário NOTA. Constante.
+@oraculo: dicionário NOTA
+@gerado: pbi/scripts/contas_base.py
+*/
+0.5

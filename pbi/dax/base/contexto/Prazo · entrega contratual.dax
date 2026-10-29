@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Prazo
+@formato: mmm/yy
+@descricao: Entrega contratual da obra (cadastro). Uma obra.
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( dObra[EntregaContratual] )

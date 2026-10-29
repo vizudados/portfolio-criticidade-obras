@@ -1,0 +1,10 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: +0.00;-0.00;0.00
+@descricao: Desvio físico da obra em foco no primeiro mês da série (−0,6 p.p. em janeiro).
+@oraculo: obras[0].serie[0].indicadores.desvio_fisico_pp
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ini = [T3 · Série · primeiro mês da obra · foco]
+RETURN
+    CALCULATE ( [T3 · Desvio físico p.p. · foco no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _ini )

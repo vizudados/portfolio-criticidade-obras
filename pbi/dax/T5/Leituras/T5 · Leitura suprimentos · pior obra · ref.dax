@@ -1,0 +1,12 @@
+/*
+@pasta: T5 Canteiro\Leituras\Contas
+@formato: texto
+@descricao: A obra com a menor taxa de entregas no prazo e completas no mês de referência (no empate, a primeira em ordem alfabética). Ex. set/26: POTENGI.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: POTENGI
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _t =
+    FILTER ( ADDCOLUMNS ( VALUES ( dObra[Obra] ), "@v", [Canteiro · entregas no prazo · ref] ), NOT ISBLANK ( [@v] ) )
+VAR _mn = MINX ( _t, [@v] )
+RETURN
+    CONCATENATEX ( TOPN ( 1, FILTER ( _t, [@v] = _mn ), dObra[Obra], ASC ), dObra[Obra] )

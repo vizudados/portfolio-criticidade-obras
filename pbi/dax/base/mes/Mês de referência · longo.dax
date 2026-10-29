@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Mês
+@formato: texto
+@descricao: Mês de referência por extenso (junho de 2026), para o cabeçalho e as frases.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    LOOKUPVALUE ( dMes[MesAnoLongo], dMes[Mes], _mes )

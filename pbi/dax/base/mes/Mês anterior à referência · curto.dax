@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Mês
+@formato: texto
+@descricao: Mês anterior ao de referência, abreviado (mai/26); vazio quando a referência é o primeiro mês do histórico.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = EDATE ( [Mês de referência], -1 )
+RETURN
+    LOOKUPVALUE ( dMes[MesAno], dMes[Mes], _mes )

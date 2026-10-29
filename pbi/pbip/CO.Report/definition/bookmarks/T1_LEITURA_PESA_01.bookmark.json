@@ -1,0 +1,66 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T1_LEITURA_PESA_01",
+  "displayName": "T1 · leitura · Onde a carteira perde pontos",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T1_LeiX_Obras",
+      "T1_LeiX_Pesa",
+      "T1_LeiX_Semestre",
+      "T1_Lei_Fora",
+      "T1_Lei_Obras",
+      "T1_Lei_Pesa",
+      "T1_Lei_Semestre"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T1",
+    "sections": {
+      "T1": {
+        "visualContainers": {
+          "T1_LeiX_Obras": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T1_LeiX_Pesa": {
+            "singleVisual": {}
+          },
+          "T1_LeiX_Semestre": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T1_Lei_Fora": {
+            "singleVisual": {}
+          },
+          "T1_Lei_Obras": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T1_Lei_Pesa": {
+            "singleVisual": {}
+          },
+          "T1_Lei_Semestre": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

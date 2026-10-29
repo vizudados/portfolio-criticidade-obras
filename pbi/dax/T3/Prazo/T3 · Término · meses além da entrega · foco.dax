@@ -1,0 +1,11 @@
+/*
+@pasta: T3 Avanço físico\Prazo\Contas
+@formato: 0
+@descricao: Meses entre a entrega contratual e o término projetado da obra em foco no mês de referência (negativo: antes da entrega).
+@oraculo: REDINHA set/26: 0
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _p = [Prazo · término projetado · foco]
+VAR _e = [Prazo · entrega contratual · foco]
+RETURN
+    IF ( NOT ISBLANK ( _p ) && NOT ISBLANK ( _e ), DATEDIFF ( _e, _p, MONTH ) )

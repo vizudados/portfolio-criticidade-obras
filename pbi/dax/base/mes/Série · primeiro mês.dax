@@ -1,0 +1,11 @@
+/*
+@pasta: Base\Mês
+@formato: dd/mm/yyyy
+@descricao: Primeiro mês da janela: o mês de referência menos (janela − 1) meses, nunca antes do primeiro mês do histórico (jan/26). Ponto de partida das séries e das leituras ("desde", "em x de y meses").
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = CALCULATE ( MIN ( dMes[Mes] ), REMOVEFILTERS ( dMes ) )
+VAR _janela = EDATE ( _ref, 1 - [Série · janela (meses)] )
+RETURN
+    IF ( NOT ISBLANK ( _ref ), MAX ( _ini, _janela ) )

@@ -1,0 +1,13 @@
+/*
+@pasta: Base\Recorte
+@formato: texto
+@descricao: Nomes das obras do recorte no mês de referência, em ordem alfabética, separados por vírgula.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE (
+        CONCATENATEX ( VALUES ( fAnaliseCritica[Obra] ), fAnaliseCritica[Obra], ", ", fAnaliseCritica[Obra], ASC ),
+        REMOVEFILTERS ( dMes ),
+        dMes[Mes] = _mes
+    )

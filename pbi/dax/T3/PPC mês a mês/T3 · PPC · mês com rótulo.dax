@@ -1,0 +1,9 @@
+/*
+@pasta: T3 Avanço físico\PPC mês a mês\Contas
+@formato: 0
+@descricao: 1 quando o mês do eixo é o do maior ou o do menor PPC da janela (o desenho escreve o valor nesses meses e no de referência quando não cabem todos); 0 nos demais.
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _m = MAX ( dMes[Mes] )
+RETURN
+    IF ( HASONEVALUE ( dMes[Mes] ), INT ( _m = [T3 · PPC · mês do maior · foco] || _m = [T3 · PPC · mês do menor · foco] ) )

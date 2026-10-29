@@ -1,0 +1,21 @@
+/*
+@pasta: T1 Visão geral\Obras pela nota
+@formato: texto
+@descricao: CSS da lista de obras pela Nota da obra (uma entrada por obra).
+@gerado: pbi/scripts/desenho_t1.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".htmlViewerEntry{display:block!important;margin:0!important;padding:0!important}.ln{position:relative;height:76px;border-bottom:1px solid #E1E1E1;transition:background .15s}.ln.cri"
+    & "t{background:#F7E3E3}.ln:not(.crit):hover,.htmlViewerEntry.hover .ln:not(.crit){background:#F7F4EE}.ln .ix{left:14px;top:16px;color:#6B6B70}.ln .nm{position:absolute;left:48px;top:"
+    & "10px;display:flex;align-items:baseline;gap:8px;white-space:nowrap}.ln .nm b{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:21px;line-height:26px}.ln .nm em{"
+    & "font-style:normal;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:12px;line-height:15px;letter-spacing:1.2px;color:#6B6B70}.ln .nm .selo{margin-left:3px}.ln "
+    & ".sub{left:48px;top:40px;font-size:14px;line-height:19px;color:#3B3B3F}.ln .chips{position:absolute;left:356px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;"
+    & "gap:6px}.ln .cota{position:absolute;left:500px;top:33px;width:200px;height:10px;background:#EFEFEF}.ln .cota i{position:absolute;left:0;top:0;bottom:0}.ln .cota i.s2{background:#C4"
+    & "3737}.ln .cota i.s1{background:#C9821F}.ln .cota i.s0{background:#A9CDB9}.ln .cota i.sm{background:#CFCCC6}.ln .cota u{position:absolute;left:0;top:-2px;height:14px;border:1px dash"
+    & "ed #3B3B3F;box-sizing:border-box}.ln .cota b{position:absolute;top:-4px;width:1px;height:18px;background:#6B6B70;opacity:.55}.ln .pt{left:690px;top:28px;width:66px;text-align:right"
+    & ";font-size:16px;line-height:20px}.ln .pt.pd{top:18px}.ln .de{left:690px;top:40px;width:66px;text-align:right;font-size:14px;line-height:19px;color:#3B3B3F}.ln .dm{position:absolute"
+    & ";left:784px;top:16px;display:flex;gap:6px}.ln .dm span{position:relative;display:block;width:24px}.ln .dm i{position:relative;display:block;width:24px;height:24px;box-sizing:border"
+    & "-box;background:#F2F0EB;border:1px solid #CFCCC6;overflow:hidden}.ln .dm i u{position:absolute;left:0;right:0;bottom:0}.ln .dm .q0 u{background:#A9CDB9}.ln .dm .q1 u{background:#C9"
+    & "821F}.ln .dm .q2{background:#FFFFFF;border-color:#C43737}.ln .dm .qf{background:#FFFFFF;border:1px dashed #3B3B3F}.ln .dm em{display:block;margin-top:5px;text-align:center;font-sty"
+    & "le:normal;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:10px;line-height:12px;letter-spacing:.6px;color:#6B6B70}.ln .dm em.z{color:#C43737}"

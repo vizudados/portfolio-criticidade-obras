@@ -1,0 +1,17 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: 0
+@descricao: Meses da janela em que o executado do mês alcançou o previsto (executado ≥ previsto; só meses com previsto na planilha). Obra do contexto.
+@oraculo: contagem de obras[].serie[] com exec_mes >= prev_mes
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ref ),
+        "@e", VAR _m = dMes[Mes] RETURN CALCULATE ( [Físico · executado no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _m ),
+        "@p", VAR _m = dMes[Mes] RETURN CALCULATE ( [Físico · previsto no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _m )
+    )
+RETURN
+    COUNTROWS ( FILTER ( _meses, NOT ISBLANK ( [@e] ) && NOT ISBLANK ( [@p] ) && [@e] >= [@p] ) ) + 0

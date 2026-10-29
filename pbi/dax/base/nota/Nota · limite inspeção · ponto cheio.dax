@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: 0%
+@descricao: Aprovação na 1.ª inspeção que vale o máximo. Do dicionário NOTA. Constante.
+@oraculo: dicionário NOTA
+@gerado: pbi/scripts/contas_base.py
+*/
+0.95

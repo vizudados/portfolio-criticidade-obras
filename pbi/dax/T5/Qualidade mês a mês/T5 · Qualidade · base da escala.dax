@@ -1,0 +1,20 @@
+/*
+@pasta: T5 Canteiro\Qualidade mês a mês\Contas
+@formato: 0.00%
+@descricao: Piso do eixo da aprovação na 1.ª inspeção (o teto é 100%): 85%, ou menos quando alguma obra do recorte fica abaixo na janela (arredondado para baixo de 5 em 5 pontos, com 1 de folga). Ex. set/26: 85% (o menor é REDINHA em ago/26, 87,5%).
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 0,85
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _ini = [Série · primeiro mês]
+VAR _ref = [Mês de referência]
+VAR _t =
+    FILTER (
+        ADDCOLUMNS (
+            CROSSJOIN ( VALUES ( dObra[Obra] ), FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ) ),
+            "@v", [Canteiro · aprovação na 1.ª inspeção]
+        ),
+        NOT ISBLANK ( [@v] )
+    )
+VAR _mn = MINX ( _t, [@v] )
+RETURN
+    IF ( NOT ISBLANK ( _mn ), MIN ( 0.85, FLOOR ( _mn - 0.01, 0.05 ) ) )

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T4_LEITURA_MES_01",
+  "displayName": "T4 · leitura · Resultado da carteira, mês a mês",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T4_LeiX_DesCart",
+      "T4_LeiX_Mes",
+      "T4_LeiX_Obras",
+      "T4_Lei_DesCart",
+      "T4_Lei_Fora",
+      "T4_Lei_Mes",
+      "T4_Lei_Obras"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T4",
+    "sections": {
+      "T4": {
+        "visualContainers": {
+          "T4_LeiX_DesCart": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_LeiX_Mes": {
+            "singleVisual": {}
+          },
+          "T4_LeiX_Obras": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Lei_DesCart": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Lei_Fora": {
+            "singleVisual": {}
+          },
+          "T4_Lei_Mes": {
+            "singleVisual": {}
+          },
+          "T4_Lei_Obras": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

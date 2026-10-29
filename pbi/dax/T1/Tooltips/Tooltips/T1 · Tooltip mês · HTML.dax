@@ -1,0 +1,186 @@
+/*
+@pasta: T1 Visão geral\Tooltips
+@formato: texto
+@descricao: Tooltip de página do mês (coluna de Como os meses evoluíram): as obras em cada estado da nota (crítico, atenção, estável com a nota; pendente com os pontos obtidos dos possíveis) e quem entrou, saiu ou abriu em crítico desde o mês anterior, pela regra nova (só entre notas completas; ir de pendente a crítico é abrir). Primeiro mês do histórico: a carteira no mês. Até 9 obras num estado, todas aparecem; de 10 em diante, as 8 primeiras e 'e mais N obras'. O pé fica preso à base do cartão.
+@gerado: pbi/scripts/tooltips_t1.py
+*/
+-- 1 · Leituras
+VAR _mesC = UPPER ( [Mês · rótulo curto] )
+VAR _mesL = [Mês · longo]
+VAR _mesAnt = [Mês anterior · nome]
+VAR _n = [Obras com análise] + 0
+VAR _primeiro = [Mês · é o primeiro do histórico] = 1
+VAR _res = [Resultado da obra]
+VAR _pct = [Resultado %]
+VAR _desv = [Desembolso · desvio no mês]
+VAR _maisC = [T1 · Tooltip mês · obras fora da lista · crítico]
+VAR _maisA = [T1 · Tooltip mês · obras fora da lista · atenção]
+VAR _maisE = [T1 · Tooltip mês · obras fora da lista · estável]
+VAR _maisP = [T1 · Tooltip mês · obras fora da lista · pendente]
+VAR _nE = [T1 · Leitura · obras que entraram em crítico] + 0
+VAR _nS = [T1 · Leitura · obras que saíram de crítico] + 0
+VAR _nAb = [T1 · Leitura · obras que abriram em crítico] + 0
+VAR _listaE = [T1 · Leitura · obras que entraram em crítico (lista)]
+VAR _listaS = [T1 · Leitura · obras que saíram de crítico (lista)]
+VAR _listaAb = [T1 · Leitura · obras que abriram em crítico (lista)]
+VAR _obras =
+    ADDCOLUMNS (
+        VALUES ( dObra[Obra] ),
+        "@aba", [Obras com análise],
+        "@st", [Nota · status · um mês],
+        "@pend", [Nota · pendente · um mês],
+        "@nota", [Nota · nota final · um mês],
+        "@obt", [Nota · pontos obtidos · um mês],
+        "@poss", [Nota · pontos possíveis · um mês],
+        "@perd", [Nota · pontos perdidos · um mês],
+        "@notaAnt", [T1 · Obra · nota no mês anterior]
+    )
+-- 2 · Textos
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _trA = ABS ( _res )
+VAR _trNu = SWITCH ( TRUE (), _trA >= 99950000, FORMAT ( _trA / 1000000, "0.0", "pt-BR" ), _trA >= 999500, FORMAT ( _trA / 1000000, "0.00", "pt-BR" ), _trA >= 999.5, FORMAT ( _trA / 1000, "0", "pt-BR" ), FORMAT ( _trA, "#,0", "pt-BR" ) )
+VAR _trUn = SWITCH ( TRUE (), _trA >= 999500, " mi", _trA >= 999.5, " mil", "" )
+VAR _trN = _trNu & _trUn
+VAR _trZero = _trN = "0"
+VAR _trS = IF ( _trZero, "", IF ( _res < 0, "−", "" ) )
+VAR _trTxt = IF ( ISBLANK ( _res ), "—", _trS & "R$ " & _trN )
+VAR _tpN = FORMAT ( ABS ( _pct ) * 100, "0.00", "pt-BR" )
+VAR _tpS = SWITCH ( TRUE (), ROUND ( _pct * 100, 2 ) < 0, "−", ROUND ( _pct * 100, 2 ) > 0, "+", "" )
+VAR _tpTxt = IF ( ISBLANK ( _pct ), "—", _tpS & _tpN & "%" )
+VAR _tdvN = FORMAT ( ABS ( _desv ) * 100, "0", "pt-BR" )
+VAR _tdvS = SWITCH ( TRUE (), ROUND ( _desv * 100, 0 ) < 0, "−", ROUND ( _desv * 100, 0 ) > 0, "+", "" )
+VAR _tdvTxt = IF ( ISBLANK ( _desv ), "—", _tdvS & _tdvN & "%" )
+VAR _htmlCol =
+    CONCATENATEX (
+        { 2, 1, 0, -1 },
+        VAR _s = [Value]
+        VAR _lista = FILTER ( _obras, [@aba] = 1 && IF ( _s = -1, [@pend] = 1, NOT ISBLANK ( [@st] ) && [@st] = _s ) ) /* lista */
+        VAR _mais = SWITCH ( _s, 2, _maisC, 1, _maisA, 0, _maisE, _maisP )
+        /* passou de 9 obras no estado: as 8 primeiras e a linha 'e mais N obras' */
+        VAR _mostra = TOPN ( IF ( _mais > 0, 8, 9 ), _lista, [@perd], DESC, dObra[Obra], ASC ) /* lista */
+        VAR _cls = IF ( _s = -1, "m", _s & "" )
+        VAR _rot = SWITCH ( _s, 2, "crítico", 1, "atenção", 0, "estável", "pendente" )
+        VAR _itens =
+            CONCATENATEX (
+                _mostra,
+                VAR _txtV = IF ( _s = -1, FORMAT ( [@obt], "0.0#", "pt-BR" ) & "/" & FORMAT ( [@poss], "0.0#", "pt-BR" ), FORMAT ( [@nota], "0.0#", "pt-BR" ) )
+                RETURN
+                    "<div class='ob'><span>" & dObra[Obra] & "</span><b" & IF ( _s = -1, " class='pd'", "" ) & ">" & "⁅" & _txtV & "⁆" & "</b></div>",
+                "",
+                [@perd], DESC,
+                dObra[Obra], ASC
+            )
+        VAR _htmlMais = IF ( _mais > 0, "<i class='vz mais'>e mais " & "⁅" & FORMAT ( _mais, "0" ) & "⁆" & " obras</i>" )
+        RETURN
+            "<div><span class='chip chip" & _cls & "'><i></i>" & _rot & "</span>"
+                & IF ( _itens = "", "<i class='vz'>nenhuma</i>", _itens & _htmlMais ) & "</div>",
+        "",
+        [Value], DESC
+    )
+VAR _nCol =
+    MAXX (
+        { 2, 1, 0, -1 },
+        VAR _s = [Value]
+        VAR _q = COUNTROWS ( FILTER ( _obras, [@aba] = 1 && IF ( _s = -1, [@pend] = 1, NOT ISBLANK ( [@st] ) && [@st] = _s ) ) ) + 0 /* lista */
+        RETURN IF ( _q > 9, 8 + 1, MAX ( 1, _q ) )
+    ) /* geometria */
+VAR _mudaram = FILTER ( _obras, PATHCONTAINS ( _listaE, dObra[Obra] ) || PATHCONTAINS ( _listaS, dObra[Obra] ) ) /* lista */
+VAR _frases =
+    CONCATENATEX (
+        _mudaram,
+        dObra[Obra] & IF ( [@st] == 2, " entrou em crítico", " saiu de crítico" ) & " (nota " & "⁅" & FORMAT ( [@notaAnt], "0.0#", "pt-BR" ) & "⁆" & " → " & "⁅" & FORMAT ( [@nota], "0.0#", "pt-BR" ) & "⁆" & ")",
+        " · ",
+        [@st], DESC,
+        dObra[Obra], ASC
+    )
+VAR _abN = IF ( ISBLANK ( _listaAb ) || _listaAb = "", 0, PATHLENGTH ( _listaAb ) )
+VAR _abPos = IF ( _abN >= 2, FIND ( "§", SUBSTITUTE ( _listaAb, "|", "§", _abN - 1 ) ) )
+VAR _abTxt = SWITCH ( TRUE (), _abN = 0, "", _abN = 1, _listaAb, SUBSTITUTE ( LEFT ( _listaAb, _abPos - 1 ), "|", ", " ) & " e " & MID ( _listaAb, _abPos + 1, 999 ) )
+VAR _txtAb = IF ( _nAb = 0, "", _abTxt & IF ( _nAb = 1, " abriu em crítico", " abriram em crítico" ) )
+VAR _nTot = _nE + _nS + _nAb
+VAR _pE = IF ( _nE > 0, IF ( _nE = 1, "entrou em crítico: ", "entraram em crítico: " ) & SUBSTITUTE ( _listaE, "|", ", " ) )
+VAR _pS = IF ( _nS > 0, IF ( _nS = 1, "saiu de crítico: ", "saíram de crítico: " ) & SUBSTITUTE ( _listaS, "|", ", " ) )
+VAR _pA = IF ( _nAb > 0, IF ( _nAb = 1, "abriu em crítico: ", "abriram em crítico: " ) & SUBSTITUTE ( _listaAb, "|", ", " ) )
+VAR _txtCompacto = _pE & IF ( _pE <> "" && _pS & _pA <> "", " · " ) & _pS & IF ( _pS <> "" && _pA <> "", " · " ) & _pA
+VAR _txtDesde =
+    SWITCH (
+        TRUE (),
+        _nTot = 0, "nenhuma obra entrou ou saiu de crítico",
+        _nTot > 2, _txtCompacto,
+        _nE + _nS = 0, _txtAb,
+        _nAb > 0, _frases & " · " & _txtAb,
+        _nE = 0, _frases & " · nenhuma obra entrou",
+        _nS = 0, _frases & " · nenhuma saiu",
+        _frases
+    )
+VAR _txtSob = "OBRAS POR STATUS DA NOTA · " & _mesC & IF ( _primeiro, " · PRIMEIRO MÊS DO HISTÓRICO", "" )
+VAR _txtCart = "resultado " & IF ( _res < 0, "<span class='ng'>" & "⁅" & _trTxt & "⁆" & "</span>", "⁅" & _trTxt & "⁆" ) & " (" & IF ( ROUND ( _pct * 100, 2 ) < 0, "<span class='ng'>" & "⁅" & _tpTxt & "⁆" & "</span>", "⁅" & _tpTxt & "⁆" ) & ") · desembolso " & "⁅" & _tdvTxt & "⁆" & " sobre o previsto"
+-- 4 · Marcação
+VAR _saidaHtml =
+    IF (
+        _n > 0,
+        "<div class='u tt'><div class='cab'><p class='vs'>" & _txtSob & "</p>"
+            & "<div class='tit'><b>" & _mesL & "</b></div></div>"
+            & "<div class='corpo'><div class='col4" & " ls " & SWITCH ( TRUE (), _nCol <= 3, "e1", _nCol <= 6, "e2", _nCol <= 9, "e3", _nCol <= 12, "e4", "e5" ) & "' style='--n:" & _nCol & "'>" & _htmlCol & "</div></div>"
+            & "<div class='pe'><div class='rg'></div>"
+            & IF (
+                _primeiro,
+                "<span class='vs'>CARTEIRA NO MÊS</span><p class='rod r2'>" & _txtCart & "</p>",
+                "<span class='vs'>DESDE " & UPPER ( _mesAnt ) & "</span><p class='rod r2'>" & _txtDesde & "</p>"
+            )
+        & "</div></div>" & [Comum · JS contador tooltip]
+    )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

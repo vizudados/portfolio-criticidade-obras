@@ -1,0 +1,8 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: 0
+@descricao: Justificativas exigidas e preenchidas da obra nos meses da janela anteriores aos 6 mais recentes.
+@oraculo: 0 (jan)
+@gerado: pbi/scripts/contas_t4.py
+*/
+[T4 · Obra · resumo das justificativas · exigidas] - [T4 · Obra · resumo das justificativas · em branco]

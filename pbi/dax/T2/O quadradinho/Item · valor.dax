@@ -1,0 +1,20 @@
+/*
+@pasta: T2 Análise crítica\O quadradinho\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Valor do item do quadradinho da linha (dItem), como a planilha imprime (sem o sinal da fórmula).
+@oraculo: obras[].composicao[].valor
+@gerado: pbi/scripts/contas_t2.py
+*/
+SWITCH (
+    SELECTEDVALUE ( dItem[Item] ),
+    "Credito", [Crédito do orçamento],
+    "SaldoContrato", [Saldo de contrato],
+    "AdiantServicos", [Adiantamento de serviços],
+    "AdiantMateriais", [Adiantamento de materiais],
+    "Estoque", [Estoque de materiais],
+    "Equipamentos", [Equipamentos (valor de mercado)],
+    "ReceitaPersonalizacao", [Receita de personalizações],
+    "ContasPagar", [Contas a pagar],
+    "Desembolsado", [Desembolsado acumulado],
+    "Divida", [Dívida da obra]
+)

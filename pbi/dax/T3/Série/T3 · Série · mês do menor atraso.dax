@@ -1,0 +1,18 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: dd/mm/yyyy
+@descricao: Primeiro mês da janela com o menor atraso em meses da obra do contexto (o rótulo do máximo e do mínimo no mini gráfico do tooltip do avanço quando os rótulos não cabem todos).
+@oraculo: obras[].serie[] (mês do extremo)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ref ),
+        "@v", VAR _m = dMes[Mes] RETURN CALCULATE ( [Prazo · atraso (meses)], REMOVEFILTERS ( dMes ), dMes[Mes] = _m )
+    )
+VAR _com = FILTER ( _meses, NOT ISBLANK ( [@v] ) )
+VAR _alvo = MINX ( _com, [@v] )
+RETURN
+    MINX ( FILTER ( _com, [@v] = _alvo ), dMes[Mes] )

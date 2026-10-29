@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Desembolso
+@formato: 0
+@descricao: Obras do recorte com justificativa em branco no mês do contexto (desvio do desembolso acima de ±10%).
+@oraculo: carteira.justificativas_ausentes
+@gerado: pbi/scripts/contas_base.py
+*/
+SUMX ( VALUES ( fAnaliseCritica[Obra] ), [Justificativa · em branco] )

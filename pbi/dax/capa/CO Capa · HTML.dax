@@ -1,0 +1,331 @@
+/*
+@pasta: Capa
+@formato: texto
+@descricao: Capa do painel num lote só: faixa do filme (MP4 publicado no GitHub Pages, sincronizado pelo JS com a linha do tempo do HTML), identidade, régua, os 5 números com odômetro (textos de Capa\Contas, a regra dos cartões da T1), base com a panorâmica, título, CTA e cartões (desenho; os cliques são botões nativos) e o botão de pausar o filme. Só lê contas; não calcula.
+@gerado: pbi/scripts/capa_medidas.py
+*/
+-- 1 · Leituras
+VAR _mes = [Mês de referência · longo]
+VAR _mesAnt = [Mês anterior à referência · nome]
+VAR _ant = [Resultado · mês anterior · ref]
+VAR _crit = [Nota · carteira · obras críticas · ref]
+VAR _aten = [Nota · carteira · obras em atenção · ref]
+VAR _est = [Nota · carteira · obras estáveis · ref]
+VAR _pend = [Nota · carteira · obras pendentes · ref]
+VAR _o1 = [Capa · obras · valor (texto)]
+VAR _o2 = [Capa · obras · orçamento (texto)]
+VAR _r1 = [Capa · resultado · valor (texto)]
+VAR _r2 = [Capa · resultado · % do orçamento (texto)]
+VAR _r3 = [Capa · resultado · variação (texto)]
+VAR _f1 = [Capa · físico · valor (texto)]
+VAR _f2 = [Capa · físico · previsto (texto)]
+VAR _f3 = [Capa · físico · desvio (texto)]
+VAR _d1 = [Capa · desembolso · valor (texto)]
+VAR _d2 = [Capa · desembolso · previsto (texto)]
+VAR _s1 = [Capa · sem estoque · valor (texto)]
+VAR _s2 = [Capa · sem estoque · pagos não aplicados (texto)]
+-- 2 · Textos
+VAR _mesH = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mes, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _mesAntH = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mesAnt, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _c = _crit + 0
+VAR _a = _aten + 0
+VAR _e = _est + 0
+VAR _p = _pend + 0
+VAR _chips =
+    "<div class='cs'>"
+        & IF ( _c > 0, "<span class='ch c2'><i></i>" & FORMAT ( _c, "0" ) & IF ( _c = 1, " crítica", " críticas" ) & "</span>" )
+        & IF ( _a > 0, "<span class='ch c1'><i></i>" & FORMAT ( _a, "0" ) & " em atenção</span>" )
+        & IF ( _e > 0, "<span class='ch c0'><i></i>" & FORMAT ( _e, "0" ) & IF ( _e = 1, " estável", " estáveis" ) & "</span>" )
+        & IF ( _p > 0, "<span class='ch cm'><i></i>" & FORMAT ( _p, "0" ) & IF ( _p = 1, " pendente", " pendentes" ) & "</span>" )
+        & "</div>"
+VAR _o2H = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _o2, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _r2H = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _r2, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _r3H = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _r3, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _f2H = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _f2, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _f3H = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _f3, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _d2H = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _d2, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _s2H = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _s2, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _apObras = _o2H & " em orçamento"
+VAR _apRes =
+    IF ( LEFT ( _r2H, 1 ) = "−", "<span class='ng'>" & _r2H & "</span>", _r2H )
+        & " do orçamento · "
+        & IF ( ISBLANK ( _ant ), "sem mês anterior para comparar", IF ( LEFT ( _r3H, 1 ) = "−", "<span class='ng'>" & _r3H & "</span>", _r3H ) & " sobre " & _mesAntH )
+VAR _apFis = _f2H & " previsto · " & IF ( LEFT ( _f3H, 1 ) = "−", "<span class='ng'>" & _f3H & "</span>", _f3H )
+VAR _apDes = _d2H & " previsto"
+VAR _apSem = _s2H & " pagos e ainda não aplicados"
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _n0 = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _o1, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _n0Ng = LEFT ( _n0, 1 ) = "−"
+VAR _n0Pre = ""
+VAR _n0Suf = ""
+VAR _n0Nuc = _n0
+VAR _n0S = SUBSTITUTE ( SUBSTITUTE ( _n0Nuc, ".", "" ), ",", "" )
+VAR _n0T = IFERROR ( VALUE ( _n0S ), -1 )
+VAR _n0Num = LEN ( _n0S ) > 0 && _n0T >= 0 && FORMAT ( _n0T, REPT ( "0", LEN ( _n0S ) ) ) = _n0S
+VAR _n0Ok = _n0Num && _n0T >= 2
+VAR _n0D = IF ( CONTAINSSTRING ( _n0Nuc, "," ), LEN ( _n0Nuc ) - SEARCH ( ",", _n0Nuc ), 0 )
+VAR _n0M = IF ( CONTAINSSTRING ( _n0Nuc, "." ), "#,##0", "0" ) & IF ( _n0D > 0, "." & REPT ( "0", _n0D ) )
+VAR _n0PreH = IF ( _n0Pre = "", "", "<span class='un'>" & _n0Pre & "</span>" )
+VAR _n0SufH = IF ( _n0Suf = "", "", "<span class='un'>" & _n0Suf & "</span>" )
+VAR _n0Od =
+    SWITCH (
+        TRUE (),
+        NOT _n0Num, _n0,
+        NOT _n0Ok, "<o-d><o-v>" & _n0PreH & _n0Nuc & _n0SufH & "</o-v></o-d>",
+        "<o-d><o-v>" & _n0PreH & _n0Nuc & _n0SufH & "</o-v><o-w aria-hidden='true'><o-t>"
+            & CONCATENATEX (
+                _odQ,
+                "<span" & IF ( [@odk] >= 23, " class='pr'", "" ) & ">" & _n0PreH
+                    & IF ( [@odk] = 24, _n0Nuc, FORMAT ( ROUND ( _n0T * [@odf] / 1000, 0 ) / POWER ( 10, _n0D ), _n0M, "pt-BR" ) )
+                    & _n0SufH & "</span>",
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-w></o-d>"
+    )
+VAR _blk0 = "<div class='nm n0 b' data-ind='obras'><p class='ro'>Obras em andamento</p><div class='vl'><p class='v" & IF ( _n0Ng, " ng", "" ) & "'>" & _n0Od & "</p>" & _chips & "</div><p class='ap'>" & _apObras & "</p></div>"
+VAR _n1 = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _r1, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _n1Ng = LEFT ( _n1, 1 ) = "−"
+VAR _n1I = SEARCH ( "R$ ", _n1, 1, 0 )
+VAR _n1Pre = IF ( _n1I > 0, LEFT ( _n1, _n1I + 2 ), "" )
+VAR _n1Re = MID ( _n1, LEN ( _n1Pre ) + 1, LEN ( _n1 ) )
+VAR _n1Suf = SWITCH ( TRUE (), RIGHT ( _n1Re, 4 ) = " mil", " mil", RIGHT ( _n1Re, 3 ) = " mi", " mi", "" )
+VAR _n1Nuc = LEFT ( _n1Re, LEN ( _n1Re ) - LEN ( _n1Suf ) )
+VAR _n1S = SUBSTITUTE ( SUBSTITUTE ( _n1Nuc, ".", "" ), ",", "" )
+VAR _n1T = IFERROR ( VALUE ( _n1S ), -1 )
+VAR _n1Num = LEN ( _n1S ) > 0 && _n1T >= 0 && FORMAT ( _n1T, REPT ( "0", LEN ( _n1S ) ) ) = _n1S
+VAR _n1Ok = _n1Num && _n1T >= 2
+VAR _n1D = IF ( CONTAINSSTRING ( _n1Nuc, "," ), LEN ( _n1Nuc ) - SEARCH ( ",", _n1Nuc ), 0 )
+VAR _n1M = IF ( CONTAINSSTRING ( _n1Nuc, "." ), "#,##0", "0" ) & IF ( _n1D > 0, "." & REPT ( "0", _n1D ) )
+VAR _n1PreH = IF ( _n1Pre = "", "", "<span class='un'>" & _n1Pre & "</span>" )
+VAR _n1SufH = IF ( _n1Suf = "", "", "<span class='un'>" & _n1Suf & "</span>" )
+VAR _n1Od =
+    SWITCH (
+        TRUE (),
+        NOT _n1Num, _n1,
+        NOT _n1Ok, "<o-d><o-v>" & _n1PreH & _n1Nuc & _n1SufH & "</o-v></o-d>",
+        "<o-d><o-v>" & _n1PreH & _n1Nuc & _n1SufH & "</o-v><o-w aria-hidden='true'><o-t>"
+            & CONCATENATEX (
+                _odQ,
+                "<span" & IF ( [@odk] >= 23, " class='pr'", "" ) & ">" & _n1PreH
+                    & IF ( [@odk] = 24, _n1Nuc, FORMAT ( ROUND ( _n1T * [@odf] / 1000, 0 ) / POWER ( 10, _n1D ), _n1M, "pt-BR" ) )
+                    & _n1SufH & "</span>",
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-w></o-d>"
+    )
+VAR _blk1 = "<div class='nm n1 b' data-ind='resultado'><p class='ro'>Resultado da carteira</p><div class='vl'><p class='v" & IF ( _n1Ng, " ng", "" ) & "'>" & _n1Od & "</p>" & "</div><p class='ap'>" & _apRes & "</p></div>"
+VAR _n2 = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _f1, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _n2Ng = LEFT ( _n2, 1 ) = "−"
+VAR _n2Pre = IF ( LEFT ( _n2, 1 ) IN { "−", "+" }, LEFT ( _n2, 1 ), "" )
+VAR _n2Suf = IF ( RIGHT ( _n2, 1 ) = "%", "%", "" )
+VAR _n2Nuc = MID ( _n2, LEN ( _n2Pre ) + 1, LEN ( _n2 ) - LEN ( _n2Pre ) - LEN ( _n2Suf ) )
+VAR _n2S = SUBSTITUTE ( SUBSTITUTE ( _n2Nuc, ".", "" ), ",", "" )
+VAR _n2T = IFERROR ( VALUE ( _n2S ), -1 )
+VAR _n2Num = LEN ( _n2S ) > 0 && _n2T >= 0 && FORMAT ( _n2T, REPT ( "0", LEN ( _n2S ) ) ) = _n2S
+VAR _n2Ok = _n2Num && _n2T >= 2
+VAR _n2D = IF ( CONTAINSSTRING ( _n2Nuc, "," ), LEN ( _n2Nuc ) - SEARCH ( ",", _n2Nuc ), 0 )
+VAR _n2M = IF ( CONTAINSSTRING ( _n2Nuc, "." ), "#,##0", "0" ) & IF ( _n2D > 0, "." & REPT ( "0", _n2D ) )
+VAR _n2PreH = IF ( _n2Pre = "", "", "<span class='un'>" & _n2Pre & "</span>" )
+VAR _n2SufH = IF ( _n2Suf = "", "", "<span class='un'>" & _n2Suf & "</span>" )
+VAR _n2Od =
+    SWITCH (
+        TRUE (),
+        NOT _n2Num, _n2,
+        NOT _n2Ok, "<o-d><o-v>" & _n2PreH & _n2Nuc & _n2SufH & "</o-v></o-d>",
+        "<o-d><o-v>" & _n2PreH & _n2Nuc & _n2SufH & "</o-v><o-w aria-hidden='true'><o-t>"
+            & CONCATENATEX (
+                _odQ,
+                "<span" & IF ( [@odk] >= 23, " class='pr'", "" ) & ">" & _n2PreH
+                    & IF ( [@odk] = 24, _n2Nuc, FORMAT ( ROUND ( _n2T * [@odf] / 1000, 0 ) / POWER ( 10, _n2D ), _n2M, "pt-BR" ) )
+                    & _n2SufH & "</span>",
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-w></o-d>"
+    )
+VAR _blk2 = "<div class='nm n2 b' data-ind='fisico'><p class='ro'>Físico acumulado</p><div class='vl'><p class='v" & IF ( _n2Ng, " ng", "" ) & "'>" & _n2Od & "</p>" & "</div><p class='ap'>" & _apFis & "</p></div>"
+VAR _n3 = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _d1, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _n3Ng = LEFT ( _n3, 1 ) = "−"
+VAR _n3I = SEARCH ( "R$ ", _n3, 1, 0 )
+VAR _n3Pre = IF ( _n3I > 0, LEFT ( _n3, _n3I + 2 ), "" )
+VAR _n3Re = MID ( _n3, LEN ( _n3Pre ) + 1, LEN ( _n3 ) )
+VAR _n3Suf = SWITCH ( TRUE (), RIGHT ( _n3Re, 4 ) = " mil", " mil", RIGHT ( _n3Re, 3 ) = " mi", " mi", "" )
+VAR _n3Nuc = LEFT ( _n3Re, LEN ( _n3Re ) - LEN ( _n3Suf ) )
+VAR _n3S = SUBSTITUTE ( SUBSTITUTE ( _n3Nuc, ".", "" ), ",", "" )
+VAR _n3T = IFERROR ( VALUE ( _n3S ), -1 )
+VAR _n3Num = LEN ( _n3S ) > 0 && _n3T >= 0 && FORMAT ( _n3T, REPT ( "0", LEN ( _n3S ) ) ) = _n3S
+VAR _n3Ok = _n3Num && _n3T >= 2
+VAR _n3D = IF ( CONTAINSSTRING ( _n3Nuc, "," ), LEN ( _n3Nuc ) - SEARCH ( ",", _n3Nuc ), 0 )
+VAR _n3M = IF ( CONTAINSSTRING ( _n3Nuc, "." ), "#,##0", "0" ) & IF ( _n3D > 0, "." & REPT ( "0", _n3D ) )
+VAR _n3PreH = IF ( _n3Pre = "", "", "<span class='un'>" & _n3Pre & "</span>" )
+VAR _n3SufH = IF ( _n3Suf = "", "", "<span class='un'>" & _n3Suf & "</span>" )
+VAR _n3Od =
+    SWITCH (
+        TRUE (),
+        NOT _n3Num, _n3,
+        NOT _n3Ok, "<o-d><o-v>" & _n3PreH & _n3Nuc & _n3SufH & "</o-v></o-d>",
+        "<o-d><o-v>" & _n3PreH & _n3Nuc & _n3SufH & "</o-v><o-w aria-hidden='true'><o-t>"
+            & CONCATENATEX (
+                _odQ,
+                "<span" & IF ( [@odk] >= 23, " class='pr'", "" ) & ">" & _n3PreH
+                    & IF ( [@odk] = 24, _n3Nuc, FORMAT ( ROUND ( _n3T * [@odf] / 1000, 0 ) / POWER ( 10, _n3D ), _n3M, "pt-BR" ) )
+                    & _n3SufH & "</span>",
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-w></o-d>"
+    )
+VAR _blk3 = "<div class='nm n3 b' data-ind='desembolso'><p class='ro'>Desembolso do mês</p><div class='vl'><p class='v" & IF ( _n3Ng, " ng", "" ) & "'>" & _n3Od & "</p>" & "</div><p class='ap'>" & _apDes & "</p></div>"
+VAR _n4 = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _s1, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" )
+VAR _n4Ng = LEFT ( _n4, 1 ) = "−"
+VAR _n4I = SEARCH ( "R$ ", _n4, 1, 0 )
+VAR _n4Pre = IF ( _n4I > 0, LEFT ( _n4, _n4I + 2 ), "" )
+VAR _n4Re = MID ( _n4, LEN ( _n4Pre ) + 1, LEN ( _n4 ) )
+VAR _n4Suf = SWITCH ( TRUE (), RIGHT ( _n4Re, 4 ) = " mil", " mil", RIGHT ( _n4Re, 3 ) = " mi", " mi", "" )
+VAR _n4Nuc = LEFT ( _n4Re, LEN ( _n4Re ) - LEN ( _n4Suf ) )
+VAR _n4S = SUBSTITUTE ( SUBSTITUTE ( _n4Nuc, ".", "" ), ",", "" )
+VAR _n4T = IFERROR ( VALUE ( _n4S ), -1 )
+VAR _n4Num = LEN ( _n4S ) > 0 && _n4T >= 0 && FORMAT ( _n4T, REPT ( "0", LEN ( _n4S ) ) ) = _n4S
+VAR _n4Ok = _n4Num && _n4T >= 2
+VAR _n4D = IF ( CONTAINSSTRING ( _n4Nuc, "," ), LEN ( _n4Nuc ) - SEARCH ( ",", _n4Nuc ), 0 )
+VAR _n4M = IF ( CONTAINSSTRING ( _n4Nuc, "." ), "#,##0", "0" ) & IF ( _n4D > 0, "." & REPT ( "0", _n4D ) )
+VAR _n4PreH = IF ( _n4Pre = "", "", "<span class='un'>" & _n4Pre & "</span>" )
+VAR _n4SufH = IF ( _n4Suf = "", "", "<span class='un'>" & _n4Suf & "</span>" )
+VAR _n4Od =
+    SWITCH (
+        TRUE (),
+        NOT _n4Num, _n4,
+        NOT _n4Ok, "<o-d><o-v>" & _n4PreH & _n4Nuc & _n4SufH & "</o-v></o-d>",
+        "<o-d><o-v>" & _n4PreH & _n4Nuc & _n4SufH & "</o-v><o-w aria-hidden='true'><o-t>"
+            & CONCATENATEX (
+                _odQ,
+                "<span" & IF ( [@odk] >= 23, " class='pr'", "" ) & ">" & _n4PreH
+                    & IF ( [@odk] = 24, _n4Nuc, FORMAT ( ROUND ( _n4T * [@odf] / 1000, 0 ) / POWER ( 10, _n4D ), _n4M, "pt-BR" ) )
+                    & _n4SufH & "</span>",
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-w></o-d>"
+    )
+VAR _blk4 = "<div class='nm n4 b' data-ind='sem_estoque'><p class='ro'>Resultado sem estoque</p><div class='vl'><p class='v" & IF ( _n4Ng, " ng", "" ) & "'>" & _n4Od & "</p>" & "</div><p class='ap'>" & _apSem & "</p></div>"
+-- 4 · Marcação
+RETURN
+    "<div class=""uc"" lang=""pt-BR""><div class=""st""><section class=""fx"" aria-label=""Acompanhamento de obras"
+    & " · mês de referência e indicadores principais""><div class=""rid"" aria-hidden=""true""></div><div class="
+    & """logo"" role=""img"" aria-label=""Vizu Dados""><svg aria-hidden='true' focusable='false' viewBox=""39.161 "
+    & "30.496 809.94 364.219"" fill=""none"" xmlns=""http://www.w3.org/2000/svg""><g><path d=""M479.987 180.474L5"
+    & "05.906 129.697C514.409 113.036 529.867 98.9904 549.716 98.9956L674.839 99.0283C700.477 99.0342 724.6"
+    & "24 111.3 743.356 128.888C770.462 154.334 783.202 189.802 778.738 227.671C774.808 260.999 755.286 292"
+    & ".849 724.991 311.782C706.564 323.297 686.628 328.27 664.538 328.25L497.332 328.109C486.792 328.1 477"
+    & ".503 330.558 469.327 336.783C456.523 346.532 451.248 363.91 458.173 378.765C462.813 388.717 473.361 "
+    & "394.754 484.877 394.714L676.953 394.059C755.977 391.791 822.758 334.943 842.8 260.04C867.195 168.929"
+    & " 818.858 75.0079 730.464 42.2363C711.059 35.0411 690.486 31.6994 668.781 31.6776L555.407 31.5642C511"
+    & ".183 31.5194 469.827 52.7877 448.135 91.9669L403.783 178.059L336.449 309.66C334.468 313.533 330.861 "
+    & "315.944 327.06 316.066C323.733 316.173 319.443 313.953 317.306 310.032L196.074 87.5953C175.234 49.35"
+    & "86 134.685 28.1695 91.6556 30.6996C81.3696 31.3041 72.3916 31.74 63.2154 35.4843C48.1404 41.636 38.0"
+    & "676 55.7424 39.2565 72.122C40.3965 87.833 52.0286 98.7512 67.7369 99.3722L93.5023 98.4867C112.425 97"
+    & ".8368 127.651 107.675 136.59 124.06L191.629 224.939L252.303 336.714C257.789 346.819 263.047 355.777 "
+    & "270.384 364.411C298.657 397.679 347.489 399.814 378.403 369.268C388.914 358.881 395.694 346.663 402."
+    & "489 333.206L439.82 259.265L479.987 180.474Z"" fill=""#979898""/><path d=""M403.783 178.059C404.09 178.39"
+    & "1 404.503 178.726 404.889 179.29L477.402 179.358C478.628 179.171 479.426 179.105 479.987 180.474L439"
+    & ".82 259.265L402.489 333.206C395.694 346.663 388.914 358.881 378.403 369.268C347.489 399.814 298.657 "
+    & "397.679 270.384 364.411C263.047 355.777 257.789 346.819 252.303 336.714L191.629 224.939L136.59 124.0"
+    & "6C127.651 107.675 112.425 97.8368 93.5023 98.4867L67.7369 99.3722C52.0286 98.7512 40.3965 87.833 39."
+    & "2565 72.122C38.0676 55.7424 48.1404 41.636 63.2154 35.4843C72.3916 31.74 81.3696 31.3041 91.6556 30."
+    & "6996C134.685 28.1695 175.234 49.3586 196.074 87.5953L317.306 310.032C319.443 313.953 323.733 316.173"
+    & " 327.06 316.066C330.861 315.944 334.468 313.533 336.449 309.66L403.783 178.059Z"" fill=""#111111""/></g"
+    & "></svg></div><div class=""dv"" aria-hidden=""true""></div><p class=""kk b"">Acompanhamento de obras</p><p "
+    & "class=""ms b"">Mês de referência · <strong data-campo=""mes"">"
+    & _mesH
+    & "</strong></p><div class='rg' aria-hidden='true'><div class='ps'><i class='p0'></i><i class='p1'></i>"
+    & "<i class='p2'></i><i class='p3'></i><i class='p4'></i><i class='p5'></i></div><div class='rl b'><spa"
+    & "n class='l0'>01 · Obras</span><span class='l1'>02 · Resultado</span><span class='l2'>03 · Físico</sp"
+    & "an><span class='l3'>04 · Desembolso</span><span class='l4'>05 · Sem estoque</span><span class='l5'>0"
+    & "6 · Final</span></div></div><div class=""ln"">"
+    & _blk0
+    & _blk1
+    & _blk2
+    & _blk3
+    & _blk4
+    & "</div><video class=""filme"" src=""https://vizudados.github.io/portfolio-criticidade-obras/assets/capa-"
+    & "filme-2560x854-60fps-cba382839b4c.mp4"" poster=""https://vizudados.github.io/portfolio-criticidade-obr"
+    & "as/assets/capa-filme-poster-d0910e567a60.webp"" muted autoplay loop playsinline preload=""auto"" disabl"
+    & "epictureinpicture disableremoteplayback aria-hidden=""true""></video></section><div class=""fio"" aria-h"
+    & "idden=""true""></div><section class=""bs"" aria-label=""Entrada do painel""><img class='pano' src='https:/"
+    & "/vizudados.github.io/portfolio-criticidade-obras/assets/panoramica-base-792749d224fb.svg' alt='' ari"
+    & "a-hidden='true' decoding='async'></section><h1 class=""ti b""><strong>Criticidade de Obras</strong> · "
+    & "Acompanhamento e análise crítica</h1><p class=""su b"">Quais obras pedem atenção neste mês, e por quê."
+    & "</p><div class=""ct b"" aria-hidden=""true"">Entrar no painel<svg class='sc' viewBox='0 0 20 20' aria-hi"
+    & "dden='true' focusable='false'><path d='M3.125 10H16.25M11.25 4.375L16.875 10L11.25 15.625'/></svg></"
+    & "div><div class='ca k0'><div class='se' aria-hidden='true'><svg viewBox='0 0 21 21' focusable='false'"
+    & "><path transform='translate(1.383 1.383)' d='M7.3675 0.950833H0.950833V7.3675H7.3675V0.950833Z M17.2"
+    & "842 0.950833H10.8675V7.3675H17.2842V0.950833Z M7.3675 10.8675H0.950833V17.2842H7.3675V10.8675Z M17.2"
+    & "842 10.8675H10.8675V17.2842H17.2842V10.8675Z'/></svg></div><h2 class='b'>Visão geral</h2><p>Quais ob"
+    & "ras pedem atenção neste mês, e por quê?</p><div class='ab b' aria-hidden='true'>Abrir<svg class='sa'"
+    & " viewBox='0 0 16 16' aria-hidden='true' focusable='false'><path d='M2.5 8H13M9 3.5L13.5 8L9 12.5'/><"
+    & "/svg></div></div><div class='ca k1'><div class='se' aria-hidden='true'><svg viewBox='0 0 21 21' focu"
+    & "sable='false'><path transform='translate(2.549 0.799)' d='M14.9508 0.950833H0.950833V18.4508H14.9508"
+    & "V0.950833Z M4.45083 6.20083H11.4508M4.45083 9.70083H11.4508M4.45083 13.2008H9.1175'/></svg></div><h2"
+    & " class='b'>Análise crítica</h2><p>Por que a obra tem essa nota?</p><div class='ab b' aria-hidden='tr"
+    & "ue'>Abrir<svg class='sa' viewBox='0 0 16 16' aria-hidden='true' focusable='false'><path d='M2.5 8H13"
+    & "M9 3.5L13.5 8L9 12.5'/></svg></div></div><div class='ca k2'><div class='se' aria-hidden='true'><svg "
+    & "viewBox='0 0 21 21' focusable='false'><path transform='translate(2.333 2.581)' d='M7.94729e-08 16.08"
+    & "54H16.3333 M0.583333 14.3354C5.83333 13.7521 7 3.25206 15.75 0.918728'/></svg></div><h2 class='b'>Av"
+    & "anço físico</h2><p>A obra está no ritmo do que foi previsto?</p><div class='ab b' aria-hidden='true'"
+    & ">Abrir<svg class='sa' viewBox='0 0 16 16' aria-hidden='true' focusable='false'><path d='M2.5 8H13M9 "
+    & "3.5L13.5 8L9 12.5'/></svg></div></div><div class='ca k3'><div class='se' aria-hidden='true'><svg vie"
+    & "wBox='0 0 21 21' focusable='false'><path transform='translate(2.333 4.667)' d='M0 14H16.3333M2.91667"
+    & " 10.5V4.66667M8.16667 10.5V0M13.4167 10.5V7'/></svg></div><h2 class='b'>Resultado no tempo</h2><p>Es"
+    & "tá piorando? Gastou fora do previsto no mês e justificou?</p><div class='ab b' aria-hidden='true'>Ab"
+    & "rir<svg class='sa' viewBox='0 0 16 16' aria-hidden='true' focusable='false'><path d='M2.5 8H13M9 3.5"
+    & "L13.5 8L9 12.5'/></svg></div></div><div class='ca k4'><div class='se' aria-hidden='true'><svg viewBo"
+    & "x='0 0 21 21' focusable='false'><path transform='translate(1.75 5.833)' d='M0 9.917H17.5M1.75 9.917V"
+    & "7A7 7 0 0 1 15.75 7V9.917M7 0.222V5.833M10.5 0.222V5.833'/></svg></div><h2 class='b'>Canteiro</h2><p"
+    & ">Está seguro, faz certo da primeira vez e recebe material no prazo?</p><div class='ab b' aria-hidden"
+    & "='true'>Abrir<svg class='sa' viewBox='0 0 16 16' aria-hidden='true' focusable='false'><path d='M2.5 "
+    & "8H13M9 3.5L13.5 8L9 12.5'/></svg></div></div><p class=""ft b"">Planilhas Análise Crítica de cada obra "
+    & "· tratamento em Power Query · <span data-campo=""mes"">"
+    & _mesH
+    & "</span></p></div></div>"
+    & "<script>(function(){'use strict';var d=document,R=d.documentElement,W=window;var f=d.querySelector('"
+    & "video.filme'),uc=d.querySelector('.uc'),fx=d.querySelector('.uc .fx');if(!f||!uc){return;}var T=33,Q"
+    & "=1/60,cl=R.classList;var agora=function(){return (W.performance&&performance.now)?performance.now():"
+    & "Date.now();};cl.remove('uo-parado','uo-espera','uo-pausa');R.style.removeProperty('--tm');clearTimeo"
+    & "ut(W.__uoEsp);var vivo=function(){return f.isConnected;};var parado=function(){if(vivo()){cl.remove("
+    & "'uo-espera','uo-pausa');cl.add('uo-parado');}};var desliga=function(){f.removeAttribute('autoplay');"
+    & "f.setAttribute('preload','none');try{f.pause();}catch(e){}f.removeAttribute('src');try{f.load();}cat"
+    & "ch(e){}};if((W.matchMedia&&W.matchMedia('(prefers-reduced-motion: reduce)').matches)||f.error){parad"
+    & "o();desliga();return;}var pausa=W.__uoPausa===1&&!!W.__uoT;if(pausa){f.removeAttribute('autoplay');t"
+    & "ry{f.pause();}catch(e){}}cl.add('uo-espera');R.style.setProperty('--tm','1000s');f.muted=true;f.defa"
+    & "ultMuted=true;var lista=function(){var l=d.getAnimations?d.getAnimations():[],r=[];for(var i=0;i<l.l"
+    & "ength;i++){var e=l[i].effect&&l[i].effect.target;if(l[i].animationName&&e&&uc.contains(e)){r.push(l["
+    & "i]);}}return r;};var crava=function(mt,para){R.style.setProperty('--tm','0s');var l=lista();for(var "
+    & "i=0;i<l.length;i++){try{if(para){l[i].pause();}else if(l[i].playState==='paused'){l[i].play();}l[i]."
+    & "currentTime=mt*1000;}catch(e){}}};var defasagem=function(mt){var l=lista(),pior=0;for(var i=0;i<l.le"
+    & "ngth;i++){var c=l[i].effect.getComputedTiming();if(c.progress==null){continue;}var x=((c.progress*T-"
+    & "mt)%T+T)%T;if(x>T/2){x-=T;}if(Math.abs(x)>Math.abs(pior)){pior=x;}}return pior;};var quadro=function"
+    & "(fn){if(f.requestVideoFrameCallback){f.requestVideoFrameCallback(function(n,md){if(vivo()){fn(md.med"
+    & "iaTime);}});}else{fn(f.currentTime);}};var sinc=function(){if(!vivo()||f.paused){return;}quadro(func"
+    & "tion(mt){if(f.paused){return;}clearTimeout(W.__uoEsp);cl.remove('uo-espera','uo-parado');crava(mt,fa"
+    & "lse);quadro(function(m2){if(Math.abs(defasagem(m2))>Q/4){crava(m2,false);}});});};var congela=functi"
+    & "on(){if(!vivo()){return;}var t=f.currentTime;W.__uoT=[t,agora()];crava(t,true);};f.addEventListener("
+    & "'playing',sinc);f.addEventListener('seeked',function(){if(!f.paused){sinc();return;}if(pausa&&vivo()"
+    & "){clearTimeout(W.__uoEsp);cl.remove('uo-espera','uo-parado');congela();}});f.addEventListener('pause"
+    & "',function(){if(!vivo()||cl.contains('uo-parado')||cl.contains('uo-espera')){return;}congela();});f."
+    & "addEventListener('timeupdate',function(){if(!vivo()){return;}if(!f.paused){W.__uoT=[f.currentTime,ag"
+    & "ora()];}if(f.paused||cl.contains('uo-espera')||cl.contains('uo-parado')){return;}quadro(function(mt)"
+    & "{if(Math.abs(defasagem(mt))>Q/2){crava(mt,false);}});});f.addEventListener('error',function(){parado"
+    & "();desliga();});var bt=d.createElement('button');bt.type='button';bt.className='pz';var marca=functi"
+    & "on(){var r=pausa?'Tocar o filme':'Pausar o filme';bt.setAttribute('aria-label',r);bt.title=r;if(paus"
+    & "a){cl.add('uo-pausa');}else{cl.remove('uo-pausa');}};bt.addEventListener('click',function(e){e.preve"
+    & "ntDefault();e.stopPropagation();pausa=!pausa;W.__uoPausa=pausa?1:0;marca();if(pausa){try{f.pause();}"
+    & "catch(x){}congela();}else{try{var p=f.play();if(p&&p.catch){p.catch(function(){});}}catch(x){}}});ma"
+    & "rca();(fx||uc).appendChild(bt);var c=W.__uoT;if(c&&c[0]>0){var t0=pausa?c[0]:(c[0]+(agora()-c[1])/10"
+    & "00)%T;crava(t0,pausa);var vai=function(){try{f.currentTime=t0;}catch(e){}};if(f.readyState>=1){vai()"
+    & ";}else{f.addEventListener('loadedmetadata',vai,{once:true});}}if(!pausa){try{var p=f.play();if(p&&p."
+    & "catch){p.catch(function(x){if(x&&x.name==='NotAllowedError'){parado();}});}}catch(x){}}W.__uoEsp=set"
+    & "Timeout(function(){if(vivo()&&cl.contains('uo-espera')){parado();}},5000);})();</script>"

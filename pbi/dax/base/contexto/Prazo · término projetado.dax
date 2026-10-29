@@ -1,0 +1,12 @@
+/*
+@pasta: Base\Prazo
+@formato: mmm/yy
+@descricao: Término projetado (Lipke, IEAC(t)): o início mais a duração prevista ÷ IDP(t), em meses inteiros. Uma obra.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _ini = SELECTEDVALUE ( dObra[Inicio] )
+VAR _fim = SELECTEDVALUE ( dObra[TerminoPrevisto] )
+VAR _idp = [Prazo · IDP(t)]
+VAR _dur = DATEDIFF ( _ini, _fim, MONTH ) + 1
+RETURN
+    IF ( NOT ISBLANK ( _idp ) && _idp > 0 && NOT ISBLANK ( _fim ), EOMONTH ( EDATE ( _ini, ROUNDUP ( _dur / _idp, 0 ) - 1 ), -1 ) + 1 )

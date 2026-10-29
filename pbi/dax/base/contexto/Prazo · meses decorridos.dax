@@ -1,0 +1,10 @@
+/*
+@pasta: Base\Prazo
+@formato: 0
+@descricao: Meses desde o início da obra até o mês do contexto, contando os dois (1 no mês de início). Uma obra com aba.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _ini = SELECTEDVALUE ( dObra[Inicio] )
+VAR _mes = MAX ( dMes[Mes] )
+RETURN
+    IF ( HASONEVALUE ( dObra[Obra] ) && NOT ISBLANK ( _ini ) && NOT ISEMPTY ( fAnaliseCritica ), DATEDIFF ( _ini, _mes, MONTH ) + 1 )

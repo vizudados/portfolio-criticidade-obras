@@ -1,0 +1,230 @@
+/*
+@pasta: T2 Análise crítica\Tooltips
+@formato: texto
+@descricao: Tooltip de página do item da nota (linha de Itens da nota): as faixas do item como estão no modelo, com a faixa atingida marcada na cor dos pontos, o X do mês, os pontos do item mês a mês na obra em foco e, no rodapé preso ao pé, o que mudou desde o mês anterior. Estados: com dado, sem dado (falta na base / sem dado na planilha), valor fora da faixa válida.
+@gerado: pbi/scripts/tooltips_t2.py
+*/
+-- 1 · Leituras
+VAR _cod = SELECTEDVALUE ( dItemNota[Item] )
+VAR _nome = [Nota · item · nome]
+VAR _fonte = [Nota · item · fonte]
+VAR _pts = [Nota · item · pontos · foco]
+VAR _poss = [Nota · item · possíveis · foco]
+VAR _x = [Nota · item · X · foco]
+VAR _fx = [Nota · item · faixa atingida · foco]
+VAR _faixas = [Nota · item · faixas]
+VAR _ptsAnt = [T2 · Item da nota · pontos no mês anterior · foco]
+VAR _possAnt = [T2 · Item da nota · possíveis no mês anterior · foco]
+VAR _foraAnt = [T2 · Item da nota · fora da faixa no mês anterior · foco] + 0
+VAR _ref = [Mês de referência]
+VAR _obra = [Nota · obra em foco]
+VAR _mesCM = [Mês de referência · curto maiúsculo]
+VAR _mesN = [Mês de referência · nome]
+VAR _mesAntN = [Mês anterior à referência · nome]
+VAR _nSer = [Série · meses até a referência]
+VAR _meses =
+    ADDCOLUMNS (
+        VALUES ( dMes[Mes] ),
+        "@ate", [Série · mês até a referência],
+        "@ord", [Mês · ordem],
+        "@pos", [Série · posição na janela],
+        "@v", [Nota · item · pontos · foco no mês],
+        "@p", [Nota · item · possíveis · foco no mês],
+        "@rot", [Mês · abreviado]
+    )
+VAR _serie =
+    ADDCOLUMNS (
+        FILTER ( _meses, [@ate] = 1 ), /* lista */
+        "@s",
+            IF (
+                ISBLANK ( [@v] ) || [@p] = 0, BLANK (),
+                IF ( [@v] >= [@p], 0, IF ( [@v] = 0, 2, 1 ) )
+            )
+    ) /* lista */
+-- 2 · Textos
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _caTxt = IF ( ISBLANK ( _pts ), "sem dado na planilha", FORMAT ( _pts, "0.0#", "pt-BR" ) & " de " & FORMAT ( _poss, "0.0#", "pt-BR" ) )
+VAR _cbTxt = IF ( ISBLANK ( _pts ), "falta na base", FORMAT ( _pts, "0.0#", "pt-BR" ) & " de " & FORMAT ( _poss, "0.0#", "pt-BR" ) )
+VAR _cnTxt = IF ( ISBLANK ( _ptsAnt ), "falta na base", FORMAT ( _ptsAnt, "0.0#", "pt-BR" ) & " de " & FORMAT ( _possAnt, "0.0#", "pt-BR" ) )
+VAR _txtPts = IF ( _fonte = "Análise Crítica", _caTxt, _cbTxt )
+VAR _fora = [Nota · item · fora da faixa · foco]
+VAR _txtDir =
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _pts ) && _fora = 1, "valor fora da faixa válida",
+        NOT ISBLANK ( _pts ) && _poss = 0, "não conta",
+        "⁅" & _txtPts & "⁆"
+    )
+VAR _txtSob = "ITENS DA NOTA · " & UPPER ( _obra ) & " · " & _mesCM & " · " & UPPER ( _fonte )
+VAR _xA1 = ROUND ( ABS ( _x ) * 100, 1 )
+VAR _xPct = FORMAT ( _xA1, "0.0", "pt-BR" ) & "%"
+VAR _xMes = FORMAT ( ABS ( _x ), "0.0", "pt-BR" ) & IF ( ROUND ( ABS ( _x ), 1 ) <= 1, " mês", " meses" )
+VAR _txtX =
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _pts ), "",
+        _cod = "custo", "<b class='" & IF ( _x < 1, "ng", "" ) & "'>IDC " & FORMAT ( _x, "0.00", "pt-BR" ) & "</b>",
+        _cod = "prazo",
+            "<b>" & IF ( ROUND ( _x, 1 ) > 0, "atraso de " & _xMes, IF ( ROUND ( _x, 1 ) < 0, "adiantada " & _xMes, "em dia" ) ) & "</b>",
+        _cod = "acidentes", "<b>TF " & FORMAT ( _x, "0.0", "pt-BR" ) & "</b>",
+        _cod = "analise", "<b>" & FORMAT ( _x, "0" ) & " de 3 checagens</b>",
+        "<b>" & _xPct & "</b>"
+    )
+VAR _clsOn = IF ( ISBLANK ( _pts ) || _poss = 0, "mkv", IF ( _pts >= _poss, "mk0", IF ( _pts = 0, "mk2", "mk1" ) ) )
+VAR _segs = SUBSTITUTE ( _faixas, " · ", "|" )
+VAR _nSeg = IF ( _segs = "", 0, PATHLENGTH ( _segs ) )
+VAR _htmlFx =
+    CONCATENATEX (
+        GENERATESERIES ( 1, _nSeg ),
+        VAR _sg = PATHITEM ( _segs, [Value] )
+        VAR _on = NOT ISBLANK ( _fx ) && LEFT ( _sg, LEN ( _fx ) + 2 ) = _fx & " →"
+        RETURN
+            "<span class='f" & IF ( _on, " on", "" ) & "'><i class='mk " & IF ( _on, _clsOn, "mkv" ) & "'></i>"
+                & SUBSTITUTE ( SUBSTITUTE ( _sg, "<", "&lt;" ), ">", "&gt;" ) & "</span>",
+        "",
+        [Value], ASC
+    ) /* lista */
+VAR _txtNota = [Nota · item · explica]
+VAR _nFx = MAX ( 1, ROUNDUP ( _nSeg / 2, 0 ) )
+VAR _txtFxTit = "Faixas"
+VAR _txtNoMes = IF ( _txtX = "", "", "No mês: " & _txtX )
+VAR _comV = FILTER ( _serie, NOT ISBLANK ( [@v] ) ) /* lista */
+VAR _vRef = MAXX ( FILTER ( _comV, dMes[Mes] = _ref ), [@v] ) /* geometria */
+VAR _vMax = MAXX ( _comV, [@v] ) /* geometria */
+VAR _vMin = MINX ( _comV, [@v] ) /* geometria */
+VAR _ext = IF ( _vRef >= _vMax, _vMin, _vMax ) /* geometria */
+VAR _mesExt = MINX ( FILTER ( _comV, [@v] = _ext && dMes[Mes] <> _ref ), dMes[Mes] ) /* geometria */
+VAR _posExt = MINX ( FILTER ( _comV, dMes[Mes] = _mesExt ), [@pos] ) /* geometria */
+VAR _pos = MAX ( _vMax, 0 ) -- geometria
+VAR _neg = MAX ( - _vMin, 0 ) -- geometria
+VAR _todaNeg = _pos = 0 -- geometria
+VAR _esc = IF ( _todaNeg, _neg, _pos + _neg ) -- geometria
+VAR _yZero = IF ( _todaNeg, 64, 20 + ROUND ( DIVIDE ( _pos, _esc ) * 44, 0 ) ) -- geometria
+VAR _wSer = DIVIDE ( 524, _nSer ) -- geometria
+VAR _bSer = MIN ( 48, ROUND ( _wSer - 16, 0 ) ) -- geometria
+VAR _hRef = MAX ( ROUND ( DIVIDE ( ABS ( _vRef ), _esc ) * 44, 0 ), 2 ) -- geometria
+VAR _yRef = IF ( _todaNeg || _vRef >= 0, _yZero - _hRef - 20, _yZero + _hRef + 4 ) -- geometria
+VAR _lRef = MIN ( MAX ( ROUND ( ( _nSer - 0.5 ) * _wSer, 0 ) - 40, -14 ), 458 ) -- geometria
+VAR _hExt = MAX ( ROUND ( DIVIDE ( ABS ( _ext ), _esc ) * 44, 0 ), 2 ) -- geometria
+VAR _yExt = IF ( _todaNeg || _ext >= 0, _yZero - _hExt - 20, _yZero + _hExt + 4 ) -- geometria
+VAR _lExt0 = MIN ( MAX ( ROUND ( ( _posExt - 0.5 ) * _wSer, 0 ) - 40, -14 ), 458 ) -- geometria
+VAR _toca = ABS ( _lExt0 - _lRef ) < 80 && ABS ( _yExt - _yRef ) < 17 -- geometria
+VAR _lExt = IF ( _toca, IF ( _lExt0 <= _lRef, _lRef - 80, _lRef + 80 ), _lExt0 ) -- geometria
+VAR _extVe = NOT _toca || ( ABS ( _lExt - _lExt0 ) <= _wSer / 2 && _lExt >= -14 && _lExt <= 458 ) -- geometria
+VAR _htmlSerie =
+    CONCATENATEX (
+        _serie,
+        VAR _p = [@v]
+        VAR _tem = NOT ISBLANK ( _p )
+        VAR _h = IF ( _tem, MAX ( ROUND ( DIVIDE ( ABS ( _p ), _esc ) * 44, 0 ), 2 ), 0 ) -- geometria
+        VAR _sobe = _todaNeg || _p >= 0
+        VAR _top = IF ( _sobe, _yZero - _h, _yZero ) -- geometria
+        VAR _atraso = ( [@pos] - 1 ) * 60 -- geometria
+        VAR _colL = ROUND ( ( [@pos] - 1 ) * _wSer, 0 ) -- geometria
+        VAR _ehRef = dMes[Mes] = _ref
+        VAR _ehExt = dMes[Mes] = _mesExt && _ext <> _vRef && _extVe
+        VAR _fTxt = FORMAT ( _p, "0.0#", "pt-BR" )
+        VAR _fS = ""
+        VAR _ngRot = ""
+        VAR _yRot = IF ( _sobe, _top - 20, _top + _h + 4 ) -- geometria
+        VAR _cls = IF ( ISBLANK ( [@s] ), "z0", "s" & [@s] )
+        VAR _rot =
+            SWITCH (
+                TRUE (),
+                _tem && _ehRef, "<span class='val fim" & _ngRot & "' style='left:" & ( _lRef - _colL ) & "px;top:" & _yRot & "px;animation-delay:" & ( _atraso + 700 ) & "ms'>" & "⁅" & _fTxt & "⁆" & "</span>",
+                _tem && _ehExt, "<span class='val" & _ngRot & "' style='left:" & ( _lExt - _colL ) & "px;top:" & _yRot & "px'>" & "⁅" & _fTxt & "⁆" & "</span>",
+                ""
+            )
+        RETURN
+            "<div class='c'>" & _rot
+                & IF ( _tem, "<i class='bar " & _cls & "' style='top:" & _top & "px;height:" & _h & "px' data-rk='m" & [@ord] & "' data-rp='top,height' data-r0-top='" & _yZero & "px' data-r0-height='0px' data-rd='" & _atraso & "'></i>" )
+                & "<span class='ms" & IF ( _ehRef, " ref", IF ( _tem, "", " sem" ) ) & "'>" & [@rot] & "</span></div>",
+        "",
+        dMes[Mes], ASC
+    )
+VAR _altSerie =
+    IF ( _todaNeg, 86, _yZero + ROUND ( DIVIDE ( _neg, _esc ) * 44, 0 ) + IF ( _neg > 0, 21, 0 ) + 22 ) -- geometria
+VAR _txtRod =
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _ptsAnt ) && ISBLANK ( _pts ),
+            SWITCH (
+                TRUE (),
+                _foraAnt = 1 && _fora = 1, "Valor fora da faixa em " & _mesAntN & " e em " & _mesN & ".",
+                _fora = 1, "Sem dado em " & _mesAntN & "; em " & _mesN & ", o valor está fora da faixa.",
+                _foraAnt = 1, "Em " & _mesAntN & ", o valor estava fora da faixa; agora falta o dado.",
+                "Sem dado em " & _mesAntN & " nem em " & _mesN & "."
+            ),
+        ISBLANK ( _ptsAnt ), IF ( _foraAnt = 1, "Em " & _mesAntN & ", o valor estava fora da faixa.", "Em " & _mesAntN & ", o item não tinha dado." ),
+        ISBLANK ( _pts ), "Era " & "⁅" & _cnTxt & "⁆" & " em " & _mesAntN & IF ( _fora = 1, "; agora o valor está fora da faixa.", "; agora falta o dado." ),
+        ROUND ( _pts, 2 ) = ROUND ( _ptsAnt, 2 ) && _poss = _possAnt, "Mesmos pontos de " & _mesAntN & ".",
+        "Era " & "⁅" & _cnTxt & "⁆" & " em " & _mesAntN & "."
+    )
+-- 4 · Marcação
+VAR _saidaHtml =
+    IF (
+        NOT ISBLANK ( _cod ) && NOT ISBLANK ( [Nota · pontos possíveis · ranking · foco] ),
+        "<div class='u tt'><div class='cab sobre-preto'><p class='vs sob'>" & _txtSob & "</p>"
+            & "<div class='tl'><div class='tit'><b>" & _nome & "</b>" & "</div>"
+            & "<p class='vs dir'>" & _txtDir & "</p></div></div>"
+            & "<div class='corpo crp'><div class='bh'><span class='vs'>" & _txtFxTit & "</span><span class='vs'>" & "⁅" & _txtNoMes & "⁆" & "</span></div>"
+            & "<div class='fx" & " ls " & SWITCH ( TRUE (), _nFx <= 3, "e1", _nFx <= 6, "e2", _nFx <= 9, "e3", _nFx <= 12, "e4", "e5" ) & "' style='--n:" & _nFx & "'>" & _htmlFx & "</div>"
+            & IF ( _txtNota = "", "", "<p class='nt'>" & SUBSTITUTE ( SUBSTITUTE ( _txtNota, "<", "&lt;" ), ">", "&gt;" ) & "</p>" )
+            & IF ( ISEMPTY ( _comV ), "<div class='rg'></div><p class='vz'>Nenhum mês da janela tem dado deste item.</p>", "<div class='rg'></div><span class='vs sl'>" & "Pontos, mês a mês" & "</span>" & "<div class='ser' style='--alt:" & _altSerie & "px;--b:" & _bSer & "px'>" & _htmlSerie & "</div>" ) & "</div>"
+            & "<div class='rp'><div class='rg'></div>" & "<span class='vs'>" & "Desde " & _mesAntN & "</span>" & "<p class='rod'>" & _txtRod & "</p></div>"
+        & "</div>" & [Comum · JS contador tooltip] & [Comum · JS corrida]
+    )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

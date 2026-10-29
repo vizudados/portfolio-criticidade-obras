@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Referência
+@formato: +0.00;-0.00;0.00
+@descricao: [Físico · desvio acumulado p.p.] no mês de referência (seletor do drawer; sem escolha, o último mês).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE ( [Físico · desvio acumulado p.p.], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

@@ -1,0 +1,8 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: texto
+@descricao: Tipo do orçamento na cronograma, minúsculo (legal).
+@oraculo: proximas[].tipo_orcamento
+@gerado: pbi/scripts/contas_t3.py
+*/
+LOWER ( SELECTEDVALUE ( dObra[TipoOrcamentoCrono] ) )

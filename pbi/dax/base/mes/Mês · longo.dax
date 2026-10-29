@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Mês
+@formato: texto
+@descricao: Mês do eixo com ano (junho de 2026).
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( dMes[MesAnoLongo] )

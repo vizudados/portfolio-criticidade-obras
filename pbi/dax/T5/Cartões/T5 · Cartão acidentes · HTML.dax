@@ -1,0 +1,56 @@
+/*
+@pasta: T5 Canteiro\Cartões
+@formato: texto
+@descricao: Cartão escuro 'Sem acidente com afastamento' (a resposta de 'o canteiro está seguro?'): meses seguidos sem acidente com afastamento no recorte, com o último mês com acidente e as obras dele (ou 'nenhum desde' o começo do histórico). A base é mensal: conta meses, não dias. Só lê contas.
+@gerado: pbi/scripts/desenho_t5.py
+*/
+-- 1 · Leituras
+VAR _n = [T5 · Acidentes · meses sem acidente]
+VAR _ult = [T5 · Acidentes · último mês]
+VAR _ini = [T5 · Acidentes · início do histórico]
+VAR _lst = [T5 · Acidentes · obras do último (lista)]
+-- 2 · Textos
+VAR _tnN = FORMAT ( _n, "#,0", "pt-BR" )
+VAR _tnTxt = IF ( ISBLANK ( _n ), "—", _tnN )
+VAR _txtLado = IF ( ISBLANK ( _n ), "", IF ( _n = 1, "mês", "meses" ) )
+VAR _txtObras = SUBSTITUTE ( _lst, "|", ", " )
+VAR _txtCtx = SWITCH ( TRUE (), ISBLANK ( _ini ), "falta na base", ISBLANK ( _ult ), "nenhum desde " & FORMAT ( _ini, "mmm/yy", "pt-BR" ), "o último em " & FORMAT ( _ult, "mmm/yy", "pt-BR" ) & " · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _txtObras, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) )
+VAR _txtRegra = "Meses seguidos sem acidente com afastamento em nenhuma obra, depois do último mês com acidente. A base é mensal: não traz o dia."
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _tnKP = LEN ( _tnN ) > 0
+VAR _tnKN = IF ( _tnKP, _tnN )
+VAR _tnKS = SUBSTITUTE ( SUBSTITUTE ( _tnKN, ".", "" ), ",", "" )
+VAR _tnKT = IFERROR ( VALUE ( _tnKS ), -1 )
+VAR _tnKOk = _tnKP && _tnKT >= 2 && FORMAT ( _tnKT, REPT ( "0", LEN ( _tnKS ) ) ) = _tnKS
+VAR _tnKD = IF ( CONTAINSSTRING ( _tnKN, "," ), LEN ( _tnKN ) - SEARCH ( ",", _tnKN ), 0 )
+VAR _tnKM = IF ( CONTAINSSTRING ( _tnKN, "." ), "#,##0", "0" ) & IF ( _tnKD > 0, "." & REPT ( "0", _tnKD ) )
+VAR _tnKOd =
+    IF (
+        _tnKOk,
+        "<o-d><o-v>" & _tnKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tnKN, FORMAT ( ROUND ( _tnKT * [@odf] / 1000, 0 ) / POWER ( 10, _tnKD ), _tnKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tnN
+    )
+VAR _tnOd = IF ( ISBLANK ( _n ), _tnTxt, _tnKOd )
+-- 4 · Marcação
+RETURN
+    "<div class='u kc escuro' tabindex='0'>"
+        & "<div class='lado frente'>"
+            & "<p class='ab vs eb'>" & "Sem acidente com afastamento" & "</p>"
+            & "<div class='linha1'><span class='b6 hero'>" & _tnOd & "</span>" & "<span class='b5 lado2'>" & _txtLado & "</span>" & "</div>"
+            & "<p class='ctx'>" & _txtCtx & "</p>"
+        & "</div>"
+        & "<div class='lado verso sobre-creme'>"
+            & "<p class='ab vs v1'>COMO É CALCULADO</p>"
+            & "<p class='regra'>" & _txtRegra & "</p>"
+            & "<div class='ond' style='top:106px'><span class='vs'>DE ONDE VEM</span><span>Base complementar · NBR 14280</span></div>"
+        & "</div>"
+    & "</div>" & [Comum · JS contador]

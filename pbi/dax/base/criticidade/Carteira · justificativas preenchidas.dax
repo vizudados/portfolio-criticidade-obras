@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Desembolso
+@formato: 0
+@descricao: Justificativas exigidas no mês do contexto que estão preenchidas na planilha.
+@oraculo: carteira.justificativas_preenchidas
+@gerado: pbi/scripts/contas_base.py
+*/
+[Carteira · justificativas exigidas] - [Carteira · justificativas em branco]

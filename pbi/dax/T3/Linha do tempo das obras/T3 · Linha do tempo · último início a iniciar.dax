@@ -1,0 +1,19 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: dd/mm/yyyy
+@descricao: Início previsto da última obra a iniciar (out/26).
+@oraculo: max(proximas[].inicio_previsto)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _aIniciar =
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@ini", [Obra · início],
+            "@tipo", [T3 · Obra · tipo de orçamento cronograma]
+        ),
+        REMOVEFILTERS ( dObra[Obra] ),
+        dObra[Situacao] = "A iniciar"
+    )
+RETURN
+    MAXX ( _aIniciar, [@ini] )

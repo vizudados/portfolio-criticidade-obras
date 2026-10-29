@@ -1,0 +1,12 @@
+/*
+@pasta: T4 Resultado no tempo\Resultado mês a mês\Contas
+@formato: dd/mm/yyyy
+@descricao: Mês da janela com o maior [Resultado aplicado] do recorte (empate: o mais recente). Com 9 meses ou mais na janela, o painel só escreve o valor no mês de referência e nos meses de máximo e mínimo de cada série.
+@oraculo: mês do maior resultado aplicado da carteira
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses = FILTER ( ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), "@v", [Resultado aplicado] ), NOT ISBLANK ( [@v] ) )
+RETURN
+    MAXX ( TOPN ( 1, _meses, [@v], DESC, dMes[Mes], DESC ), dMes[Mes] )

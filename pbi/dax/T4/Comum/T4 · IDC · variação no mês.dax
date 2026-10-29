@@ -1,0 +1,11 @@
+/*
+@pasta: T4 Resultado no tempo\Comum\Contas
+@formato: +0.00;-0.00;0.00
+@descricao: IDC do mês menos o do mês anterior, arredondados em 2 casas como a tela mostra (vazio sem um dos dois).
+@oraculo: nota_previa.csv: x_idc set/26 − ago/26, em 2 casas
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _a = [IDC]
+VAR _b = [T4 · IDC · mês anterior]
+RETURN
+    IF ( NOT ISBLANK ( _a ) && NOT ISBLANK ( _b ), ROUND ( _a, 2 ) - ROUND ( _b, 2 ) )

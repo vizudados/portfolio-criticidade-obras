@@ -1,0 +1,8 @@
+/*
+@pasta: T3 Avanço físico\Avanço das sete obras\Contas
+@formato: 0
+@descricao: Posição da obra na lista do avanço: a ordem da nota (mais pontos perdidos no mês de referência; empate pela menor nota, a pendente depois, e pelo nome), lida de [T1 · Obras · posição] sem recalcular. Uma obra no contexto; vazio sem aba no mês.
+@oraculo: conferir_real.py · oráculo da nota (lista por pontos perdidos)
+@gerado: pbi/scripts/contas_t3.py
+*/
+[T1 · Obras · posição]

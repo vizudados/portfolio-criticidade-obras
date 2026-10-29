@@ -1,0 +1,12 @@
+/*
+@pasta: T4 Resultado no tempo\Comum\Contas
+@formato: 0
+@descricao: Faixa da previsão de caixa da nota em que a obra caiu no mês do contexto, pelos pontos do item: 0 com os pontos cheios, 1 com parte deles, 2 sem ponto (a faixa crítica: o desembolso fugiu do previsto para mais ou para menos). Vazio sem previsto ou com mais de uma obra no contexto.
+@oraculo: ago/26 (bases de teste): POTENGI e JANGADA 2 (−21% e −31%) · REDINHA e CAJUEIRO 1 · DUNAS e TIROL 0
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _x = [Nota · X caixa]
+VAR _p = [Nota · pontos caixa]
+VAR _max = [Nota · possíveis · caixa]
+RETURN
+    IF ( NOT ISBLANK ( _x ) && NOT ISBLANK ( _p ), SWITCH ( TRUE (), _p >= _max, 0, _p = 0, 2, 1 ) )

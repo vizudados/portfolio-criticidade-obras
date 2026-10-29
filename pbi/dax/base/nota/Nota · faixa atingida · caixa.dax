@@ -1,0 +1,18 @@
+/*
+@pasta: Base\Nota
+@formato: texto
+@descricao: Faixa da previsão de caixa em que o X caiu (rótulo gerado dos limites). Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _x = [Nota · X caixa]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), SWITCH (
+            TRUE (),
+            _x < 0.1, "desvio < 10%",
+            _x <= 0.2, "10% ≤ desvio ≤ 20%",
+            "desvio > 20%"
+        ) )
+)

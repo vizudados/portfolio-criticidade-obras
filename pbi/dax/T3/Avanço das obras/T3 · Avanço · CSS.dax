@@ -1,0 +1,17 @@
+/*
+@pasta: T3 Avanço físico\Avanço das obras
+@formato: texto
+@descricao: CSS da lista Avanço das obras (uma entrada por obra) e da legenda do pé.
+@gerado: pbi/scripts/desenho_t3.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".htmlViewerEntry{display:block!important;margin:0!important;padding:0!important}.av{position:relative;height:42px;transition:background .15s}.av.foco{background:#F7F4EE;box-shadow:"
+    & "inset 3px 0 0 #0B0B0C}.av:hover,.htmlViewerEntry.hover .av{background:rgba(233,224,207,.4)}.av .nm{position:absolute;left:14px;top:9px;font-family:'Barlow U','Segoe UI',sans-serif;"
+    & "font-weight:600;font-size:18px;line-height:22px;white-space:nowrap}.av .tr{position:absolute;left:140px;top:8px;width:282px;height:12px;background:#EFEFEF}.av .fl{position:absolute"
+    & ";left:140px;top:8px;height:12px}.av .fl.s0{background:#A9CDB9}.av .fl.s1{background:#C9821F}.av .fl.s2{background:#C43737}.av .fl.sx{background:#3B3B3F}.av .pv{position:absolute;to"
+    & "p:4px;width:2px;height:20px;background:#0B0B0C}.av .tx{position:absolute;left:140px;top:23px;font-size:14px;line-height:19px;color:#3B3B3F;white-space:nowrap}.av .dr{position:absol"
+    & "ute;right:12px;top:11px;display:flex;align-items:center;gap:8px;white-space:nowrap}.av .dv{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:16px;line-height:2"
+    & "0px}.av .sp{position:absolute;right:12px;top:12px;font-size:14px;line-height:19px;color:#6B6B70;white-space:nowrap}.lga{position:fixed;inset:0;font-size:14px;line-height:19px;white"
+    & "-space:nowrap}.lga p{display:flex;align-items:center;height:21px;color:#3B3B3F}.lga span{display:inline-flex;align-items:center;gap:6px;margin-right:16px}.lga .mk.mkx{background:#3"
+    & "B3B3F}"

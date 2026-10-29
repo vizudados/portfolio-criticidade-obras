@@ -1,0 +1,132 @@
+/// Pontos e possíveis de cada item da nota por obra × mês (obras com aba da Análise Crítica ou com a base complementar no mês), copiados das medidas da regra de cada item no refresh. As somas por item e por dimensão (Nota · item · …) leem esta tabela. GERADA por pbi/scripts/contas_base.py; a regra fica nas medidas.
+table dItemRankingNota
+	lineageTag: 65dc93a9-ced4-598b-8cb9-2ed7c2c90d18
+	isHidden
+
+	/// Obra.
+	column Obra
+		dataType: string
+		lineageTag: e16f15ac-fdc0-5746-8709-98fc32b86d61
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Obra]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Mês.
+	column Mes
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 6844458e-a60b-5e75-a9f3-ea1f9af95861
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mes]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Código do item (dItemNota).
+	column Item
+		dataType: string
+		lineageTag: d27e7549-800e-5b9c-8151-ca2b089e2c8e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Item]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// 1 quando a obra tem aba da Análise Crítica no mês.
+	column TemAC
+		dataType: int64
+		formatString: 0
+		lineageTag: 75d7c959-7c1c-528f-a8ab-6c04b4c5b9ed
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [TemAC]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Pontos do item.
+	column Pontos
+		dataType: double
+		formatString: 0.00
+		lineageTag: e709b6b5-60e7-57ea-afec-00c4633deaad
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Pontos]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Máximo do item quando tem dado.
+	column Possiveis
+		dataType: double
+		formatString: 0.00
+		lineageTag: bffec50b-eaba-553a-b4bc-789c6498ff88
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Possiveis]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dItemRankingNota = calculated
+		mode: import
+		source =
+				VAR _obraMes =
+				    SELECTCOLUMNS ( dRankingNota, "Obra", dRankingNota[Obra], "Mes", dRankingNota[Mes], "TemAC", dRankingNota[TemAC] )
+				VAR _itens = SELECTCOLUMNS ( { "custo", "prazo", "ppc", "caixa", "inspecao", "acidentes", "nr18", "entregas", "analise" }, "Item", [Value] )
+				RETURN
+				    SELECTCOLUMNS (
+				        CROSSJOIN ( _obraMes, _itens ),
+				        "Obra", [Obra],
+				        "Mes", [Mes],
+				        "Item", [Item],
+				        "TemAC", [TemAC],
+				        "Pontos",
+				            VAR _o = [Obra]
+				            VAR _m = [Mes]
+				            VAR _i = [Item]
+				            RETURN
+				                CALCULATE (
+				                    SWITCH (
+				                        _i,
+				                        "custo", [Nota · pontos custo],
+				                        "prazo", [Nota · pontos prazo],
+				                        "ppc", [Nota · pontos PPC],
+				                        "caixa", [Nota · pontos caixa],
+				                        "inspecao", [Nota · pontos inspeção],
+				                        "acidentes", [Nota · pontos acidentes],
+				                        "nr18", [Nota · pontos NR-18],
+				                        "entregas", [Nota · pontos entregas],
+				                        "analise", [Nota · pontos análise crítica]
+				                    ),
+				                    REMOVEFILTERS ( fAnaliseCritica ),
+				                    REMOVEFILTERS ( fBaseObra ),
+				                    dObra[Obra] = _o,
+				                    dMes[Mes] = _m
+				                ),
+				        "Possiveis",
+				            VAR _o = [Obra]
+				            VAR _m = [Mes]
+				            VAR _i = [Item]
+				            RETURN
+				                CALCULATE (
+				                    SWITCH (
+				                        _i,
+				                        "custo", [Nota · possíveis · custo],
+				                        "prazo", [Nota · possíveis · prazo],
+				                        "ppc", [Nota · possíveis · PPC],
+				                        "caixa", [Nota · possíveis · caixa],
+				                        "inspecao", [Nota · possíveis · inspeção],
+				                        "acidentes", [Nota · possíveis · acidentes],
+				                        "nr18", [Nota · possíveis · NR-18],
+				                        "entregas", [Nota · possíveis · entregas],
+				                        "analise", [Nota · possíveis · análise crítica]
+				                    ),
+				                    REMOVEFILTERS ( fAnaliseCritica ),
+				                    REMOVEFILTERS ( fBaseObra ),
+				                    dObra[Obra] = _o,
+				                    dMes[Mes] = _m
+				                )
+				    )
+

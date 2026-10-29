@@ -1,0 +1,11 @@
+/*
+@pasta: T1 Visão geral\Onde a carteira perde pontos\Contas
+@formato: texto
+@descricao: Código (dItemNota) do item da dimensão da linha que mais perde pontos somados no mês de referência (empate: a ordem do item); vazio sem perda ou com um item só na dimensão.
+@oraculo: dados/_gabarito/nota_previa.csv
+@gerado: pbi/scripts/contas_t1.py
+*/
+VAR _itens = ADDCOLUMNS ( VALUES ( dItemNota[Item] ), "@p", [Nota · item · perdidos · ref] + 0 )
+VAR _top = TOPN ( 1, FILTER ( _itens, [@p] > 0 ), [@p], DESC, [Nota · item · ordem], ASC )
+RETURN
+    IF ( HASONEVALUE ( dItemNota[Dimensao] ) && COUNTROWS ( _itens ) > 1, MAXX ( _top, dItemNota[Item] ) )

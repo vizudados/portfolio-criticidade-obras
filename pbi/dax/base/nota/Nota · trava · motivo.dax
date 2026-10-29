@@ -1,0 +1,16 @@
+/*
+@pasta: Base\Nota
+@formato: texto
+@descricao: Por que a trava vale: 'custo' (IDC abaixo do limite), 'prazo' (atraso acima do limite) ou 'custo|prazo'; vazio sem trava. Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _idc = [Nota · X custo]
+    VAR _atraso = [Nota · X prazo]
+    VAR _c = IF ( _idc < 0.9, "custo" )
+    VAR _p = IF ( _atraso > 3, "prazo" )
+    RETURN
+        IF ( [Nota · trava] = 1, _c & IF ( _c <> "" && _p <> "", "|" ) & _p )
+)

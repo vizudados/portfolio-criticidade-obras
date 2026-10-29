@@ -1,0 +1,17 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras
+@formato: texto
+@descricao: CSS das linhas da Linha do tempo das obras (uma entrada por obra).
+@gerado: pbi/scripts/desenho_t3.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".htmlViewerEntry{display:block!important;margin:0!important;padding:0!important}.lt{position:relative;height:23px;transition:background .15s}.lt:hover,.htmlViewerEntry.hover .lt{ba"
+    & "ckground:rgba(233,224,207,.45)}.lt>*{top:50%;translate:0 -50%}.lt .nm{position:absolute;left:0;width:112px;text-align:right;font-family:'Barlow U','Segoe UI',sans-serif;font-weight"
+    & ":600;font-size:min(17px,max(13px,calc(16px * var(--k,100) / 100)));line-height:1.2;white-space:nowrap}.lt.ai .nm{color:#6B6B70}.lt .tk{position:absolute;height:min(20px,max(8px,cal"
+    & "c(12px * var(--k,100) / 100)));background:#EFEFEF}.lt.ai .tk{background:transparent;border:1px dashed #3B3B3F;box-sizing:border-box}.lt .fl{position:absolute;height:min(20px,max(8p"
+    & "x,calc(12px * var(--k,100) / 100)))}.lt .fl.s0{background:#A9CDB9}.lt .fl.s1{background:#C9821F}.lt .fl.s2{background:#C43737}.lt .fl.sx{background:#3B3B3F}.lt .pv{position:absolut"
+    & "e;width:2px;height:calc(min(20px,max(8px,calc(12px * var(--k,100) / 100))) + 6px);background:#0B0B0C}.lt .tl{position:absolute;height:calc(min(20px,max(8px,calc(12px * var(--k,100)"
+    & " / 100))) + 4px);background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%224%22 height=%224%22%3E%3Cpath d=%22M-1 1L1 -1M0 4L4 0M3 5L5 3%22 st"
+    & "roke=%22%233B3B3F%22 stroke-width=%221%22/%3E%3C/svg%3E');opacity:.55}.lt .tp{position:absolute;width:min(13px,max(7px,calc(9px * var(--k,100) / 100)));aspect-ratio:1;transform:rot"
+    & "ate(45deg);border:1.5px solid #0B0B0C}.lt .tp.t0{background:#A9CDB9}.lt .tp.t1{background:#C9821F}.lt .tp.t2{background:#C43737}"

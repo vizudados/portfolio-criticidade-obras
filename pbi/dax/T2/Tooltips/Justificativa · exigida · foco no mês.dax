@@ -1,0 +1,9 @@
+/*
+@pasta: T2 Análise crítica\Tooltips\Contas
+@formato: 0
+@descricao: [Justificativa · exigida] da obra em foco no mês do eixo (tooltips e séries da T2).
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    CALCULATE ( [Justificativa · exigida], dObra[Obra] = _obra )

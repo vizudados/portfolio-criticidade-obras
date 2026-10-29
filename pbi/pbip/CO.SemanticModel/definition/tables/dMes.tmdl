@@ -1,0 +1,109 @@
+/// Meses do histórico, de pInicioHistorico até o último mês com aba em fAnaliseCritica. Eixo dos gráficos mês a mês. O mês de referência escolhido no drawer vem de dMesRef (desconectada), para que o seletor não corte o eixo.
+table dMes
+	lineageTag: cb45e104-c168-5235-9a89-f411c06f4b47
+
+	/// Primeiro dia do mês.
+	column Mes
+		dataType: dateTime
+		isKey
+		formatString: dd/mm/yyyy
+		lineageTag: b864b4df-b0de-5896-8d32-87639308a8f2
+		summarizeBy: none
+		sourceColumn: Mes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Ano.
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: e8a8e53b-d426-5dda-b504-a21afced2a10
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Número do mês (1 a 12).
+	column MesNum
+		dataType: int64
+		formatString: 0
+		lineageTag: 18124f30-be6f-5736-892e-77bd33bdde73
+		summarizeBy: none
+		sourceColumn: MesNum
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome do mês por extenso, minúsculo (junho).
+	column MesNome
+		dataType: string
+		lineageTag: df2de805-637c-5d91-b7a5-1c70edc2e2a0
+		summarizeBy: none
+		sourceColumn: MesNome
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Rótulo curto: jun/26.
+	column MesAno
+		dataType: string
+		lineageTag: b38a17ff-3ca4-5db4-b2dc-42eea460390b
+		summarizeBy: none
+		sourceColumn: MesAno
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Rótulo longo: junho de 2026.
+	column MesAnoLongo
+		dataType: string
+		lineageTag: 995aacd4-99e8-5385-bafd-49157668b866
+		summarizeBy: none
+		sourceColumn: MesAnoLongo
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Mês abreviado sem ano: jun.
+	column MesAbrev
+		dataType: string
+		lineageTag: 900d47d4-0932-58e1-955d-2ccb1b96afac
+		summarizeBy: none
+		sourceColumn: MesAbrev
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem do mês no histórico (1 = primeiro mês).
+	column Ordem
+		dataType: int64
+		formatString: 0
+		lineageTag: 5d4b6907-7892-52c5-8749-15e0ebd58f82
+		summarizeBy: none
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dMes = m
+		mode: import
+		source =
+				let
+				    // sem nenhuma aba lida (pasta ausente ou vazia), o eixo fica no primeiro mês do histórico, em vez de quebrar
+				    Ultimo = if List.IsEmpty(List.RemoveNulls(fAnaliseCritica[Mes])) then pInicioHistorico else List.Max(fAnaliseCritica[Mes]),
+				    Quantos = (Date.Year(Ultimo) - Date.Year(pInicioHistorico)) * 12 + Date.Month(Ultimo) - Date.Month(pInicioHistorico) + 1,
+				    Meses = List.Transform({0 .. Quantos - 1}, each Date.AddMonths(pInicioHistorico, _)),
+				    Nomes = {"janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro",
+				        "novembro", "dezembro"},
+				    Linhas = List.Transform(List.Positions(Meses), (i) =>
+				        let m = Meses{i}, nome = Nomes{Date.Month(m) - 1} in
+				        [Mes = m, Ano = Date.Year(m), MesNum = Date.Month(m), MesNome = nome,
+				         MesAno = Text.Start(nome, 3) & "/" & Text.End(Text.From(Date.Year(m)), 2),
+				         MesAnoLongo = nome & " de " & Text.From(Date.Year(m)), MesAbrev = Text.Start(nome, 3), Ordem = i + 1]),
+				    Tabela = Table.FromRecords(Linhas, type table [Mes = date, Ano = Int64.Type, MesNum = Int64.Type, MesNome = text,
+				        MesAno = text, MesAnoLongo = text, MesAbrev = text, Ordem = Int64.Type])
+				in
+				    Tabela
+
+	annotation PBI_ResultType = Table
+

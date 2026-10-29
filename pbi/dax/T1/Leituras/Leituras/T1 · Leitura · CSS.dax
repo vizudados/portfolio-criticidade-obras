@@ -1,0 +1,27 @@
+/*
+@pasta: T1 Visão geral\Leituras
+@formato: texto
+@descricao: CSS das leituras do "?" da Tela 01 (sobre o painel: superfície, completa em duas colunas, condensadas) e do guia da página.
+@gerado: pbi/scripts/leituras_t1.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ":root{--hach:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%224%22 height=%224%22%3E%3Cpath d=%22M-1 1L1 -1M0 4L4 0M3 5L5 3%22 stroke=%22%230B0B0C%22 "
+    & "stroke-width=%221%22/%3E%3C/svg%3E')}.lv{position:fixed;inset:0}.lv .pn{position:absolute;inset:0;background:#FFFFFF;border:1px solid #0B0B0C;border-radius:16px;overflow:hidden;col"
+    & "or:#0B0B0C}.lv .sob{display:block;padding-right:40px;color:#6B6B70}.lv .ach{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;color:#0B0B0C}.lv .exp{color:#3B3B3F}.lv .d"
+    & "st{background:#E9E0CF}.lv .dst b{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}.lv .dst span{color:#3B3B3F}.lv ."
+    & "sec>.vs{display:block;margin-bottom:6px;color:#6B6B70}.pn-obras{padding:28px}.pn-obras .cols{display:grid;grid-template-columns:560px 1px 1fr;column-gap:24px;height:100%}.pn-obras "
+    & ".div{display:block;background:#E1E1E1}.pn-obras .ach{margin-top:9px;font-size:23px;line-height:28px}.pn-obras .exp{margin-top:12px;font-size:17px;line-height:26px}.pn-obras .dst{ma"
+    & "rgin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);column-gap:16px;padding:18px 20px}.pn-obras .dst b{display:block;font-size:34px;line-height:40px}.pn-obras .dst span{"
+    & "display:block;margin-top:6px;font-size:14px;line-height:19px}.pn-obras .sec{margin-top:22px}.pn-obras .oqe{font-size:15px;line-height:21px}.pn-obras .dir .sub{margin-top:7px;font-s"
+    & "ize:14px;line-height:19px;color:#3B3B3F}.pn-obras .dir .sec{margin-top:24px}.pn-obras .cl{font-size:14px;line-height:19px;color:#3B3B3F}.lv .bp{position:relative;margin-top:14px}.l"
+    & "v .bp .r{display:grid;grid-template-columns:108px 1fr;align-items:center;height:30px}.lv .bp .r b{font-size:15px;font-weight:600;white-space:nowrap}.lv .bp .r .tr{position:relative"
+    & ";height:10px;background:#EFEFEF}.lv .bp .r .tr i{position:absolute;left:0;top:0;bottom:0;display:block}.lv .bp .r .tr i.s2{background:#C43737}.lv .bp .r .tr i.s1{background:#C9821F"
+    & "}.lv .bp .r .tr i.s0{background:#A9CDB9}.lv .bp .r .tr i.sm{background:#CFCCC6}.lv .bp .r .tr u{position:absolute;left:0;top:-2px;height:14px;border:1px dashed #3B3B3F;box-sizing:b"
+    & "order-box}.lv .bp .lim{position:absolute;top:0;width:0;border-left:1px dashed #3B3B3F;transform-origin:top;animation:lvLim .4s ease-out backwards}@keyframes lvLim{from{transform:sc"
+    & "aleY(0)}}.lv .bp .lr{position:absolute;font-size:13px;line-height:16px;color:#6B6B70;white-space:nowrap;transform:translateX(-50%)}.lv .bp .lr.la{transform:translateX(calc(-100% - "
+    & "4px))}.lv .bp .lr.le{transform:translateX(4px)}.pn-peq{padding:20px}.pn-peq .ach{margin-top:9px;font-size:21px;line-height:26px}.pn-peq .exp{margin-top:10px;font-size:15px;line-hei"
+    & "ght:21px}.pn-meses .exp{margin-top:8px;font-size:14px;line-height:19px}.pn-peq .dst-l{margin-top:14px;padding:12px 16px}.pn-meses .dst-l{margin-top:10px}.lv .dl{display:grid;grid-t"
+    & "emplate-columns:112px 1fr;column-gap:12px;align-items:baseline;margin-top:4px}.lv .dl:first-child{margin-top:0}.lv .dl b{text-align:right;font-size:21px;line-height:26px}.lv .dl sp"
+    & "an{font-size:14px;line-height:19px}.pn-peq .sec{margin-top:16px}.pn-peq .oqe{font-size:14px;line-height:19px}@media (prefers-reduced-motion:reduce){.lv .bp .lim{animation:none}}.lv"
+    & " svg.x{position:absolute;right:11px;top:7px;width:26px;height:26px;display:block;z-index:5}"

@@ -1,0 +1,10 @@
+/*
+@pasta: T3 Avanço físico\Obra em foco\Contas
+@formato: dd/mm/yyyy
+@descricao: Início da obra em foco (cadastro).
+@oraculo: obras[].inicio
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    LOOKUPVALUE ( dObra[Inicio], dObra[Obra], _obra )

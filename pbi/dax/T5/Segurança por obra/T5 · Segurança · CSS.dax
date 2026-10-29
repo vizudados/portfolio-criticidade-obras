@@ -1,0 +1,14 @@
+/*
+@pasta: T5 Canteiro\Segurança por obra
+@formato: texto
+@descricao: CSS do cabeçalho e das linhas de Segurança por obra.
+@gerado: pbi/scripts/desenho_t5.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".htmlViewerEntry{display:block!important;margin:0!important;padding:0!important}.sg{position:relative;height:41px;border-bottom:1px solid #E1E1E1;background:#FFFFFF;transition:back"
+    & "ground .15s}.sg:hover,.htmlViewerEntry.hover .sg{background:#F7F4EE}.sg .nm{position:absolute;left:14px;top:10px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-s"
+    & "ize:15px;line-height:20px;white-space:nowrap}.sg .tr{position:absolute;left:116px;top:14px;width:140px;height:12px;background:#EFEFEF}.sg .br{position:absolute;left:0;top:0;height:"
+    & "12px}.sg .br.s1{background:#C9821F}.sg .br.s2{background:#C43737}.sg .st{position:absolute;top:-5px;width:2px;height:22px;background:#0B0B0C}.sg .v{position:absolute;left:264px;top"
+    & ":10px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:15px;line-height:20px;white-space:nowrap}.sg .nr{position:absolute;right:14px;top:10px;display:flex;ali"
+    & "gn-items:center;white-space:nowrap;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:15px;line-height:20px}.sg .nr .mk{margin-right:6px}"

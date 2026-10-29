@@ -1,0 +1,27 @@
+/*
+@pasta: T1 Visão geral\Obras pela nota\Contas
+@formato: 0
+@descricao: Posição da obra no ranking do mês de referência pela nota: mais pontos perdidos primeiro; empate pela menor nota (pendente, sem nota, depois das que têm nota) e depois pelo nome. Entre as obras com aba no mês e no recorte. Lê o ranking guardado em dRankingNota (as mesmas medidas Nota, calculadas no refresh). Uma obra no contexto.
+@oraculo: conferir_real.py · oráculo da nota (lista por pontos perdidos)
+@gerado: pbi/scripts/contas_t1.py
+*/
+VAR _obra = SELECTEDVALUE ( dObra[Obra] )
+VAR _mes = [Mês de referência]
+VAR _recorte = CALCULATETABLE ( VALUES ( dObra[Obra] ), ALLSELECTED ( dObra ) )
+VAR _obras = FILTER ( dRankingNota, dRankingNota[Mes] = _mes && dRankingNota[TemAC] = 1 && dRankingNota[Obra] IN _recorte )
+VAR _eu = FILTER ( _obras, dRankingNota[Obra] = _obra )
+VAR _perd = MAXX ( _eu, dRankingNota[Perdidos] )
+VAR _nota = MAXX ( _eu, dRankingNota[NotaOrdem] )
+VAR _antes =
+    COUNTROWS (
+        FILTER (
+            _obras,
+            dRankingNota[Perdidos] > _perd
+                || (
+                    dRankingNota[Perdidos] = _perd
+                        && ( dRankingNota[NotaOrdem] < _nota || ( dRankingNota[NotaOrdem] = _nota && dRankingNota[Obra] < _obra ) )
+                )
+        )
+    )
+RETURN
+    IF ( NOT ISEMPTY ( _eu ), _antes + 1 )

@@ -1,0 +1,51 @@
+/// Janela das séries mês a mês (seletor do drawer, de escolha única): quantos meses, até o mês de referência, os gráficos, os tooltips e as leituras olham. Desconectada. A primeira linha (12 meses) é a padrão: o seletor de escolha única a marca quando nada está escolhido. A série nunca começa antes do primeiro mês do histórico (pInicioHistorico).
+table dJanela
+	lineageTag: e7de4712-be22-570f-90bf-274855620000
+
+	/// Rótulo do seletor (12 meses, 9 meses, 6 meses, 3 meses).
+	column Janela
+		dataType: string
+		isKey
+		lineageTag: d837bdd9-72c8-5126-95b1-99c6ab68e959
+		summarizeBy: none
+		sourceColumn: Janela
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quantos meses a janela cobre, contando o de referência.
+	column Meses
+		dataType: int64
+		formatString: 0
+		lineageTag: b028411d-db56-5997-9bec-1c5f36bc204d
+		summarizeBy: none
+		sourceColumn: Meses
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem no seletor (1 = 12 meses, a padrão).
+	column Ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 588d6d6f-6e3a-56f9-9477-13f0a146cea7
+		summarizeBy: none
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dJanela = m
+		mode: import
+		source =
+				let
+				    Tabela = #table(type table [Janela = text, Meses = Int64.Type, Ordem = Int64.Type], {
+				        {"12 meses", 12, 1},
+				        {"9 meses", 9, 2},
+				        {"6 meses", 6, 3},
+				        {"3 meses", 3, 4}
+				    })
+				in
+				    Tabela
+
+	annotation PBI_ResultType = Table
+

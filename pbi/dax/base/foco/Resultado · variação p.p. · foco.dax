@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Obra em foco
+@formato: +0.00;-0.00;0.00
+@descricao: [Resultado · variação p.p.] da obra em foco (a que mais perde pontos na nota, ou a escolhida), no mês de referência.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    CALCULATE ( [Resultado · variação p.p. · ref], dObra[Obra] = _obra )

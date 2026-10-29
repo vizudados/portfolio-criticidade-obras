@@ -1,0 +1,9 @@
+/*
+@pasta: T5 Canteiro\Cartões
+@formato: texto
+@descricao: CSS dos cartões da T5: o do cartão com flip comum mais a marca no começo do contexto.
+@gerado: pbi/scripts/desenho_t5.py
+*/
+-- 4 · Marcação
+[Comum · CSS cartão]
+    & ".kc .ctx .mk{margin-right:6px;vertical-align:-1px}"

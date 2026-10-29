@@ -1,0 +1,17 @@
+/*
+@pasta: T1 Visão geral\Cartões\Contas
+@formato: texto
+@descricao: Obra do recorte com o maior atraso em meses no mês de referência (empate: ordem alfabética); vazio sem atraso.
+@oraculo: dados/_gabarito/nota_previa.csv (x_atraso)
+@gerado: pbi/scripts/contas_t1.py
+*/
+VAR _mes = [Mês de referência]
+VAR _obras =
+    CALCULATETABLE (
+        ADDCOLUMNS ( FILTER ( VALUES ( dObra[Obra] ), NOT ISEMPTY ( RELATEDTABLE ( fAnaliseCritica ) ) ), "@a", [Prazo · atraso (meses)] ),
+        REMOVEFILTERS ( dMes ),
+        dMes[Mes] = _mes
+    )
+VAR _top = TOPN ( 1, FILTER ( _obras, [@a] > 0 ), [@a], DESC, dObra[Obra], ASC )
+RETURN
+    MAXX ( _top, dObra[Obra] )

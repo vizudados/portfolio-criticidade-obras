@@ -1,0 +1,29 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: texto
+@descricao: As três causas mais repetidas nas justificativas dos meses com desembolso acima de +10% (excesso exigido), na janela; códigos de 'T4 · Justificativa · causa' separados por '|', da mais para a menos frequente.
+@oraculo: obras[].serie[].justificativa com desvio > 10%: efetivo 7 · aditivo 5 · medição concentrada 4
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _pares =
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            SUMMARIZE ( fAnaliseCritica, fAnaliseCritica[Obra], fAnaliseCritica[Mes] ),
+            "@c", [T4 · Justificativa · causa],
+            "@d", [Desembolso · desvio no mês]
+        ),
+        REMOVEFILTERS ( dMes ),
+        dMes[Mes] >= _ini && dMes[Mes] <= _ref
+    )
+VAR _excesso = FILTER ( _pares, [@d] > 0.10 && NOT ISBLANK ( [@c] ) && [@c] <> "outra" )
+VAR _ordem = DATATABLE ( "@c", STRING, "@o", INTEGER, { { "efetivo", 1 }, { "aditivo", 2 }, { "medicao", 3 }, { "postergada", 4 }, { "compra", 5 }, { "sinal", 6 } } )
+VAR _contagem =
+    ADDCOLUMNS (
+        _ordem,
+        "@n", VAR _c = [@c] RETURN COUNTROWS ( FILTER ( _excesso, [@c] = _c ) ) + 0
+    )
+VAR _top = TOPN ( 3, FILTER ( _contagem, [@n] > 0 ), [@n], DESC, [@o], ASC )
+RETURN
+    CONCATENATEX ( _top, [@c], "|", [@n], DESC, [@o], ASC )

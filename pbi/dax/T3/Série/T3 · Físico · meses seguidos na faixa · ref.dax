@@ -1,0 +1,9 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: 0
+@descricao: [T3 · Físico · meses seguidos na faixa] no mês de referência.
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE ( [T3 · Físico · meses seguidos na faixa], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

@@ -1,0 +1,13 @@
+/*
+@pasta: Capa\Contas
+@formato: texto
+@descricao: Texto do número da capa: [Obras com análise · ref] escrito com a regra dos cartões da T1 (inteiro com ponto de milhar (vazio = 0)). A capa só lê este texto; o cartão da T1 escreve o mesmo número com a mesma regra.
+@oraculo: o texto da T1 (número do cartão 'Obras em andamento' da T1); prova no motor por pbi/scripts/capa_provar.py
+@gerado: pbi/scripts/capa_medidas.py
+*/
+VAR _v = [Obras com análise · ref]
+-- texto na regra dos cartões da T1 (desenho_projeto: inteiro com ponto de milhar (vazio = 0)); vazio = '—'
+VAR _tN = FORMAT ( _v, "#,0", "pt-BR" )
+VAR _tTxt = IF ( ISBLANK ( _v ), "0", _tN )
+RETURN
+    _tTxt

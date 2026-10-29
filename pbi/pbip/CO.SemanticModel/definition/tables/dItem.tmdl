@@ -1,0 +1,92 @@
+/// Os 10 itens do quadradinho, na ordem e com o sinal da fórmula do resultado (D155), e o texto de "significado de cada item" que a própria planilha traz (lido da aba mais recente que o tiver).
+table dItem
+	lineageTag: adab106b-7e20-557a-8406-53cc5504a233
+
+	/// Código do item (igual ao nome da coluna em fAnaliseCritica).
+	column Item
+		dataType: string
+		isKey
+		lineageTag: 9426fe43-14e3-5584-bbd4-77dbf7fa53b4
+		summarizeBy: none
+		sourceColumn: Item
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Posição no quadradinho (1 a 10).
+	column Ordem
+		dataType: int64
+		formatString: 0
+		lineageTag: 061d3abe-053f-5f20-ab52-0c3f3920ce0a
+		summarizeBy: none
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Rótulo como na planilha.
+	column Rotulo
+		dataType: string
+		lineageTag: 4e55368e-7098-5401-ae59-09a01e505146
+		summarizeBy: none
+		sourceColumn: Rotulo
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// +1 soma no resultado; −1 subtrai.
+	column Sinal
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ab89204-fe18-5ed2-885b-95b3c80f5733
+		summarizeBy: none
+		sourceColumn: Sinal
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Pago e ainda não virou obra (saldo de contrato, adiantamentos, estoque, equipamentos): sai do "resultado sem estoque e adiantamentos".
+	column Ativo
+		dataType: boolean
+		lineageTag: a3ce31b5-eaf4-51b3-a107-427febeee1d5
+		summarizeBy: none
+		sourceColumn: Ativo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Texto de ajuda da própria planilha ("significado de cada item").
+	column Significado
+		dataType: string
+		lineageTag: b11d3107-e534-5dce-bbcc-ff6007cad14c
+		summarizeBy: none
+		sourceColumn: Significado
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dItem = m
+		mode: import
+		source =
+				let
+				    Itens = #table(type table [Item = text, Ordem = Int64.Type, Rotulo = text, Sinal = Int64.Type, Ativo = logical, Chave = text], {
+				        {"Credito", 1, "Crédito do orçamento", 1, false, "credito do orcamento"},
+				        {"SaldoContrato", 2, "Saldo de contrato", 1, true, "saldo de contrato"},
+				        {"AdiantServicos", 3, "Adiant. de serviços não medidos", 1, true, "adiantamento de servicos nao medidos"},
+				        {"AdiantMateriais", 4, "Adiant. de materiais não estocados", 1, true, "adiantamento de materiais nao estocados"},
+				        {"Estoque", 5, "Estoque de materiais", 1, true, "estoque de materiais"},
+				        {"Equipamentos", 6, "Equipamentos (valor de mercado)", 1, true, "equipamentos (valor de mercado)"},
+				        {"ReceitaPersonalizacao", 7, "Receita de personalizações", 1, false, "receita de personalizacoes"},
+				        {"ContasPagar", 8, "Contas a pagar dos medidos", -1, false, "contas a pagar dos medidos"},
+				        {"Desembolsado", 9, "Valor desembolsado pela obra", -1, false, "valor desembolsado pela obra"},
+				        {"Divida", 10, "Dívida da obra a ser paga", -1, false, "divida da obra a ser paga"}
+				    }),
+				    // Textos de ajuda: da aba mais recente que tenha a seção "significado de cada item"
+				    ComTexto = Table.SelectRows(stgAbas, each [Leitura][Layout] = true
+				        and not List.IsEmpty(Record.FieldOrDefault([Leitura], "Significados", {}))),
+				    Recente = Table.FirstN(Table.Sort(ComTexto, {{"Fonte", Order.Descending}, {"Mes", Order.Descending}}), 1),
+				    Significados = if Table.IsEmpty(Recente) then {} else Recente{0}[Leitura][Significados],
+				    ComSignificado = Table.AddColumn(Itens, "Significado", (r) =>
+				        let s = List.First(List.Select(Significados, each [Rotulo] = r[Chave]), null)
+				        in if s = null then null else s[Texto], type text),
+				    Final = Table.SelectColumns(ComSignificado, {"Item", "Ordem", "Rotulo", "Sinal", "Ativo", "Significado"})
+				in
+				    Final
+
+	annotation PBI_ResultType = Table
+

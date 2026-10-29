@@ -1,0 +1,38 @@
+/*
+@pasta: T2 Análise crítica\Tour
+@formato: texto
+@descricao: Passo 7 de 8 do tour da Análise crítica (O desembolso do mês): gestor (pose P3) no canto direita, balão de 560 px, ligação ao anel. Só desenha; lê a medida da pose.
+@gerado: pbi/scripts/tour_lib.py
+*/
+-- 4 · Marcação
+"<div class='u tr'>"
+    & "<div class='rc' style='left:1480px;top:693px;width:388px;height:355px'></div>"
+    & "<svg class='sv' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M1498 687H1494A20 20 0 0 0 1474 707V711M1850 687H1854A20 20 0 0 1 1874 707V711M1498 105"
+    & "4H1494A20 20 0 0 1 1474 1034V1030M1850 1054H1854A20 20 0 0 0 1874 1034V1030' fill='none' stroke='#FF"
+    & "FFFF' stroke-width='3' stroke-linecap='round'/><path d='M1361 703L1480 703' fill='none' stroke='#E9E"
+    & "0CF' stroke-width='2' stroke-dasharray='2 6' stroke-linecap='round'/><circle cx='1480' cy='703' r='3"
+    & "' fill='#E9E0CF' stroke='#0B0B0C' stroke-width='2'/></svg>"
+    & "<div class='nr' style='left:944px;top:744px;width:511px;height:336px'>"
+    & [Comum · Tour · Pose P3 · HTML]
+    & "</div>"
+    & "<svg class='bq' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M1261 723L1261 727Q1264.13 832.337 1200.84 911.035L1203.16 911.965Q1280.29 832.803 1291"
+    & " 727L1291 723Z' fill='#FFFFFF'/></svg>"
+    & "<section class='bl' role='dialog' aria-label='Tour guiado, passo 7 de 8: O desembolso do mês' style="
+    & "'left:801px;top:417px;width:560px;height:310px'>"
+    & "<span class='sl' style='left:32px;top:28px'>Passo 7 de 8</span>"
+    & "<h2 class='tt' style='left:32px;top:68px;width:496px'>O desembolso do mês</h2>"
+    & "<p class='tx' style='left:32px;top:116px;width:496px'>Compara o previsto (creme) com o desembolsado "
+    & "(preto) no mês e mostra a diferença e o desvio, com os pontos do item Previsão de caixa na nota. Qua"
+    & "ndo o desvio passa de 10%, para mais ou para menos, a planilha pede uma justificativa, que aparece a"
+    & "qui.</p>"
+    & "<div class='rg' style='left:32px;top:262px;width:178px;gap:6px'><i style='width:17px;background:rgba"
+    & "(11,11,12,.45)'></i><i style='width:17px;background:rgba(11,11,12,.45)'></i><i style='width:17px;bac"
+    & "kground:rgba(11,11,12,.45)'></i><i style='width:17px;background:rgba(11,11,12,.45)'></i><i style='wi"
+    & "dth:17px;background:rgba(11,11,12,.45)'></i><i style='width:17px;background:rgba(11,11,12,.45)'></i>"
+    & "<i style='width:17px;background:#0B0B0C'></i><i style='width:17px;background:#E1E1E1'></i></div>"
+    & "<span class='bt pl' style='left:228px;top:236px;width:64px;height:56px'>Pular</span>"
+    & "<span class='bt s' style='left:302px;top:242px;width:92px'>← Voltar</span>"
+    & "<span class='bt p' style='left:404px;top:242px;width:124px'>Seguir →</span>"
+    & "</section></div>"

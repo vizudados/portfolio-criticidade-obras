@@ -1,0 +1,16 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: dd/mm/yyyy
+@descricao: Primeiro mês da sequência, na janela e terminando no de referência, em que a variação do resultado aplicado da carteira (só as obras com aba no mês e na anterior) andou no mesmo sentido do último mês (cai desde / sobe desde).
+@oraculo: carteira.serie[].resultado mistura obras (mockup, jun/26: fev/26); com as mesmas obras, jun/26: desde mai/26
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses = ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] > _ini && dMes[Mes] <= _ref ), "@v", [T4 · Resultado aplicado · variação no mês] )
+VAR _sentidos = ADDCOLUMNS ( _meses, "@s", IF ( ISBLANK ( [@v] ), BLANK (), SIGN ( [@v] ) ) )
+VAR _sinal = MAXX ( FILTER ( _sentidos, dMes[Mes] = _ref ), [@s] )
+VAR _quebra = MAXX ( FILTER ( _sentidos, ISBLANK ( [@s] ) || [@s] <> _sinal ), dMes[Mes] )
+VAR _inicio = MINX ( FILTER ( _sentidos, ISBLANK ( _quebra ) || dMes[Mes] > _quebra ), dMes[Mes] )
+RETURN
+    IF ( NOT ISBLANK ( _sinal ) && _sinal <> 0, _inicio )

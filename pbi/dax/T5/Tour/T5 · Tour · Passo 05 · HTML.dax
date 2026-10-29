@@ -1,0 +1,41 @@
+/*
+@pasta: T5 Canteiro\Tour
+@formato: texto
+@descricao: Passo 5 de 7 do tour do Canteiro (Chuva e ritmo): gestor (pose P2) no canto direita, balão de 440 px, ligação ao anel. Só desenha; lê a medida da pose.
+@gerado: pbi/scripts/tour_lib.py
+*/
+-- 4 · Marcação
+"<div class='u tr'>"
+    & "<div class='rc' style='left:344px;top:685px;width:1084px;height:363px'></div>"
+    & "<svg class='sv' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M362 679H358A20 20 0 0 0 338 699V703M1410 679H1414A20 20 0 0 1 1434 699V703M362 1054H35"
+    & "8A20 20 0 0 1 338 1034V1030M1410 1054H1414A20 20 0 0 0 1434 1034V1030' fill='none' stroke='#FFFFFF' "
+    & "stroke-width='3' stroke-linecap='round'/><path d='M1456 708L1428 708' fill='none' stroke='#E9E0CF' s"
+    & "troke-width='2' stroke-dasharray='2 6' stroke-linecap='round'/><circle cx='1428' cy='708' r='3' fill"
+    & "='#E9E0CF' stroke='#0B0B0C' stroke-width='2'/></svg>"
+    & "<div class='nr' style='left:1390px;top:749px;width:469px;height:331px'>"
+    & [Comum · Tour · Pose P2 · HTML]
+    & "</div>"
+    & "<svg class='bq' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M1508 728L1508 732Q1517.71 837.437 1593.84 916.954L1596.16 916.046Q1533.87 836.983 1538"
+    & " 732L1538 728Z' fill='#FFFFFF'/></svg>"
+    & "<section class='bl' role='dialog' aria-label='Tour guiado, passo 5 de 7: Chuva e ritmo' style='left:"
+    & "1456px;top:364px;width:440px;height:368px'>"
+    & "<span class='sl' style='left:32px;top:28px'>Passo 5 de 7</span>"
+    & "<h2 class='tt' style='left:32px;top:68px;width:376px'>Chuva e ritmo</h2>"
+    & "<p class='tx' style='left:32px;top:116px;width:376px'>Em cima, os dias em que a chuva parou o serviç"
+    & "o externo, na média das obras; embaixo, quanto da carteira foi executado no mês. De março a julho é "
+    & "a quadra chuvosa de Natal: o ritmo cai junto.</p>"
+    & "<div class='dc' style='left:32px;top:234px;width:376px'><svg class='cur' width='16' height='16' view"
+    & "Box='0 0 18 18' aria-hidden='true'><path d='M4 2L4 14L7.2 11L9.4 16L11.3 15.2L9.1 10.3L13.6 10.3Z' f"
+    & "ill='#0B0B0C'/></svg><p class='dt'>Passe o mouse num mês para ver a chuva e o executado de cada obra"
+    & ".</p></div>"
+    & "<div class='rg' style='left:32px;top:320px;width:88px;gap:3px'><i style='width:10px;background:rgba("
+    & "11,11,12,.45)'></i><i style='width:10px;background:rgba(11,11,12,.45)'></i><i style='width:10px;back"
+    & "ground:rgba(11,11,12,.45)'></i><i style='width:10px;background:rgba(11,11,12,.45)'></i><i style='wid"
+    & "th:10px;background:#0B0B0C'></i><i style='width:10px;background:#E1E1E1'></i><i style='width:10px;ba"
+    & "ckground:#E1E1E1'></i></div>"
+    & "<span class='bt pl' style='left:108px;top:294px;width:64px;height:56px'>Pular</span>"
+    & "<span class='bt s' style='left:182px;top:300px;width:92px'>← Voltar</span>"
+    & "<span class='bt p' style='left:284px;top:300px;width:124px'>Seguir →</span>"
+    & "</section></div>"

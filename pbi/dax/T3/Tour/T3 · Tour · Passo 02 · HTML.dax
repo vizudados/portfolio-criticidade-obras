@@ -1,0 +1,41 @@
+/*
+@pasta: T3 Avanço físico\Tour
+@formato: texto
+@descricao: Passo 2 de 7 do tour da Avanço físico (Os números da obra): gestor (pose P9) no canto direita, balão de 480 px, ligação ao anel. Só desenha; lê a medida da pose.
+@gerado: pbi/scripts/tour_lib.py
+*/
+-- 4 · Marcação
+"<div class='u tr'>"
+    & "<div class='rc' style='left:344px;top:101px;width:1524px;height:156px'></div>"
+    & "<svg class='sv' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M362 95H358A20 20 0 0 0 338 115V119M1850 95H1854A20 20 0 0 1 1874 115V119M362 263H358A2"
+    & "0 20 0 0 1 338 243V239M1850 263H1854A20 20 0 0 0 1874 243V239' fill='none' stroke='#FFFFFF' stroke-w"
+    & "idth='3' stroke-linecap='round'/><path d='M1106 313L1106 257' fill='none' stroke='#E9E0CF' stroke-wi"
+    & "dth='2' stroke-dasharray='2 6' stroke-linecap='round'/><circle cx='1106' cy='257' r='3' fill='#E9E0C"
+    & "F' stroke='#0B0B0C' stroke-width='2'/></svg>"
+    & "<div class='nr' style='left:792px;top:750px;width:453px;height:330px'>"
+    & [Comum · Tour · Pose P9 · HTML]
+    & "</div>"
+    & "<svg class='bq' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M880 729L880 733Q888.706 838.072 963.831 917.943L966.169 917.057Q904.874 837.628 910 73"
+    & "3L910 729Z' fill='#FFFFFF'/></svg>"
+    & "<section class='bl' role='dialog' aria-label='Tour guiado, passo 2 de 7: Os números da obra' style='"
+    & "left:700px;top:313px;width:480px;height:420px'>"
+    & "<span class='sl' style='left:32px;top:28px'>Passo 2 de 7</span>"
+    & "<h2 class='tt' style='left:32px;top:68px;width:416px'>Os números da obra</h2>"
+    & "<p class='tx' style='left:32px;top:116px;width:416px'>O cartão escuro é o atraso em meses: o executa"
+    & "do de hoje é o previsto de quantos meses atrás. Depois vêm o executado acumulado, o avanço no mês, o"
+    & " PPC do mês (o plano semanal cumprido, meta de 80%) e o término projetado, com a entrega contratual "
+    & "e os 180 dias de tolerância.</p>"
+    & "<div class='dc' style='left:32px;top:286px;width:416px'><svg class='cur' width='16' height='16' view"
+    & "Box='0 0 18 18' aria-hidden='true'><path d='M4 2L4 14L7.2 11L9.4 16L11.3 15.2L9.1 10.3L13.6 10.3Z' f"
+    & "ill='#0B0B0C'/></svg><p class='dt'>Passe o mouse num cartão para ver como é calculado e de onde vem."
+    & "</p></div>"
+    & "<div class='rg' style='left:32px;top:372px;width:100px;gap:5px'><i style='width:10px;background:rgba"
+    & "(11,11,12,.45)'></i><i style='width:10px;background:#0B0B0C'></i><i style='width:10px;background:#E1"
+    & "E1E1'></i><i style='width:10px;background:#E1E1E1'></i><i style='width:10px;background:#E1E1E1'></i>"
+    & "<i style='width:10px;background:#E1E1E1'></i><i style='width:10px;background:#E1E1E1'></i></div>"
+    & "<span class='bt pl' style='left:148px;top:346px;width:64px;height:56px'>Pular</span>"
+    & "<span class='bt s' style='left:222px;top:352px;width:92px'>← Voltar</span>"
+    & "<span class='bt p' style='left:324px;top:352px;width:124px'>Seguir →</span>"
+    & "</section></div>"

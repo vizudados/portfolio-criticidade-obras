@@ -1,0 +1,104 @@
+/*
+@pasta: T5 Canteiro\Chuva e ritmo
+@formato: texto
+@descricao: Uma coluna por mês da janela (granularidade dMes[Mes]; coluna = 1068 ÷ n, barra = mín(44; 0,36 × coluna)): em cima, os dias impraticáveis por chuva (média por obra, creme) com o valor; no meio, o mês; embaixo, o executado no mês da carteira (preto, % do orçamento) com o valor. Escalas pelo maior mês da janela (T5 · Chuva · topo da escala e T5 · Ritmo · topo da escala). Mês de referência em semibold; o ano entra no primeiro mês e em janeiro quando a janela cruza a virada. As barras correm da linha do meio em cascata.
+@gerado: pbi/scripts/desenho_t5.py
+*/
+-- 1 · Leituras
+VAR _noRecorte = [Série · mês até a referência]
+VAR _ch = [Canteiro · dias de chuva]
+VAR _ex = [Físico · executado no mês]
+VAR _topoC = [T5 · Chuva · topo da escala]
+VAR _topoE = [T5 · Ritmo · topo da escala]
+VAR _mes = [Mês · abreviado]
+VAR _mesAno = [Mês · rótulo curto]
+VAR _data = [Mês · data]
+VAR _ehRef = [Série · é o mês de referência]
+VAR _pos = [Série · posição na janela]
+VAR _n = [Série · meses até a referência]
+VAR _ini = [Série · primeiro mês]
+VAR _ref = [Mês de referência]
+-- 2 · Textos
+VAR _tcN = IF ( _ch = INT ( _ch ), FORMAT ( _ch, "0", "pt-BR" ), FORMAT ( _ch, "0.0", "pt-BR" ) )
+VAR _tcTxt = IF ( ISBLANK ( _ch ), "—", _tcN )
+VAR _teN = FORMAT ( ABS ( _ex ) * 100, "0.0", "pt-BR" )
+VAR _teS = IF ( ROUND ( _ex * 100, 1 ) < 0, "−", "" )
+VAR _teTxt = IF ( ISBLANK ( _ex ), "—", _teS & _teN & "%" )
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _tcKP = LEN ( _tcN ) > 0
+VAR _tcKN = IF ( _tcKP, _tcN )
+VAR _tcKS = SUBSTITUTE ( SUBSTITUTE ( _tcKN, ".", "" ), ",", "" )
+VAR _tcKT = IFERROR ( VALUE ( _tcKS ), -1 )
+VAR _tcKOk = _tcKP && _tcKT >= 2 && FORMAT ( _tcKT, REPT ( "0", LEN ( _tcKS ) ) ) = _tcKS
+VAR _tcKD = IF ( CONTAINSSTRING ( _tcKN, "," ), LEN ( _tcKN ) - SEARCH ( ",", _tcKN ), 0 )
+VAR _tcKM = IF ( CONTAINSSTRING ( _tcKN, "." ), "#,##0", "0" ) & IF ( _tcKD > 0, "." & REPT ( "0", _tcKD ) )
+VAR _tcKOd =
+    IF (
+        _tcKOk,
+        "<o-d><o-v>" & _tcKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tcKN, FORMAT ( ROUND ( _tcKT * [@odf] / 1000, 0 ) / POWER ( 10, _tcKD ), _tcKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tcN
+    )
+VAR _tcOd = IF ( ISBLANK ( _ch ), _tcTxt, _tcKOd )
+VAR _teKP = LEN ( _teN ) > 0
+VAR _teKN = IF ( _teKP, _teN )
+VAR _teKS = SUBSTITUTE ( SUBSTITUTE ( _teKN, ".", "" ), ",", "" )
+VAR _teKT = IFERROR ( VALUE ( _teKS ), -1 )
+VAR _teKOk = _teKP && _teKT >= 2 && FORMAT ( _teKT, REPT ( "0", LEN ( _teKS ) ) ) = _teKS
+VAR _teKD = IF ( CONTAINSSTRING ( _teKN, "," ), LEN ( _teKN ) - SEARCH ( ",", _teKN ), 0 )
+VAR _teKM = IF ( CONTAINSSTRING ( _teKN, "." ), "#,##0", "0" ) & IF ( _teKD > 0, "." & REPT ( "0", _teKD ) )
+VAR _teKOd =
+    IF (
+        _teKOk,
+        "<o-d><o-v>" & _teKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _teKN, FORMAT ( ROUND ( _teKT * [@odf] / 1000, 0 ) / POWER ( 10, _teKD ), _teKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _teN
+    )
+VAR _teOd = IF ( ISBLANK ( _ex ), _teTxt, _teS & _teKOd & "%" )
+VAR _cruza = YEAR ( _ini ) <> YEAR ( _ref )
+VAR _txtMes = _mes & IF ( _cruza && ( _pos = 1 || MONTH ( _data ) = 1 ), RIGHT ( _mesAno, 3 ), "" )
+VAR _clsMes = IF ( _ehRef = 1, " ref", "" ) & IF ( ISBLANK ( _ch ) && ISBLANK ( _ex ), " sem", "" )
+-- 3 · Geometria
+VAR _b = MIN ( 44, ROUND ( 0.36 * 1068 / _n, 0 ) ) -- geometria
+VAR _hC = IF ( _ch > 0, MAX ( 2, ROUND ( DIVIDE ( _ch, _topoC ) * 88, 0 ) ), 0 ) -- geometria
+VAR _hE = IF ( _ex > 0, MAX ( 2, ROUND ( DIVIDE ( _ex, _topoE ) * 100, 0 ) ), 0 ) -- geometria
+VAR _yC = 118 - _hC -- geometria
+VAR _atraso = ( _pos - 1 ) * 100 -- geometria
+-- 4 · Marcação
+VAR _htmlC =
+    IF (
+        NOT ISBLANK ( _ch ),
+        "<i class='bc' style='top:" & _yC & "px;height:" & _hC & "px;left:calc(50% - " & INT ( _b / 2 ) & "px);width:"
+            & _b & "px' data-rk='" & _mes & "|c' data-rp='top,height' data-r0-top='118px' "
+            & "data-r0-height='0px' data-rd='" & _atraso & "'></i>"
+            & "<span class='vl c a-fd' style='animation-delay:" & ( _atraso + 250 ) & "ms;top:" & ( _yC - 20 ) & "px'>" & _tcOd & "</span>"
+    )
+VAR _htmlE =
+    IF (
+        NOT ISBLANK ( _ex ),
+        "<i class='be' style='top:146px;height:" & _hE & "px;left:calc(50% - " & INT ( _b / 2 ) & "px);width:"
+            & _b & "px' data-rk='" & _mes & "|e' data-rp='height' data-r0-height='0px' data-rd='" & ( _atraso + 50 )
+            & "'></i>"
+            & "<span class='vl a-fd' style='animation-delay:" & ( _atraso + 300 ) & "ms;top:" & ( 146 + _hE + 4 ) & "px'>" & _teOd & "</span>"
+    )
+RETURN
+    IF (
+        _noRecorte = 1,
+        "<div class='u cr'><i class='b0 a-fd'></i><i class='b1 a-fd'></i>" & _htmlC & _htmlE
+            & "<p class='ms a-fd" & _clsMes & "' style='animation-delay:" & _atraso & "ms'>" & _txtMes & "</p>"
+        & "</div>" & [Comum · JS contador] & [Comum · JS corrida]
+    )

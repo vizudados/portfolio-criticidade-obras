@@ -1,0 +1,8 @@
+/*
+@pasta: T5 Canteiro\Suprimentos por obra\Contas
+@formato: 0.00%
+@descricao: Ordem das linhas de Suprimentos por obra (crescente): a menor taxa de entregas no prazo e completas do mês primeiro. Vazio sem pedido previsto (a linha some). Ex. set/26: POTENGI 76,9%, REDINHA 85,2%, JANGADA 86,4%.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: POTENGI 0,769
+@gerado: pbi/scripts/contas_t5.py
+*/
+[Canteiro · entregas no prazo · ref]

@@ -1,0 +1,29 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: texto
+@descricao: Como o executado do mês andou: cresce (nunca cai), cai (nunca sobe) ou oscila. Pares de meses seguidos dentro da janela; obra do contexto.
+@oraculo: obras[].serie[].exec_mes
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ref ),
+        "@v", VAR _m = dMes[Mes] RETURN CALCULATE ( [Físico · executado no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _m ),
+        "@a", VAR _m = dMes[Mes] RETURN CALCULATE ( [Físico · executado no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = EDATE ( _m, -1 ) )
+    )
+VAR _pares = FILTER ( _meses, dMes[Mes] > _jan && NOT ISBLANK ( [@v] ) && NOT ISBLANK ( [@a] ) )
+VAR _sobe = COUNTROWS ( FILTER ( _pares, ROUND ( [@v] - [@a], 6 ) > 0 ) ) + 0
+VAR _desce = COUNTROWS ( FILTER ( _pares, ROUND ( [@v] - [@a], 6 ) < 0 ) ) + 0
+RETURN
+    IF (
+        COUNTROWS ( _pares ) > 0,
+        SWITCH (
+            TRUE (),
+            _sobe > 0 && _desce = 0, "cresce",
+            _desce > 0 && _sobe = 0, "cai",
+            _sobe = 0 && _desce = 0, "constante",
+            "oscila"
+        )
+    )

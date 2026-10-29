@@ -1,0 +1,11 @@
+/*
+@pasta: T5 Canteiro\Segurança por obra\Contas
+@formato: 0.00
+@descricao: Topo da escala das barras da taxa de frequência: o dobro da média do setor ou o maior valor das obras do visual arredondado para cima de 5 em 5 (a linha do setor fica na metade ou antes). Ex. set/26: 15.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 15
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _lim = [Nota · limite acidentes · setor]
+VAR _mx = MAXX ( ALLSELECTED ( dObra[Obra] ), [Canteiro · taxa de frequência (12 meses) · ref] )
+RETURN
+    MAX ( 2 * _lim, CEILING ( _mx, 5 ) )

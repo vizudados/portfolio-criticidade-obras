@@ -1,0 +1,10 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: 0
+@descricao: Justificativas exigidas e em branco no mês do contexto além das 2 primeiras obras da lista (o M de 'em branco: A, B e mais M' no rodapé do tooltip); vazio com até 2 em branco.
+@oraculo: ago/26 real: 2 (4 em branco) · jun/26: vazio (1 em branco)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _n = [Carteira · justificativas em branco] + 0
+RETURN
+    IF ( _n > 2, _n - 2 )

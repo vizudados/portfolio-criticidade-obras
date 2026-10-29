@@ -1,0 +1,18 @@
+/*
+@pasta: Comum\Desenho
+@formato: texto
+@descricao: Marca do status da nota da obra no mês de referência, na gramática do VizuFilter 2.10 (crítico vermelho sólido, atenção ocre sólido, estável sálvia com contorno, pendente tracejado claro); sem obra no mês, sem marca.
+@gerado: pbi/scripts/desenho_comum.py
+*/
+-- 1 · Leituras
+VAR _st = [Nota · status · ranking · ref]
+VAR _pend = [Nota · pendente · ranking · ref]
+-- 4 · Marcação
+RETURN
+    SWITCH ( TRUE (),
+        _pend = 1, "tracejado|#B8B8B8",
+        ISBLANK ( _st ), "",
+        _st = 2, "#C43737",
+        _st = 1, "#C9821F",
+        "#A9CDB9|#6E9F85"
+    )

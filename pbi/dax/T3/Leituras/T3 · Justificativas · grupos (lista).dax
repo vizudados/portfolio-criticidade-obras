@@ -1,0 +1,20 @@
+/*
+@pasta: T3 Avanço físico\Leituras\Contas
+@formato: texto
+@descricao: Justificativas da planilha nos meses em que o desembolso passou do previsto (série da obra do contexto, na janela), agrupadas pelo texto, da mais repetida à menos: texto § meses, separadas por '|'.
+@oraculo: obras[].serie[].justificativa (contagem dos textos iguais)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ref ),
+        "@d", VAR _m = dMes[Mes] RETURN CALCULATE ( [Desembolso · desvio no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _m ),
+        "@j", VAR _m = dMes[Mes] RETURN CALCULATE ( TRIM ( [Justificativa do desembolso] ), REMOVEFILTERS ( dMes ), dMes[Mes] = _m )
+    )
+VAR _acima = FILTER ( _meses, [@d] > 0 && [@j] <> "" )
+VAR _textos = DISTINCT ( SELECTCOLUMNS ( _acima, "@t", [@j] ) )
+VAR _cont = ADDCOLUMNS ( _textos, "@n", VAR _t = [@t] RETURN COUNTROWS ( FILTER ( _acima, [@j] = _t ) ) )
+RETURN
+    CONCATENATEX ( _cont, SUBSTITUTE ( SUBSTITUTE ( [@t], "|", "/" ), "§", "" ) & "§" & [@n], "|", [@n], DESC, [@t], ASC )

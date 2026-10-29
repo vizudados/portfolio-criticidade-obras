@@ -1,0 +1,9 @@
+/*
+@pasta: T1 Visão geral\Obras pela nota
+@formato: texto
+@descricao: CSS do subtítulo da lista de obras.
+@gerado: pbi/scripts/desenho_t1.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".oc{position:fixed;inset:0}.oc .sub{left:0;top:0;font-size:15px;line-height:20px;color:#3B3B3F}"

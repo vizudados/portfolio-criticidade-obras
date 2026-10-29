@@ -1,0 +1,24 @@
+/*
+@pasta: T3 Avanço físico\Avanço das sete obras\Contas
+@formato: 0.0
+@descricao: Menor atraso em meses entre as obras no mês de referência.
+@oraculo: PONTA NEGRA 0,66
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obras =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@e", [Físico · executado acumulado · ref],
+            "@d", [Físico · desvio acumulado p.p. · ref],
+            "@ini", [Obra · início],
+            "@fim", [Obra · término previsto],
+            "@orc", [Orçamento · ref],
+            "@tipo", [Tipo de orçamento · ref],
+            "@a", [Prazo · atraso (meses) · ref]
+        ),
+        NOT ISBLANK ( [@e] )
+    )
+VAR _top = TOPN ( 1, FILTER ( _obras, NOT ISBLANK ( [@a] ) ), [@a], ASC, dObra[Obra], ASC )
+RETURN
+    MAXX ( _top, [@a] )

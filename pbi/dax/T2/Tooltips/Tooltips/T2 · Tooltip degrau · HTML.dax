@@ -1,0 +1,264 @@
+/*
+@pasta: T2 Análise crítica\Tooltips
+@formato: texto
+@descricao: Tooltip de página do degrau da cascata (Como o resultado se forma): as linhas do quadradinho que formam o degrau, com o sinal da conta (zeros esmaecidos), o degrau mês a mês e uma linha de rodapé por degrau, presa ao pé. No resultado aplicado e no resultado da planilha, os degraus da conta (o "−" em vermelho) e o resultado mês a mês com valores positivos e negativos. Estado vazio: degrau todo em zero.
+@gerado: pbi/scripts/tooltips_t2.py
+*/
+-- 1 · Leituras
+VAR _deg = SELECTEDVALUE ( dDegrau[Degrau] )
+VAR _ordemDeg = [Cascata · degrau · ordem]
+VAR _rotDeg = SELECTEDVALUE ( dDegrau[Rotulo] )
+VAR _sinal = SELECTEDVALUE ( dDegrau[Sinal] )
+VAR _ref = [Mês de referência]
+VAR _obra = [Nota · obra em foco]
+VAR _mesCM = [Mês de referência · curto maiúsculo]
+VAR _mesN = [Mês de referência · nome]
+VAR _nDeg = [Cascata · degraus · foco]
+VAR _v = [Cascata · degrau · valor · foco]
+VAR _pctOrc = [Cascata · degrau · % do orçamento · foco]
+VAR _exec = [Físico · executado acumulado · foco]
+VAR _idc = [IDC · foco]
+VAR _pctRes = [Resultado % · foco]
+VAR _vVA = CALCULATE ( [Cascata · degrau · valor · foco], dDegrau[Degrau] = "ValorAgregado" )
+VAR _vCA = CALCULATE ( [Cascata · degrau · valor · foco], dDegrau[Degrau] = "CustoAplicado" )
+VAR _vRA = CALCULATE ( [Cascata · degrau · valor · foco], dDegrau[Degrau] = "ResultadoAplicado" )
+VAR _vAR = CALCULATE ( [Cascata · degrau · valor · foco], dDegrau[Degrau] = "ARealizar" )
+VAR _vR = CALCULATE ( [Cascata · degrau · valor · foco], dDegrau[Degrau] = "Resultado" )
+VAR _tabCompoe = { ( "ValorAgregado", "Credito", 1, 1 ), ( "CustoAplicado", "Desembolsado", 1, 1 ), ( "CustoAplicado", "ContasPagar", 1, 2 ), ( "CustoAplicado", "Divida", 1, 3 ), ( "CustoAplicado", "AdiantServicos", -1, 4 ), ( "CustoAplicado", "AdiantMateriais", -1, 5 ), ( "CustoAplicado", "Estoque", -1, 6 ), ( "CustoAplicado", "ReceitaPersonalizacao", -1, 7 ), ( "ARealizar", "SaldoContrato", 1, 1 ), ( "ARealizar", "Equipamentos", 1, 2 ) } /* lista */
+VAR _compoe = FILTER ( _tabCompoe, [Value1] = _deg ) /* lista */
+VAR _linhas =
+    ADDCOLUMNS (
+        _compoe,
+        "@rot", VAR _c = [Value2] RETURN CALCULATE ( [Item · rótulo], dItem[Item] = _c ),
+        "@v", VAR _c = [Value2] RETURN CALCULATE ( [Item · valor · foco], dItem[Item] = _c )
+    ) /* lista */
+VAR _nSer = [Série · meses até a referência]
+VAR _meses =
+    ADDCOLUMNS (
+        VALUES ( dMes[Mes] ),
+        "@ate", [Série · mês até a referência],
+        "@ord", [Mês · ordem],
+        "@pos", [Série · posição na janela],
+        "@v", [Cascata · degrau · valor · foco no mês],
+        "@rot", [Mês · abreviado]
+    )
+VAR _serie = FILTER ( _meses, [@ate] = 1 ) /* lista */
+-- 2 · Textos
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _ehConta = _deg IN { "ResultadoAplicado", "Resultado" }
+VAR _zero = ( ISBLANK ( _v ) || _v = 0 ) && NOT _ehConta
+VAR _txtSob = "COMO O RESULTADO SE FORMA · " & UPPER ( _obra ) & " · " & _mesCM
+VAR _tpoN = FORMAT ( ABS ( _pctOrc ) * 100, "0.00", "pt-BR" )
+VAR _tpoS = SWITCH ( TRUE (), ROUND ( _pctOrc * 100, 2 ) < 0, "−", ROUND ( _pctOrc * 100, 2 ) > 0, "+", "" )
+VAR _tpoTxt = IF ( ISBLANK ( _pctOrc ), "—", _tpoS & _tpoN & "%" )
+VAR _tprN = FORMAT ( ABS ( _pctRes ) * 100, "0.00", "pt-BR" )
+VAR _tprS = SWITCH ( TRUE (), ROUND ( _pctRes * 100, 2 ) < 0, "−", ROUND ( _pctRes * 100, 2 ) > 0, "+", "" )
+VAR _tprTxt = IF ( ISBLANK ( _pctRes ), "—", _tprS & _tprN & "%" )
+VAR _txtDir =
+    IF (
+        _ehConta,
+        "RESULTADO · " & "<span class='" & IF ( _tpoS = "−", "ng", "" ) & "'>" & "⁅" & _tpoTxt & "⁆" & "</span>" & " DO ORÇAMENTO",
+        IF ( _sinal < 0, "DESCONTA", "SOMA" ) & " · " & "⁅" & SUBSTITUTE ( _tpoTxt, "+", "" ) & "⁆" & " DO ORÇAMENTO"
+    )
+VAR _txtCod = "DEGRAU " & _ordemDeg & " DE " & _nDeg
+VAR _nLs = IF ( _ehConta, 3, COUNTROWS ( _linhas ) ) /* lista */
+VAR _htmlItens =
+    CONCATENATEX (
+        _linhas,
+        VAR _iv = [@v]
+        VAR _z = ISBLANK ( _iv ) || _iv = 0
+        VAR _iTxt = "R$ " & FORMAT ( ABS ( _iv + 0 ), "#,0.00", "pt-BR" )
+        RETURN
+            "<div class='lin cf so" & IF ( _z, " z", "" ) & "'><span class='sg" & IF ( [Value3] < 0, " ng'>−", "'>+" ) & "</span>"
+                & "<span class='n'>" & [@rot] & "</span><span class='v'>" & "⁅" & _iTxt & "⁆" & "</span></div>",
+        "",
+        [Value4], ASC
+    )
+VAR _t1A = ABS ( _vVA )
+VAR _t1Nu = SWITCH ( TRUE (), _t1A >= 99950000, FORMAT ( _t1A / 1000000, "0.0", "pt-BR" ), _t1A >= 999500, FORMAT ( _t1A / 1000000, "0.00", "pt-BR" ), _t1A >= 999.5, FORMAT ( _t1A / 1000, "0", "pt-BR" ), FORMAT ( _t1A, "#,0", "pt-BR" ) )
+VAR _t1Un = SWITCH ( TRUE (), _t1A >= 999500, " mi", _t1A >= 999.5, " mil", "" )
+VAR _t1N = _t1Nu & _t1Un
+VAR _t1Zero = _t1N = "0"
+VAR _t1S = IF ( _t1Zero, "", IF ( _vVA < 0, "−", "" ) )
+VAR _t1Txt = IF ( ISBLANK ( _vVA ), "—", _t1S & "R$ " & _t1N )
+VAR _t2A = ABS ( _vCA )
+VAR _t2Nu = SWITCH ( TRUE (), _t2A >= 99950000, FORMAT ( _t2A / 1000000, "0.0", "pt-BR" ), _t2A >= 999500, FORMAT ( _t2A / 1000000, "0.00", "pt-BR" ), _t2A >= 999.5, FORMAT ( _t2A / 1000, "0", "pt-BR" ), FORMAT ( _t2A, "#,0", "pt-BR" ) )
+VAR _t2Un = SWITCH ( TRUE (), _t2A >= 999500, " mi", _t2A >= 999.5, " mil", "" )
+VAR _t2N = _t2Nu & _t2Un
+VAR _t2Zero = _t2N = "0"
+VAR _t2S = IF ( _t2Zero, "", IF ( _vCA < 0, "−", "" ) )
+VAR _t2Txt = IF ( ISBLANK ( _vCA ), "—", _t2S & "R$ " & _t2N )
+VAR _t3A = ABS ( _vRA )
+VAR _t3Nu = SWITCH ( TRUE (), _t3A >= 99950000, FORMAT ( _t3A / 1000000, "0.0", "pt-BR" ), _t3A >= 999500, FORMAT ( _t3A / 1000000, "0.00", "pt-BR" ), _t3A >= 999.5, FORMAT ( _t3A / 1000, "0", "pt-BR" ), FORMAT ( _t3A, "#,0", "pt-BR" ) )
+VAR _t3Un = SWITCH ( TRUE (), _t3A >= 999500, " mi", _t3A >= 999.5, " mil", "" )
+VAR _t3N = _t3Nu & _t3Un
+VAR _t3Zero = _t3N = "0"
+VAR _t3S = IF ( _t3Zero, "", IF ( _vRA < 0, "−", "" ) )
+VAR _t3Txt = IF ( ISBLANK ( _vRA ), "—", _t3S & "R$ " & _t3N )
+VAR _t4A = ABS ( _vAR )
+VAR _t4Nu = SWITCH ( TRUE (), _t4A >= 99950000, FORMAT ( _t4A / 1000000, "0.0", "pt-BR" ), _t4A >= 999500, FORMAT ( _t4A / 1000000, "0.00", "pt-BR" ), _t4A >= 999.5, FORMAT ( _t4A / 1000, "0", "pt-BR" ), FORMAT ( _t4A, "#,0", "pt-BR" ) )
+VAR _t4Un = SWITCH ( TRUE (), _t4A >= 999500, " mi", _t4A >= 999.5, " mil", "" )
+VAR _t4N = _t4Nu & _t4Un
+VAR _t4Zero = _t4N = "0"
+VAR _t4S = IF ( _t4Zero, "", IF ( _vAR < 0, "−", "" ) )
+VAR _t4Txt = IF ( ISBLANK ( _vAR ), "—", _t4S & "R$ " & _t4N )
+VAR _t5A = ABS ( _vR )
+VAR _t5Nu = SWITCH ( TRUE (), _t5A >= 99950000, FORMAT ( _t5A / 1000000, "0.0", "pt-BR" ), _t5A >= 999500, FORMAT ( _t5A / 1000000, "0.00", "pt-BR" ), _t5A >= 999.5, FORMAT ( _t5A / 1000, "0", "pt-BR" ), FORMAT ( _t5A, "#,0", "pt-BR" ) )
+VAR _t5Un = SWITCH ( TRUE (), _t5A >= 999500, " mi", _t5A >= 999.5, " mil", "" )
+VAR _t5N = _t5Nu & _t5Un
+VAR _t5Zero = _t5N = "0"
+VAR _t5S = IF ( _t5Zero, "", IF ( _vR < 0, "−", "" ) )
+VAR _t5Txt = IF ( ISBLANK ( _vR ), "—", _t5S & "R$ " & _t5N )
+VAR _lin = "<div class='lin cf so'><span class='sg"
+VAR _htmlContaRA =
+    _lin & "'>+</span><span class='n'>Valor agregado</span><span class='v'>" & "⁅" & _t1Txt & "⁆" & "</span></div>"
+        & _lin & " ng'>−</span><span class='n'>Custo aplicado</span><span class='v'>" & "⁅" & _t2Txt & "⁆" & "</span></div>"
+        & _lin & "'>=</span><span class='n'>Resultado aplicado</span><span class='v'>" & "<span class='" & IF ( _t3S = "−", "ng", "" ) & "'>" & "⁅" & _t3Txt & "⁆" & "</span>" & "</span></div>"
+VAR _htmlContaR =
+    _lin & "'>+</span><span class='n'>Resultado aplicado</span><span class='v'>" & "<span class='" & IF ( _t3S = "−", "ng", "" ) & "'>" & "⁅" & _t3Txt & "⁆" & "</span>" & "</span></div>"
+        & _lin & "'>+</span><span class='n'>A realizar</span><span class='v'>" & "⁅" & _t4Txt & "⁆" & "</span></div>"
+        & _lin & "'>=</span><span class='n'>Resultado da planilha</span><span class='v'>" & "<span class='" & IF ( _t5S = "−", "ng", "" ) & "'>" & "⁅" & _t5Txt & "⁆" & "</span>" & "</span></div>"
+VAR _titLista = IF ( _ehConta, "Degraus da conta", "Linhas da planilha que formam o degrau" )
+VAR _txtSerieTit = _rotDeg & ", mês a mês"
+VAR _comV = FILTER ( _serie, NOT ISBLANK ( [@v] ) ) /* lista */
+VAR _vRef = MAXX ( FILTER ( _comV, dMes[Mes] = _ref ), [@v] ) /* geometria */
+VAR _vMax = MAXX ( _comV, [@v] ) /* geometria */
+VAR _vMin = MINX ( _comV, [@v] ) /* geometria */
+VAR _ext = IF ( _vRef >= _vMax, _vMin, _vMax ) /* geometria */
+VAR _mesExt = MINX ( FILTER ( _comV, [@v] = _ext && dMes[Mes] <> _ref ), dMes[Mes] ) /* geometria */
+VAR _posExt = MINX ( FILTER ( _comV, dMes[Mes] = _mesExt ), [@pos] ) /* geometria */
+VAR _pos = MAX ( _vMax, 0 ) -- geometria
+VAR _neg = MAX ( - _vMin, 0 ) -- geometria
+VAR _todaNeg = _pos = 0 -- geometria
+VAR _esc = IF ( _todaNeg, _neg, _pos + _neg ) -- geometria
+VAR _yZero = IF ( _todaNeg, 64, 20 + ROUND ( DIVIDE ( _pos, _esc ) * 44, 0 ) ) -- geometria
+VAR _wSer = DIVIDE ( 524, _nSer ) -- geometria
+VAR _bSer = MIN ( 48, ROUND ( _wSer - 16, 0 ) ) -- geometria
+VAR _hRef = MAX ( ROUND ( DIVIDE ( ABS ( _vRef ), _esc ) * 44, 0 ), 2 ) -- geometria
+VAR _yRef = IF ( _todaNeg || _vRef >= 0, _yZero - _hRef - 20, _yZero + _hRef + 4 ) -- geometria
+VAR _lRef = MIN ( MAX ( ROUND ( ( _nSer - 0.5 ) * _wSer, 0 ) - 40, -14 ), 458 ) -- geometria
+VAR _hExt = MAX ( ROUND ( DIVIDE ( ABS ( _ext ), _esc ) * 44, 0 ), 2 ) -- geometria
+VAR _yExt = IF ( _todaNeg || _ext >= 0, _yZero - _hExt - 20, _yZero + _hExt + 4 ) -- geometria
+VAR _lExt0 = MIN ( MAX ( ROUND ( ( _posExt - 0.5 ) * _wSer, 0 ) - 40, -14 ), 458 ) -- geometria
+VAR _toca = ABS ( _lExt0 - _lRef ) < 80 && ABS ( _yExt - _yRef ) < 17 -- geometria
+VAR _lExt = IF ( _toca, IF ( _lExt0 <= _lRef, _lRef - 80, _lRef + 80 ), _lExt0 ) -- geometria
+VAR _extVe = NOT _toca || ( ABS ( _lExt - _lExt0 ) <= _wSer / 2 && _lExt >= -14 && _lExt <= 458 ) -- geometria
+VAR _htmlSerie =
+    CONCATENATEX (
+        _serie,
+        VAR _p = [@v]
+        VAR _tem = NOT ISBLANK ( _p )
+        VAR _h = IF ( _tem, MAX ( ROUND ( DIVIDE ( ABS ( _p ), _esc ) * 44, 0 ), 2 ), 0 ) -- geometria
+        VAR _sobe = _todaNeg || _p >= 0
+        VAR _top = IF ( _sobe, _yZero - _h, _yZero ) -- geometria
+        VAR _atraso = ( [@pos] - 1 ) * 60 -- geometria
+        VAR _colL = ROUND ( ( [@pos] - 1 ) * _wSer, 0 ) -- geometria
+        VAR _ehRef = dMes[Mes] = _ref
+        VAR _ehExt = dMes[Mes] = _mesExt && _ext <> _vRef && _extVe
+        VAR _fA = ABS ( _p )
+        VAR _fNu = SWITCH ( TRUE (), _fA >= 99950000, FORMAT ( _fA / 1000000, "0.0", "pt-BR" ), _fA >= 999500, FORMAT ( _fA / 1000000, "0.00", "pt-BR" ), _fA >= 999.5, FORMAT ( _fA / 1000, "0", "pt-BR" ), FORMAT ( _fA, "#,0", "pt-BR" ) )
+        VAR _fUn = SWITCH ( TRUE (), _fA >= 999500, " mi", _fA >= 999.5, " mil", "" )
+        VAR _fN = _fNu & _fUn
+        VAR _fZero = _fN = "0"
+        VAR _fS = IF ( _fZero, "", IF ( _p < 0, "−", "" ) )
+        VAR _fTxt = IF ( ISBLANK ( _p ), "—", _fS & "R$ " & _fN )
+        VAR _ngRot = IF ( _fS = "−", " ng", "" )
+        VAR _yRot = IF ( _sobe, _top - 20, _top + _h + 4 ) -- geometria
+        VAR _cls = IF ( _p = 0, "z0", IF ( _ehRef, "nr", "nt" ) & IF ( _p < 0, " ng", "" ) )
+        VAR _rot =
+            SWITCH (
+                TRUE (),
+                _tem && _ehRef, "<span class='val fim" & _ngRot & "' style='left:" & ( _lRef - _colL ) & "px;top:" & _yRot & "px;animation-delay:" & ( _atraso + 700 ) & "ms'>" & "⁅" & _fTxt & "⁆" & "</span>",
+                _tem && _ehExt, "<span class='val" & _ngRot & "' style='left:" & ( _lExt - _colL ) & "px;top:" & _yRot & "px'>" & "⁅" & _fTxt & "⁆" & "</span>",
+                ""
+            )
+        RETURN
+            "<div class='c'>" & _rot
+                & IF ( _tem, "<i class='bar " & _cls & "' style='top:" & _top & "px;height:" & _h & "px' data-rk='m" & [@ord] & "' data-rp='top,height' data-r0-top='" & _yZero & "px' data-r0-height='0px' data-rd='" & _atraso & "'></i>" )
+                & "<span class='ms" & IF ( _ehRef, " ref", IF ( _tem, "", " sem" ) ) & "'>" & [@rot] & "</span></div>",
+        "",
+        dMes[Mes], ASC
+    )
+VAR _altSerie =
+    IF ( _todaNeg, 86, _yZero + ROUND ( DIVIDE ( _neg, _esc ) * 44, 0 ) + IF ( _neg > 0, 21, 0 ) + 22 ) -- geometria
+VAR _teN = FORMAT ( ABS ( _exec ) * 100, "0.0", "pt-BR" )
+VAR _teS = IF ( ROUND ( _exec * 100, 1 ) < 0, "−", "" )
+VAR _teTxt = IF ( ISBLANK ( _exec ), "—", _teS & _teN & "%" )
+VAR _txtIdc = FORMAT ( _idc, "0.00", "pt-BR" )
+VAR _txtRod =
+    SWITCH (
+        TRUE (),
+        _zero, "Nada lançado em " & _mesN & ": o degrau fica em zero.",
+        _deg = "ValorAgregado", "Único degrau que cresce com o físico: " & "⁅" & _teTxt & "⁆" & " executado × orçamento.",
+        _deg = "CustoAplicado", "O que já virou obra, com a dívida. IDC = agregado ÷ este custo: " & "⁅" & _txtIdc & "⁆" & ".",
+        _deg = "ResultadoAplicado", "O que a obra já ganhou ou perdeu no que executou.",
+        _deg = "ARealizar", "A planilha conta como ganho e ainda não aconteceu.",
+        "É o que a planilha apresenta: " & "<span class='" & IF ( _tprS = "−", "ng", "" ) & "'>" & "⁅" & _tprTxt & "⁆" & "</span>" & " do orçamento."
+    )
+-- 4 · Marcação
+VAR _saidaHtml =
+    IF (
+        NOT ISBLANK ( _deg ) && NOT ISBLANK ( [Orçamento · foco] ),
+        "<div class='u tt'><div class='cab sobre-preto'><p class='vs sob'>" & _txtSob & "</p>"
+            & "<div class='tl'><div class='tit'><b>" & _rotDeg & "</b>" & "<em class='vs'>" & _txtCod & "</em>" & "</div>"
+            & "<p class='vs dir'>" & _txtDir & "</p></div></div>"
+            & "<div class='corpo crp'><div class='bh'><span class='vs'>" & _titLista & "</span><span class='vs'>Valor</span></div>"
+            & "<div class='lsb" & " ls " & SWITCH ( TRUE (), _nLs <= 3, "e1", _nLs <= 6, "e2", _nLs <= 9, "e3", _nLs <= 12, "e4", "e5" ) & "' style='--n:" & _nLs & "'>" & SWITCH ( _deg, "ResultadoAplicado", _htmlContaRA, "Resultado", _htmlContaR, _htmlItens ) & "</div>"
+            & IF ( _vMax = 0 && _vMin = 0, "", "<div class='rg'></div><span class='vs sl'>" & _txtSerieTit & "</span>" & "<div class='ser' style='--alt:" & _altSerie & "px;--b:" & _bSer & "px'>" & _htmlSerie & "</div>" ) & "</div>"
+            & "<div class='rp'><div class='rg'></div>" & "<p class='rod'>" & _txtRod & "</p></div>"
+        & "</div>" & [Comum · JS contador tooltip] & [Comum · JS corrida]
+    )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

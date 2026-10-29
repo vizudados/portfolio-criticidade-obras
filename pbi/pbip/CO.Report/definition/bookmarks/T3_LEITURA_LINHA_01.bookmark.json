@@ -1,0 +1,82 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T3_LEITURA_LINHA_01",
+  "displayName": "T3 · leitura · Linha do tempo das obras",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T3_LeiX_Avanco",
+      "T3_LeiX_Curva",
+      "T3_LeiX_Linha",
+      "T3_LeiX_Ppc",
+      "T3_Lei_Avanco",
+      "T3_Lei_Curva",
+      "T3_Lei_Fora",
+      "T3_Lei_Linha",
+      "T3_Lei_Ppc"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T3",
+    "sections": {
+      "T3": {
+        "visualContainers": {
+          "T3_LeiX_Avanco": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_LeiX_Curva": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_LeiX_Linha": {
+            "singleVisual": {}
+          },
+          "T3_LeiX_Ppc": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_Lei_Avanco": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_Lei_Curva": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T3_Lei_Fora": {
+            "singleVisual": {}
+          },
+          "T3_Lei_Linha": {
+            "singleVisual": {}
+          },
+          "T3_Lei_Ppc": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

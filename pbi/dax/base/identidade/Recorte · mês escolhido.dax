@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Recorte
+@formato: 0
+@descricao: 1 quando o seletor de mês do drawer tem um mês escolhido; 0 quando vale o último mês (linha automática).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _auto = SELECTEDVALUE ( dMesRef[Automatico], TRUE () )
+RETURN
+    IF ( ISFILTERED ( dMesRef ) && NOT _auto, 1, 0 )

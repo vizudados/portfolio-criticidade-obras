@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Mês
+@formato: dd/mm/yyyy
+@descricao: Mês do eixo (primeiro dia), no contexto do gráfico ou do tooltip.
+@gerado: pbi/scripts/contas_base.py
+*/
+MAX ( dMes[Mes] )

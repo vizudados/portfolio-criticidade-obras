@@ -1,0 +1,9 @@
+/*
+@pasta: T4 Resultado no tempo\Comum\Contas
+@formato: texto
+@descricao: Artigo do nome da obra nas frases ('a CAJUEIRO', 'o JANGADA'). O cadastro não traz o gênero; JANGADA é o único masculino das obras em andamento (a confirmar com a Construtora).
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _obra = SELECTEDVALUE ( dObra[Obra] )
+RETURN
+    IF ( _obra IN { "JANGADA" }, "o", "a" )

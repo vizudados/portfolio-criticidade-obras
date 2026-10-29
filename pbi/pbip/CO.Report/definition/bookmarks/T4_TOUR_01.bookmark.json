@@ -1,0 +1,254 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T4_TOUR_01",
+  "displayName": "T4 · tour · passo 1 de 6 · Este é o Resultado no tempo",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T4_LeiX_DesCart",
+      "T4_LeiX_Mes",
+      "T4_LeiX_Obras",
+      "T4_Lei_DesCart",
+      "T4_Lei_Fora",
+      "T4_Lei_Mes",
+      "T4_Lei_Obras",
+      "T4_TourAnt_P01",
+      "T4_TourAnt_P02",
+      "T4_TourAnt_P03",
+      "T4_TourAnt_P04",
+      "T4_TourAnt_P05",
+      "T4_TourAnt_P06",
+      "T4_TourFecha_P01",
+      "T4_TourFecha_P02",
+      "T4_TourFecha_P03",
+      "T4_TourFecha_P04",
+      "T4_TourFecha_P05",
+      "T4_TourFecha_P06",
+      "T4_TourProx_P01",
+      "T4_TourProx_P02",
+      "T4_TourProx_P03",
+      "T4_TourProx_P04",
+      "T4_TourProx_P05",
+      "T4_TourProx_P06",
+      "T4_Tour_P01",
+      "T4_Tour_P02",
+      "T4_Tour_P03",
+      "T4_Tour_P04",
+      "T4_Tour_P05",
+      "T4_Tour_P06"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T4",
+    "sections": {
+      "T4": {
+        "visualContainers": {
+          "T4_LeiX_DesCart": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_LeiX_Mes": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_LeiX_Obras": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Lei_DesCart": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Lei_Fora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Lei_Mes": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Lei_Obras": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourAnt_P01": {
+            "singleVisual": {}
+          },
+          "T4_TourAnt_P02": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourAnt_P03": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourAnt_P04": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourAnt_P05": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourAnt_P06": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourFecha_P01": {
+            "singleVisual": {}
+          },
+          "T4_TourFecha_P02": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourFecha_P03": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourFecha_P04": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourFecha_P05": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourFecha_P06": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourProx_P01": {
+            "singleVisual": {}
+          },
+          "T4_TourProx_P02": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourProx_P03": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourProx_P04": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourProx_P05": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_TourProx_P06": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Tour_P01": {
+            "singleVisual": {}
+          },
+          "T4_Tour_P02": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Tour_P03": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Tour_P04": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Tour_P05": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T4_Tour_P06": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

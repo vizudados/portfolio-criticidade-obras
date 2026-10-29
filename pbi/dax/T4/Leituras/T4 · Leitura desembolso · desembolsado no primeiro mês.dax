@@ -1,0 +1,10 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: [Desembolso · realizado no mês] no primeiro mês com aba do recorte, até o de referência.
+@oraculo: carteira.serie[0].desembolsado_mes_rs 4.997.740,29
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ini = [T4 · Primeiro mês com aba]
+RETURN
+    CALCULATE ( [Desembolso · realizado no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _ini )

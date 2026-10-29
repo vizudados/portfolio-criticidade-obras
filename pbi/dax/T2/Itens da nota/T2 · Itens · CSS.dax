@@ -1,0 +1,15 @@
+/*
+@pasta: T2 Análise crítica\Itens da nota
+@formato: texto
+@descricao: CSS de Itens da nota (uma entrada por item, linhas de 76, minissérie à direita) e do subtítulo.
+@gerado: pbi/scripts/desenho_t2.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & "#htmlContent{padding:0!important}.htmlViewerEntry{display:block!important;margin:0!important;padding:0!important}.it{position:relative;height:76px;border-bottom:1px solid #E1E1E1;w"
+    & "hite-space:nowrap}.it .nm{position:absolute;left:0;top:12px;font-size:15px;line-height:19px;font-weight:600}.it .ln{position:absolute;left:0;right:165px;top:40px;display:flex;align"
+    & "-items:baseline;gap:10px;overflow:hidden}.it .ln b{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:14px;line-height:17px;font-variant-numeric:tabular-nums}.i"
+    & "t .ln span{font-size:13px;line-height:17px;color:#3B3B3F;overflow:hidden;text-overflow:ellipsis}.it .chi{position:absolute;right:0;top:11px}.it .sr{position:absolute;right:0;top:40"
+    & "px;width:141px;height:26px}.it .sr i{position:absolute;bottom:0;width:9px}.it .sr i.c{background:#A9CDB9}.it .sr i.p{background:#C9821F}.it .sr i.z{background:#C43737}.it .sr i.v{h"
+    & "eight:1px!important;background:#CFCCC6}.it .sr i.r{outline:1px solid #0B0B0C;outline-offset:1px}.it:hover{background:rgba(233,224,207,.3)}.ss{position:fixed;inset:0;font-size:15px;"
+    & "line-height:20px;color:#3B3B3F;white-space:nowrap}"

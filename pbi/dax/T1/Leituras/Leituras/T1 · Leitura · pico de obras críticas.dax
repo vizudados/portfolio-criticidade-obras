@@ -1,0 +1,16 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: 0
+@descricao: Maior número de obras críticas na nota num mês da janela (do primeiro mês da janela ao de referência).
+@oraculo: oráculo da régua antiga · bases de teste: 1 (DUNAS, mai/26)
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ),
+        "@c", [Nota · carteira · obras críticas] + 0
+    )
+RETURN
+    MAXX ( _meses, [@c] )

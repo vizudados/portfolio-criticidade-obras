@@ -1,0 +1,8 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: #,0
+@descricao: Área da obra em m² NBR (cadastro).
+@oraculo: obras[].m2_nbr · proximas[].m2_nbr
+@gerado: pbi/scripts/contas_t3.py
+*/
+SELECTEDVALUE ( dObra[M2] )

@@ -1,0 +1,18 @@
+/*
+@pasta: Capa\Contas
+@formato: texto
+@descricao: Texto do número da capa: [Ativos não consumidos · ref] escrito com a regra dos cartões da T1 (R$ com mil/mi (≥ 100 mi uma casa; 1 a 100 mi duas; mil a 1 mi inteiro), sinal U+2212 antes do R$). A capa só lê este texto; o cartão da T1 escreve o mesmo número com a mesma regra.
+@oraculo: o texto da T1 (valor pago e não aplicado na linha de baixo do cartão 'Resultado sem estoque' da T1); prova no motor por pbi/scripts/capa_provar.py
+@gerado: pbi/scripts/capa_medidas.py
+*/
+VAR _v = [Ativos não consumidos · ref]
+-- texto na regra dos cartões da T1 (desenho_projeto: R$ com mil/mi (≥ 100 mi uma casa; 1 a 100 mi duas; mil a 1 mi inteiro), sinal U+2212 antes do R$); vazio = '—'
+VAR _tA = ABS ( _v )
+VAR _tNu = SWITCH ( TRUE (), _tA >= 99950000, FORMAT ( _tA / 1000000, "0.0", "pt-BR" ), _tA >= 999500, FORMAT ( _tA / 1000000, "0.00", "pt-BR" ), _tA >= 999.5, FORMAT ( _tA / 1000, "0", "pt-BR" ), FORMAT ( _tA, "#,0", "pt-BR" ) )
+VAR _tUn = SWITCH ( TRUE (), _tA >= 999500, " mi", _tA >= 999.5, " mil", "" )
+VAR _tN = _tNu & _tUn
+VAR _tZero = _tN = "0"
+VAR _tS = IF ( _tZero, "", IF ( _v < 0, "−", "" ) )
+VAR _tTxt = IF ( ISBLANK ( _v ), "—", _tS & "R$ " & _tN )
+RETURN
+    _tTxt

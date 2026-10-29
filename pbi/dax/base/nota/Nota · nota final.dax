@@ -1,0 +1,14 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: Nota da obra (0 a 10): a soma dos pontos, só com todos os itens com dado (senão, vazio e a obra fica pendente). Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    IF (
+        [Nota · completa] = 1,
+        ROUND ( [Nota · pontos obtidos], 8 )
+    )
+)

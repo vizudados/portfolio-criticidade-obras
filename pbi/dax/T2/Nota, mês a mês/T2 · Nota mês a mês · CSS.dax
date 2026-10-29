@@ -1,0 +1,14 @@
+/*
+@pasta: T2 Análise crítica\Nota, mês a mês
+@formato: texto
+@descricao: CSS do painel 'A nota, mês a mês' (um HTML só, sem granularidade).
+@gerado: pbi/scripts/desenho_t2.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & ".nm2{position:fixed;inset:0}.nm2 .ar{position:absolute;left:0;top:30px;width:372px;height:220px}.nm2 .lm{position:absolute;left:0;right:0;height:0;border-top:1px dashed #6B6B70}.nm"
+    & "2 .lm span{position:absolute;right:0;top:-16px;font-size:12px;line-height:14px;color:#6B6B70}.nm2 .z{position:absolute;left:0;right:0;height:1px;background:#0B0B0C}.nm2 .b{position"
+    & ":absolute;bottom:0;box-sizing:border-box}.nm2 .b.s2{background:#C43737}.nm2 .b.s1{background:#C9821F}.nm2 .b.s0{background:#A9CDB9}.nm2 .b.sm{background:#FFFFFF;border:1px dashed #"
+    & "3B3B3F}.nm2 .v{position:absolute;width:50px;margin-left:-25px;text-align:center;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:14px;line-height:17px;white-s"
+    & "pace:nowrap;font-variant-numeric:tabular-nums}.nm2 .ms{position:absolute;width:44px;margin-left:-22px;text-align:center;font-size:13px;line-height:16px;color:#3B3B3F;white-space:no"
+    & "wrap}.nm2 .ms.ref{font-weight:600;color:#0B0B0C}.nm2 .ms.sem{opacity:.35}.nm2 .tx{position:absolute;left:0;right:0;bottom:0;font-size:14px;line-height:19px;color:#3B3B3F}"

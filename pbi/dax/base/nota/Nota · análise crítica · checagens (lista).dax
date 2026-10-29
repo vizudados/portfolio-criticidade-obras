@@ -1,0 +1,18 @@
+/*
+@pasta: Base\Nota
+@formato: texto
+@descricao: As checagens da aba do mês que falharam, separadas por '|' (conta|justificativa|previsto); vazio quando todas passam ou sem aba. Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _conta = INT ( ABS ( SUM ( fAnaliseCritica[Resultado] ) - SUM ( fAnaliseCritica[ResultadoRegra] ) ) < 1 )
+    VAR _just = INT ( NOT ( [Justificativa · em branco] = 1 ) )
+    VAR _prev = SELECTEDVALUE ( fAnaliseCritica[PrevAcum] )
+    VAR _ant = SELECTEDVALUE ( fAnaliseCritica[PrevAcumAnterior] )
+    VAR _naoCaiu = INT ( ISBLANK ( _prev ) || ISBLANK ( _ant ) || _prev >= _ant - 0.000001 )
+    VAR _t = { ( "conta", _conta ), ( "justificativa", _just ), ( "previsto", _naoCaiu ) }
+    RETURN
+        IF ( NOT ISEMPTY ( fAnaliseCritica ), CONCATENATEX ( FILTER ( _t, [Value2] = 0 ), [Value1], "|" ) )
+)

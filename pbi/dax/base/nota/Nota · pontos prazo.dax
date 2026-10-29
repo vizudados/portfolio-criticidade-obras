@@ -1,0 +1,20 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: Pontos do atraso (máx. 2): atraso ≤ 0,5 mês → 2 · 0,5 mês < atraso ≤ 1 mês → 1,5 · 1 mês < atraso ≤ 2 meses → 1 · 2 meses < atraso ≤ 3 meses → 0,5 · atraso > 3 meses → 0; vazio sem dado. Uma obra; com várias, soma.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+SUMX (
+    VALUES ( dObra[Obra] ),
+    VAR _x = [Nota · X prazo]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), SWITCH (
+            TRUE (),
+            _x <= 0.5, 2,
+            _x <= 1, 1.5,
+            _x <= 2, 1,
+            _x <= 3, 0.5,
+            0
+        ) )
+)

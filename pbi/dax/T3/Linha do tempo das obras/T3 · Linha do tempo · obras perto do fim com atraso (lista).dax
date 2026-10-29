@@ -1,0 +1,23 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: texto
+@descricao: Obras com 70% ou mais executado, atrás do cronograma e com término depois do mês de referência, pelo término. Obras com aba no mês de referência, separadas por '|'.
+@oraculo: POTENGI
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _obras =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@e", [Físico · executado acumulado · ref],
+            "@d", [Físico · desvio acumulado p.p. · ref],
+            "@ini", [Obra · início],
+            "@fim", [Obra · término previsto],
+            "@orc", [Orçamento · ref],
+            "@tipo", [Tipo de orçamento · ref]
+        ),
+        NOT ISBLANK ( [@e] )
+    )
+RETURN
+    CONCATENATEX ( FILTER ( _obras, [@e] >= 0.70 && [@d] < 0 && [@fim] > _ref ), dObra[Obra], "|", [@fim], ASC, dObra[Obra], ASC )

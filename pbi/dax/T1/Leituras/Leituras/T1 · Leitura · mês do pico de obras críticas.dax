@@ -1,0 +1,16 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: dd/mm/yyyy
+@descricao: Primeiro mês da janela em que as obras críticas na nota chegaram ao pico (vazio quando nenhuma obra foi crítica).
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _pico = [T1 · Leitura · pico de obras críticas]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ),
+        "@c", [Nota · carteira · obras críticas] + 0
+    )
+RETURN
+    IF ( _pico > 0, MINX ( FILTER ( _meses, [@c] = _pico ), dMes[Mes] ) )

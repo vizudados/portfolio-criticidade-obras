@@ -1,0 +1,27 @@
+/*
+@pasta: T3 Avanço físico\Curva S
+@formato: texto
+@descricao: Subtítulo da Curva S com os meses da série da obra em foco na janela (jan/26 a ago/26) e a legenda na linha do título (executado, previsto, executado abaixo do previsto), Figma 387:4403. Obra sem previsto na planilha (JANGADA): o subtítulo fala só do executado e a legenda diz 'sem previsto na planilha'.
+@gerado: pbi/scripts/desenho_t3.py
+*/
+-- 1 · Leituras
+VAR _ini = [T3 · Série · primeiro mês da obra · foco]
+VAR _ref = [Mês de referência]
+VAR _p = [Físico · previsto acumulado · foco]
+VAR _e = [Físico · executado acumulado · foco]
+-- 2 · Textos
+VAR _txtIni = FORMAT ( _ini, "mmm/yy", "pt-BR" )
+VAR _txtRef = FORMAT ( _ref, "mmm/yy", "pt-BR" )
+VAR _txtMeses = IF ( ISBLANK ( _ini ) || _ini = _ref, _txtRef, _txtIni & " a " & _txtRef )
+VAR _semP = ISBLANK ( _p ) && NOT ISBLANK ( _e )
+VAR _txtSub = IF ( _semP, "executado acumulado, ", "previsto × executado acumulado, " ) & _txtMeses & " · % do orçamento"
+-- 4 · Marcação
+VAR _lgExec =
+    "<svg width='18' height='3'><path d='M0 1.5H18' stroke='#0B0B0C' stroke-width='3'/></svg><span>executado</span>"
+VAR _lgPrev =
+    "<svg width='18' height='2'><path d='M0 1H18' stroke='#3B3B3F' stroke-width='2' stroke-dasharray='5 4'/></svg>"
+        & "<span>previsto</span><i class='ar'></i><span>executado abaixo do previsto</span>"
+RETURN
+    "<div class='u pc'><span class='sub'>" & _txtSub & "</span><div class='lg'>" & _lgExec
+        & IF ( _semP, "<span class='sp'>· sem previsto na planilha</span>", _lgPrev )
+    & "</div></div>"

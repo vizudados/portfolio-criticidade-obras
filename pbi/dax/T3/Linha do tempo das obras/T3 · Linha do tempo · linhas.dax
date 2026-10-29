@@ -1,0 +1,19 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: 0
+@descricao: Quantas obras a Linha do tempo desenha no recorte do visual (posição, início e término preenchidos): a altura de cada linha sai daí (F4, a lista ocupa o painel inteiro).
+@oraculo: 7 em set/26 (as sete obras em andamento)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obras =
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@pos", [T3 · Linha do tempo · posição],
+            "@ini", [Obra · início],
+            "@fim", [Obra · término previsto]
+        ),
+        ALLSELECTED ( dObra[Obra] )
+    )
+RETURN
+    COUNTROWS ( FILTER ( _obras, NOT ISBLANK ( [@pos] ) && NOT ISBLANK ( [@ini] ) && NOT ISBLANK ( [@fim] ) ) ) + 0

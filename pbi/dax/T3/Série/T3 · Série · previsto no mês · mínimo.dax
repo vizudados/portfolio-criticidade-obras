@@ -1,0 +1,16 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: 0.00%
+@descricao: Menor % previsto para o mês na série da obra do contexto, na janela (meses sem o valor na planilha ficam de fora).
+@oraculo: min(obras[].serie[].prev_mes)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ref ),
+        "@v", VAR _m = dMes[Mes] RETURN CALCULATE ( [Físico · previsto no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _m )
+    )
+RETURN
+    MINX ( FILTER ( _meses, NOT ISBLANK ( [@v] ) ), [@v] )

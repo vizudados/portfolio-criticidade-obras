@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Recorte
+@formato: 0
+@descricao: 1 quando o seletor de obras do drawer recorta a carteira; 0 com todas as obras.
+@gerado: pbi/scripts/contas_base.py
+*/
+IF ( ISFILTERED ( dObra ), 1, 0 )

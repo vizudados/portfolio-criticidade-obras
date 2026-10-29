@@ -1,0 +1,38 @@
+/*
+@pasta: T1 Visão geral\Tour
+@formato: texto
+@descricao: Passo 7 de 9 do tour da Visão geral (A leitura do mês): gestor (pose P2) no canto direita, balão de 560 px, ligação ao anel. Só desenha; lê a medida da pose.
+@gerado: pbi/scripts/tour_lib.py
+*/
+-- 4 · Marcação
+"<div class='u tr'>"
+    & "<div class='rc' style='left:344px;top:936px;width:1020px;height:112px'></div>"
+    & "<svg class='sv' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M362 930H358A20 20 0 0 0 338 950V954M1346 930H1350A20 20 0 0 1 1370 950V954M362 1054H35"
+    & "8A20 20 0 0 1 338 1034V1030M1346 1054H1350A20 20 0 0 0 1370 1034V1030' fill='none' stroke='#FFFFFF' "
+    & "stroke-width='3' stroke-linecap='round'/><path d='M1360 732L1360 936' fill='none' stroke='#E9E0CF' s"
+    & "troke-width='2' stroke-dasharray='2 6' stroke-linecap='round'/><circle cx='1360' cy='936' r='3' fill"
+    & "='#E9E0CF' stroke='#0B0B0C' stroke-width='2'/></svg>"
+    & "<div class='nr' style='left:1390px;top:749px;width:469px;height:331px'>"
+    & [Comum · Tour · Pose P2 · HTML]
+    & "</div>"
+    & "<svg class='bq' width='1920' height='1080' viewBox='0 0 1920 1080' aria-hidden='true' focusable='fal"
+    & "se'><path d='M1508 728L1508 732Q1517.71 837.437 1593.84 916.954L1596.16 916.046Q1533.87 836.983 1538"
+    & " 732L1538 728Z' fill='#FFFFFF'/></svg>"
+    & "<section class='bl' role='dialog' aria-label='Tour guiado, passo 7 de 9: A leitura do mês' style='le"
+    & "ft:1336px;top:422px;width:560px;height:310px'>"
+    & "<span class='sl' style='left:32px;top:28px'>Passo 7 de 9</span>"
+    & "<h2 class='tt' style='left:32px;top:68px;width:496px'>A leitura do mês</h2>"
+    & "<p class='tx' style='left:32px;top:116px;width:496px'>Esta faixa traz o resumo escrito do mês: quant"
+    & "as obras estão em cada status da nota, inclusive as pendentes, e qual obra mais perde pontos, com os"
+    & " itens em que ela perde. O texto é montado com os números da tela e muda junto com os filtros.</p>"
+    & "<div class='rg' style='left:32px;top:262px;width:174px;gap:6px'><i style='width:14px;background:rgba"
+    & "(11,11,12,.45)'></i><i style='width:14px;background:rgba(11,11,12,.45)'></i><i style='width:14px;bac"
+    & "kground:rgba(11,11,12,.45)'></i><i style='width:14px;background:rgba(11,11,12,.45)'></i><i style='wi"
+    & "dth:14px;background:rgba(11,11,12,.45)'></i><i style='width:14px;background:rgba(11,11,12,.45)'></i>"
+    & "<i style='width:14px;background:#0B0B0C'></i><i style='width:14px;background:#E1E1E1'></i><i style='"
+    & "width:14px;background:#E1E1E1'></i></div>"
+    & "<span class='bt pl' style='left:228px;top:236px;width:64px;height:56px'>Pular</span>"
+    & "<span class='bt s' style='left:302px;top:242px;width:92px'>← Voltar</span>"
+    & "<span class='bt p' style='left:404px;top:242px;width:124px'>Seguir →</span>"
+    & "</section></div>"

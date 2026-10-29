@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Obra
+@formato: 0.00%
+@descricao: Resultado aplicado ÷ orçamento (na carteira, soma ÷ soma).
+@gerado: pbi/scripts/contas_base.py
+*/
+DIVIDE ( [Resultado aplicado], [Orçamento] )

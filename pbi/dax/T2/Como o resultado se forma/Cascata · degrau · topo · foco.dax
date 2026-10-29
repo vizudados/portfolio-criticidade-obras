@@ -1,0 +1,21 @@
+/*
+@pasta: T2 Análise crítica\Como o resultado se forma\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Onde o degrau da linha termina na cascata da obra em foco (o maior dos dois extremos da barra).
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _deg = SELECTEDVALUE ( dDegrau[Degrau] )
+VAR _va = [Crédito do orçamento · foco] + 0
+VAR _ca = [Custo aplicado · foco] + 0
+VAR _ra = [Resultado aplicado · foco] + 0
+VAR _ar = [A realizar · foco] + 0
+VAR _r = [Resultado da obra · foco] + 0
+RETURN
+    SWITCH (
+        _deg,
+        "ValorAgregado", MAX ( 0, _va ),
+        "CustoAplicado", MAX ( _va, _va - _ca ),
+        "ResultadoAplicado", MAX ( 0, _ra ),
+        "ARealizar", MAX ( _ra, _ra + _ar ),
+        "Resultado", MAX ( 0, _r )
+    )

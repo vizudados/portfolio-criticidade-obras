@@ -1,0 +1,17 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: Itens com valor na base, mas fora da faixa válida (PPC fora de 0 a 100%; aprovados, conformes ou entregues maior que o total): ficam sem pontos e já contam em 'itens faltando na base'. Soma pelas obras presentes.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+SUMX (
+    VALUES ( dObra[Obra] ),
+    IF (
+        [Nota · obra presente] = 1,
+        INT ( NOT ISBLANK ( MAX ( fBaseObra[PPC] ) ) && ISBLANK ( [Nota · X PPC] ) )
+            + INT ( NOT ISBLANK ( SUM ( fBaseObra[AprovadosPrimeira] ) ) && SUM ( fBaseObra[ServicosVerificados] ) > 0 && ISBLANK ( [Nota · X inspeção] ) )
+            + INT ( NOT ISBLANK ( SUM ( fBaseObra[NR18Conformes] ) ) && SUM ( fBaseObra[NR18Aplicaveis] ) > 0 && ISBLANK ( [Nota · X NR-18] ) )
+            + INT ( NOT ISBLANK ( SUM ( fBaseObra[PedidosNoPrazo] ) ) && SUM ( fBaseObra[PedidosPrevistos] ) > 0 && ISBLANK ( [Nota · X entregas] ) )
+    )
+)

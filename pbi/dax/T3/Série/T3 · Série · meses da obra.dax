@@ -1,0 +1,16 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: 0
+@descricao: Meses com aba da obra do contexto na janela, do primeiro mês da janela ao de referência (8 na REDINHA em ago/26 com a janela de 12; 3 na TIROL).
+@oraculo: len(obras[].serie)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ref ),
+        "@e", VAR _m = dMes[Mes] RETURN CALCULATE ( [Físico · executado acumulado], REMOVEFILTERS ( dMes ), dMes[Mes] = _m )
+    )
+RETURN
+    COUNTROWS ( FILTER ( _meses, NOT ISBLANK ( [@e] ) ) )

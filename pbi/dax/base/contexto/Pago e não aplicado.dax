@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Obra
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Pago e ainda não virou obra: estoque de materiais + adiantamentos de materiais e de serviços.
+@gerado: pbi/scripts/contas_base.py
+*/
+[Estoque de materiais] + [Adiantamento de materiais] + [Adiantamento de serviços]

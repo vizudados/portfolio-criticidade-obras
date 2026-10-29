@@ -1,0 +1,16 @@
+/*
+@pasta: Base\Obra
+@formato: +0.00;-0.00;0.00
+@descricao: Resultado % − resultado % do mês anterior, em pontos percentuais; compara só as obras com aba no mês e no mês anterior (vazio sem nenhuma).
+@oraculo: obras[].ultimo.indicadores.variacao_resultado_pp · carteira.variacao_resultado_pp
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _comp = FILTER ( VALUES ( fAnaliseCritica[Obra] ), NOT ISBLANK ( [Resultado · mês anterior] ) )
+RETURN
+    IF (
+        NOT ISEMPTY ( _comp ),
+        (
+            DIVIDE ( SUMX ( _comp, [Resultado da obra] ), SUMX ( _comp, [Orçamento] ) )
+                - DIVIDE ( SUMX ( _comp, [Resultado · mês anterior] ), SUMX ( _comp, [Orçamento · mês anterior] ) )
+        ) * 100
+    )

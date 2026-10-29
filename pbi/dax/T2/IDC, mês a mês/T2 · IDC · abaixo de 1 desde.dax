@@ -1,0 +1,14 @@
+/*
+@pasta: T2 Análise crítica\IDC, mês a mês\Contas
+@formato: dd/mm/yyyy
+@descricao: Primeiro mês da sequência atual de IDC abaixo de 1 que chega ao mês de referência (vazio quando o IDC de referência não está abaixo de 1).
+@oraculo: dados/_gabarito/nota_previa.csv (x_idc)
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses = ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), "@i", VAR _v = [IDC · foco no mês] RETURN IF ( NOT ISBLANK ( _v ), ROUND ( _v, 2 ) ) )
+VAR _ultimoOk = MAXX ( FILTER ( _meses, NOT ISBLANK ( [@i] ) && [@i] >= 1 ), dMes[Mes] )
+VAR _abaixo = FILTER ( _meses, NOT ISBLANK ( [@i] ) && [@i] < 1 && ( ISBLANK ( _ultimoOk ) || dMes[Mes] > _ultimoOk ) )
+RETURN
+    IF ( MAXX ( FILTER ( _meses, dMes[Mes] = _ref ), [@i] ) < 1, MINX ( _abaixo, dMes[Mes] ) )

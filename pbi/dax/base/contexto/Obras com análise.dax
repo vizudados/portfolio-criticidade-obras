@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Obra
+@formato: 0
+@descricao: Obras com aba no recorte (contexto de mês e de obra).
+@oraculo: carteira.obras_em_andamento
+@gerado: pbi/scripts/contas_base.py
+*/
+DISTINCTCOUNT ( fAnaliseCritica[Obra] )

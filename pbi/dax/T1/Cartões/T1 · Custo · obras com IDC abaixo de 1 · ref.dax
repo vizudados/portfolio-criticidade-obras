@@ -1,0 +1,11 @@
+/*
+@pasta: T1 Visão geral\Cartões\Contas
+@formato: 0
+@descricao: Obras com aba no mês de referência e IDC abaixo de 1 (gastam mais do que agregam).
+@oraculo: dados/_gabarito/nota_previa.csv (x_idc < 1)
+@gerado: pbi/scripts/contas_t1.py
+*/
+VAR _mes = [Mês de referência]
+VAR _obras = CALCULATETABLE ( FILTER ( VALUES ( dObra[Obra] ), NOT ISEMPTY ( RELATEDTABLE ( fAnaliseCritica ) ) ), REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )
+RETURN
+    COUNTROWS ( FILTER ( _obras, CALCULATE ( [IDC] < 1, REMOVEFILTERS ( dMes ), dMes[Mes] = _mes ) ) ) + 0

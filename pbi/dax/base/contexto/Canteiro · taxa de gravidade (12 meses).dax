@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Canteiro
+@formato: 0
+@descricao: Taxa de gravidade nos 12 meses até o mês (NBR 14280): dias perdidos × 1.000.000 ÷ HHT. Só informação.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _h = [Canteiro · HHT 12 meses]
+RETURN
+    IF ( _h > 0, DIVIDE ( [Canteiro · dias perdidos 12 meses] * 1000000, _h ) )

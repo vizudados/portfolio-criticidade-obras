@@ -1,0 +1,11 @@
+/*
+@pasta: Base\Referência
+@formato: 0
+@descricao: [Nota · status] no mês de referência (seletor do drawer; sem escolha, o último mês), lida da linha de dRankingNota (a mesma medida, guardada no refresh), sem recalcular os itens.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = [Mês de referência]
+VAR _o = SELECTEDVALUE ( dObra[Obra] )
+VAR _linha = FILTER ( dRankingNota, dRankingNota[Obra] = _o && dRankingNota[Mes] = _mes )
+RETURN
+    IF ( HASONEVALUE ( dObra[Obra] ), MAXX ( _linha, dRankingNota[Status] ) )

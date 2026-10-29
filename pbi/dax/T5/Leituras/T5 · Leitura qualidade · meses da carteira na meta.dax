@@ -1,0 +1,15 @@
+/*
+@pasta: T5 Canteiro\Leituras\Contas
+@formato: 0
+@descricao: Meses da janela em que a carteira (soma ÷ soma) aprovou na 1.ª inspeção pelo menos o ponto cheio da nota. Ex. set/26, 12 meses: 1 (mar/26, 95,0%).
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 1
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _ini = [Série · primeiro mês]
+VAR _ref = [Mês de referência]
+VAR _lim = [Nota · limite inspeção · ponto cheio]
+RETURN
+    COUNTROWS ( FILTER ( ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ),
+        "@v", [Canteiro · aprovação na 1.ª inspeção]
+    ), NOT ISBLANK ( [@v] ) && [@v] >= _lim ) ) + 0

@@ -1,0 +1,11 @@
+/*
+@pasta: Base\Mês
+@formato: dd/mm/yyyy
+@descricao: Mês escolhido no seletor do drawer (dMesRef, desconectada); sem escolha, ou com a linha "Último mês", o mês dessa linha (o mais recente que pelo menos metade das obras já fechou).
+@oraculo: carteira.mes_ref
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _auto = SELECTEDVALUE ( dMesRef[Automatico], TRUE () )
+VAR _ultimo = CALCULATE ( MAX ( dMesRef[MesRef] ), REMOVEFILTERS ( dMesRef ), dMesRef[Automatico] = TRUE () )
+RETURN
+    IF ( _auto, _ultimo, MAX ( dMesRef[MesRef] ) )

@@ -1,0 +1,10 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: 0
+@descricao: Meses comparáveis da janela (com variação do resultado da carteira) em que a variação não caiu: alta ou igual ao mês anterior (comparáveis menos meses com queda). Diz 'subiu em X dos Y meses' no 'o que explica'. Ex. ago/26: 3 (7 comparáveis, 4 com queda).
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _comp = [T4 · Leitura mês · meses comparáveis]
+VAR _queda = [T4 · Leitura mês · meses com queda]
+RETURN
+    _comp - _queda

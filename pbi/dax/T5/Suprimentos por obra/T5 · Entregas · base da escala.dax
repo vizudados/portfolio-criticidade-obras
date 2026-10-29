@@ -1,0 +1,14 @@
+/*
+@pasta: T5 Canteiro\Suprimentos por obra\Contas
+@formato: 0.00%
+@descricao: Começo da trilha das entregas (o fim é 100%): 60%, ou menos quando alguma obra do visual fica abaixo disso (arredondado para baixo de 10 em 10 pontos, com 5 de folga). Ex. set/26: 60%.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 0,6
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _mn =
+    MINX (
+        FILTER ( ALLSELECTED ( dObra[Obra] ), NOT ISBLANK ( [Canteiro · entregas no prazo · ref] ) ),
+        [Canteiro · entregas no prazo · ref]
+    )
+RETURN
+    MIN ( 0.6, FLOOR ( _mn - 0.05, 0.1 ) )

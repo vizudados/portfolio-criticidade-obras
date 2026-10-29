@@ -1,0 +1,8 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: texto
+@descricao: A primeira das dimensões que mais perdem pontos na carteira no mês de referência; vazio sem perda.
+@oraculo: dados/_gabarito/nota_previa.csv · set/26: Prazo
+@gerado: pbi/scripts/leituras_t1.py
+*/
+PATHITEM ( [T1 · Leitura · dimensões que mais perdem (lista)] & "", 1 )

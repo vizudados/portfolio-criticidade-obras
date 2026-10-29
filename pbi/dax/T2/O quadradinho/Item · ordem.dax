@@ -1,0 +1,7 @@
+/*
+@pasta: T2 Análise crítica\O quadradinho\Contas
+@formato: 0
+@descricao: Posição do item no quadradinho (1 a 10), para ordenar as linhas.
+@gerado: pbi/scripts/contas_t2.py
+*/
+SELECTEDVALUE ( dItem[Ordem] )

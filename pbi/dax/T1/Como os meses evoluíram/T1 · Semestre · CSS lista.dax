@@ -1,0 +1,16 @@
+/*
+@pasta: T1 Visão geral\Como os meses evoluíram
+@formato: texto
+@descricao: CSS do mapa obra × mês de Como os meses evoluíram (uma entrada por mês da janela).
+@gerado: pbi/scripts/desenho_t1.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & "#htmlContent{display:block!important;height:100vh;padding:0!important}.htmlViewerEntry{display:block!important;margin:0!important;padding:0!important}.cm{position:fixed;top:0;heigh"
+    & "t:236px}.cm .cl{position:absolute;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-siz"
+    & "e:12px;line-height:14px;font-variant-numeric:tabular-nums;font-style:normal;transition:filter .15s;animation:mpEnt .3s ease-out backwards}.cm:hover .cl,.htmlViewerEntry.hover .cm ."
+    & "cl{filter:brightness(.94)}.cm .s2{background:#C43737;color:#FFFFFF}.cm .s1{background:#C9821F;color:#0B0B0C}.cm .s0{background:#A9CDB9;color:#1E5C43}.cm .sm{background:#FFFFFF;bord"
+    & "er:1px dashed #3B3B3F;color:#3B3B3F}.cm .sx{background:#F2F0EB}.cm .nm{position:absolute;left:-104px;width:98px;display:flex;align-items:center;font-family:'Barlow U','Segoe UI',sa"
+    & "ns-serif;font-weight:600;font-size:12px;line-height:14px;letter-spacing:.6px;color:#0B0B0C;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cm .ms{position:absolute;left:"
+    & "-12px;right:-12px;text-align:center;font-size:13px;line-height:16px;color:#6B6B70;white-space:nowrap}.cm .ms.ref{font-weight:600;color:#0B0B0C}@keyframes mpEnt{from{opacity:0}}@med"
+    & "ia (prefers-reduced-motion:reduce){.cm .cl{animation:none}}"

@@ -1,0 +1,85 @@
+/// Mês de referência (seletor do drawer, de escolha única). Desconectada de propósito: as medidas leem o mês escolhido e os gráficos mês a mês mantêm o eixo do primeiro mês do histórico (pInicioHistorico) até ele. A primeira linha é o "Último mês", que acompanha a atualização: o seletor de escolha única marca a primeira linha quando nada está escolhido, e o rótulo dela muda a cada mês novo, então a escolha salva cai de volta nela.
+table dMesRef
+	lineageTag: a1fe8ce6-0c84-50a2-8150-392065c2daeb
+
+	/// Primeiro dia do mês (na linha "Último mês", o mais recente que pelo menos metade das obras já fechou).
+	column MesRef
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 05bbcb2b-d95d-5051-ba17-8618bba08821
+		summarizeBy: none
+		sourceColumn: MesRef
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Rótulo curto: jun/26 (na linha automática, "último · jun/26").
+	column MesRefAno
+		dataType: string
+		lineageTag: 365240ea-8173-547b-b662-3e14520a0758
+		summarizeBy: none
+		sourceColumn: MesRefAno
+		sortByColumn: OrdemRef
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Rótulo longo: junho de 2026 (na linha automática, "Último mês · junho de 2026").
+	column MesRefLongo
+		dataType: string
+		isKey
+		lineageTag: e2927f72-8e79-56ad-a6ec-2b46e360a8fd
+		summarizeBy: none
+		sourceColumn: MesRefLongo
+		sortByColumn: OrdemRef
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem no seletor: 0 = último mês automático; 1 = mês mais recente.
+	column OrdemRef
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 209a6a9e-9a52-5c5a-9bd0-9956f9adfa4e
+		summarizeBy: none
+		sourceColumn: OrdemRef
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Verdadeiro só na linha "Último mês" (não conta como filtro escolhido).
+	column Automatico
+		dataType: boolean
+		isHidden
+		lineageTag: b1dc9d5d-34bb-53fc-9c3f-dba428c53a7b
+		summarizeBy: none
+		sourceColumn: Automatico
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dMesRef = m
+		mode: import
+		source =
+				let
+				    Origem = Table.SelectColumns(dMes, {"Mes", "MesAno", "MesAnoLongo", "Ordem"}),
+				    Renomeado = Table.RenameColumns(Origem, {{"Mes", "MesRef"}, {"MesAno", "MesRefAno"}, {"MesAnoLongo", "MesRefLongo"},
+				        {"Ordem", "OrdemRef"}}),
+				    Total = Table.RowCount(Renomeado),
+				    Meses = Table.AddColumn(
+				        Table.TransformColumns(Renomeado, {{"OrdemRef", each Total + 1 - _, Int64.Type}}),
+				        "Automatico", each false, type logical),
+				    // "Último mês" = o mais recente que pelo menos metade das obras já fechou: uma obra adiantada (aba de set/26 com
+				    // as outras em ago/26) não puxa a referência para um mês quase vazio; ela continua escolhível na lista
+				    PorMes = Table.Group(fAnaliseCritica, {"Mes"}, {{"Obras", each List.Count(List.Distinct([Obra])), Int64.Type}}),
+				    TotalObras = List.Count(List.Distinct(fAnaliseCritica[Obra])),
+				    Fechados = Table.SelectRows(PorMes, each [Obras] * 2 >= TotalObras),
+				    MesAuto = if Table.IsEmpty(Fechados) then List.Max(Renomeado[MesRef]) else List.Max(Fechados[Mes]),
+				    Ultimo = Table.First(Table.SelectRows(Renomeado, each [MesRef] = MesAuto)),
+				    Automatica = #table(
+				        type table [MesRef = date, MesRefAno = text, MesRefLongo = text, OrdemRef = Int64.Type, Automatico = logical],
+				        {{Ultimo[MesRef], "último · " & Ultimo[MesRefAno], "Último mês · " & Ultimo[MesRefLongo], 0, true}}),
+				    Tabela = if Total = 0 then Meses else Table.Combine({Automatica, Meses})
+				in
+				    Tabela
+
+	annotation PBI_ResultType = Table
+

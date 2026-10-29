@@ -1,0 +1,15 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: texto
+@descricao: Obras do recorte que tiveram justificativa exigida na janela e não preencheram nenhuma, da que mais deixou em branco para a que menos, separadas por '|'.
+@oraculo: CAJUEIRO (0 de 4)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _obras =
+    ADDCOLUMNS (
+        VALUES ( dObra[Obra] ),
+        "@e", [T4 · Obra · justificativas exigidas no período],
+        "@p", [T4 · Obra · justificativas preenchidas no período]
+    )
+RETURN
+    CONCATENATEX ( FILTER ( _obras, [@e] > 0 && [@p] = 0 ), dObra[Obra], "|", [@e], DESC, dObra[Obra], ASC )

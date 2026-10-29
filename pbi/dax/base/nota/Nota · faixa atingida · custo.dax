@@ -1,0 +1,22 @@
+/*
+@pasta: Base\Nota
+@formato: texto
+@descricao: Faixa do custo em que o X caiu (rótulo gerado dos limites). Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _x = [Nota · X custo]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), SWITCH (
+            TRUE (),
+            _x >= 1, "IDC ≥ 1,00",
+            _x >= 0.98, "0,98 ≤ IDC < 1,00",
+            _x >= 0.96, "0,96 ≤ IDC < 0,98",
+            _x >= 0.94, "0,94 ≤ IDC < 0,96",
+            _x >= 0.92, "0,92 ≤ IDC < 0,94",
+            _x >= 0.9, "0,90 ≤ IDC < 0,92",
+            "IDC < 0,90"
+        ) )
+)

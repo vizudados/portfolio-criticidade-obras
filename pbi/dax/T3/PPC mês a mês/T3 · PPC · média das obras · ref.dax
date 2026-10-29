@@ -1,0 +1,10 @@
+/*
+@pasta: T3 Avanço físico\PPC mês a mês\Contas
+@formato: 0.00%
+@descricao: PPC médio das obras com base no mês de referência (média simples, como a carteira lê o PPC).
+@oraculo: média de x_ppc em set/26
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE ( [Canteiro · PPC], REMOVEFILTERS ( dObra[Obra] ), REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

@@ -1,0 +1,7 @@
+/*
+@pasta: T2 Análise crítica\Como o resultado se forma\Contas
+@formato: 0
+@descricao: 1 quando o degrau da linha entra na cascata da obra em foco (todos, sempre que há degrau na linha).
+@gerado: pbi/scripts/contas_t2.py
+*/
+IF ( NOT ISBLANK ( SELECTEDVALUE ( dDegrau[Degrau] ) ), 1 )

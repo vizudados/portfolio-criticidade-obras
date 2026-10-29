@@ -1,0 +1,8 @@
+/*
+@pasta: T5 Canteiro\Cartões\Contas
+@formato: dd/mm/yyyy
+@descricao: Primeiro mês com base complementar das obras do recorte no histórico do painel. Ex.: out/25.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv): 01/10/2025
+@gerado: pbi/scripts/contas_t5.py
+*/
+CALCULATE ( MIN ( fBaseObra[Mes] ), REMOVEFILTERS ( dMes ) )

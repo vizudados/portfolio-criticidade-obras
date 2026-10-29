@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Obra
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Valor agregado (crédito do orçamento) − custo aplicado: o resultado da planilha sem o que ainda é promessa (saldo de contrato e equipamentos). Na carteira, soma.
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _ca = [Custo aplicado]
+RETURN
+    IF ( NOT ISBLANK ( _ca ), [Crédito do orçamento] - _ca )

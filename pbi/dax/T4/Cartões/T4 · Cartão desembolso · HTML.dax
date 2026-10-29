@@ -1,0 +1,153 @@
+/*
+@pasta: T4 Resultado no tempo\Cartões
+@formato: texto
+@descricao: Cartão 'Desembolso do mês': desembolsado, desvio sobre o previsto (só as obras com previsto; preto também quando negativo) e o previsto; verso com a régua da previsão de caixa da nota (o desvio de cada obra, para mais ou para menos; rótulos lidos das contas). Só lê contas · ref.
+@gerado: pbi/scripts/desenho_t4.py
+*/
+-- 1 · Leituras
+VAR _des = [Desembolso · realizado no mês · ref]
+VAR _prev = [Desembolso · previsto no mês · ref]
+VAR _desv = [T4 · Desembolso · desvio no mês · com previsto · ref]
+VAR _fx = [T4 · Desembolso · faixas do fluxo de caixa (lista)]
+-- 2 · Textos
+VAR _tdA = ABS ( _des )
+VAR _tdNu = SWITCH ( TRUE (), _tdA >= 99950000, FORMAT ( _tdA / 1000000, "0.0", "pt-BR" ), _tdA >= 999500, FORMAT ( _tdA / 1000000, "0.00", "pt-BR" ), _tdA >= 999.5, FORMAT ( _tdA / 1000, "0", "pt-BR" ), FORMAT ( _tdA, "#,0", "pt-BR" ) )
+VAR _tdUn = SWITCH ( TRUE (), _tdA >= 999500, " mi", _tdA >= 999.5, " mil", "" )
+VAR _tdN = _tdNu & _tdUn
+VAR _tdZero = _tdN = "0"
+VAR _tdS = IF ( _tdZero, "", IF ( _des < 0, "−", "" ) )
+VAR _tdTxt = IF ( ISBLANK ( _des ), "—", _tdS & "R$ " & _tdN )
+VAR _tpA = ABS ( _prev )
+VAR _tpNu = SWITCH ( TRUE (), _tpA >= 99950000, FORMAT ( _tpA / 1000000, "0.0", "pt-BR" ), _tpA >= 999500, FORMAT ( _tpA / 1000000, "0.00", "pt-BR" ), _tpA >= 999.5, FORMAT ( _tpA / 1000, "0", "pt-BR" ), FORMAT ( _tpA, "#,0", "pt-BR" ) )
+VAR _tpUn = SWITCH ( TRUE (), _tpA >= 999500, " mi", _tpA >= 999.5, " mil", "" )
+VAR _tpN = _tpNu & _tpUn
+VAR _tpZero = _tpN = "0"
+VAR _tpS = IF ( _tpZero, "", IF ( _prev < 0, "−", "" ) )
+VAR _tpTxt = IF ( ISBLANK ( _prev ), "—", _tpS & "R$ " & _tpN )
+VAR _tvN = FORMAT ( ABS ( _desv ) * 100, "0", "pt-BR" )
+VAR _tvS = SWITCH ( TRUE (), ROUND ( _desv * 100, 0 ) < 0, "−", ROUND ( _desv * 100, 0 ) > 0, "+", "" )
+VAR _tvTxt = IF ( ISBLANK ( _desv ), "—", _tvS & _tvN & "%" )
+VAR _txtCtx = "⁅" & _tpTxt & "⁆" & " previsto para o mês"
+VAR _txtRegra = "Desembolsado ÷ previsto − 1. Na nota, por obra, para mais ou para menos:"
+VAR _fxN = IF ( ISBLANK ( _fx ), 0, PATHLENGTH ( _fx ) )
+/* da faixa crítica (vermelha) à de pontos cheios (sálvia) */
+VAR _htmlRegua =
+    CONCATENATEX (
+        GENERATESERIES ( 1, _fxN ),
+        "<i class='mk mk" & SWITCH ( TRUE (), [Value] = 1, 2, [Value] = _fxN, 0, 1 ) & "'></i><span>"
+            & PATHITEM ( _fx, [Value] ) & "</span>",
+        "",
+        [Value], ASC
+    ) /* lista */
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _tdKP = LEN ( _tdNu ) > 0
+VAR _tdKN = IF ( _tdKP, _tdNu )
+VAR _tdKS = SUBSTITUTE ( SUBSTITUTE ( _tdKN, ".", "" ), ",", "" )
+VAR _tdKT = IFERROR ( VALUE ( _tdKS ), -1 )
+VAR _tdKOk = _tdKP && _tdKT >= 2 && FORMAT ( _tdKT, REPT ( "0", LEN ( _tdKS ) ) ) = _tdKS
+VAR _tdKD = IF ( CONTAINSSTRING ( _tdKN, "," ), LEN ( _tdKN ) - SEARCH ( ",", _tdKN ), 0 )
+VAR _tdKM = IF ( CONTAINSSTRING ( _tdKN, "." ), "#,##0", "0" ) & IF ( _tdKD > 0, "." & REPT ( "0", _tdKD ) )
+VAR _tdKOd =
+    IF (
+        _tdKOk,
+        "<o-d><o-v>" & _tdKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tdKN, FORMAT ( ROUND ( _tdKT * [@odf] / 1000, 0 ) / POWER ( 10, _tdKD ), _tdKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tdNu
+    )
+VAR _tdOd = IF ( ISBLANK ( _des ), _tdTxt, _tdS & "R$ " & _tdKOd & _tdUn )
+VAR _tvKP = LEN ( _tvN ) > 0
+VAR _tvKN = IF ( _tvKP, _tvN )
+VAR _tvKS = SUBSTITUTE ( SUBSTITUTE ( _tvKN, ".", "" ), ",", "" )
+VAR _tvKT = IFERROR ( VALUE ( _tvKS ), -1 )
+VAR _tvKOk = _tvKP && _tvKT >= 2 && FORMAT ( _tvKT, REPT ( "0", LEN ( _tvKS ) ) ) = _tvKS
+VAR _tvKD = IF ( CONTAINSSTRING ( _tvKN, "," ), LEN ( _tvKN ) - SEARCH ( ",", _tvKN ), 0 )
+VAR _tvKM = IF ( CONTAINSSTRING ( _tvKN, "." ), "#,##0", "0" ) & IF ( _tvKD > 0, "." & REPT ( "0", _tvKD ) )
+VAR _tvKOd =
+    IF (
+        _tvKOk,
+        "<o-d><o-v>" & _tvKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tvKN, FORMAT ( ROUND ( _tvKT * [@odf] / 1000, 0 ) / POWER ( 10, _tvKD ), _tvKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tvN
+    )
+VAR _tvOd = IF ( ISBLANK ( _desv ), _tvTxt, _tvS & _tvKOd & "%" )
+-- 4 · Marcação
+VAR _saidaHtml =
+    "<div class='u kc' tabindex='0'>"
+        & "<div class='lado frente'>"
+            & "<p class='ab vs eb'>" & "Desembolso do mês" & "</p>"
+            & "<div class='linha1'><span class='b6 hero" & "" & "'>" & _tdOd & "</span>" & "<span class='b5 lado2" & "" & "'>" & _tvOd & "</span>" & "</div>"
+            & "<p class='ctx'>" & _txtCtx & "</p>"
+        & "</div>"
+        & "<div class='lado verso sobre-creme'>"
+            & "<p class='ab vs v1'>COMO É CALCULADO</p>"
+            & "<p class='regra'>" & _txtRegra & "</p>"
+            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Previsto e desembolsado</span></div>"
+            & "<div class='regua'>" & _htmlRegua & "</div>"
+        & "</div>"
+    & "</div>" & [Comum · JS contador]
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

@@ -1,0 +1,13 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: 0
+@descricao: Quantos meses seguidos da janela, terminando no de referência, a obra deixou a justificativa exigida em branco.
+@oraculo: CAJUEIRO: abr, mai e jun/26 = 3
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses = ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), "@b", [Justificativa · em branco] )
+VAR _quebra = MAXX ( FILTER ( _meses, [@b] <> 1 ), dMes[Mes] )
+RETURN
+    COUNTROWS ( FILTER ( _meses, ISBLANK ( _quebra ) || dMes[Mes] > _quebra ) ) + 0

@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Referência
+@formato: texto
+@descricao: [Físico · obras sem previsto (lista)] no mês de referência (seletor do drawer; sem escolha, o último mês).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE ( [Físico · obras sem previsto (lista)], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

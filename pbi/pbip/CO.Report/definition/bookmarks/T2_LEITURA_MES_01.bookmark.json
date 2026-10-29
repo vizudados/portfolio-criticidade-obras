@@ -1,0 +1,82 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T2_LEITURA_MES_01",
+  "displayName": "T2 · leitura · IDC, mês a mês",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T2_LeiX_Forma",
+      "T2_LeiX_Itens",
+      "T2_LeiX_Mes",
+      "T2_LeiX_Nota",
+      "T2_Lei_Fora",
+      "T2_Lei_Forma",
+      "T2_Lei_Itens",
+      "T2_Lei_Mes",
+      "T2_Lei_Nota"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T2",
+    "sections": {
+      "T2": {
+        "visualContainers": {
+          "T2_LeiX_Forma": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_LeiX_Itens": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_LeiX_Mes": {
+            "singleVisual": {}
+          },
+          "T2_LeiX_Nota": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Lei_Fora": {
+            "singleVisual": {}
+          },
+          "T2_Lei_Forma": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Lei_Itens": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T2_Lei_Mes": {
+            "singleVisual": {}
+          },
+          "T2_Lei_Nota": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

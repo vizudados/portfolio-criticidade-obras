@@ -1,0 +1,15 @@
+/*
+@pasta: T2 Análise crítica\Como o resultado se forma\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Escala da cascata da obra em foco: a base mais baixa entre os degraus que aparecem (zero entra sempre).
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _deg =
+    ADDCOLUMNS (
+        ALL ( dDegrau ),
+        "@a", [Cascata · degrau · aparece · foco],
+        "@t", [Cascata · degrau · topo · foco],
+        "@b", [Cascata · degrau · base · foco]
+    )
+RETURN
+    MINX ( FILTER ( _deg, [@a] = 1 ), [@b] )

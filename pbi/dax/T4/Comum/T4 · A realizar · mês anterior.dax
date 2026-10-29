@@ -1,0 +1,9 @@
+/*
+@pasta: T4 Resultado no tempo\Comum\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: O que ainda vai se realizar (resultado da planilha − resultado aplicado) no mês anterior ao do contexto.
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+RETURN
+    CALCULATE ( [A realizar], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Canteiro
+@formato: 0.00%
+@descricao: PPC do mês (pacotes concluídos ÷ planejados); na carteira, a média (base complementar).
+@gerado: pbi/scripts/contas_base.py
+*/
+AVERAGE ( fBaseObra[PPC] )

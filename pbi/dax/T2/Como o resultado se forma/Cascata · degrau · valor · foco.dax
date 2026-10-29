@@ -1,0 +1,15 @@
+/*
+@pasta: T2 Análise crítica\Como o resultado se forma\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Valor do degrau da linha (dDegrau) da obra em foco no mês de referência, sem o sinal da conta (os resultados com o próprio sinal).
+@oraculo: dados/_gabarito (VA, CA, a realizar)
+@gerado: pbi/scripts/contas_t2.py
+*/
+SWITCH (
+    SELECTEDVALUE ( dDegrau[Degrau] ),
+    "ValorAgregado", [Crédito do orçamento · foco],
+    "CustoAplicado", [Custo aplicado · foco],
+    "ResultadoAplicado", [Resultado aplicado · foco],
+    "ARealizar", [A realizar · foco],
+    "Resultado", [Resultado da obra · foco]
+)

@@ -1,0 +1,13 @@
+/*
+@pasta: T4 Resultado no tempo\Desembolso da carteira
+@formato: texto
+@descricao: CSS das colunas do painel Desembolso da carteira (uma entrada por mês da janela).
+@gerado: pbi/scripts/desenho_t4.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & "#htmlContent{display:flex!important;align-items:flex-start;width:100vw;height:100vh;margin:0!important;padding:0!important}.htmlViewerEntry{display:block!important;flex:1 1 0;min-w"
+    & "idth:0;margin:0!important;padding:0!important}.dc{position:relative;height:279px;transition:background .15s}.dc:hover,.htmlViewerEntry.hover .dc{background:rgba(233,224,207,.3)}.dc"
+    & " .rz{position:absolute;left:0;right:0;top:255px;height:1px;background:#6B6B70}.dc .bp,.dc .bd{position:absolute}.dc .bp{background:#E9E0CF}.dc .bd{background:#0B0B0C}.dc .dv{positi"
+    & "on:absolute;text-align:center;font-size:14px;line-height:17px;white-space:nowrap;color:#0B0B0C}.dc .dv.d13{font-size:13px}.dc .ms{position:absolute;left:0;right:0;top:263px;text-al"
+    & "ign:center;font-size:13px;line-height:16px;color:#3B3B3F;white-space:nowrap}.dc .ms.ref{font-weight:600;color:#0B0B0C}.dc .ms.sem{opacity:.35}"

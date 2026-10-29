@@ -1,0 +1,14 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00%
+@descricao: |desembolsado no mês ÷ previsto no mês − 1|, arredondado em 8 casas; vazio sem previsto (ou previsto 0) ou sem desembolsado no mês. Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _prev = [Desembolso · previsto no mês]
+    VAR _real = [Desembolso · realizado no mês]
+    RETURN
+        IF ( NOT ISBLANK ( _prev ) && _prev <> 0 && NOT ISBLANK ( _real ), ROUND ( ABS ( DIVIDE ( _real, _prev ) - 1 ), 8 ) )
+)

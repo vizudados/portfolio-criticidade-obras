@@ -1,0 +1,18 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: Pontos da frequência de acidentes (máx. 0,5): TF = 0 → 0,5 · 0 < TF ≤ 7,5 → 0,25 · TF > 7,5 → 0; vazio sem dado. Uma obra; com várias, soma.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+SUMX (
+    VALUES ( dObra[Obra] ),
+    VAR _x = [Nota · X acidentes]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), SWITCH (
+            TRUE (),
+            _x <= 0, 0.5,
+            _x <= 7.5, 0.25,
+            0
+        ) )
+)

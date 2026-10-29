@@ -1,0 +1,14 @@
+/*
+@pasta: Capa\Contas
+@formato: texto
+@descricao: Texto do número da capa: [Físico · executado acumulado · com previsto · ref] escrito com a regra dos cartões da T1 (percentual com uma casa, sinal U+2212). A capa só lê este texto; o cartão da T1 escreve o mesmo número com a mesma regra.
+@oraculo: o texto da T1 (número do cartão 'Físico acumulado · ponderado' da T1); prova no motor por pbi/scripts/capa_provar.py
+@gerado: pbi/scripts/capa_medidas.py
+*/
+VAR _v = [Físico · executado acumulado · com previsto · ref]
+-- texto na regra dos cartões da T1 (desenho_projeto: percentual com uma casa, sinal U+2212); vazio = '—'
+VAR _tN = FORMAT ( ABS ( _v ) * 100, "0.0", "pt-BR" )
+VAR _tS = IF ( ROUND ( _v * 100, 1 ) < 0, "−", "" )
+VAR _tTxt = IF ( ISBLANK ( _v ), "—", _tS & _tN & "%" )
+RETURN
+    _tTxt

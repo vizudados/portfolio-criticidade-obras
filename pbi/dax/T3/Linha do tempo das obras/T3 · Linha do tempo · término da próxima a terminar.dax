@@ -1,0 +1,10 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: dd/mm/yyyy
+@descricao: Término previsto da [T3 · Linha do tempo · próxima a terminar].
+@oraculo: jan/27
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obra = [T3 · Linha do tempo · próxima a terminar]
+RETURN
+    LOOKUPVALUE ( dObra[TerminoPrevisto], dObra[Obra], _obra )

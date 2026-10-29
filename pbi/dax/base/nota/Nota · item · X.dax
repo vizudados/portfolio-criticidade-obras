@@ -1,0 +1,19 @@
+/*
+@pasta: Base\Nota
+@formato: 0.0000
+@descricao: X do item da linha: IDC (custo), meses (prazo), fração (PPC, caixa, inspeção, NR-18, entregas), taxa (acidentes) ou checagens (análise crítica). Uma obra.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+SWITCH (
+    SELECTEDVALUE ( dItemNota[Item] ),
+    "custo", [Nota · X custo],
+    "prazo", [Nota · X prazo],
+    "ppc", [Nota · X PPC],
+    "caixa", [Nota · X caixa],
+    "inspecao", [Nota · X inspeção],
+    "acidentes", [Nota · X acidentes],
+    "nr18", [Nota · X NR-18],
+    "entregas", [Nota · X entregas],
+    "analise", [Nota · X análise crítica]
+)

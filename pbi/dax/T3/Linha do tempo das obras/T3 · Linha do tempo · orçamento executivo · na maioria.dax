@@ -1,0 +1,11 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: 0
+@descricao: 1 quando as obras com orçamento executivo são mais da metade das obras em andamento e há mais de duas (a frase 'na maioria' da leitura); 0 nos outros casos. Ex. ago/26: 3 de 6 em andamento → 0.
+@oraculo: obras[].tipo_orcamento: mais da metade das em andamento
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _q = [T3 · Linha do tempo · obras com orçamento executivo (quantidade)]
+VAR _n = [Obras com análise · ref] + 0
+RETURN
+    IF ( _q * 2 > _n && _n > 2, 1, 0 )

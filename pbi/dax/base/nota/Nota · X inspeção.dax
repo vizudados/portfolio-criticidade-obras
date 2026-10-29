@@ -1,0 +1,14 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00%
+@descricao: AprovadosPrimeira ÷ ServicosVerificados da base, arredondado em 8 casas; vazio sem ServicosVerificados ou com a parte maior que o todo. Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _n = SUM ( fBaseObra[AprovadosPrimeira] )
+    VAR _d = SUM ( fBaseObra[ServicosVerificados] )
+    RETURN
+        IF ( _d > 0 && NOT ISBLANK ( _n ) && _n >= 0 && _n <= _d, ROUND ( DIVIDE ( _n, _d ), 8 ) )
+)

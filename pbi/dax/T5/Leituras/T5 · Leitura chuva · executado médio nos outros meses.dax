@@ -1,0 +1,23 @@
+/*
+@pasta: T5 Canteiro\Leituras\Contas
+@formato: 0.00%
+@descricao: Média simples do executado no mês da carteira nos meses da janela que não foram chuvosos. Ex. set/26: 4,1%.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 0,04115
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _ini = [Série · primeiro mês]
+VAR _ref = [Mês de referência]
+VAR _lim = [T5 · Chuva · limite de mês chuvoso]
+VAR _t =
+    FILTER (
+        ADDCOLUMNS (
+            FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ),
+            "@ch", [Canteiro · dias de chuva],
+            "@ex", [Físico · executado no mês]
+        ),
+        NOT ISBLANK ( [@ch] ) && NOT ISBLANK ( [@ex] )
+    )
+VAR _chuv = FILTER ( _t, [@ch] >= _lim )
+VAR _out = FILTER ( _t, [@ch] < _lim )
+RETURN
+    AVERAGEX ( _out, [@ex] )

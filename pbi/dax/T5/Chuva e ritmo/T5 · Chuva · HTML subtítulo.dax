@@ -1,0 +1,9 @@
+/*
+@pasta: T5 Canteiro\Chuva e ritmo
+@formato: texto
+@descricao: Subtítulo de Chuva e ritmo: o que cada metade da coluna mostra.
+@gerado: pbi/scripts/desenho_t5.py
+*/
+-- 4 · Marcação
+"<p class='u hsb'><svg class='lg' width='12' height='12'><rect width='12' height='12' fill='#E9E0CF'/></svg>dias impraticáveis por chuva, média por obra (em cima)<span class='sep'>·"
+    & "</span><svg class='lg' width='12' height='12'><rect width='12' height='12' fill='#0B0B0C'/></svg>executado no mês da carteira, % do orçamento (embaixo)</p>"

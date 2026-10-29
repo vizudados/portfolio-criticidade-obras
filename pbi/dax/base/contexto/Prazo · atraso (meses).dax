@@ -1,0 +1,11 @@
+/*
+@pasta: Base\Prazo
+@formato: 0.0
+@descricao: Meses decorridos − meses agregados, arredondado em 8 casas: quantos meses a obra está atrás do cronograma (negativo: adiantada). Uma obra com aba.
+@oraculo: pipeline/conferir_ficticios.py (x_atraso)
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _d = [Prazo · meses decorridos]
+VAR _a = [Prazo · meses agregados]
+RETURN
+    IF ( NOT ISBLANK ( _d ) && NOT ISBLANK ( _a ), ROUND ( _d - _a, 8 ) )

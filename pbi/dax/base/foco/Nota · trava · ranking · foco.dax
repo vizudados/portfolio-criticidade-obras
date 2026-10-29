@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Obra em foco
+@formato: 0
+@descricao: [Nota · trava] da obra em foco (a que mais perde pontos na nota, ou a escolhida), no mês de referência (lida de dRankingNota, por [Nota · trava · ranking · ref]).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    CALCULATE ( [Nota · trava · ranking · ref], dObra[Obra] = _obra )

@@ -1,0 +1,9 @@
+/*
+@pasta: T2 Análise crítica\Tooltips\Contas
+@formato: texto
+@descricao: [Justificativa do desembolso] da obra em foco no mês do eixo (tooltips e séries da T2).
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    CALCULATE ( [Justificativa do desembolso], dObra[Obra] = _obra )

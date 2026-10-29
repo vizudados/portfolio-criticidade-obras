@@ -1,0 +1,19 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: 0
+@descricao: Lado do cronograma (−1, 0, 1) da sequência anterior à que termina na referência, dentro da janela; vazio quando não há.
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [T3 · Físico · sinal · início da sequência]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ref ),
+        "@d", VAR _m = dMes[Mes] RETURN CALCULATE ( [Físico · desvio acumulado p.p.], REMOVEFILTERS ( dMes ), dMes[Mes] = _m )
+    )
+VAR _antes = ADDCOLUMNS ( FILTER ( _meses, NOT ISBLANK ( [@d] ) && dMes[Mes] < _ini ), "@l", IF ( NOT ISBLANK ( [@d] ), SIGN ( ROUND ( [@d], 1 ) ) ) )
+VAR _ladoAntes = MAXX ( FILTER ( _antes, dMes[Mes] = EDATE ( _ini, -1 ) ), [@l] )
+VAR _quebra = MAXX ( FILTER ( _antes, [@l] <> _ladoAntes ), dMes[Mes] )
+RETURN
+    IF ( NOT ISBLANK ( _ladoAntes ), _ladoAntes )

@@ -1,0 +1,14 @@
+/*
+@pasta: T5 Canteiro\Chuva e ritmo
+@formato: texto
+@descricao: CSS das colunas espelhadas de Chuva e ritmo (uma entrada por mês da janela).
+@gerado: pbi/scripts/desenho_t5.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & "#htmlContent{display:flex!important;align-items:flex-start;width:100vw;height:100vh;margin:0!important;padding:0!important}.htmlViewerEntry{display:block!important;flex:1 1 0;min-w"
+    & "idth:0;margin:0!important;padding:0!important}.cr{position:relative;height:279px;transition:background .15s}.cr:hover,.htmlViewerEntry.hover .cr{background:rgba(233,224,207,.3)}.cr"
+    & " .b0{position:absolute;left:0;right:0;top:118px;height:1px;background:#E1E1E1}.cr .b1{position:absolute;left:0;right:0;top:145px;height:1px;background:#6B6B70}.cr .bc{position:abso"
+    & "lute;background:#E9E0CF}.cr .be{position:absolute;background:#0B0B0C}.cr .vl{position:absolute;left:0;right:0;text-align:center;font-family:'Barlow U','Segoe UI',sans-serif;font-we"
+    & "ight:600;font-size:14px;line-height:17px;white-space:nowrap;color:#0B0B0C}.cr .vl.c{color:#3B3B3F}.cr .ms{position:absolute;left:0;right:0;top:124px;text-align:center;font-size:13p"
+    & "x;line-height:16px;color:#3B3B3F;white-space:nowrap}.cr .ms.ref{font-weight:600;color:#0B0B0C}.cr .ms.sem{opacity:.35}"

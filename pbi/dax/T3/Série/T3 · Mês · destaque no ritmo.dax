@@ -1,0 +1,21 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: texto
+@descricao: Posição do mês do contexto na série da obra na janela (estado de negócio): exec_min (o mês mais fraco), exec_max (o melhor mês), prev_max (o maior previsto), prev_min (o menor previsto), nessa ordem; vazio quando não é extremo ou quando a obra tem menos de três meses na janela (o 'em n meses' não diria nada).
+@oraculo: spec §3.1 (detalhe 'o mês mais fraco em n meses')
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _e = [Físico · executado no mês]
+VAR _p = [Físico · previsto no mês]
+VAR _n = [T3 · Série · meses da obra]
+RETURN
+    IF (
+        NOT ISBLANK ( _e ) && _n >= 3,
+        SWITCH (
+            TRUE (),
+            _e = [T3 · Série · executado no mês · mínimo], "exec_min",
+            _e = [T3 · Série · executado no mês · máximo], "exec_max",
+            NOT ISBLANK ( _p ) && _p = [T3 · Série · previsto no mês · máximo], "prev_max",
+            NOT ISBLANK ( _p ) && _p = [T3 · Série · previsto no mês · mínimo], "prev_min"
+        )
+    )

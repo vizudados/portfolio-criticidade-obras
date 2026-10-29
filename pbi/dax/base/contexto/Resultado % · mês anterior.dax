@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Obra
+@formato: 0.00%
+@descricao: Resultado da aba anterior ÷ orçamento da aba anterior.
+@oraculo: obras[].ultimo.resultado_pct_mes_anterior
+@gerado: pbi/scripts/contas_base.py
+*/
+DIVIDE ( [Resultado · mês anterior], [Orçamento · mês anterior] )

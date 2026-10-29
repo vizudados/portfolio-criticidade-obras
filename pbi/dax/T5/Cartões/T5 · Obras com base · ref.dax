@@ -1,0 +1,10 @@
+/*
+@pasta: T5 Canteiro\Cartões\Contas
+@formato: 0
+@descricao: Obras do recorte com base complementar no mês de referência. Ex. set/26: 7.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: 7
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _ref = [Mês de referência]
+RETURN
+    CALCULATE ( DISTINCTCOUNT ( fBaseObra[Obra] ), REMOVEFILTERS ( dMes ), fBaseObra[Mes] = _ref ) + 0

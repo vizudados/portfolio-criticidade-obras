@@ -1,0 +1,27 @@
+/*
+@pasta: T1 Visão geral\Onde a carteira perde pontos\Contas
+@formato: 0
+@descricao: Ordem da dimensão no painel 'Onde a carteira perde pontos' (eixo dItemNota[Dimensao], mês de referência): mais pontos perdidos somados primeiro; empate: a dimensão com dado antes da que falta em todas as obras, depois a ordem da dimensão na régua.
+@oraculo: dados/_gabarito/nota_previa.csv · set/26: prazo (REDINHA e POTENGI) primeiro
+@gerado: pbi/scripts/contas_t1.py
+*/
+VAR _p = [Nota · item · perdidos · ref] + 0
+VAR _t = INT ( NOT ISBLANK ( [Nota · item · possíveis · ref] ) )
+VAR _ord = SELECTEDVALUE ( dItemNota[OrdemDimensao] )
+VAR _todos =
+    ADDCOLUMNS (
+        ALL ( dItemNota[Dimensao], dItemNota[OrdemDimensao] ),
+        "@p", [Nota · item · perdidos · ref] + 0,
+        "@t", INT ( NOT ISBLANK ( [Nota · item · possíveis · ref] ) )
+    )
+VAR _antes =
+    COUNTROWS (
+        FILTER (
+            _todos,
+            [@p] > _p
+                || ( [@p] = _p && [@t] > _t )
+                || ( [@p] = _p && [@t] = _t && dItemNota[OrdemDimensao] < _ord )
+        )
+    )
+RETURN
+    IF ( HASONEVALUE ( dItemNota[Dimensao] ), _antes + 1 )

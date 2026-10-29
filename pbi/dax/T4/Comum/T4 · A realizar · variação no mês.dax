@@ -1,0 +1,18 @@
+/*
+@pasta: T4 Resultado no tempo\Comum\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: O que falta realizar (planilha − aplicado) no mês menos o do mês anterior, só das obras com aba nos dois meses.
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _mesAnt = EDATE ( MAX ( dMes[Mes] ), -1 )
+VAR _comp =
+    FILTER (
+        VALUES ( fAnaliseCritica[Obra] ),
+        NOT ISBLANK ( [A realizar] )
+            && NOT ISBLANK ( CALCULATE ( [A realizar], REMOVEFILTERS ( dMes ), dMes[Mes] = _mesAnt ) )
+    )
+RETURN
+    IF (
+        NOT ISEMPTY ( _comp ),
+        SUMX ( _comp, [A realizar] - CALCULATE ( [A realizar], REMOVEFILTERS ( dMes ), dMes[Mes] = _mesAnt ) )
+    )

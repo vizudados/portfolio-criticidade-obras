@@ -1,0 +1,8 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: texto
+@descricao: SPE da obra (cadastro).
+@oraculo: obras[].spe
+@gerado: pbi/scripts/contas_t3.py
+*/
+SELECTEDVALUE ( dObra[SPE] )

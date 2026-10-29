@@ -1,0 +1,13 @@
+/*
+@pasta: Base\Nota
+@formato: 0.0
+@descricao: Taxa de frequência (NBR 14280) nos 12 meses até o mês, arredondada em 8 casas; vazio sem horas trabalhadas. Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _x = [Canteiro · taxa de frequência (12 meses)]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), ROUND ( _x, 8 ) )
+)

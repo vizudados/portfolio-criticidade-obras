@@ -1,0 +1,19 @@
+/*
+@pasta: T1 Visão geral\Obras pela nota\Contas
+@formato: texto
+@descricao: Códigos (dItemNota) dos itens que a frase 'perde mais …' cita para a obra do contexto, separados por '|', do que mais perde ao que menos perde (empate: maior máximo, depois a ordem da nota). Empate no topo: todos os empatados. Topo único: ele e o segundo, se o segundo for único; com o segundo empatado, só o topo. Só itens com perda; vazio sem perda. Uma obra no contexto.
+@oraculo: bases de teste, ago/26: REDINHA medio_prazo (o 2º empata em 0,5 entre três itens)
+@gerado: pbi/scripts/contas_t1.py
+*/
+VAR _itens = ADDCOLUMNS ( ALL ( dItemNota ), "@p", ROUND ( [Nota · item · perdidos], 8 ) )
+VAR _perde = FILTER ( _itens, [@p] > 0 )
+VAR _p1 = MAXX ( _perde, [@p] )
+VAR _nTopo = COUNTROWS ( FILTER ( _perde, [@p] = _p1 ) )
+VAR _p2 = MAXX ( FILTER ( _perde, [@p] < _p1 ), [@p] )
+VAR _n2 = COUNTROWS ( FILTER ( _perde, [@p] = _p2 ) )
+VAR _cita = FILTER ( _perde, [@p] = _p1 || ( _nTopo = 1 && _n2 = 1 && [@p] = _p2 ) )
+RETURN
+    IF (
+        HASONEVALUE ( dObra[Obra] ),
+        CONCATENATEX ( _cita, dItemNota[Item], "|", [@p], DESC, dItemNota[Maximo], DESC, dItemNota[Ordem], ASC )
+    )

@@ -1,0 +1,19 @@
+/*
+@pasta: Base\Nota
+@formato: 0
+@descricao: Obras do recorte em crítico pela trava (custo ou prazo) no mês do contexto. Um mês no contexto.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dMes[Mes] ),
+    COUNTROWS (
+        FILTER (
+            dRankingNota,
+            dRankingNota[Mes] = VALUES ( dMes[Mes] )
+                && dRankingNota[TemAC] = 1
+                && dRankingNota[Obra] IN VALUES ( dObra[Obra] )
+                && dRankingNota[Trava] == 1
+        )
+    )
+)

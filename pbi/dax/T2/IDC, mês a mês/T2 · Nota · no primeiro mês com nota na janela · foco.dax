@@ -1,0 +1,9 @@
+/*
+@pasta: T2 Análise crítica\IDC, mês a mês\Contas
+@formato: 0.00
+@descricao: Nota da obra em foco no primeiro mês da janela em que ela tem nota completa.
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _ini = [T2 · Nota · primeiro mês com nota na janela · foco]
+RETURN
+    CALCULATE ( [Nota · nota final · foco no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _ini )

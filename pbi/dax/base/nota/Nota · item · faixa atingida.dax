@@ -1,0 +1,19 @@
+/*
+@pasta: Base\Nota
+@formato: texto
+@descricao: Faixa em que o item da linha caiu.
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+SWITCH (
+    SELECTEDVALUE ( dItemNota[Item] ),
+    "custo", [Nota · faixa atingida · custo],
+    "prazo", [Nota · faixa atingida · prazo],
+    "ppc", [Nota · faixa atingida · PPC],
+    "caixa", [Nota · faixa atingida · caixa],
+    "inspecao", [Nota · faixa atingida · inspeção],
+    "acidentes", [Nota · faixa atingida · acidentes],
+    "nr18", [Nota · faixa atingida · NR-18],
+    "entregas", [Nota · faixa atingida · entregas],
+    "analise", [Nota · faixa atingida · análise crítica]
+)

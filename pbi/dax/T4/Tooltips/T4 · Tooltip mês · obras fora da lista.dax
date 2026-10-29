@@ -1,0 +1,10 @@
+/*
+@pasta: T4 Resultado no tempo\Tooltips\Contas
+@formato: 0
+@descricao: Obras do recorte com resultado no mês (as linhas do tooltip) que não cabem na lista: vazio com até 10 obras (todas aparecem); com mais, as que passam das 9 mostradas (o N da linha 'e mais N obras, com resultado mais perto de zero').
+@oraculo: vazio com até 10 obras (jun/26: vazio)
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _n = COUNTROWS ( FILTER ( VALUES ( dObra[Obra] ), NOT ISBLANK ( [Resultado aplicado] ) ) )
+RETURN
+    IF ( _n > 10, _n - 9 )

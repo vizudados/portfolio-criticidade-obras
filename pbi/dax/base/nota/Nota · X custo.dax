@@ -1,0 +1,13 @@
+/*
+@pasta: Base\Nota
+@formato: 0.000
+@descricao: IDC da obra (valor agregado ÷ custo aplicado), arredondado em 8 casas; vazio sem aba ou com custo aplicado zero. Só com uma obra no contexto (com várias, vazio).
+@oraculo: pipeline/conferir_ficticios.py · prévia da nota (dados/_gabarito/nota_previa.csv)
+@gerado: pbi/scripts/contas_base.py
+*/
+IF (
+    HASONEVALUE ( dObra[Obra] ),    -- uma obra no contexto; com várias, vazio
+    VAR _x = [IDC]
+    RETURN
+        IF ( NOT ISBLANK ( _x ), ROUND ( _x, 8 ) )
+)

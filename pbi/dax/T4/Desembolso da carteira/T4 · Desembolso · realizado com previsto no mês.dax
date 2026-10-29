@@ -1,0 +1,11 @@
+/*
+@pasta: T4 Resultado no tempo\Desembolso da carteira\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Desembolsado no mês só das obras do contexto que têm previsto no mês (regra 'sem previsto': a obra sem previsto fica fora do previsto e do desvio da carteira). Igual ao desembolsado quando todas têm previsto.
+@oraculo: jun/26 real: R$ 4,90 mi (sem os R$ 296 mil da TIROL, sem previsto) · ago/26: R$ 5,10 mi
+@gerado: pbi/scripts/contas_t4.py
+*/
+SUMX (
+    VALUES ( fAnaliseCritica[Obra] ),
+    IF ( NOT ISBLANK ( [Desembolso · previsto no mês] ), [Desembolso · realizado no mês] )
+)

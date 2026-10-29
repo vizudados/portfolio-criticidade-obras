@@ -1,0 +1,29 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: texto
+@descricao: Cada vez que o físico da obra do contexto cruzou o limite da nota, dentro da janela, da mais antiga à mais nova, separadas por '|': mês por extenso § mês abreviado § status de antes § status novo (0 dentro, 2 fora) § meses no status novo (até a mudança seguinte ou até a referência). Mudança vinda de antes da janela não conta.
+@oraculo: oráculo da nota (coluna F-F, mudanças)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ref ),
+        "@s", VAR _m = dMes[Mes] RETURN CALCULATE ( [T3 · Status desvio físico], REMOVEFILTERS ( dMes ), dMes[Mes] = _m ),
+        "@a", VAR _m = dMes[Mes] RETURN CALCULATE ( [T3 · Status desvio físico], REMOVEFILTERS ( dMes ), dMes[Mes] = EDATE ( _m, -1 ) )
+    )
+VAR _mud = FILTER ( _meses, dMes[Mes] > _jan && NOT ISBLANK ( [@s] ) && NOT ISBLANK ( [@a] ) && [@s] <> [@a] )
+VAR _lista =
+    ADDCOLUMNS (
+        _mud,
+        "@prox", VAR _m = dMes[Mes] RETURN MINX ( FILTER ( _mud, dMes[Mes] > _m ), dMes[Mes] )
+    )
+RETURN
+    CONCATENATEX (
+        _lista,
+        FORMAT ( dMes[Mes], "mmmm", "pt-BR" ) & "§" & FORMAT ( dMes[Mes], "mmm", "pt-BR" ) & "§" & [@a] & "§" & [@s]
+            & "§" & DATEDIFF ( dMes[Mes], COALESCE ( [@prox], EDATE ( _ref, 1 ) ), MONTH ),
+        "|",
+        dMes[Mes], ASC
+    )

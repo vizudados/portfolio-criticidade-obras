@@ -1,0 +1,10 @@
+/*
+@pasta: T1 Visão geral\Tooltips\Contas
+@formato: 0
+@descricao: Justificativas exigidas e em branco no mês de referência além das 2 primeiras obras da lista (Recorte · justificativas em branco (lista) · ref): o M de 'em branco: A, B e mais M' no rodapé do tooltip do item fluxo de caixa (T1) e no cartão Justificativas do mês (T4); vazio com até 2 em branco.
+@oraculo: ago/26 real: 2 (4 em branco) · jun/26: vazio (1 em branco)
+@gerado: pbi/scripts/tooltips_t1.py
+*/
+VAR _n = [Carteira · justificativas em branco · ref] + 0
+RETURN
+    IF ( _n > 2, _n - 2 )

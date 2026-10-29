@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Referência
+@formato: texto
+@descricao: [Nota · análise crítica · checagens (lista)] no mês de referência (seletor do drawer; sem escolha, o último mês).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE ( [Nota · análise crítica · checagens (lista)], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

@@ -1,0 +1,12 @@
+/*
+@pasta: T4 Resultado no tempo\Resultado mês a mês\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Maior valor entre o resultado aplicado e o resultado da planilha nos meses da janela (zero quando todos são negativos): o topo da escala das colunas do painel Resultado da carteira, mês a mês.
+@oraculo: max(resultado aplicado, resultado da planilha, 0) da carteira na janela
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _ref = [Mês de referência]
+VAR _ini = [Série · primeiro mês]
+VAR _meses = ADDCOLUMNS ( FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _ini && dMes[Mes] <= _ref ), "@a", [Resultado aplicado], "@r", [Resultado da obra] )
+RETURN
+    MAX ( 0, MAX ( MAXX ( _meses, [@a] ), MAXX ( _meses, [@r] ) ) )

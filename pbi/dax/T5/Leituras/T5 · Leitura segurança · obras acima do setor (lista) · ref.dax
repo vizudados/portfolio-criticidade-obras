@@ -1,0 +1,11 @@
+/*
+@pasta: T5 Canteiro\Leituras\Contas
+@formato: texto
+@descricao: Obras com taxa de frequência de 12 meses acima da média do setor, da maior para a menor. Ex. set/26: REDINHA|POTENGI.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) · set/26: REDINHA|POTENGI
+@gerado: pbi/scripts/contas_t5.py
+*/
+CONCATENATEX (
+    FILTER ( VALUES ( dObra[Obra] ), [Canteiro · taxa de frequência (12 meses) · ref] > [Nota · limite acidentes · setor] ),
+    dObra[Obra], "|", - [Canteiro · taxa de frequência (12 meses) · ref], ASC, dObra[Obra], ASC
+)

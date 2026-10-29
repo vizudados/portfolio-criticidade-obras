@@ -1,0 +1,9 @@
+/*
+@pasta: T4 Resultado no tempo\Comum\Contas
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: [T4 · Resultado aplicado · variação no mês] no mês de referência (seletor do drawer; sem escolha, o último mês).
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE ( [T4 · Resultado aplicado · variação no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

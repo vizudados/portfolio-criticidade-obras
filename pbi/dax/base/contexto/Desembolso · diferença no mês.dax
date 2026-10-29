@@ -1,0 +1,11 @@
+/*
+@pasta: Base\Desembolso
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: Desembolsado no mês − previsto no mês, em R$, só com as obras que têm previsto (vazio sem um dos dois).
+@oraculo: obras[].ultimo.diferenca_desembolso_rs
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _prev = [Desembolso · previsto no mês]
+VAR _real = [Desembolso · realizado com previsto no mês]
+RETURN
+    IF ( NOT ISBLANK ( _prev ) && NOT ISBLANK ( _real ), _real - _prev )

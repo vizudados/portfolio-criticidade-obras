@@ -1,0 +1,19 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: 0
+@descricao: Quantos meses seguidos, terminando no mês do contexto e dentro da janela, o físico da obra ficou do mesmo lado do limite da nota ([T3 · Status desvio físico]: 3 = 'terceiro mês seguido dentro do limite').
+@oraculo: oráculo da nota (coluna F-F, sequência)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _mes = MAX ( dMes[Mes] )
+VAR _s = [T3 · Status desvio físico]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _mes ),
+        "@s", VAR _m = dMes[Mes] RETURN CALCULATE ( [T3 · Status desvio físico], REMOVEFILTERS ( dMes ), dMes[Mes] = _m )
+    )
+VAR _com = FILTER ( _meses, NOT ISBLANK ( [@s] ) )
+VAR _quebra = MAXX ( FILTER ( _com, [@s] <> _s ), dMes[Mes] )
+RETURN
+    IF ( NOT ISBLANK ( _s ), COUNTROWS ( FILTER ( _com, ISBLANK ( _quebra ) || dMes[Mes] > _quebra ) ) )

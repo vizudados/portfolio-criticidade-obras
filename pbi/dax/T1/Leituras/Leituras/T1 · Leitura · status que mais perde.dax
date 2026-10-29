@@ -1,0 +1,26 @@
+/*
+@pasta: T1 Visão geral\Leituras\Contas
+@formato: texto
+@descricao: Estado da nota das obras que somam mais pontos perdidos no mês de referência: '2' crítico, '1' atenção, '0' estável, 'm' pendente; vazio sem perda.
+@oraculo: oráculo da régua antiga · ago/26: m (JANGADA 2,0 + DUNAS 1,75 + CAJUEIRO 0,75)
+@gerado: pbi/scripts/leituras_t1.py
+*/
+VAR _mes = [Mês de referência]
+VAR _obras =
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            FILTER ( VALUES ( dObra[Obra] ), NOT ISEMPTY ( RELATEDTABLE ( fAnaliseCritica ) ) ),
+            "@s", IF ( [Nota · pendente · um mês] == 1, "m", [Nota · status · um mês] & "" ),
+            "@p", [Nota · pontos perdidos · um mês]
+        ),
+        REMOVEFILTERS ( dMes ),
+        dMes[Mes] = _mes
+    )
+VAR _por =
+    ADDCOLUMNS (
+        DATATABLE ( "Estado", STRING, { { "2" }, { "1" }, { "0" }, { "m" } } ),
+        "@soma", VAR _e = [Estado] RETURN SUMX ( FILTER ( _obras, [@s] = _e ), [@p] )
+    )
+VAR _top = TOPN ( 1, FILTER ( _por, [@soma] > 0 ), [@soma], DESC, [Estado], ASC )
+RETURN
+    MAXX ( _top, [Estado] )

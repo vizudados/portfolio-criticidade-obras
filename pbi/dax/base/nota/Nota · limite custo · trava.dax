@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: 0.00
+@descricao: IDC abaixo do qual a obra fica crítica (trava). Do dicionário NOTA. Constante.
+@oraculo: dicionário NOTA
+@gerado: pbi/scripts/contas_base.py
+*/
+0.9

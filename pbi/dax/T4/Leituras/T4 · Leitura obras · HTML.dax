@@ -1,0 +1,142 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras
+@formato: texto
+@descricao: Leitura do "?" de Obras no mês, sobre o próprio painel (L065, 400 × 767, condensada; F3): quantas obras estão com IDC abaixo de 1 e qual mais caiu no mês (achado), as justificativas de caixa exigidas, preenchidas e em branco, com os nomes (explicação), e três destaques: o IDC da carteira, a maior queda do IDC e as justificativas em branco. Só lê contas.
+@gerado: pbi/scripts/leituras_t4.py
+*/
+-- 1 · Leituras
+VAR _mesL = [Mês de referência · longo]
+VAR _mesN = [Mês de referência · nome]
+VAR _mesAntN = [Mês anterior à referência · nome]
+VAR _nObras = [Obras com análise · ref] + 0
+VAR _abx = [T1 · Custo · obras com IDC abaixo de 1 · ref] + 0
+VAR _nQueda = [T4 · Leitura obras · obras com IDC em queda] + 0
+VAR _oQueda = [T4 · Leitura obras · obra de maior queda do IDC]
+VAR _vQueda = [T4 · Leitura obras · maior queda do IDC]
+VAR _idc = [IDC · ref]
+VAR _ex = [Carteira · justificativas exigidas · ref] + 0
+VAR _pre = [Carteira · justificativas preenchidas · ref] + 0
+VAR _br = [Carteira · justificativas em branco · ref] + 0
+VAR _lBr = [Recorte · justificativas em branco (lista) · ref]
+VAR _lim = [Nota · limite caixa · ponto inteiro]
+-- 2 · Textos
+/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+VAR _odQ =
+    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+VAR _txtSob = "LEITURA · OBRAS NO MÊS<br>" & UPPER ( _mesL )
+VAR _txtLim = "±" & FORMAT ( _lim, "0%", "pt-BR" )
+VAR _txtAbx =
+    SWITCH (
+        TRUE (),
+        _abx = 0, "Nenhuma das " & SWITCH ( _nObras, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _nObras, "0" ) ) & " obras está com IDC abaixo de 1",
+        _abx = _nObras, "As " & SWITCH ( _nObras, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _nObras, "0" ) ) & " obras estão com IDC abaixo de 1",
+        UPPER ( LEFT ( SWITCH ( _abx, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _abx, "0" ) ), 1 ) ) & MID ( SWITCH ( _abx, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _abx, "0" ) ), 2, LEN ( SWITCH ( _abx, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _abx, "0" ) ) ) ) & " das " & SWITCH ( _nObras, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _nObras, "0" ) ) & IF ( _abx = 1, " obras está", " obras estão" ) & " com IDC abaixo de 1: gastam mais do que agregam"
+    )
+VAR _txtQueda =
+    IF (
+        ISBLANK ( _oQueda ),
+        "; nenhuma perdeu IDC desde " & _mesAntN & ".",
+        "; " & IF ( _nQueda = 1, "só ", "" ) & CALCULATE ( [T4 · Obra · artigo], dObra[Obra] = _oQueda ) & " " & _oQueda & IF ( _nQueda = 1, " perdeu IDC desde ", " foi a que mais perdeu IDC desde " ) & _mesAntN & "."
+    )
+VAR _achado = _txtAbx & _txtQueda
+VAR _txtBr = SUBSTITUTE ( _lBr & "", "|", ", " )
+VAR _explica =
+    SWITCH (
+        TRUE (),
+        _ex = 0, "No caixa, nenhuma obra passou de " & "⁅" & _txtLim & "⁆" & " sobre o previsto em " & _mesN & ": nenhuma "
+            & "justificativa foi exigida.",
+        _br = 0, "No caixa, " & SWITCH ( _ex, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _ex, "0" ) ) & IF ( _ex = 1, " obra passou", " obras passaram" ) & " de " & "⁅" & _txtLim & "⁆"
+            & " sobre o previsto e " & IF ( _ex = 1, "justificou", "todas justificaram" ) & " na planilha.",
+        "No caixa, " & SWITCH ( _ex, 0, "nenhuma", 1, "uma", 2, "duas", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _ex, "0" ) ) & IF ( _ex = 1, " obra passou", " obras passaram" ) & " de " & "⁅" & _txtLim & "⁆"
+            & " sobre o previsto; " & IF ( _br = 1, "ficou em branco a justificativa de ", "ficaram em branco as de " ) & _txtBr & "."
+    )
+VAR _tiN = FORMAT ( _idc, "0.00", "pt-BR" )
+VAR _tiTxt = IF ( ISBLANK ( _idc ), "—", _tiN )
+VAR _tiKP = LEN ( _tiN ) > 0
+VAR _tiKN = IF ( _tiKP, _tiN )
+VAR _tiKS = SUBSTITUTE ( SUBSTITUTE ( _tiKN, ".", "" ), ",", "" )
+VAR _tiKT = IFERROR ( VALUE ( _tiKS ), -1 )
+VAR _tiKOk = _tiKP && _tiKT >= 2 && FORMAT ( _tiKT, REPT ( "0", LEN ( _tiKS ) ) ) = _tiKS
+VAR _tiKD = IF ( CONTAINSSTRING ( _tiKN, "," ), LEN ( _tiKN ) - SEARCH ( ",", _tiKN ), 0 )
+VAR _tiKM = IF ( CONTAINSSTRING ( _tiKN, "." ), "#,##0", "0" ) & IF ( _tiKD > 0, "." & REPT ( "0", _tiKD ) )
+VAR _tiKOd =
+    IF (
+        _tiKOk,
+        "<o-d><o-v>" & _tiKN & "</o-v><o-t aria-hidden='true'>"
+            & CONCATENATEX (
+                _odQ,
+                IF ( [@odk] = 24, _tiKN, FORMAT ( ROUND ( _tiKT * [@odf] / 1000, 0 ) / POWER ( 10, _tiKD ), _tiKM, "pt-BR" ) ),
+                UNICHAR ( 10 ),
+                [@odk], ASC
+            )
+            & "</o-t></o-d>",
+        _tiN
+    )
+VAR _tiOd = IF ( ISBLANK ( _idc ), _tiTxt, _tiKOd )
+VAR _tqTxt = IF ( ISBLANK ( _vQueda ), "—", "−" & FORMAT ( ABS ( _vQueda ), "0.00", "pt-BR" ) )
+VAR _txtD2 = IF ( ISBLANK ( _oQueda ), "nenhuma obra perdeu IDC no mês", "no IDC da " & _oQueda & ", a maior queda do mês" )
+VAR _txtD3 = IF ( _br = 1, "justificativa em branco", "justificativas em branco" ) & " de " & "⁅" & _ex & "⁆" & IF ( _ex = 1, " exigida", " exigidas" )
+-- 4 · Marcação
+VAR _corpo =
+    "<span class='vs sob'>" & _txtSob & "</span><h2 class='ach'>" & _achado & "</h2>"
+        & "<p class='exp'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _explica, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "</p>"
+        & "<div class='dst sobre-creme'>"
+        & "<div><b>" & _tiOd & "</b><span>" & "IDC da carteira em " & _mesN & "</span></div>"
+        & "<div><b>" & "<span class='ng'>" & "⁅" & _tqTxt & "⁆" & "</span>" & "</b><span>" & _txtD2 & "</span></div>"
+        & "<div><b>" & "⁅" & _br & "⁆" & "</b><span>" & _txtD3 & "</span></div>"
+        & "</div>"
+        & "<div class='sec'><span class='vs'>Como ler</span>" & "<p class='cl'>Cada linha é uma obra, na ordem da nota: o IDC com a marca dos pontos do custo, a variação dele no mês, o desvio de caixa com a marca da faixa e a justificativa da planilha. Passe o mouse numa obra para ver o caixa mês a mês e as justificativas anteriores.</p>" & "</div>"
+VAR _saidaHtml =
+    IF ( _nObras > 0, "<div class='u lv' role='dialog' aria-label='" & "Leitura de Obras no mês" & "'><div class='pn pn-t4p'>" & _corpo & "</div><svg class='x' width='26' height='26' viewBox='0 0 26 26' aria-hidden='true'><circle cx='13' cy='13' r='12.375' fill='#FFFFFF' stroke='#3B3B3F' stroke-width='1.25'/><path d='M9 9L17 17M17 9L9 17' fill='none' stroke='#0B0B0C' stroke-width='1.5' stroke-linecap='round'/></svg></div>" & [Comum · JS contador tooltip] )
+VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+VAR _mcHtml =
+    IF (
+        _mcK = 0,
+        _saidaHtml,
+        CONCATENATEX (
+            GENERATESERIES ( 1, _mcK ),
+            VAR _mcj = [Value]
+            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+            VAR _mcc = LEN ( _mcsg )
+            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+            RETURN
+                _mcantes
+                    & IF (
+                        _mcOk,
+                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+                            & CONCATENATEX (
+                                _odQ,
+                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+                                UNICHAR ( 10 ),
+                                [@odk], ASC
+                            )
+                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+                        _mcpre & _mcnum & _mcsuf
+                    )
+                    & _mcdepois,
+            "",
+            [Value], ASC
+        )
+    )
+RETURN
+    _mcHtml

@@ -1,0 +1,11 @@
+/*
+@pasta: T1 Visão geral\Tooltips\Contas
+@formato: 0
+@descricao: Obras com aba no mês do contexto no estado atenção da nota (as da coluna do tooltip do mês; o mesmo que Nota · carteira · …) que não cabem na coluna: vazio com até 9 obras (todas aparecem); com mais, as que passam das 8 mostradas (o N da linha 'e mais N obras').
+@oraculo: vazio com até 9 obras no estado
+@gerado: pbi/scripts/tooltips_t1.py
+*/
+VAR _n =
+    COUNTROWS ( FILTER ( FILTER ( VALUES ( dObra[Obra] ), NOT ISEMPTY ( RELATEDTABLE ( fAnaliseCritica ) ) ), [Nota · status · um mês] == 1 ) )
+RETURN
+    IF ( _n > 9, _n - 8 )

@@ -1,0 +1,20 @@
+/*
+@pasta: T3 Avanço físico\Linha do tempo das obras\Contas
+@formato: dd/mm/yyyy
+@descricao: O mês mais distante que a linha do tempo desenha (escala): o término previsto, a entrega com a tolerância de 180 dias e o término projetado no mês de referência, entre as obras em andamento e a iniciar.
+@oraculo: TIROL: tolerância jul/29 (set/26)
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _obras =
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            VALUES ( dObra[Obra] ),
+            "@f", [Obra · término previsto],
+            "@t", [Prazo · entrega com tolerância],
+            "@p", [Prazo · término projetado · ref]
+        ),
+        REMOVEFILTERS ( dObra[Obra] ),
+        dObra[Situacao] IN { "Em andamento", "A iniciar" }
+    )
+RETURN
+    MAX ( MAXX ( _obras, [@f] ), MAX ( MAXX ( _obras, [@t] ), MAXX ( _obras, [@p] ) ) )

@@ -1,0 +1,11 @@
+/*
+@pasta: T3 Avanço físico\Curva S
+@formato: texto
+@descricao: CSS das colunas invisíveis da Curva S (uma por mês: alvo do tooltip).
+@gerado: pbi/scripts/desenho_t3.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & "#htmlContent{display:flex!important;align-items:stretch;height:100vh}.htmlViewerEntry{display:block!important;flex:none;margin:0!important;padding:0!important;height:100vh}.hm{posi"
+    & "tion:relative;height:100vh;cursor:default}.hm i{position:absolute;top:28px;height:234px;width:1px;background:rgba(11,11,12,.3);opacity:0;transition:opacity .15s}.hm:hover i,.htmlVi"
+    & "ewerEntry.hover .hm i{opacity:1}"

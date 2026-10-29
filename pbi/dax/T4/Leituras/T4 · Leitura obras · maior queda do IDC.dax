@@ -1,0 +1,9 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: +0.00;-0.00;0.00
+@descricao: A queda do IDC da [T4 · Leitura obras · obra de maior queda do IDC] no mês de referência.
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _obra = [T4 · Leitura obras · obra de maior queda do IDC]
+RETURN
+    IF ( NOT ISBLANK ( _obra ), CALCULATE ( [T4 · IDC · variação no mês · ref], dObra[Obra] = _obra ) )

@@ -1,0 +1,20 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: texto
+@descricao: Obra do recorte com a maior queda do IDC no mês de referência (empate pelo nome); vazio quando nenhuma caiu.
+@oraculo: nota_previa.csv: x_idc set − ago
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _mes = [Mês de referência]
+VAR _obras = CALCULATETABLE (
+        ADDCOLUMNS (
+            FILTER ( VALUES ( dObra[Obra] ), [Obras com análise] > 0 ),
+            "@v", [T4 · IDC · variação no mês],
+            "@pos", [T1 · Obras · posição]
+        ),
+        REMOVEFILTERS ( dMes ),
+        dMes[Mes] = _mes
+    )
+VAR _caiu = FILTER ( _obras, NOT ISBLANK ( [@v] ) && [@v] < 0 )
+RETURN
+    MAXX ( TOPN ( 1, _caiu, [@v], ASC, dObra[Obra], ASC ), dObra[Obra] )

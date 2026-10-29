@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Nota
+@formato: 0%
+@descricao: Limite do desvio do desembolso sobre o previsto, em módulo (10%): abaixo dele (X <) vale o ponto inteiro. Do dicionário NOTA. Constante.
+@oraculo: dicionário NOTA (caixa)
+@gerado: pbi/scripts/contas_base.py
+*/
+0.1

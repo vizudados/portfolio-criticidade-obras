@@ -1,0 +1,8 @@
+/*
+@pasta: T2 Análise crítica\Tooltips\Contas
+@formato: 0.00%
+@descricao: Valor do degrau da linha sobre o orçamento da obra em foco, no mês de referência (3,60% no pago e não aplicado da REDINHA em jun/26).
+@oraculo: composicao[].pct_orcamento (soma dos itens)
+@gerado: pbi/scripts/contas_t2.py
+*/
+DIVIDE ( [Cascata · degrau · valor · foco], [Orçamento · foco] )

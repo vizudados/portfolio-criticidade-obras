@@ -1,0 +1,7 @@
+/*
+@pasta: Base\Obra
+@formato: mmm/yy
+@descricao: Início da obra (cadastro).
+@gerado: pbi/scripts/contas_base.py
+*/
+SELECTEDVALUE ( dObra[Inicio] )

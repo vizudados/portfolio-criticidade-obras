@@ -1,0 +1,8 @@
+/*
+@pasta: Base\Obra
+@formato: 0.00%
+@descricao: Resultado ÷ orçamento (na carteira, soma ÷ soma).
+@oraculo: obras[].ultimo.resultado_pct · carteira.resultado_pct
+@gerado: pbi/scripts/contas_base.py
+*/
+DIVIDE ( [Resultado da obra], [Orçamento] )

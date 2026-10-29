@@ -1,0 +1,15 @@
+/*
+@pasta: T4 Resultado no tempo\Leituras\Contas
+@formato: texto
+@descricao: Obra do recorte com o maior resultado aplicado (R$) no mês de referência.
+@oraculo: max obras[].ultimo.resultado: DUNAS
+@gerado: pbi/scripts/contas_t4.py
+*/
+VAR _mes = [Mês de referência]
+VAR _obras = CALCULATETABLE (
+        ADDCOLUMNS ( VALUES ( fAnaliseCritica[Obra] ), "@r", [Resultado aplicado] ),
+        REMOVEFILTERS ( dMes ),
+        dMes[Mes] = _mes
+    )
+RETURN
+    MAXX ( TOPN ( 1, _obras, [@r], DESC, fAnaliseCritica[Obra], ASC ), fAnaliseCritica[Obra] )

@@ -1,0 +1,9 @@
+/*
+@pasta: Base\Referência
+@formato: "R$" #,0.00;-"R$" #,0.00;"R$" 0.00
+@descricao: [Resultado da obra] no mês de referência (seletor do drawer; sem escolha, o último mês).
+@gerado: pbi/scripts/contas_base.py
+*/
+VAR _mes = [Mês de referência]
+RETURN
+    CALCULATE ( [Resultado da obra], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )
