@@ -1,0 +1,11 @@
+/*
+@pasta: T2 Análise crítica\Nota, mês a mês
+@formato: texto
+@descricao: CSS das colunas invisíveis sobre A nota, mês a mês (uma por mês: alvo do tooltip e do destaque).
+@gerado: pbi/scripts/desenho_t2.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & "#htmlContent{display:flex!important;align-items:stretch;height:100vh;padding:0!important}.htmlViewerEntry{display:block!important;flex:1 1 0;min-width:0;margin:0!important;padding:"
+    & "0!important;height:100vh}.nmh{position:relative;height:100vh;cursor:default}.nmh i{position:absolute;left:3px;right:3px;top:22px;bottom:0;border-radius:4px;box-shadow:inset 0 0 0 1"
+    & "px rgba(11,11,12,0);transition:box-shadow .15s}.nmh:hover i,.nmh.hover i,.hover .nmh i{box-shadow:inset 0 0 0 1px rgba(11,11,12,.4)}"

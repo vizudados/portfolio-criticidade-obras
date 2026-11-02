@@ -6,8 +6,9 @@ F3 (28/10/2026, docs/08 §5), sobre a geometria v2 (Figma FjBWDk5odF9HaZ2pwhGosl
 Sem estoque · Prazo); Itens da nota 352,273 (548 × 767: subtítulo +32, nove linhas de 76 a partir de +68, eixo
 dItemNota) no lugar do quadradinho e do "com e sem estoque"; Como o resultado se forma 940,273 (508 × 350, degraus em
 +68); IDC, mês a mês 940,663 (508 × 377: subtítulo +32, colunas +96); A nota, mês a mês 1488,273 (372 × 388, miolo em
-+68); Desembolso do mês 1488,701 (372 × 339, miolo +68). O desenho estático (títulos, subtítulos fixos, "?", molduras e
-divisórias) está no papel de parede; os títulos novos dos painéis esperam a casca nova da sessão local.
++68; por cima, a camada T2_Nota_Meses com uma coluna por mês, alvo do tooltip ttT2Nota); Desembolso do mês 1488,701
+(372 × 339, miolo +68; granularidade dItemNota, só a linha "caixa", alvo do tooltip ttT2Des). O desenho estático
+(títulos, subtítulos fixos, "?", molduras e divisórias) está no papel de parede.
 """
 from __future__ import annotations
 
@@ -22,7 +23,8 @@ CARTOES = [("Nota", "T2 · Cartão nota da obra · HTML", "Nota da obra e o stat
            ("SemEstoque", "T2 · Cartão sem estoque · HTML", "Resultado sem estoque e adiantamentos e o que foi pago"),
            ("Prazo", "T2 · Cartão prazo · HTML", "Prazo: atraso em meses, término projetado e executado")]
 CARTAO_X = [352, 654, 955, 1257, 1558]
-TOOLTIPS = {"degrau": "ttT2Degrau", "mes": "ttT2Mes", "indicador": "ttT2Indicador"}
+TOOLTIPS = {"degrau": "ttT2Degrau", "mes": "ttT2Mes", "indicador": "ttT2Indicador", "nota": "ttT2Nota",
+            "des": "ttT2Des"}
 ITENS = (352, 273)         # Itens da nota 548 × 767 (era o quadradinho + com e sem estoque)
 CAS = (940, 273)           # Como o resultado se forma 508 × 350
 MES = (940, 663)           # IDC, mês a mês 508 × 377
@@ -65,13 +67,23 @@ def declarar(ctx):
         granularidade=("dMes", "Mes"), ordenacao=[(lib.campo_coluna_expr("dMes", "Mes"), "Ascending")],
         folha_de_estilo="T2 · Mês a mês · CSS", tooltip_pagina=tt["mes"],
         alt="IDC da obra mês a mês, com as linhas de 1,00 e da trava", tab=140))
-    # ---- A nota, mês a mês (era Itens da nota)
+    # ---- A nota, mês a mês (era Itens da nota). O gráfico é um HTML só; por cima, a camada de colunas invisíveis por mês
+    # (granularidade dMes, 02/11/2026) abre o tooltip do mês e destaca o mês sob o mouse (véu nos outros). Cobre as barras
+    # e o eixo dos meses (276 de 300); a frase de baixo fica de fora
+    z_nota = lib.CAMADAS["conteudo"]
     v.append(lib.visual_html("T2_Nota_Mes", NOTA[0], NOTA[1] + 68, 372, 300, "T2 · Nota mês a mês · HTML",
-                             folha_de_estilo="T2 · Nota mês a mês · CSS",
+                             folha_de_estilo="T2 · Nota mês a mês · CSS", z=z_nota,
                              alt="A nota da obra mês a mês, na cor do status, com os limites de atenção e de estável",
                              tab=150))
-    # ---- Desembolso do mês
+    v.append(lib.visual_html(
+        "T2_Nota_Meses", NOTA[0], NOTA[1] + 68, 372, 276, "T2 · Nota mês a mês · HTML mês",
+        granularidade=("dMes", "Mes"), ordenacao=[(lib.campo_coluna_expr("dMes", "Mes"), "Ascending")],
+        folha_de_estilo="T2 · Nota mês a mês · CSS mês", tooltip_pagina=tt["nota"], z=z_nota + 10,
+        alt="Meses da nota: passe o mouse para ver a nota, os nove itens e o que mudou no mês", tab=151))
+    # ---- Desembolso do mês: granularidade dItemNota (só a linha "caixa" desenha; 02/11/2026) para abrir o tooltip dos
+    # meses anteriores com o eixo dos meses livre
     v.append(lib.visual_html("T2_Des_Html", DESEMB[0], DESEMB[1] + 68, 372, 271, "T2 · Desembolso · HTML",
-                             folha_de_estilo="T2 · Desembolso · CSS",
+                             granularidade=("dItemNota", "Item"), folha_de_estilo="T2 · Desembolso · CSS",
+                             tooltip_pagina=tt["des"],
                              alt="Desembolso do mês: previsto, desembolsado, diferença, desvio e justificativa", tab=160))
     return [Visual("T2", d) for d in v]

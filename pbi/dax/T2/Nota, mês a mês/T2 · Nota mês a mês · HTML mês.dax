@@ -1,0 +1,12 @@
+/*
+@pasta: T2 Análise crítica\Nota, mês a mês
+@formato: texto
+@descricao: Uma coluna invisível por mês da janela (granularidade dMes[Mes]) sobre A nota, mês a mês: alvo do mouse que abre o tooltip do mês (ttT2Nota) e destaca o mês (contorno no mês sob o mouse, véu nos outros). Colunas iguais, as vagas das barras; vazio fora da janela e sem obra em foco.
+@gerado: pbi/scripts/desenho_t2.py
+*/
+-- 1 · Leituras
+VAR _ate = [Série · mês até a referência]
+VAR _temObra = NOT ISBLANK ( [Nota · pontos possíveis · ranking · foco] )
+-- 4 · Marcação
+RETURN
+    IF ( _ate = 1 && _temObra, "<div class='u hv-camada nmh'><i></i></div>" )

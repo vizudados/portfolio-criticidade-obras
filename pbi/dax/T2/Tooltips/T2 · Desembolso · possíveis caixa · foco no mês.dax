@@ -1,0 +1,7 @@
+/*
+@pasta: T2 Análise crítica\Tooltips\Contas
+@formato: 0.00
+@descricao: [Nota · item · possíveis · foco no mês] do item previsão de caixa na obra em foco no mês do eixo (marca de cada mês no tooltip dos meses anteriores do Desembolso).
+@gerado: pbi/scripts/contas_t2.py
+*/
+CALCULATE ( [Nota · item · possíveis · foco no mês], dItemNota[Item] = "caixa" )

@@ -1,0 +1,9 @@
+/*
+@pasta: T2 Análise crítica\Tooltips\Contas
+@formato: 0
+@descricao: O status (0 estável · 1 atenção · 2 crítico) da obra em foco no mês anterior ao do eixo (tooltip do mês de A nota, mês a mês); vazio sem nota no mês anterior.
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+RETURN
+    CALCULATE ( [Nota · status · foco no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )

@@ -429,6 +429,63 @@ m("Estoque de materiais · mês anterior · foco no mês", TT, RS,
 VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
 RETURN
     CALCULATE ( [Estoque de materiais], dObra[Obra] = _obra, REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )""")
+# hover e tooltips (02/11/2026): o mês de A nota, mês a mês (ttT2Nota) e os meses anteriores do Desembolso (ttT2Des)
+MES_ANT = """VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+RETURN
+    CALCULATE ( [{base}], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )"""
+for nome, base, fmt, desc in (
+        ("nota no mês anterior", "Nota · nota final · foco no mês", "0.00", "A nota da obra em foco"),
+        ("status no mês anterior", "Nota · status · foco no mês", "0", "O status (0 estável · 1 atenção · 2 crítico) da obra em foco"),
+        ("pendente no mês anterior", "Nota · pendente · foco no mês", "0", "1 quando a nota da obra em foco estava pendente"),
+        ("obtidos no mês anterior", "Nota · pontos obtidos · foco no mês", "0.00", "Os pontos obtidos pela obra em foco"),
+        ("possíveis no mês anterior", "Nota · pontos possíveis · foco no mês", "0.00", "Os pontos possíveis da obra em foco"),
+        ("item · pontos no mês anterior", "Nota · item · pontos · foco no mês", "0.00",
+         "Os pontos do item da linha (dItemNota) na obra em foco")):
+    m(f"T2 · Nota do mês · {nome} · foco no mês", TT, fmt,
+      f"{desc} no mês anterior ao do eixo (tooltip do mês de A nota, mês a mês); vazio sem nota no mês anterior.",
+      MES_ANT.format(base=base))
+m("T2 · Nota do mês · item · X · foco no mês", TT, "0.00",
+  "X do item da linha (dItemNota) na obra em foco no mês do eixo: IDC, meses de atraso, fração, taxa ou checagens "
+  "(tooltip do mês de A nota, mês a mês).", FOCO_OBRA.format(base="Nota · item · X"))
+m("T2 · Nota do mês · item · variação de pontos · foco no mês", TT, "+0.0#;-0.0#;0",
+  "Pontos do item da linha no mês do eixo menos os do mês anterior, na obra em foco; vazio quando um dos dois meses "
+  "não tem pontos (tooltip do mês de A nota, mês a mês).",
+  """VAR _p = [Nota · item · pontos · foco no mês]
+VAR _a = [T2 · Nota do mês · item · pontos no mês anterior · foco no mês]
+RETURN
+    IF ( ISBLANK ( _p ) || ISBLANK ( _a ), BLANK (), _p - _a )""")
+for nome, base in (("pontos caixa", "Nota · item · pontos · foco no mês"),
+                   ("possíveis caixa", "Nota · item · possíveis · foco no mês")):
+    m(f"T2 · Desembolso · {nome} · foco no mês", TT, "0.00",
+      f"[{base}] do item previsão de caixa na obra em foco no mês do eixo (marca de cada mês no tooltip dos meses "
+      "anteriores do Desembolso).",
+      f'CALCULATE ( [{base}], dItemNota[Item] = "caixa" )')
+m("T2 · Desembolso · faixas da previsão de caixa", TT, "texto",
+  "As faixas do item previsão de caixa como estão no dicionário da nota ('rótulo → pontos', separadas por ' · ').",
+  'CALCULATE ( [Nota · item · faixas], dItemNota[Item] = "caixa" )')
+DES_ANTES = """VAR _ref = [Mês de referência]
+VAR _meses =
+    FILTER (
+        ADDCOLUMNS (
+            ALL ( dMes[Mes] ),
+            "@ate", [Série · mês até a referência],
+            "@pv", [Desembolso · previsto no mês · foco no mês],
+            "@ds", [Desembolso · realizado no mês · foco no mês],
+            "@e", [Justificativa · exigida · foco no mês],
+            "@b", [Justificativa · em branco · foco no mês]
+        ),
+        [@ate] = 1 && dMes[Mes] < _ref && ( NOT ISBLANK ( [@pv] ) || NOT ISBLANK ( [@ds] ) )
+    )
+RETURN
+    COUNTROWS ( {filtro} ) + 0"""
+for nome, filtro, desc in (
+        ("meses antes da referência", "_meses", "Meses da janela antes do de referência com desembolso previsto ou feito"),
+        ("justificativas exigidas antes da referência", "FILTER ( _meses, [@e] = 1 )",
+         "Desses meses, em quantos a justificativa era exigida (desvio acima de ±10%)"),
+        ("justificativas preenchidas antes da referência", "FILTER ( _meses, [@e] = 1 && [@b] <> 1 )",
+         "Desses meses com justificativa exigida, em quantos ela foi preenchida")):
+    m(f"T2 · Desembolso · {nome} · foco", TT, "0",
+      f"{desc}, na obra em foco (pé do tooltip dos meses anteriores do Desembolso).", DES_ANTES.format(filtro=filtro))
 m("Cascata · resultado sem o degrau · foco", TT, RS,
   "Resultado da obra em foco no mês de referência sem o degrau 'pago e não aplicado' (itens 02 a 07): o que a "
   "obra fecharia sem o dinheiro pago que ainda não virou obra.",

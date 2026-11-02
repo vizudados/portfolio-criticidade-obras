@@ -1,0 +1,21 @@
+/*
+@pasta: T2 Análise crítica\Tooltips\Contas
+@formato: 0
+@descricao: Desses meses, em quantos a justificativa era exigida (desvio acima de ±10%), na obra em foco (pé do tooltip dos meses anteriores do Desembolso).
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _ref = [Mês de referência]
+VAR _meses =
+    FILTER (
+        ADDCOLUMNS (
+            ALL ( dMes[Mes] ),
+            "@ate", [Série · mês até a referência],
+            "@pv", [Desembolso · previsto no mês · foco no mês],
+            "@ds", [Desembolso · realizado no mês · foco no mês],
+            "@e", [Justificativa · exigida · foco no mês],
+            "@b", [Justificativa · em branco · foco no mês]
+        ),
+        [@ate] = 1 && dMes[Mes] < _ref && ( NOT ISBLANK ( [@pv] ) || NOT ISBLANK ( [@ds] ) )
+    )
+RETURN
+    COUNTROWS ( FILTER ( _meses, [@e] = 1 ) ) + 0

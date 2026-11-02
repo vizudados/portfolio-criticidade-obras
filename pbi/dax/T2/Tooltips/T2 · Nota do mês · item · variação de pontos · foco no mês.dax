@@ -1,0 +1,10 @@
+/*
+@pasta: T2 Análise crítica\Tooltips\Contas
+@formato: +0.0#;-0.0#;0
+@descricao: Pontos do item da linha no mês do eixo menos os do mês anterior, na obra em foco; vazio quando um dos dois meses não tem pontos (tooltip do mês de A nota, mês a mês).
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _p = [Nota · item · pontos · foco no mês]
+VAR _a = [T2 · Nota do mês · item · pontos no mês anterior · foco no mês]
+RETURN
+    IF ( ISBLANK ( _p ) || ISBLANK ( _a ), BLANK (), _p - _a )

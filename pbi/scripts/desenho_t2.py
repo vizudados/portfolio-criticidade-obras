@@ -424,6 +424,9 @@ CSS_DES = (
     ".dm .js .vs{display:block}"
     ".dm .js p{margin-top:8px;font-size:15px;line-height:21px;color:#3B3B3F;display:-webkit-box;-webkit-line-clamp:3;"
     "-webkit-box-orient:vertical;overflow:hidden}"
+    # hover (02/11/2026): o bloco é uma entrada só; cada número, barra e a caixa da justificativa são partes (.hv-p do
+    # Comum · CSS base): a parte sob o mouse fica plena e as outras apagam
+    ".dm .c,.dm .br{cursor:default}"
 )
 m("T2 · Desembolso · CSS", DES, "CSS do bloco Desembolso do mês v2.", "-- 4 · Marcação\n[Comum · CSS base]\n    & "
   + dax_lit(CSS_DES))
@@ -431,7 +434,9 @@ m("T2 · Desembolso · HTML", DES,
   "Desembolso do mês da obra em foco: previsto e desembolsado (com as barras creme × preta na mesma escala), diferença "
   "e × previsto com a marca dos pontos da previsão de caixa na nota (cheio, parcial ou zero, pelas faixas do item) e os "
   "pontos ao lado do rótulo, e a justificativa da planilha (exigida acima de ±10%; em branco vira "
-  "aviso). Desvio e diferença negativos ficam em preto (decisão do Alisson).",
+  "aviso). Desvio e diferença negativos ficam em preto (decisão do Alisson). Granularidade dItemNota (02/11/2026): o "
+  "bloco sai só na linha 'caixa' (uma entrada), e o mouse abre o tooltip dos meses anteriores (ttT2Des) com o item da "
+  "previsão de caixa no contexto e o eixo dos meses livre.",
   linhas(
       "-- 1 · Leituras",
       "VAR _prev = [Desembolso · previsto no mês · foco]",
@@ -443,6 +448,8 @@ m("T2 · Desembolso · HTML", DES,
       "VAR _exig = [Justificativa · exigida · foco]",
       "VAR _branco = [Justificativa · em branco · foco]",
       "VAR _just = [Justificativa do desembolso · foco]",
+      "/* granularidade dItemNota (hover e tooltip, 02/11/2026): o bloco sai só na linha da previsão de caixa, uma entrada */",
+      "VAR _ehCaixa = SELECTEDVALUE ( dItemNota[Item] ) = \"caixa\"",
       "-- 2 · Textos",
       D.rs("_prev", "_tp") + D.rs("_real", "_tr") + D.rs("_dif", "_td", mais=True) + D.pct("_desv", "_tv", casas=0, mais=True),
       item_txt_m("_ti", "_ptx", "_psx", fonte="ac"),
@@ -462,17 +469,17 @@ m("T2 · Desembolso · HTML", DES,
       "-- 4 · Marcação",
       "RETURN",
       "    IF (",
-      "        NOT ISBLANK ( _prev ) || NOT ISBLANK ( _real ),",
-      "        \"<div class='u dm'>\"",
-      "            & \"<div class='c' style='left:0;top:0'><span class='vs'><i class='pv a-pop'></i>Previsto</span><b>\" & _tpOd & \"</b></div>\"",
-      "            & \"<div class='c' style='left:186px;top:0'><span class='vs'><i class='dv a-pop' style='animation-delay:90ms'></i>Desembolsado</span><b>\" & _trOd"
+      "        _ehCaixa && ( NOT ISBLANK ( _prev ) || NOT ISBLANK ( _real ) ),",
+      "        \"<div class='u dm hv-g'>\"",
+      "            & \"<div class='c hv-p' style='left:0;top:0'><span class='vs'><i class='pv a-pop'></i>Previsto</span><b>\" & _tpOd & \"</b></div>\"",
+      "            & \"<div class='c hv-p' style='left:186px;top:0'><span class='vs'><i class='dv a-pop' style='animation-delay:90ms'></i>Desembolsado</span><b>\" & _trOd"
       " & \"</b></div>\"",
-      "            & \"<i class='br pv' style='top:55px;width:\" & _wP & \"px' data-rk='dp' data-rp='width'></i>\"",
-      "            & \"<i class='br dv' style='top:69px;width:\" & _wR & \"px' data-rk='dr' data-rp='width' data-rd='90'></i>\"",
-      "            & \"<div class='c' style='left:0;top:95px'><span class='vs'>Diferença</span><b>\" & _tdOd & \"</b></div>\"",
-      "            & \"<div class='c' style='left:186px;top:95px'><span class='vs'>× previsto\" & IF ( ISBLANK ( _ptx ), \"\", \" · <span>\" & _tiTxt & \"</span>\" ) & \"</span><b>\" & "
+      "            & \"<i class='br pv hv-p' style='top:55px;width:\" & _wP & \"px' data-rk='dp' data-rp='width'></i>\"",
+      "            & \"<i class='br dv hv-p' style='top:69px;width:\" & _wR & \"px' data-rk='dr' data-rp='width' data-rd='90'></i>\"",
+      "            & \"<div class='c hv-p' style='left:0;top:95px'><span class='vs'>Diferença</span><b>\" & _tdOd & \"</b></div>\"",
+      "            & \"<div class='c hv-p' style='left:186px;top:95px'><span class='vs'>× previsto\" & IF ( ISBLANK ( _ptx ), \"\", \" · <span>\" & _tiTxt & \"</span>\" ) & \"</span><b>\" & "
       + marca_item("_ptx", "_psx", 700) + " & \"<span>\" & _tvOd & \"</span></b></div>\"",
-      "            & \"<div class='js'><span class='vs'>\" & _txtRot & \"</span><p>\" & _txtJust & \"</p></div>\"",
+      "            & \"<div class='js hv-p'><span class='vs'>\" & _txtRot & \"</span><p>\" & _txtJust & \"</p></div>\"",
       "        & \"</div>\" & [Comum · JS contador] & [Comum · JS corrida]",
       "    )",
   ))
@@ -496,7 +503,6 @@ CSS_CAS = (
     ".cd .v{position:absolute;left:-10px;right:-10px;text-align:center;font-family:'Barlow U','Segoe UI',sans-serif;"
     "font-weight:600;font-size:14px;line-height:17px;white-space:nowrap;font-variant-numeric:tabular-nums}"
     ".cd .n{position:absolute;left:0;right:0;top:249px;text-align:center;font-size:13px;line-height:16px;color:#3B3B3F}"
-    ".cd:hover .b{filter:brightness(.94)}"
 )
 m("T2 · Cascata · CSS", CAS, "CSS da cascata v2 (uma entrada por degrau, colunas iguais).",
   "-- 4 · Marcação\n[Comum · CSS base]\n    & " + dax_lit(CSS_CAS))
@@ -587,7 +593,6 @@ CSS_MES = (
     ".mm .ms{position:absolute;left:-12px;right:-12px;top:265px;text-align:center;font-size:13px;line-height:16px;"
     "white-space:nowrap;color:#3B3B3F}"
     ".mm .ms.ref{font-weight:600;color:#0B0B0C}.mm .ms.sem{opacity:.35}"
-    ".mm:hover .b{filter:brightness(.92)}"
     ".ms2{position:fixed;inset:0;font-size:15px;line-height:20px;color:#3B3B3F;white-space:nowrap}"
 )
 m("T2 · Mês a mês · CSS", MES, "CSS do IDC mês a mês (uma entrada por mês da janela; colunas iguais) e do subtítulo.",
@@ -928,6 +933,34 @@ m("T2 · Nota mês a mês · HTML", NMM,
       "    )",
   ))
 
+# camada da nota mês a mês (hover e tooltip, 02/11/2026): o gráfico é um HTML só, sem granularidade, então não abre
+# tooltip de página nem destaca um mês. Por cima dele, uma coluna invisível por mês da janela (granularidade dMes[Mes],
+# colunas iguais = as vagas das barras, NMM_W ÷ n): é o alvo do mouse que abre o tooltip do mês (ttT2Nota); a coluna sob o
+# mouse ganha um contorno discreto e as outras, o véu branco da regra comum (.hv-camada), que apaga o gráfico de baixo.
+NMM_CAMADA_H = NMM_TOP + NMM_H + 26     # cobre a área das barras e o eixo dos meses (276); a frase de baixo fica de fora
+CSS_NMM_MES = (
+    "#htmlContent{display:flex!important;align-items:stretch;height:100vh;padding:0!important}"
+    ".htmlViewerEntry{display:block!important;flex:1 1 0;min-width:0;margin:0!important;padding:0!important;"
+    "height:100vh}"
+    ".nmh{position:relative;height:100vh;cursor:default}"
+    f".nmh i{{position:absolute;left:3px;right:3px;top:{NMM_TOP - 8}px;bottom:0;border-radius:4px;"
+    "box-shadow:inset 0 0 0 1px rgba(11,11,12,0);transition:box-shadow .15s}"
+    ".nmh:hover i,.nmh.hover i,.hover .nmh i{box-shadow:inset 0 0 0 1px rgba(11,11,12,.4)}"
+)
+m("T2 · Nota mês a mês · CSS mês", NMM, "CSS das colunas invisíveis sobre A nota, mês a mês (uma por mês: alvo do "
+  "tooltip e do destaque).", "-- 4 · Marcação\n[Comum · CSS base]\n    & " + dax_lit(CSS_NMM_MES))
+m("T2 · Nota mês a mês · HTML mês", NMM,
+  "Uma coluna invisível por mês da janela (granularidade dMes[Mes]) sobre A nota, mês a mês: alvo do mouse que abre o "
+  "tooltip do mês (ttT2Nota) e destaca o mês (contorno no mês sob o mouse, véu nos outros). Colunas iguais, as vagas "
+  "das barras; vazio fora da janela e sem obra em foco.",
+  linhas(
+      "-- 1 · Leituras",
+      "VAR _ate = [Série · mês até a referência]",
+      "VAR _temObra = NOT ISBLANK ( [Nota · pontos possíveis · ranking · foco] )",
+      "-- 4 · Marcação",
+      "RETURN",
+      "    IF ( _ate = 1 && _temObra, \"<div class='u hv-camada nmh'><i></i></div>\" )",
+  ))
 
 # ======================================================================================================== com e sem estoque
 CSE = r"T2 Análise crítica\Com e sem estoque"

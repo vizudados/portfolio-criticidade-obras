@@ -179,11 +179,37 @@ FONTES_FX = {".tt .fx.ls .f": 14}
 CASCATA_T2 = TL.entrada(".tt .ls>:nth-child({k})", [".tt .corpo>.bh", ".tt .corpo>.sl", ".tt .corpo>.vs",
                                                      ".tt .corpo>.tx", ".tt .corpo>.des", ".tt .corpo>.nt",
                                                      ".tt .corpo>.vz", ".tt .ser .ms"], pe=".tt .rp")
+# hover e tooltips (02/11/2026): o mês de A nota, mês a mês (ttT2Nota: item | valor no mês | pontos | variação) e os
+# meses anteriores do Desembolso (ttT2Des: mês | marca e desvio | previsto × desembolsado | justificativa). Colunas de
+# largura fixa: a fonte cresce com a faixa só até 17 px (o maior caso, "Qualidade · 1.ª inspeção" e
+# "R$ 1,02 mi × R$ 1,45 mi", cabe); a pílula "Em branco" (13 px, sem escala) cabe nos 128 da última coluna.
+CSS_HV = (
+    ".tt .lin.nt2{grid-template-columns:1fr 140px 104px 48px;column-gap:8px}"
+    ".tt .lin.nt2 .n{font-weight:600;white-space:nowrap}"
+    ".tt .lin.nt2 .x{white-space:nowrap}"
+    ".tt .lin.nt2 .x b{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600}"
+    ".tt .lin.nt2 .x b.ng{color:#C43737}"
+    ".tt .lin.nt2 .p{justify-self:end}"
+    ".tt .lin.nt2 .dl{text-align:right;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;white-space:nowrap}"
+    ".tt .lin.nt2 .dl.ng{color:#C43737}.tt .lin.nt2 .dl.ig{color:#6B6B70}"
+    ".tt .lin.ds2{grid-template-columns:62px 92px 1fr 128px;column-gap:8px}"
+    ".tt .lin.ds2 .m{font-weight:600;white-space:nowrap}"
+    ".tt .lin.ds2 .dv{display:flex;align-items:center;gap:6px;font-family:'Barlow U','Segoe UI',sans-serif;"
+    "font-weight:600;white-space:nowrap}"
+    ".tt .lin.ds2 .rs{white-space:nowrap;color:#3B3B3F}"
+    ".tt .lin.ds2 .j{justify-self:end;white-space:nowrap;color:#3B3B3F}"
+    ".tt .corpo>.nt+.bh{margin-top:8px}"
+)
+FONTES_NT2 = {".tt .ls .lin.nt2 .n": 15, ".tt .ls .lin.nt2 .x": 14, ".tt .ls .lin.nt2 .dl": 15}
+FONTES_DS2 = {".tt .ls .lin.ds2 .m": 15, ".tt .ls .lin.ds2 .dv": 16, ".tt .ls .lin.ds2 .rs": 14,
+              ".tt .ls .lin.ds2 .j": 14}
 desenho("T2 · Tooltip · CSS", "CSS dos tooltips v2 da T2 (cartão branco 560, cabeçalho preto com a meta que quebra "
         "de linha, linhas de item, degrau e conta, faixa, série de uma só e rodapé preso ao pé; F4: corpo flexível, lista "
         "com escala e cascata de entrada). Não depende da CSS de tooltip da T1.",
         "-- 4 · Marcação\n[Comum · CSS base]\n    & " + dax_lit(CSS_TT + CSS_FX + TL.css_escala(FONTES_T2)
-                                                         + TL.css_fontes(FONTES_FX, teto=0) + CSS_F4 + CASCATA_T2))
+                                                         + TL.css_fontes(FONTES_FX, teto=0) + CSS_F4 + CSS_HV
+                                                         + TL.css_fontes(FONTES_NT2, teto=17)
+                                                         + TL.css_fontes(FONTES_DS2, teto=17) + CASCATA_T2))
 
 
 def serie(var_lista: str, ref: str, modo: str = "neutra") -> list[str]:
@@ -716,6 +742,214 @@ desenho(
         + bloco_serie("\"Pontos, mês a mês\"") + " ) & \"</div>\"",
         "            & " + rodape("_txtRod", "\"Desde \" & _mesAntN"),
         "        & \"</div>\" & [Comum · JS contador tooltip] & [Comum · JS corrida]",
+        "    )",
+    ))
+
+# ==================================================================================================== Nota do mês
+# Tooltip do mês de A nota, mês a mês (camada T2_Nota_Meses, 02/11/2026): o gráfico só mostra a barra da nota; aqui vão a
+# nota e o status no mês, os nove itens com o valor no mês, os pontos (pílula pela faixa) e quanto cada um mudou contra o
+# mês anterior, e no pé a nota do mês anterior.
+desenho(
+    "T2 · Tooltip nota do mês · HTML",
+    "Tooltip de página do mês de A nota, mês a mês (obra em foco): a nota e o status no mês, os nove itens da nota com o "
+    "valor no mês, os pontos (pílula cheio, parcial, zero, sem dado) e a variação contra o mês anterior, e no pé a nota "
+    "do mês anterior. Primeiro mês do histórico: sem variação.",
+    linhas(
+        "-- 1 · Leituras",
+        "VAR _mesL = [Mês · longo]",
+        "VAR _mesAntN = [Mês anterior · nome]",
+        "VAR _primeiro = [Mês · é o primeiro do histórico] = 1",
+        "VAR _obra = [Nota · obra em foco]",
+        "VAR _selo = [Obra em foco · selo]",
+        "VAR _nota = [Nota · nota final · foco no mês]",
+        "VAR _st = [Nota · status · foco no mês]",
+        "VAR _pend = [Nota · pendente · foco no mês]",
+        "VAR _obt = [Nota · pontos obtidos · foco no mês]",
+        "VAR _poss = [Nota · pontos possíveis · foco no mês]",
+        "VAR _notaA = [T2 · Nota do mês · nota no mês anterior · foco no mês]",
+        "VAR _stA = [T2 · Nota do mês · status no mês anterior · foco no mês]",
+        "VAR _pendA = [T2 · Nota do mês · pendente no mês anterior · foco no mês]",
+        "VAR _obtA = [T2 · Nota do mês · obtidos no mês anterior · foco no mês]",
+        "VAR _possA = [T2 · Nota do mês · possíveis no mês anterior · foco no mês]",
+        "VAR _itens =",
+        "    ADDCOLUMNS (",
+        "        VALUES ( dItemNota[Item] ),",
+        '        "@ord", [Nota · item · ordem],',
+        '        "@nome", [Nota · item · nome médio],',
+        '        "@pts", [Nota · item · pontos · foco no mês],',
+        '        "@ps", [Nota · item · possíveis · foco no mês],',
+        '        "@x", [T2 · Nota do mês · item · X · foco no mês],',
+        '        "@dv", [T2 · Nota do mês · item · variação de pontos · foco no mês]',
+        "    )",
+        "VAR _nIt = COUNTROWS ( _itens ) /* lista */",
+        "-- 2 · Textos",
+        f'VAR _txtSob = "A NOTA, MÊS A MÊS · " & UPPER ( _obra ) & IF ( _selo = "", "", " · " & _selo )',
+        "VAR _txtDir =",
+        "    SWITCH (",
+        "        TRUE (),",
+        "        _pend = 1, \"pendente · \" & " + C.marca(f'FORMAT ( _obt, "{DC.FMT_PTS}", "pt-BR" )') + " & \" de \" & "
+        + C.marca(f'FORMAT ( _poss, "{DC.FMT_PTS}", "pt-BR" )') + ",",
+        "        ISBLANK ( _nota ), \"sem nota no mês\",",
+        "        \"nota \" & " + C.marca(f'FORMAT ( _nota, "{DC.FMT_PTS}", "pt-BR" )') + " & \" · \" & "
+        + DC.palavra_status("_st", "_pend"),
+        "    )",
+        "VAR _txtAnt =",
+        "    SWITCH (",
+        "        TRUE (),",
+        "        _primeiro, \"primeiro mês do histórico\",",
+        "        _pendA = 1, \"pendente · \" & " + C.marca(f'FORMAT ( _obtA, "{DC.FMT_PTS}", "pt-BR" )') + " & \" de \" & "
+        + C.marca(f'FORMAT ( _possA, "{DC.FMT_PTS}", "pt-BR" )') + ",",
+        "        ISBLANK ( _notaA ), \"sem nota\",",
+        "        \"nota \" & " + C.marca(f'FORMAT ( _notaA, "{DC.FMT_PTS}", "pt-BR" )') + " & \" · \" & "
+        + DC.palavra_status("_stA", "_pendA"),
+        "    )",
+        "VAR _txtRotAnt = IF ( _primeiro, \"Antes\", \"Em \" & _mesAntN )",
+        "VAR _txtBhD = IF ( _primeiro, \"Pontos\", \"Pontos · desde \" & _mesAntN )",
+        "-- 4 · Marcação",
+        "VAR _htmlLinhas =",
+        "    CONCATENATEX (",
+        "        _itens,",
+        "        VAR _cod = dItemNota[Item]",
+        "        VAR _pts = [@pts]",
+        "        VAR _ps = [@ps]",
+        "\n".join("        " + l for l in x_item("_cod", "[@x]", "", "_pts", marcar=True)),
+        "        VAR _kCls = SWITCH ( TRUE (), ISBLANK ( _pts ), \"f\", _ps = 0, \"n\", _pts >= _ps, \"c\", _pts = 0, \"z\", \"p\" )",
+        "        VAR _kTxt =",
+        "            SWITCH (",
+        "                TRUE (),",
+        "                ISBLANK ( _pts ), \"sem dado\",",
+        "                _ps = 0, \"não conta\",",
+        "                " + C.marca(f'FORMAT ( _pts, "{DC.FMT_PTS}", "pt-BR" )') + " & \" de \" & "
+        + C.marca(f'FORMAT ( _ps, "{DC.FMT_PTS}", "pt-BR" )'),
+        "            )",
+        "        VAR _v = [@dv]",
+        "        VAR _vR = ROUND ( _v, 2 )",
+        "        VAR _dTxt =",
+        "            SWITCH (",
+        "                TRUE (),",
+        "                _primeiro || ISBLANK ( _v ), \"\",",
+        "                _vR = 0, \"=\",",
+        f"                IF ( _vR > 0, \"+\", \"{MENOS}\" ) & " + C.marca(f'FORMAT ( ABS ( _v ), "{DC.FMT_PTS}", "pt-BR" )'),
+        "            )",
+        "        VAR _dCls = IF ( ISBLANK ( _v ), \"\", IF ( _vR < 0, \" ng\", IF ( _vR = 0, \" ig\", \"\" ) ) )",
+        "        RETURN",
+        "            \"<div class='lin nt2'><span class='n'>\" & [@nome] & \"</span><span class='x'>\" & _txtX & \"</span>\"",
+        "                & \"<span class='p'><span class='chi chi-\" & _kCls & \"'><span>\" & _kTxt & \"</span></span></span>\"",
+        "                & \"<span class='dl\" & _dCls & \"'>\" & _dTxt & \"</span></div>\",",
+        "        \"\",",
+        "        [@ord], ASC",
+        "    )",
+        "RETURN",
+        "    IF (",
+        "        NOT ISBLANK ( _obra ),",
+        "        " + cabeca("_txtSob", "_mesL", None, "_txtDir"),
+        "            & IF (",
+        "                ISBLANK ( _poss ) && ISBLANK ( _nota ),",
+        "                \"<div class='corpo'><p class='vz'>Sem planilha da obra neste mês.</p></div>\",",
+        "                \"<div class='corpo crp'><div class='bh'><span class='vs'>Item · valor no mês</span>\"",
+        "                    & \"<span class='vs'>\" & _txtBhD & \"</span></div>\"",
+        "                    & \"<div class='lsb\" & " + TL.atributos("_nIt") + "'>\" & _htmlLinhas & \"</div></div>\"",
+        "                    & " + rodape("_txtAnt", "_txtRotAnt"),
+        "            )",
+        "        & \"</div>\" & [Comum · JS contador tooltip]",
+        "    )",
+    ))
+
+
+def rs_curto(v: str) -> str:
+    """DAX: "R$ 812 mil" · "R$ 1,02 mi" · "R$ 950" (valor absoluto; previsto e desembolsado nunca são negativos)."""
+    a = f"ABS ( {v} )"
+    return (f'"R$ " & SWITCH ( TRUE (), {a} >= 999500, FORMAT ( {a} / 1000000, "0.00", "pt-BR" ) & " mi", '
+            f'{a} >= 999.5, FORMAT ( {a} / 1000, "0", "pt-BR" ) & " mil", FORMAT ( {a}, "#,0", "pt-BR" ) )')
+
+
+# ==================================================================================================== Desembolso
+# Tooltip do Desembolso do mês (T2_Des_Html com granularidade dItemNota, só a linha "caixa"; 02/11/2026): o painel mostra
+# o mês de referência; aqui vão os meses anteriores da janela, do mais recente ao mais antigo: a marca da faixa da
+# previsão de caixa no mês, o desvio, previsto × desembolsado e se a justificativa era exigida e se foi preenchida. O eixo
+# dos meses chega livre (o item da nota é que vem do ponto), então a lista sai de VALUES ( dMes[Mes] ).
+desenho(
+    "T2 · Tooltip desembolso · HTML",
+    "Tooltip de página do Desembolso do mês (obra em foco): os meses anteriores ao de referência na janela, do mais "
+    "recente ao mais antigo, com a marca da faixa da previsão de caixa, o desvio (negativo em preto, decisão do Alisson), "
+    "previsto × desembolsado e a justificativa (não exigida, preenchida ou em branco); as faixas do item lidas do modelo "
+    "e, no pé, quantas exigidas foram preenchidas.",
+    linhas(
+        "-- 1 · Leituras",
+        "VAR _ref = [Mês de referência]",
+        "VAR _mesRefC = [Mês de referência · curto]",
+        "VAR _obra = [Nota · obra em foco]",
+        "VAR _selo = [Obra em foco · selo]",
+        "VAR _faixas = [T2 · Desembolso · faixas da previsão de caixa]",
+        "VAR _nMes = [T2 · Desembolso · meses antes da referência · foco] + 0",
+        "VAR _nEx = [T2 · Desembolso · justificativas exigidas antes da referência · foco] + 0",
+        "VAR _nPre = [T2 · Desembolso · justificativas preenchidas antes da referência · foco] + 0",
+        "VAR _meses =",
+        "    ADDCOLUMNS (",
+        "        VALUES ( dMes[Mes] ),",
+        '        "@ate", [Série · mês até a referência],',
+        '        "@rot", [Mês · rótulo curto],',
+        '        "@pv", [Desembolso · previsto no mês · foco no mês],',
+        '        "@ds", [Desembolso · realizado no mês · foco no mês],',
+        '        "@d", [Desembolso · desvio no mês · foco no mês],',
+        '        "@e", [Justificativa · exigida · foco no mês],',
+        '        "@b", [Justificativa · em branco · foco no mês],',
+        '        "@pt", [T2 · Desembolso · pontos caixa · foco no mês],',
+        '        "@ps", [T2 · Desembolso · possíveis caixa · foco no mês]',
+        "    )",
+        "VAR _ant = FILTER ( _meses, [@ate] = 1 && dMes[Mes] < _ref && ( NOT ISBLANK ( [@pv] ) || NOT ISBLANK ( [@ds] ) ) ) /* lista */",
+        "VAR _nLs = COUNTROWS ( _ant ) /* lista */",
+        "-- 2 · Textos",
+        f'VAR _txtSob = "DESEMBOLSO DO MÊS · " & UPPER ( _obra ) & IF ( _selo = "", "", " · " & _selo )',
+        "VAR _txtDir = " + C.marca("_nMes") + " & IF ( _nMes = 1, \" mês antes de \", \" meses antes de \" ) & _mesRefC",
+        "VAR _txtRod =",
+        "    SWITCH (",
+        "        TRUE (),",
+        "        _nEx = 0, \"nenhuma exigida: todo desvio ficou dentro de ±10%\",",
+        "        _nPre = _nEx, IF ( _nEx = 1, \"a única exigida foi preenchida\", \"todas as \" & " + C.marca("_nEx") + " & \" exigidas preenchidas\" ),",
+        "        " + C.marca("_nPre") + " & \" de \" & " + C.marca("_nEx") + " & IF ( _nEx = 1, \" exigida preenchida\", \" exigidas preenchidas\" )",
+        "    )",
+        "-- 4 · Marcação",
+        "VAR _htmlLinhas =",
+        "    CONCATENATEX (",
+        "        _ant,",
+        "        VAR _d = [@d]",
+        "        VAR _dR = ROUND ( _d * 100, 0 )",
+        f"        VAR _dTxt = IF ( ISBLANK ( _d ), \"—\", IF ( _dR > 0, \"+\", IF ( _dR < 0, \"{MENOS}\", \"\" ) ) & "
+        + C.marca('FORMAT ( ABS ( _d ) * 100, "0", "pt-BR" )') + " & \"%\" )",
+        "        VAR _mk = " + marca_item("[@pt]", "[@ps]"),
+        "        VAR _dsTxt = IF ( ISBLANK ( [@ds] ), \"nada desembolsado\", " + C.marca(rs_curto("[@ds]")) + " )",
+        "        VAR _rsTxt = IF ( ISBLANK ( [@pv] ), \"sem previsto · \" & _dsTxt, " + C.marca(rs_curto("[@pv]")) + " & \" × \" & _dsTxt )",
+        "        VAR _jTxt =",
+        "            SWITCH (",
+        "                TRUE (),",
+        "                [@b] = 1, \"<span class='chp'><i></i>Em branco</span>\",",
+        "                [@e] = 1, \"preenchida\",",
+        "                ISBLANK ( [@e] ), \"sem previsto\",",
+        "                \"não exigida\"",
+        "            )",
+        "        RETURN",
+        "            \"<div class='lin ds2'><span class='m'>\" & [@rot] & \"</span><span class='dv'>\" & _mk & \"<span>\" & _dTxt"
+        " & \"</span></span>\"",
+        "                & \"<span class='rs'>\" & _rsTxt & \"</span><span class='j'>\" & _jTxt & \"</span></div>\",",
+        "        \"\",",
+        "        dMes[Mes], DESC",
+        "    )",
+        "RETURN",
+        "    IF (",
+        "        NOT ISBLANK ( _obra ),",
+        "        " + cabeca("_txtSob", "\"Os meses anteriores\"", None, "_txtDir"),
+        "            & IF (",
+        "                _nLs = 0,",
+        "                \"<div class='corpo'><p class='vz'>Nenhum mês antes de \" & _mesRefC & \" com desembolso na janela.</p></div>\",",
+        "                \"<div class='corpo crp'>\"",
+        "                    & IF ( _faixas = \"\", \"\", \"<p class='nt'>Faixas: \" & " + faixa_html("_faixas") + " & \"</p>\" )",
+        "                    & \"<div class='bh'><span class='vs'>Mês · desvio · previsto × desembolsado</span>\"",
+        "                    & \"<span class='vs'>Justificativa</span></div>\"",
+        "                    & \"<div class='lsb\" & " + TL.atributos("_nLs") + "'>\" & _htmlLinhas & \"</div></div>\"",
+        "                    & " + rodape("_txtRod", "\"Justificativa exigida acima de ±10%\""),
+        "            )",
+        "        & \"</div>\" & [Comum · JS contador tooltip]",
         "    )",
     ))
 

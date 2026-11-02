@@ -1,0 +1,9 @@
+/*
+@pasta: T2 Análise crítica\Tooltips\Contas
+@formato: 0.00
+@descricao: X do item da linha (dItemNota) na obra em foco no mês do eixo: IDC, meses de atraso, fração, taxa ou checagens (tooltip do mês de A nota, mês a mês).
+@gerado: pbi/scripts/contas_t2.py
+*/
+VAR _obra = [Nota · obra em foco]
+RETURN
+    CALCULATE ( [Nota · item · X], dObra[Obra] = _obra )

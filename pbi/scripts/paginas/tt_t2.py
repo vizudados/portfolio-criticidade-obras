@@ -21,6 +21,12 @@ TOOLTIPS = [  # (página, título, altura, visual, medida, alt)
      "O IDC e o resultado da obra no mês, como se formaram, o que mudou e o desembolso do mês"),
     ("ttT2Indicador", "Tooltip · item da nota", 440, "TT_T2Ind_Html", "T2 · Tooltip item da nota · HTML",
      "As faixas do item da nota, a faixa atingida, os pontos mês a mês e o que mudou desde o mês anterior"),
+    # hover e tooltips (02/11/2026): nove itens (cabeçalho 72, corpo 16 + bh 25, lista, pé 72) e até 11 meses anteriores
+    # (com a linha das faixas): a lista ocupa o que sobra, com a escala do tooltip_lib
+    ("ttT2Nota", "Tooltip · nota do mês", 480, "TT_T2Nota_Html", "T2 · Tooltip nota do mês · HTML",
+     "A nota e o status da obra no mês, os nove itens com valor, pontos e a variação contra o mês anterior"),
+    ("ttT2Des", "Tooltip · desembolso, meses anteriores", 500, "TT_T2Des_Html", "T2 · Tooltip desembolso · HTML",
+     "Os meses anteriores do desembolso da obra: desvio, previsto × desembolsado e a justificativa de cada mês"),
 ]
 
 
