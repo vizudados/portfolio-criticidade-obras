@@ -1,0 +1,1 @@
+LIDO 1b12d2d · ramo recriado sobre origin/main (raiz 4a850b4); tarefa: hover que acende a parte sob o mouse e apaga as vizinhas numa regra comum, e tooltip em todo gráfico de T1 a T5 (faltam T2 Desembolso, T2 Nota mês a mês, T5 Qualidade, Segurança e Suprimentos)
