@@ -1,1 +1,1 @@
-ANDANDO regra comum de hover pronta (Comum · CSS base); agora T2 e T5 (tooltips novos e camadas) em paralelo, e T1, T3 e T4 (ajustes de hover)
+ANDANDO T1, T3 e T4 com o hover comum (mapa da T1 apaga só as células; véu na camada da Curva S); T2 e T5 em andamento

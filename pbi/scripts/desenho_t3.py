@@ -469,7 +469,8 @@ css("T3 · Curva S · CSS mês", CURVA, "CSS das colunas invisíveis da Curva S 
     CSS_CURVA_MES)
 m("T3 · Curva S · HTML mês", CURVA,
   "Uma coluna invisível por mês da série (granularidade dMes[Mes]) sobre a Curva S: é o alvo estável do mouse que abre "
-  "o tooltip do mês (L012) e mostra a linha-guia no mês. x pela posição na janela; a coluna vai da metade do caminho "
+  "o tooltip do mês (L012) e mostra a linha-guia no mês; os outros meses ganham o véu branco do destaque comum "
+  "(hv-camada, Comum · CSS base), que apaga a curva de baixo fora do mês sob o mouse. x pela posição na janela; a coluna vai da metade do caminho "
   "desde o mês anterior com aba (ou da borda, no primeiro) até a metade do caminho para o seguinte (ou a borda, na "
   "referência), então os meses vazios da janela ficam com o mês seguinte; vazio fora da série.",
   linhas(
@@ -487,7 +488,8 @@ m("T3 · Curva S · HTML mês", CURVA,
       "RETURN",
       "    IF (",
       "        _na = 1,",
-      "        \"<div class='u hm' style='width:\" & ( _b1 - _b0 ) & \"px'><i style='left:\" & ( _x - _b0 ) & \"px'></i></div>\"",
+      "        \"<div class='u hm hv-camada' style='width:\" & ( _b1 - _b0 ) & \"px'><i style='left:\" & ( _x - _b0 ) "
+      "& \"px'></i></div>\"",
       "    )",
   ))
 

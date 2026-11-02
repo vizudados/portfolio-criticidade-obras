@@ -558,8 +558,14 @@ CSS_SEM = (
     ".cm{position:fixed;top:0;height:236px}"
     ".cm .cl{position:absolute;display:flex;align-items:center;justify-content:center;box-sizing:border-box;"
     "font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:12px;line-height:14px;"
-    "font-variant-numeric:tabular-nums;font-style:normal;transition:filter .15s;animation:mpEnt .3s ease-out backwards}"
-    ".cm:hover .cl,.htmlViewerEntry.hover .cm .cl{filter:brightness(.94)}"
+    "font-variant-numeric:tabular-nums;font-style:normal;transition:opacity .18s ease-out;"
+    "animation:mpEnt .3s ease-out backwards}"
+    # hover (02/11/2026): a regra comum apagaria a coluna inteira, e a do 1.º mês leva os nomes das obras; aqui apagam só
+    # as células e o rótulo dos outros meses, e a célula sob o mouse ganha contorno
+    "#htmlContent>.htmlViewerEntry{opacity:1!important}"
+    ".cm .ms{transition:opacity .18s ease-out}"
+    + ",".join(f"{c} :is(.cl,.ms)" for c in DC._HV_COM) + f"{{opacity:{DC.HV_OPACIDADE}}}"
+    ".cm .cl:hover{box-shadow:inset 0 0 0 2px #0B0B0C}"
     ".cm .s2{background:#C43737;color:#FFFFFF}"
     ".cm .s1{background:#C9821F;color:#0B0B0C}"
     ".cm .s0{background:#A9CDB9;color:#1E5C43}"
