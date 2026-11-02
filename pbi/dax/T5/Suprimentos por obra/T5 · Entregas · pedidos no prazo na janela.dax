@@ -1,0 +1,11 @@
+/*
+@pasta: T5 Canteiro\Suprimentos por obra\Contas
+@formato: 0
+@descricao: Pedidos entregues no prazo e completos da obra (ou do recorte) somados nos meses da janela, do primeiro mês da série ao de referência. Ex. set/26, POTENGI: a soma dos 12 meses de fBaseObra.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) (soma de pedidos_no_prazo na janela)
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _ini = [Série · primeiro mês]
+VAR _ref = [Mês de referência]
+RETURN
+    CALCULATE ( [Canteiro · pedidos no prazo], REMOVEFILTERS ( dMes ), dMes[Mes] >= _ini && dMes[Mes] <= _ref )

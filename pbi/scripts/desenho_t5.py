@@ -270,7 +270,8 @@ css("T5 · Segurança · CSS", SEG, "CSS do cabeçalho e das linhas de Seguranç
     ".htmlViewerEntry{display:block!important;margin:0!important;padding:0!important}"
     f".sg{{position:relative;height:{SEG_LINHA - 1}px;border-bottom:1px solid #E1E1E1;background:#FFFFFF;"
     "transition:background .15s}"
-    ".sg:hover,.htmlViewerEntry.hover .sg{background:#F7F4EE}"
+    # hover (02/11/2026): a regra comum apaga as outras obras; a linha sob o mouse ganha o creme das colunas da T5
+    ".sg:hover,.htmlViewerEntry.hover .sg{background:rgba(233,224,207,.45)}"
     ".sg .nm{position:absolute;left:14px;top:10px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;"
     "font-size:15px;line-height:20px;white-space:nowrap}"
     f".sg .tr{{position:absolute;left:{SEG_X0}px;top:14px;width:{SEG_W}px;height:12px;background:#EFEFEF}}"
@@ -333,7 +334,7 @@ css("T5 · Suprimentos · CSS", SUP, "CSS das linhas de Suprimentos por obra.",
     ".htmlViewerEntry{display:block!important;margin:0!important;padding:0!important}"
     f".sp{{position:relative;height:{SUP_LINHA - 1}px;border-bottom:1px solid #E1E1E1;background:#FFFFFF;"
     "transition:background .15s}"
-    ".sp:hover,.htmlViewerEntry.hover .sp{background:#F7F4EE}"
+    ".sp:hover,.htmlViewerEntry.hover .sp{background:rgba(233,224,207,.45)}"
     ".sp .nm{position:absolute;left:14px;top:7px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;"
     "font-size:15px;line-height:20px;white-space:nowrap}"
     f".sp .tr{{position:absolute;left:{SUP_X0}px;top:17px;width:{SUP_W}px;height:2px;background:#E1E1E1}}"
@@ -528,6 +529,56 @@ m("T5 · Qualidade · HTML gráfico", QUA,
       "                & \"</b>\" & " + D.esc("_dest") + " & \"</span>\" )",
       "        & \"</div>\" & [Comum · JS contador],",
       "        \"<div class='u ql'><p class='vz'>Sem base complementar das obras na janela.</p></div>\"",
+      "    )",
+  ))
+
+# camada dos meses (02/11/2026, pedido do Alisson: hover e tooltip em todo gráfico). O gráfico é um HTML só; por cima
+# dele, T5_Qua_Meses tem uma entrada por mês da janela (granularidade dMes): é o alvo do mouse que abre o tooltip do mês
+# (ttT5Qua) e, pela regra comum (.hv-camada, num filho que cobre a área das linhas), põe véu branco nos outros meses. A camada vai de x 52 (o começo da grade:
+# o eixo y fica de fora) a QM_X1 (antes dos rótulos finais em Q_X1 + 14); cada mês vai do meio-caminho desde o anterior
+# ao meio-caminho para o seguinte. No mês sob o mouse, a linha-guia e o anel no ponto da carteira (q_x, q_y).
+QM_X0, QM_X1 = 52, Q_X1 + 12
+css("T5 · Qualidade · CSS mês", QUA, "CSS da camada dos meses da Qualidade (uma entrada por mês: alvo do tooltip).",
+    "#htmlContent{display:flex!important;align-items:stretch;height:100vh;margin:0!important;padding:0!important}"
+    ".htmlViewerEntry{display:block!important;flex:none;margin:0!important;padding:0!important;height:100vh}"
+    ".qm{position:relative;height:100vh;cursor:default}"
+    # o véu da regra comum vai num filho que cobre só a área das linhas (até os rótulos dos meses, que ficam nítidos:
+    # sem ele, o rótulo do primeiro e do último mês ficava metade sob o véu)
+    f".qm .vu{{position:absolute;left:0;right:0;top:0;height:{Q_MES - 4}px}}"
+    f".qm .gd{{position:absolute;top:{Q_TOPO}px;height:{Q_BASE - Q_TOPO}px;width:1px;margin-left:-.5px;"
+    "background:rgba(11,11,12,.35);opacity:0;transition:opacity .15s}"
+    ".qm .rg{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;box-sizing:border-box;border-radius:50%;"
+    "border:2px solid #0B0B0C;opacity:0;scale:.6;transition:opacity .15s,scale .15s}"
+    ".qm:hover .gd,.qm.hover .gd,.htmlViewerEntry.hover .qm .gd{opacity:1}"
+    ".qm:hover .rg,.qm.hover .rg,.htmlViewerEntry.hover .qm .rg{opacity:1;scale:1}"
+    "@media (prefers-reduced-motion:reduce){.qm .gd,.qm .rg{transition:none}}")
+m("T5 · Qualidade · HTML mês", QUA,
+  "Uma coluna invisível por mês da janela (granularidade dMes[Mes]) sobre o gráfico de Qualidade, mês a mês: o alvo do "
+  "mouse que abre o tooltip do mês (ttT5Qua). Na regra comum de hover, os outros meses ganham véu branco; no mês sob o "
+  "mouse, a linha-guia e o anel no ponto da carteira. A coluna vai do meio-caminho desde o mês anterior (ou x "
+  f"{QM_X0}, no primeiro) ao meio-caminho para o seguinte (ou x {QM_X1}, no de referência); vazio fora da janela.",
+  linhas(
+      "-- 1 · Leituras",
+      "VAR _ate = [Série · mês até a referência]",
+      "VAR _pj = [Série · posição na janela]",
+      "VAR _n = [Série · meses até a referência]",
+      "VAR _v = [Canteiro · aprovação na 1.ª inspeção]",
+      "VAR _base = [T5 · Qualidade · base da escala]",
+      "-- 3 · Geometria",
+      f"VAR _passoX = IF ( _n > 1, DIVIDE ( {Q_X1 - Q_X0}, _n - 1 ), 0 ) /* geometria */",
+      f"VAR _escY = DIVIDE ( {Q_BASE - Q_TOPO}, 1 - _base ) /* geometria */",
+      f"VAR _x = {q_x('_pj')} -- geometria",
+      f"VAR _b0 = IF ( _pj = 1, {QM_X0}, ROUND ( {Q_X0} + ( _pj - 1.5 ) * _passoX, 0 ) ) -- geometria",
+      f"VAR _b1 = IF ( _pj = _n, {QM_X1}, ROUND ( {Q_X0} + ( _pj - 0.5 ) * _passoX, 0 ) ) -- geometria",
+      f"VAR _y = IF ( NOT ISBLANK ( _v ), {q_y('_v')} ) -- geometria",
+      "-- 4 · Marcação",
+      "RETURN",
+      "    IF (",
+      "        _ate = 1,",
+      "        \"<div class='u qm' style='width:\" & ( _b1 - _b0 ) & \"px'><i class='hv-camada vu'></i><i class='gd' style='left:\" "
+      "& ( _x - _b0 ) & \"px'></i>\"",
+      "            & IF ( NOT ISBLANK ( _y ), \"<b class='rg' style='left:\" & ( _x - _b0 ) & \"px;top:\" & _y & \"px'></b>\" )",
+      "            & \"</div>\"",
       "    )",
   ))
 

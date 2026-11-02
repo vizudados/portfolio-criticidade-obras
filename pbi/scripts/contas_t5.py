@@ -193,6 +193,44 @@ RETURN
     CONCATENATEX ( TOPN ( 1, FILTER ( _t, [@v] = _mn ), dObra[Obra], ASC ), dObra[Obra] )""",
   GAB + " · set/26: REDINHA")
 
+# tooltip do mês da Qualidade (ttT5Qua, 02/11/2026): o mês sob o mouse vem como filtro de dMes
+m("T5 · Inspeção · obras abaixo da meta", QUA, INT,
+  "Obras do recorte com aprovação na 1.ª inspeção no mês do contexto (o mês sob o mouse no tooltip) abaixo do ponto "
+  "cheio da nota ([Nota · limite inspeção · ponto cheio]); sem dado não conta. Ex. set/26: 3 (JANGADA, POTENGI e "
+  "REDINHA).",
+  """VAR _lim = [Nota · limite inspeção · ponto cheio]
+RETURN
+    COUNTROWS (
+        FILTER (
+            VALUES ( dObra[Obra] ),
+            VAR _x = [Canteiro · aprovação na 1.ª inspeção]
+            RETURN
+                NOT ISBLANK ( _x ) && _x < _lim
+        )
+    ) + 0""", GAB + " · set/26: 3")
+
+# tooltip da obra de Suprimentos (ttT5Sup, 02/11/2026): a janela inteira da obra sob o mouse
+m("T5 · Entregas · pedidos no prazo na janela", SUP, INT,
+  "Pedidos entregues no prazo e completos da obra (ou do recorte) somados nos meses da janela, do primeiro mês da série "
+  "ao de referência. Ex. set/26, POTENGI: a soma dos 12 meses de fBaseObra.",
+  JANELA_VARS + """
+RETURN
+    CALCULATE ( [Canteiro · pedidos no prazo], REMOVEFILTERS ( dMes ), dMes[Mes] >= _ini && dMes[Mes] <= _ref )""",
+  GAB + " (soma de pedidos_no_prazo na janela)")
+m("T5 · Entregas · pedidos previstos na janela", SUP, INT,
+  "Pedidos com entrega prevista da obra (ou do recorte) somados nos meses da janela, do primeiro mês da série ao de "
+  "referência.",
+  JANELA_VARS + """
+RETURN
+    CALCULATE ( [Canteiro · pedidos previstos], REMOVEFILTERS ( dMes ), dMes[Mes] >= _ini && dMes[Mes] <= _ref )""",
+  GAB + " (soma de pedidos_previstos na janela)")
+m("T5 · Entregas · taxa na janela", SUP, PCT,
+  "Entregas no prazo e completas na janela: pedidos no prazo ÷ pedidos previstos, somados do primeiro mês da série ao "
+  "de referência; vazio sem pedido previsto.",
+  """VAR _d = [T5 · Entregas · pedidos previstos na janela]
+RETURN
+    IF ( _d > 0, DIVIDE ( [T5 · Entregas · pedidos no prazo na janela], _d ) )""", GAB + " (no prazo ÷ previstos)")
+
 # ======================================================================================================== chuva e ritmo
 m("T5 · Chuva · topo da escala", CHU, NUM,
   "Topo da escala dos dias impraticáveis por chuva (média por obra) na janela: o maior mês arredondado para cima de 2 "

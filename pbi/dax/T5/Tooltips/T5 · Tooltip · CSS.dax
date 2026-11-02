@@ -1,7 +1,7 @@
 /*
 @pasta: T5 Canteiro\Tooltips
 @formato: texto
-@descricao: CSS do tooltip de página da T5: o dos tooltips da T4 (tooltips_t4.CSS_T4) mais as linhas de chuva e executado por obra.
+@descricao: CSS dos tooltips de página da T5: o dos tooltips da T4 (tooltips_t4.CSS_T4), as linhas de chuva e executado por obra e as linhas em grade da qualidade do mês, da segurança e dos suprimentos da obra.
 @gerado: pbi/scripts/tooltips_t5.py
 */
 -- 4 · Marcação
@@ -81,4 +81,8 @@
     & "s>:nth-child(9),.tt .ls>:nth-child(9) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(10),.tt .ls>:nth-child(10) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(1"
     & "1),.tt .ls>:nth-child(11) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(12),.tt .ls>:nth-child(12) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(13),.tt .ls>:"
     & "nth-child(13) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(14),.tt .ls>:nth-child(14) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .pe,.tt .pe :is(.mk,.chi,.chip,.chp,circ"
-    & "le,.pend){animation:none!important}}/*fim-contador*/ "
+    & "le,.pend){animation:none!important}}/*fim-contador*/ .tt .q5{display:grid;align-items:center;column-gap:.6em;white-space:nowrap}.tt .q5>*{min-width:0;line-height:1.25}.tt .q5 .n{fo"
+    & "nt-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:1.067em}.tt .q5 .d,.tt .q5 .a{font-size:.933em;color:#3B3B3F}.tt .q5 .d{text-align:right}.tt .q5 .a.z{color:#6B"
+    & "6B70}.tt .q5 .v{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:1.067em;text-align:right}.tt .q5>i{justify-self:center}.tt .qa{grid-template-columns:1em minm"
+    & "ax(0,1fr) auto 4.6em}.tt .qs{grid-template-columns:4.4em minmax(0,1fr) auto 1em 4.6em}.tt .qp{grid-template-columns:4.4em minmax(0,1fr) 1em 4.6em}.tt .q5 .n.ref{text-decoration:und"
+    & "erline;text-underline-offset:3px}.tt .pe .rod b{font-weight:600}.tt .ls .q5{font-size:min(20px,max(13px,calc(15px * var(--k,1))))}"

@@ -1,0 +1,27 @@
+/*
+@pasta: T5 Canteiro\Qualidade mês a mês
+@formato: texto
+@descricao: Uma coluna invisível por mês da janela (granularidade dMes[Mes]) sobre o gráfico de Qualidade, mês a mês: o alvo do mouse que abre o tooltip do mês (ttT5Qua). Na regra comum de hover, os outros meses ganham véu branco; no mês sob o mouse, a linha-guia e o anel no ponto da carteira. A coluna vai do meio-caminho desde o mês anterior (ou x 52, no primeiro) ao meio-caminho para o seguinte (ou x 912, no de referência); vazio fora da janela.
+@gerado: pbi/scripts/desenho_t5.py
+*/
+-- 1 · Leituras
+VAR _ate = [Série · mês até a referência]
+VAR _pj = [Série · posição na janela]
+VAR _n = [Série · meses até a referência]
+VAR _v = [Canteiro · aprovação na 1.ª inspeção]
+VAR _base = [T5 · Qualidade · base da escala]
+-- 3 · Geometria
+VAR _passoX = IF ( _n > 1, DIVIDE ( 836, _n - 1 ), 0 ) /* geometria */
+VAR _escY = DIVIDE ( 248, 1 - _base ) /* geometria */
+VAR _x = ROUND ( IF ( _n > 1, 64 + ( _pj - 1 ) * _passoX, 900 ), 0 ) -- geometria
+VAR _b0 = IF ( _pj = 1, 52, ROUND ( 64 + ( _pj - 1.5 ) * _passoX, 0 ) ) -- geometria
+VAR _b1 = IF ( _pj = _n, 912, ROUND ( 64 + ( _pj - 0.5 ) * _passoX, 0 ) ) -- geometria
+VAR _y = IF ( NOT ISBLANK ( _v ), ROUND ( 262 - ( _v - _base ) * _escY, 0 ) ) -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        _ate = 1,
+        "<div class='u qm' style='width:" & ( _b1 - _b0 ) & "px'><i class='hv-camada vu'></i><i class='gd' style='left:" & ( _x - _b0 ) & "px'></i>"
+            & IF ( NOT ISBLANK ( _y ), "<b class='rg' style='left:" & ( _x - _b0 ) & "px;top:" & _y & "px'></b>" )
+            & "</div>"
+    )

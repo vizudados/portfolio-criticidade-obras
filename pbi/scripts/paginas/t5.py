@@ -5,13 +5,16 @@ Tela nova da F3 (docs/08 §6), na grade da T4 (prancheta em 300,12): cartões em
 1257 · 1558, o primeiro escuro); Qualidade, mês a mês 352,273 · 1068 × 380 (subtítulo em y 305, gráfico 1068 × 312 de
 y 341); Chuva e ritmo 352,693 · 1068 × 347 (subtítulo em y 725, colunas 1068 × 279 de y 761); Segurança por obra
 1460,273 · 400 × 380 (cabeçalho em y 305, sete linhas de 42 de y 365); Suprimentos por obra 1460,693 · 400 × 347
-(cabeçalho em y 725, sete linhas de 36 de y 785). Títulos, "?" e divisórias estão na casca (wp-t5.svg, casca única da
+(cabeçalho em y 725, sete linhas de 36 de y 785). Por cima do gráfico da Qualidade, a camada dos meses T5_Qua_Meses
+(02/11/2026: hover e tooltip do mês). Títulos, "?" e divisórias estão na casca (wp-t5.svg, casca única da
 sessão local); subtítulos, legendas e nomes de coluna vêm em HTML.
 """
 from __future__ import annotations
 
 import pbip_lib as lib
 from pbip_lib import Visual
+
+QM_X0, QM_X1 = 52, 912   # camada dos meses da Qualidade, em x do gráfico (desenho_t5.QM_X0 e QM_X1)
 
 CARTOES = [
     ("Acidentes", "T5 · Cartão acidentes · HTML", "Meses seguidos sem acidente com afastamento e o último acidente"),
@@ -41,6 +44,13 @@ def declarar(ctx):
         "T5_Qua_Grafico", 352, 341, 1068, 312, "T5 · Qualidade · HTML gráfico", folha_de_estilo="T5 · Qualidade · CSS",
         alt="Aprovação na 1.ª inspeção mês a mês: uma linha por obra, a carteira em preto, a obra com a menor aprovação no "
             "mês em grafite e a meta tracejada", tab=110))
+    # camada dos meses por cima do gráfico (02/11/2026): alvo do mouse, tooltip do mês e véu nos outros meses; vai de x
+    # 52 a 912 do gráfico (sem cobrir o eixo y nem os rótulos finais), acima dele e abaixo do tour
+    v.append(lib.visual_html(
+        "T5_Qua_Meses", 352 + QM_X0, 341, QM_X1 - QM_X0, 312, "T5 · Qualidade · HTML mês", granularidade=("dMes", "Mes"),
+        ordenacao=[(lib.campo_coluna_expr("dMes", "Mes"), "Ascending")], folha_de_estilo="T5 · Qualidade · CSS mês",
+        tooltip_pagina="ttT5Qua", z=lib.CAMADAS["conteudo"] + 10,
+        alt="Meses da Qualidade: passe o mouse para ver a aprovação na 1.ª inspeção de cada obra no mês", tab=111))
     # ---- Segurança por obra (1460,273 · 400 × 380)
     v.append(lib.visual_html("T5_Seg_Cabecalho", 1460, 305, 400, 56, "T5 · Segurança · HTML cabeçalho",
                              folha_de_estilo="T5 · Cabeçalho · CSS",
@@ -49,7 +59,7 @@ def declarar(ctx):
     v.append(lib.visual_html(
         "T5_Seg_Lista", 1460, 365, 400, 294, "T5 · Segurança · HTML linha", granularidade=("dObra", "Obra"),
         ordenacao=[(lib.campo_medida_expr("T5 · Segurança · ordem"), "Ascending")], tooltips=["T5 · Segurança · ordem"],
-        folha_de_estilo="T5 · Segurança · CSS",
+        folha_de_estilo="T5 · Segurança · CSS", tooltip_pagina="ttT5Seg",
         alt="Segurança por obra: taxa de frequência de acidentes em 12 meses com o traço da média do setor e a "
             "conformidade NR-18 do mês, da maior taxa para a menor", tab=121))
     # ---- Chuva e ritmo (352,693 · 1068 × 347)
@@ -69,7 +79,7 @@ def declarar(ctx):
     v.append(lib.visual_html(
         "T5_Sup_Lista", 1460, 785, 400, 252, "T5 · Suprimentos · HTML linha", granularidade=("dObra", "Obra"),
         ordenacao=[(lib.campo_medida_expr("T5 · Entregas · ordem"), "Ascending")], tooltips=["T5 · Entregas · ordem"],
-        folha_de_estilo="T5 · Suprimentos · CSS",
+        folha_de_estilo="T5 · Suprimentos · CSS", tooltip_pagina="ttT5Sup",
         alt="Suprimentos por obra: entregas no prazo e completas do mês com o traço da meta e os pedidos, da menor taxa "
             "para a maior", tab=140))
     return [Visual("T5", d) for d in v]

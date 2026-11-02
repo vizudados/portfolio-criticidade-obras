@@ -1,0 +1,13 @@
+/*
+@pasta: T5 Canteiro\Qualidade mês a mês
+@formato: texto
+@descricao: CSS da camada dos meses da Qualidade (uma entrada por mês: alvo do tooltip).
+@gerado: pbi/scripts/desenho_t5.py
+*/
+-- 4 · Marcação
+[Comum · CSS base]
+    & "#htmlContent{display:flex!important;align-items:stretch;height:100vh;margin:0!important;padding:0!important}.htmlViewerEntry{display:block!important;flex:none;margin:0!important;pa"
+    & "dding:0!important;height:100vh}.qm{position:relative;height:100vh;cursor:default}.qm .vu{position:absolute;left:0;right:0;top:0;height:274px}.qm .gd{position:absolute;top:14px;heig"
+    & "ht:248px;width:1px;margin-left:-.5px;background:rgba(11,11,12,.35);opacity:0;transition:opacity .15s}.qm .rg{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;box-sizin"
+    & "g:border-box;border-radius:50%;border:2px solid #0B0B0C;opacity:0;scale:.6;transition:opacity .15s,scale .15s}.qm:hover .gd,.qm.hover .gd,.htmlViewerEntry.hover .qm .gd{opacity:1}."
+    & "qm:hover .rg,.qm.hover .rg,.htmlViewerEntry.hover .qm .rg{opacity:1;scale:1}@media (prefers-reduced-motion:reduce){.qm .gd,.qm .rg{transition:none}}"

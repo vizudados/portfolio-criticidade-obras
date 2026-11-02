@@ -1,0 +1,10 @@
+/*
+@pasta: T5 Canteiro\Suprimentos por obra\Contas
+@formato: 0.00%
+@descricao: Entregas no prazo e completas na janela: pedidos no prazo ÷ pedidos previstos, somados do primeiro mês da série ao de referência; vazio sem pedido previsto.
+@oraculo: dados/_gabarito (base_complementar.csv, fato_analise_critica.csv) (no prazo ÷ previstos)
+@gerado: pbi/scripts/contas_t5.py
+*/
+VAR _d = [T5 · Entregas · pedidos previstos na janela]
+RETURN
+    IF ( _d > 0, DIVIDE ( [T5 · Entregas · pedidos no prazo na janela], _d ) )
