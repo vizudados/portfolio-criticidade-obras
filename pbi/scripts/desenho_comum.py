@@ -70,6 +70,25 @@ def css_fontes() -> str:
     return "".join(regras)
 
 
+HV_OPACIDADE = ".45"          # vizinhas apagadas: texto preto vira ~#919191 sobre branco, ainda legível
+HV_VEU = "rgba(255,255,255,.6)"   # véu da camada sobre gráfico de um HTML só (o mesmo apagado, por cima)
+_HV_E = "#htmlContent>.htmlViewerEntry"
+_HV_COM = [f"#htmlContent:has(>.htmlViewerEntry.hover)>.htmlViewerEntry:not(.hover)",
+           f"#htmlContent:has(>.htmlViewerEntry:hover)>.htmlViewerEntry:not(:hover)"]
+HV_CSS = (
+    f"{_HV_E}{{transition:opacity .18s ease-out}}"
+    + ",".join(_HV_COM) + f"{{opacity:{HV_OPACIDADE}}}"
+    # camada invisível por cima de um gráfico de um HTML só (curva, linhas, barras do mês): a entrada não apaga a si
+    # mesma (é transparente); os outros meses ganham um véu branco que apaga o gráfico de baixo, a outra camada
+    + f"{_HV_E}:is(.hv-camada,:has(.hv-camada)){{opacity:1!important}}"
+    ".hv-camada{transition:background-color .18s ease-out}"
+    + ",".join(f"{c}.hv-camada,{c} .hv-camada" for c in _HV_COM) + f"{{background-color:{HV_VEU}}}"
+    # partes de um HTML só sem granularidade (.hv-g com .hv-p): a parte sob o mouse fica plena, as outras apagam
+    ".hv-p{transition:opacity .18s ease-out}"
+    f".hv-g:has(.hv-p:hover) .hv-p:not(:hover){{opacity:{HV_OPACIDADE}}}"
+    f"@media (prefers-reduced-motion:reduce){{{_HV_E},.hv-camada,.hv-p{{transition:none!important}}}}"
+)
+
 CSS_BASE = (
     "*{box-sizing:border-box;margin:0;padding:0}"
     "html,body{background:transparent!important;overflow:hidden}"
@@ -148,7 +167,14 @@ CSS_BASE = (
     ".u .a-fd{animation:cbFd .45s ease-out backwards}"
     ".u .a-gx{transform-box:fill-box;transform-origin:left center;animation:cbGx .7s cubic-bezier(.2,.7,.2,1) backwards}"
     ".u .a-gy{transform-box:fill-box;transform-origin:center bottom;animation:cbGy .7s cubic-bezier(.2,.7,.2,1) backwards}"
-    "@media (prefers-reduced-motion:reduce){.u *{transition:none!important;animation:none!important}}"
+    # destaque de hover (pedido do Alisson, 02/11/2026: "o destaque de uma parte do gráfico deveria acender mais ela e
+    # diminuir a opacidade das outras"), uma regra só para as cinco telas. O HTML Content desenha cada linha da
+    # granularidade como filho direto de #htmlContent com a classe htmlViewerEntry e põe .hover nela no mouseover (tira no
+    # mouseout); a folha de estilo vai como veio (sem filtro de CSS nesta versão), então :has() vale. A entrada sob o mouse
+    # fica plena; as outras do mesmo visual caem para HV_OPACIDADE. Visual de uma entrada só (cartão, tooltip, leitura)
+    # não tem vizinha e não muda.
+    + HV_CSS
+    + "@media (prefers-reduced-motion:reduce){.u *{transition:none!important;animation:none!important}}"
 )
 
 # cartão com flip: frente e verso no mesmo visual (coluna inteira do cartão, L057); hover ou foco
