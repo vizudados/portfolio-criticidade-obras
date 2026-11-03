@@ -6004,13 +6004,18 @@ table _Medidas
 			    & "ckground:#3B3B3F;color:#FFFFFF}.selo:empty{display:none!important}@keyframes cbPop{from{opacity:0;scale:.4}}@keyframes cbFd{from{opacity:0}}@keyframes cbGx{from{scale:0 1}}@keyfram"
 			    & "es cbGy{from{scale:1 0}}.u .a-pop{transform-box:fill-box;transform-origin:center;animation:cbPop .4s cubic-bezier(.2,.7,.2,1) backwards}.u .a-fd{animation:cbFd .45s ease-out backwa"
 			    & "rds}.u .a-gx{transform-box:fill-box;transform-origin:left center;animation:cbGx .7s cubic-bezier(.2,.7,.2,1) backwards}.u .a-gy{transform-box:fill-box;transform-origin:center botto"
-			    & "m;animation:cbGy .7s cubic-bezier(.2,.7,.2,1) backwards}@media (prefers-reduced-motion:reduce){.u *{transition:none!important;animation:none!important}}/*contador*/o-d{position:rel"
-			    & "ative;display:inline-block;height:1.33em;height:1lh;overflow:hidden;vertical-align:top;font-variant-numeric:tabular-nums}@supports (overflow:clip){o-d{overflow-x:visible;overflow-y"
-			    & ":clip;vertical-align:baseline}}o-v{font-variant-numeric:normal;animation:odV .6s steps(1,end)}o-t{position:absolute;right:0;top:0;white-space:pre;text-align:right;user-select:none;"
-			    & "opacity:0;transform:translateY(-31.92em);transform:translateY(-24lh);animation:odConta .6s steps(24,end),odT .6s steps(1,end)}@supports not (height:1lh){o-d{height:auto;overflow:vi"
-			    & "sible;vertical-align:baseline}o-t{display:none}o-v{animation:none}}@keyframes odConta{from{transform:translateY(0)}}@keyframes odT{from{opacity:1}}@keyframes odV{from{opacity:0}}.t"
-			    & "qv o-t,.tqv o-v{animation-duration:.3s}o-d.oq>o-t,o-d.oq>o-v{animation:none}o-n{white-space:nowrap}@media (prefers-reduced-motion:reduce){o-t,o-v{animation:none!important}}/*fim-co"
-			    & "ntador*/ "
+			    & "m;animation:cbGy .7s cubic-bezier(.2,.7,.2,1) backwards}#htmlContent>.htmlViewerEntry{transition:opacity .18s ease-out}#htmlContent:has(>.htmlViewerEntry.hover)>.htmlViewerEntry:no"
+			    & "t(.hover),#htmlContent:has(>.htmlViewerEntry:hover)>.htmlViewerEntry:not(:hover){opacity:.45}#htmlContent>.htmlViewerEntry:is(.hv-camada,:has(.hv-camada)){opacity:1!important}.hv-c"
+			    & "amada{transition:background-color .18s ease-out}#htmlContent:has(>.htmlViewerEntry.hover)>.htmlViewerEntry:not(.hover).hv-camada,#htmlContent:has(>.htmlViewerEntry.hover)>.htmlView"
+			    & "erEntry:not(.hover) .hv-camada,#htmlContent:has(>.htmlViewerEntry:hover)>.htmlViewerEntry:not(:hover).hv-camada,#htmlContent:has(>.htmlViewerEntry:hover)>.htmlViewerEntry:not(:hove"
+			    & "r) .hv-camada{background-color:rgba(255,255,255,.6)}.hv-p{transition:opacity .18s ease-out}.hv-g:has(.hv-p:hover) .hv-p:not(:hover){opacity:.45}@media (prefers-reduced-motion:reduc"
+			    & "e){#htmlContent>.htmlViewerEntry,.hv-camada,.hv-p{transition:none!important}}@media (prefers-reduced-motion:reduce){.u *{transition:none!important;animation:none!important}}/*conta"
+			    & "dor*/o-d{position:relative;display:inline-block;height:1.33em;height:1lh;overflow:hidden;vertical-align:top;font-variant-numeric:tabular-nums}@supports (overflow:clip){o-d{overflow"
+			    & "-x:visible;overflow-y:clip;vertical-align:baseline}}o-v{font-variant-numeric:normal;animation:odV .6s steps(1,end)}o-t{position:absolute;right:0;top:0;white-space:pre;text-align:ri"
+			    & "ght;user-select:none;opacity:0;transform:translateY(-31.92em);transform:translateY(-24lh);animation:odConta .6s steps(24,end),odT .6s steps(1,end)}@supports not (height:1lh){o-d{he"
+			    & "ight:auto;overflow:visible;vertical-align:baseline}o-t{display:none}o-v{animation:none}}@keyframes odConta{from{transform:translateY(0)}}@keyframes odT{from{opacity:1}}@keyframes o"
+			    & "dV{from{opacity:0}}.tqv o-t,.tqv o-v{animation-duration:.3s}o-d.oq>o-t,o-d.oq>o-v{animation:none}o-n{white-space:nowrap}@media (prefers-reduced-motion:reduce){o-t,o-v{animation:non"
+			    & "e!important}}/*fim-contador*/ "
 		displayFolder: Comum\Desenho
 		lineageTag: 876168b5-19ce-59f3-9700-add28660daae
 
@@ -18660,12 +18665,13 @@ table _Medidas
 			[Comum · CSS base]
 			    & "#htmlContent{display:block!important;height:100vh;padding:0!important}.htmlViewerEntry{display:block!important;margin:0!important;padding:0!important}.cm{position:fixed;top:0;heigh"
 			    & "t:236px}.cm .cl{position:absolute;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-siz"
-			    & "e:12px;line-height:14px;font-variant-numeric:tabular-nums;font-style:normal;transition:filter .15s;animation:mpEnt .3s ease-out backwards}.cm:hover .cl,.htmlViewerEntry.hover .cm ."
-			    & "cl{filter:brightness(.94)}.cm .s2{background:#C43737;color:#FFFFFF}.cm .s1{background:#C9821F;color:#0B0B0C}.cm .s0{background:#A9CDB9;color:#1E5C43}.cm .sm{background:#FFFFFF;bord"
-			    & "er:1px dashed #3B3B3F;color:#3B3B3F}.cm .sx{background:#F2F0EB}.cm .nm{position:absolute;left:-104px;width:98px;display:flex;align-items:center;font-family:'Barlow U','Segoe UI',sa"
-			    & "ns-serif;font-weight:600;font-size:12px;line-height:14px;letter-spacing:.6px;color:#0B0B0C;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cm .ms{position:absolute;left:"
-			    & "-12px;right:-12px;text-align:center;font-size:13px;line-height:16px;color:#6B6B70;white-space:nowrap}.cm .ms.ref{font-weight:600;color:#0B0B0C}@keyframes mpEnt{from{opacity:0}}@med"
-			    & "ia (prefers-reduced-motion:reduce){.cm .cl{animation:none}}"
+			    & "e:12px;line-height:14px;font-variant-numeric:tabular-nums;font-style:normal;transition:opacity .18s ease-out;animation:mpEnt .3s ease-out backwards}#htmlContent>.htmlViewerEntry{op"
+			    & "acity:1!important}.cm .ms{transition:opacity .18s ease-out}#htmlContent:has(>.htmlViewerEntry.hover)>.htmlViewerEntry:not(.hover) :is(.cl,.ms),#htmlContent:has(>.htmlViewerEntry:ho"
+			    & "ver)>.htmlViewerEntry:not(:hover) :is(.cl,.ms){opacity:.45}.cm .cl:hover{box-shadow:inset 0 0 0 2px #0B0B0C}.cm .s2{background:#C43737;color:#FFFFFF}.cm .s1{background:#C9821F;colo"
+			    & "r:#0B0B0C}.cm .s0{background:#A9CDB9;color:#1E5C43}.cm .sm{background:#FFFFFF;border:1px dashed #3B3B3F;color:#3B3B3F}.cm .sx{background:#F2F0EB}.cm .nm{position:absolute;left:-104"
+			    & "px;width:98px;display:flex;align-items:center;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:12px;line-height:14px;letter-spacing:.6px;color:#0B0B0C;white-s"
+			    & "pace:nowrap;overflow:hidden;text-overflow:ellipsis}.cm .ms{position:absolute;left:-12px;right:-12px;text-align:center;font-size:13px;line-height:16px;color:#6B6B70;white-space:nowr"
+			    & "ap}.cm .ms.ref{font-weight:600;color:#0B0B0C}@keyframes mpEnt{from{opacity:0}}@media (prefers-reduced-motion:reduce){.cm .cl{animation:none}}"
 		displayFolder: T1 Visão geral\Como os meses evoluíram
 		lineageTag: 0e597079-20a3-599b-b988-ae6acb3480c2
 
@@ -23049,8 +23055,7 @@ table _Medidas
 			    & "x-shadow:inset 0 0 0 1px #C43737}.cd .b.kn{background:#C43737}.cd .b.kr{background:repeating-linear-gradient(135deg,#0B0B0C 0 2px,#FFFFFF 2px 6px);box-shadow:inset 0 0 0 1px #0B0B0"
 			    & "C}.cd .lg{position:absolute;left:calc(50% + 28px);width:calc(100% - 56px);height:1px;background:rgba(59,59,63,.5)}.cd .z{position:absolute;left:0;right:0;height:1px;background:rgba"
 			    & "(59,59,63,.6)}.cd .v{position:absolute;left:-10px;right:-10px;text-align:center;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:14px;line-height:17px;white-s"
-			    & "pace:nowrap;font-variant-numeric:tabular-nums}.cd .n{position:absolute;left:0;right:0;top:249px;text-align:center;font-size:13px;line-height:16px;color:#3B3B3F}.cd:hover .b{filter:"
-			    & "brightness(.94)}"
+			    & "pace:nowrap;font-variant-numeric:tabular-nums}.cd .n{position:absolute;left:0;right:0;top:249px;text-align:center;font-size:13px;line-height:16px;color:#3B3B3F}"
 		displayFolder: T2 Análise crítica\Como o resultado se forma
 		lineageTag: 85a652ca-f321-5497-9131-275f588e3612
 
@@ -23367,11 +23372,12 @@ table _Medidas
 			    & "c .vs i.pv{background:#E9E0CF;box-shadow:inset 0 0 0 1px #E1E1E1}.dm .c .vs i.dv{background:#0B0B0C}.dm .c b{display:flex;align-items:center;gap:7px;margin-top:4px;font-family:'Bar"
 			    & "low U','Segoe UI',sans-serif;font-weight:600;font-size:21px;line-height:26px;white-space:nowrap;font-variant-numeric:tabular-nums}.dm .br{position:absolute;left:0;height:10px}.dm ."
 			    & "br.pv{background:#E9E0CF}.dm .br.dv{background:#0B0B0C}.dm .js{position:absolute;left:0;right:0;top:156px;bottom:0;background:#F7F4EE;border-radius:6px;padding:16px}.dm .js .vs{dis"
-			    & "play:block}.dm .js p{margin-top:8px;font-size:15px;line-height:21px;color:#3B3B3F;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}"
+			    & "play:block}.dm .js p{margin-top:8px;font-size:15px;line-height:21px;color:#3B3B3F;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.dm .c,.dm .b"
+			    & "r{cursor:default}"
 		displayFolder: T2 Análise crítica\Desembolso do mês
 		lineageTag: f81452cb-0ff8-51e4-9ef6-5ede26d66302
 
-	/// Desembolso do mês da obra em foco: previsto e desembolsado (com as barras creme × preta na mesma escala), diferença e × previsto com a marca dos pontos da previsão de caixa na nota (cheio, parcial ou zero, pelas faixas do item) e os pontos ao lado do rótulo, e a justificativa da planilha (exigida acima de ±10%; em branco vira aviso). Desvio e diferença negativos ficam em preto (decisão do Alisson).
+	/// Desembolso do mês da obra em foco: previsto e desembolsado (com as barras creme × preta na mesma escala), diferença e × previsto com a marca dos pontos da previsão de caixa na nota (cheio, parcial ou zero, pelas faixas do item) e os pontos ao lado do rótulo, e a justificativa da planilha (exigida acima de ±10%; em branco vira aviso). Desvio e diferença negativos ficam em preto (decisão do Alisson). Granularidade dItemNota (02/11/2026): o bloco sai só na linha 'caixa' (uma entrada), e o mouse abre o tooltip dos meses anteriores (ttT2Des) com o item da previsão de caixa no contexto e o eixo dos meses livre.
 	measure 'T2 · Desembolso · HTML' =
 			-- 1 · Leituras
 			VAR _prev = [Desembolso · previsto no mês · foco]
@@ -23383,6 +23389,8 @@ table _Medidas
 			VAR _exig = [Justificativa · exigida · foco]
 			VAR _branco = [Justificativa · em branco · foco]
 			VAR _just = [Justificativa do desembolso · foco]
+			/* granularidade dItemNota (hover e tooltip, 02/11/2026): o bloco sai só na linha da previsão de caixa, uma entrada */
+			VAR _ehCaixa = SELECTEDVALUE ( dItemNota[Item] ) = "caixa"
 			-- 2 · Textos
 			VAR _tpA = ABS ( _prev )
 			VAR _tpNu = SWITCH ( TRUE (), _tpA >= 99950000, FORMAT ( _tpA / 1000000, "0.0", "pt-BR" ), _tpA >= 999500, FORMAT ( _tpA / 1000000, "0.00", "pt-BR" ), _tpA >= 999.5, FORMAT ( _tpA / 1000, "0", "pt-BR" ), FORMAT ( _tpA, "#,0", "pt-BR" ) )
@@ -23511,15 +23519,15 @@ table _Medidas
 			-- 4 · Marcação
 			VAR _saidaHtml =
 			    IF (
-			        NOT ISBLANK ( _prev ) || NOT ISBLANK ( _real ),
-			        "<div class='u dm'>"
-			            & "<div class='c' style='left:0;top:0'><span class='vs'><i class='pv a-pop'></i>Previsto</span><b>" & _tpOd & "</b></div>"
-			            & "<div class='c' style='left:186px;top:0'><span class='vs'><i class='dv a-pop' style='animation-delay:90ms'></i>Desembolsado</span><b>" & _trOd & "</b></div>"
-			            & "<i class='br pv' style='top:55px;width:" & _wP & "px' data-rk='dp' data-rp='width'></i>"
-			            & "<i class='br dv' style='top:69px;width:" & _wR & "px' data-rk='dr' data-rp='width' data-rd='90'></i>"
-			            & "<div class='c' style='left:0;top:95px'><span class='vs'>Diferença</span><b>" & _tdOd & "</b></div>"
-			            & "<div class='c' style='left:186px;top:95px'><span class='vs'>× previsto" & IF ( ISBLANK ( _ptx ), "", " · <span>" & _tiTxt & "</span>" ) & "</span><b>" & IF ( IF ( ISBLANK ( _ptx ), "", IF ( _ptx >= _psx, "0", IF ( _ptx = 0, "2", "1" ) ) ) = "", "", "<i class='a-pop mk mk" & IF ( ISBLANK ( _ptx ), "", IF ( _ptx >= _psx, "0", IF ( _ptx = 0, "2", "1" ) ) ) & "' style='animation-delay:700ms'></i>" ) & "<span>" & _tvOd & "</span></b></div>"
-			            & "<div class='js'><span class='vs'>" & _txtRot & "</span><p>" & _txtJust & "</p></div>"
+			        _ehCaixa && ( NOT ISBLANK ( _prev ) || NOT ISBLANK ( _real ) ),
+			        "<div class='u dm hv-g'>"
+			            & "<div class='c hv-p' style='left:0;top:0'><span class='vs'><i class='pv a-pop'></i>Previsto</span><b>" & _tpOd & "</b></div>"
+			            & "<div class='c hv-p' style='left:186px;top:0'><span class='vs'><i class='dv a-pop' style='animation-delay:90ms'></i>Desembolsado</span><b>" & _trOd & "</b></div>"
+			            & "<i class='br pv hv-p' style='top:55px;width:" & _wP & "px' data-rk='dp' data-rp='width'></i>"
+			            & "<i class='br dv hv-p' style='top:69px;width:" & _wR & "px' data-rk='dr' data-rp='width' data-rd='90'></i>"
+			            & "<div class='c hv-p' style='left:0;top:95px'><span class='vs'>Diferença</span><b>" & _tdOd & "</b></div>"
+			            & "<div class='c hv-p' style='left:186px;top:95px'><span class='vs'>× previsto" & IF ( ISBLANK ( _ptx ), "", " · <span>" & _tiTxt & "</span>" ) & "</span><b>" & IF ( IF ( ISBLANK ( _ptx ), "", IF ( _ptx >= _psx, "0", IF ( _ptx = 0, "2", "1" ) ) ) = "", "", "<i class='a-pop mk mk" & IF ( ISBLANK ( _ptx ), "", IF ( _ptx >= _psx, "0", IF ( _ptx = 0, "2", "1" ) ) ) & "' style='animation-delay:700ms'></i>" ) & "<span>" & _tvOd & "</span></b></div>"
+			            & "<div class='js hv-p'><span class='vs'>" & _txtRot & "</span><p>" & _txtJust & "</p></div>"
 			        & "</div>" & [Comum · JS contador] & [Comum · JS corrida]
 			    )
 			VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
@@ -23587,8 +23595,8 @@ table _Medidas
 			    & "A9CDB9}.mm .b.q1{background:#C9821F}.mm .b.q2{background:#C43737}.mm .v{position:absolute;left:-30px;right:-30px;text-align:center;font-family:'Barlow U','Segoe UI',sans-serif;font"
 			    & "-weight:600;font-size:14px;line-height:17px;white-space:nowrap;font-variant-numeric:tabular-nums;color:#0B0B0C;text-shadow:1px 0 0 #FFF,-1px 0 0 #FFF,0 1px 0 #FFF,0 -1px 0 #FFF,1px"
 			    & " 1px 0 #FFF,-1px -1px 0 #FFF,1px -1px 0 #FFF,-1px 1px 0 #FFF,0 0 3px #FFF}.mm .v.ng{color:#C43737}.mm .ms{position:absolute;left:-12px;right:-12px;top:265px;text-align:center;font-"
-			    & "size:13px;line-height:16px;white-space:nowrap;color:#3B3B3F}.mm .ms.ref{font-weight:600;color:#0B0B0C}.mm .ms.sem{opacity:.35}.mm:hover .b{filter:brightness(.92)}.ms2{position:fixe"
-			    & "d;inset:0;font-size:15px;line-height:20px;color:#3B3B3F;white-space:nowrap}"
+			    & "size:13px;line-height:16px;white-space:nowrap;color:#3B3B3F}.mm .ms.ref{font-weight:600;color:#0B0B0C}.mm .ms.sem{opacity:.35}.ms2{position:fixed;inset:0;font-size:15px;line-height"
+			    & ":20px;color:#3B3B3F;white-space:nowrap}"
 		displayFolder: T2 Análise crítica\IDC, mês a mês
 		lineageTag: c1b7ede9-7ddd-5ace-8514-b25991a39eac
 
@@ -24842,6 +24850,16 @@ table _Medidas
 		displayFolder: T2 Análise crítica\Nota, mês a mês
 		lineageTag: 86b64e27-52e3-5b4f-90e0-6dd3c5c2dab6
 
+	/// CSS das colunas invisíveis sobre A nota, mês a mês (uma por mês: alvo do tooltip e do destaque).
+	measure 'T2 · Nota mês a mês · CSS mês' =
+			-- 4 · Marcação
+			[Comum · CSS base]
+			    & "#htmlContent{display:flex!important;align-items:stretch;height:100vh;padding:0!important}.htmlViewerEntry{display:block!important;flex:1 1 0;min-width:0;margin:0!important;padding:"
+			    & "0!important;height:100vh}.nmh{position:relative;height:100vh;cursor:default}.nmh i{position:absolute;left:3px;right:3px;top:22px;bottom:0;border-radius:4px;box-shadow:inset 0 0 0 1"
+			    & "px rgba(11,11,12,0);transition:box-shadow .15s}.nmh:hover i,.nmh.hover i,.hover .nmh i{box-shadow:inset 0 0 0 1px rgba(11,11,12,.4)}"
+		displayFolder: T2 Análise crítica\Nota, mês a mês
+		lineageTag: b279e218-9aad-519d-bbbd-9ef3fcee248b
+
 	/// A nota da obra em foco mês a mês na janela: barras na cor do status (pendente tracejado até os pontos obtidos) de 0 ao máximo da nota, linhas tracejadas nos limites de estável e de atenção (lidos das medidas), rótulo no mês de referência, na maior e na menor nota, e embaixo uma linha com o que a nota fez desde o primeiro mês da janela.
 	measure 'T2 · Nota mês a mês · HTML' =
 			-- 1 · Leituras
@@ -24976,6 +24994,17 @@ table _Medidas
 			    _mcHtml
 		displayFolder: T2 Análise crítica\Nota, mês a mês
 		lineageTag: c932ab4d-ae3b-53bc-b829-fee40de00d53
+
+	/// Uma coluna invisível por mês da janela (granularidade dMes[Mes]) sobre A nota, mês a mês: alvo do mouse que abre o tooltip do mês (ttT2Nota) e destaca o mês (contorno no mês sob o mouse, véu nos outros). Colunas iguais, as vagas das barras; vazio fora da janela e sem obra em foco.
+	measure 'T2 · Nota mês a mês · HTML mês' =
+			-- 1 · Leituras
+			VAR _ate = [Série · mês até a referência]
+			VAR _temObra = NOT ISBLANK ( [Nota · pontos possíveis · ranking · foco] )
+			-- 4 · Marcação
+			RETURN
+			    IF ( _ate = 1 && _temObra, "<div class='u hv-camada nmh'><i></i></div>" )
+		displayFolder: T2 Análise crítica\Nota, mês a mês
+		lineageTag: f3e2e813-93d2-5e33-835d-abf45a4fb2fa
 
 	/// Valor do item sobre o orçamento projetado (coluna % do quadradinho).
 	measure 'Item · % do orçamento' =
@@ -25314,6 +25343,142 @@ table _Medidas
 			    _mcHtml
 		displayFolder: T2 Análise crítica\Tooltips
 		lineageTag: 212e6ae1-8f84-5011-84a3-eec032ad5ba5
+
+	/// Tooltip de página do Desembolso do mês (obra em foco): os meses anteriores ao de referência na janela, do mais recente ao mais antigo, com a marca da faixa da previsão de caixa, o desvio (negativo em preto, decisão do Alisson), previsto × desembolsado e a justificativa (não exigida, preenchida ou em branco); as faixas do item lidas do modelo e, no pé, quantas exigidas foram preenchidas.
+	measure 'T2 · Tooltip desembolso · HTML' =
+			-- 1 · Leituras
+			VAR _ref = [Mês de referência]
+			VAR _mesRefC = [Mês de referência · curto]
+			VAR _obra = [Nota · obra em foco]
+			VAR _selo = [Obra em foco · selo]
+			VAR _faixas = [T2 · Desembolso · faixas da previsão de caixa]
+			VAR _nMes = [T2 · Desembolso · meses antes da referência · foco] + 0
+			VAR _nEx = [T2 · Desembolso · justificativas exigidas antes da referência · foco] + 0
+			VAR _nPre = [T2 · Desembolso · justificativas preenchidas antes da referência · foco] + 0
+			VAR _meses =
+			    ADDCOLUMNS (
+			        VALUES ( dMes[Mes] ),
+			        "@ate", [Série · mês até a referência],
+			        "@rot", [Mês · rótulo curto],
+			        "@pv", [Desembolso · previsto no mês · foco no mês],
+			        "@ds", [Desembolso · realizado no mês · foco no mês],
+			        "@d", [Desembolso · desvio no mês · foco no mês],
+			        "@e", [Justificativa · exigida · foco no mês],
+			        "@b", [Justificativa · em branco · foco no mês],
+			        "@pt", [T2 · Desembolso · pontos caixa · foco no mês],
+			        "@ps", [T2 · Desembolso · possíveis caixa · foco no mês]
+			    )
+			VAR _ant = FILTER ( _meses, [@ate] = 1 && dMes[Mes] < _ref && ( NOT ISBLANK ( [@pv] ) || NOT ISBLANK ( [@ds] ) ) ) /* lista */
+			VAR _nLs = COUNTROWS ( _ant ) /* lista */
+			-- 2 · Textos
+			VAR _txtSob = "DESEMBOLSO DO MÊS · " & UPPER ( _obra ) & IF ( _selo = "", "", " · " & _selo )
+			VAR _txtDir = "⁅" & _nMes & "⁆" & IF ( _nMes = 1, " mês antes de ", " meses antes de " ) & _mesRefC
+			VAR _txtRod =
+			    SWITCH (
+			        TRUE (),
+			        _nEx = 0, "nenhuma exigida: todo desvio ficou dentro de ±10%",
+			        _nPre = _nEx, IF ( _nEx = 1, "a única exigida foi preenchida", "todas as " & "⁅" & _nEx & "⁆" & " exigidas preenchidas" ),
+			        "⁅" & _nPre & "⁆" & " de " & "⁅" & _nEx & "⁆" & IF ( _nEx = 1, " exigida preenchida", " exigidas preenchidas" )
+			    )
+			-- 4 · Marcação
+			VAR _htmlLinhas =
+			    CONCATENATEX (
+			        _ant,
+			        VAR _d = [@d]
+			        VAR _dR = ROUND ( _d * 100, 0 )
+			        VAR _dTxt = IF ( ISBLANK ( _d ), "—", IF ( _dR > 0, "+", IF ( _dR < 0, "−", "" ) ) & "⁅" & FORMAT ( ABS ( _d ) * 100, "0", "pt-BR" ) & "⁆" & "%" )
+			        VAR _mk = IF ( IF ( ISBLANK ( [@pt] ), "", IF ( [@pt] >= [@ps], "0", IF ( [@pt] = 0, "2", "1" ) ) ) = "", "", "<i class='mk mk" & IF ( ISBLANK ( [@pt] ), "", IF ( [@pt] >= [@ps], "0", IF ( [@pt] = 0, "2", "1" ) ) ) & "'></i>" )
+			        VAR _dsTxt = IF ( ISBLANK ( [@ds] ), "nada desembolsado", "⁅" & "R$ " & SWITCH ( TRUE (), ABS ( [@ds] ) >= 999500, FORMAT ( ABS ( [@ds] ) / 1000000, "0.00", "pt-BR" ) & " mi", ABS ( [@ds] ) >= 999.5, FORMAT ( ABS ( [@ds] ) / 1000, "0", "pt-BR" ) & " mil", FORMAT ( ABS ( [@ds] ), "#,0", "pt-BR" ) ) & "⁆" )
+			        VAR _rsTxt = IF ( ISBLANK ( [@pv] ), "sem previsto · " & _dsTxt, "⁅" & "R$ " & SWITCH ( TRUE (), ABS ( [@pv] ) >= 999500, FORMAT ( ABS ( [@pv] ) / 1000000, "0.00", "pt-BR" ) & " mi", ABS ( [@pv] ) >= 999.5, FORMAT ( ABS ( [@pv] ) / 1000, "0", "pt-BR" ) & " mil", FORMAT ( ABS ( [@pv] ), "#,0", "pt-BR" ) ) & "⁆" & " × " & _dsTxt )
+			        VAR _jTxt =
+			            SWITCH (
+			                TRUE (),
+			                [@b] = 1, "<span class='chp'><i></i>Em branco</span>",
+			                [@e] = 1, "preenchida",
+			                ISBLANK ( [@e] ), "sem previsto",
+			                "não exigida"
+			            )
+			        RETURN
+			            "<div class='lin ds2'><span class='m'>" & [@rot] & "</span><span class='dv'>" & _mk & "<span>" & _dTxt & "</span></span>"
+			                & "<span class='rs'>" & _rsTxt & "</span><span class='j'>" & _jTxt & "</span></div>",
+			        "",
+			        dMes[Mes], DESC
+			    )
+			VAR _saidaHtml =
+			    IF (
+			        NOT ISBLANK ( _obra ),
+			        "<div class='u tt'><div class='cab sobre-preto'><p class='vs sob'>" & _txtSob & "</p>"
+			            & "<div class='tl'><div class='tit'><b>" & "Os meses anteriores" & "</b>" & "</div>"
+			            & "<p class='vs dir'>" & _txtDir & "</p></div></div>"
+			            & IF (
+			                _nLs = 0,
+			                "<div class='corpo'><p class='vz'>Nenhum mês antes de " & _mesRefC & " com desembolso na janela.</p></div>",
+			                "<div class='corpo crp'>"
+			                    & IF ( _faixas = "", "", "<p class='nt'>Faixas: " & SUBSTITUTE ( SUBSTITUTE ( _faixas, "<", "&lt;" ), ">", "&gt;" ) & "</p>" )
+			                    & "<div class='bh'><span class='vs'>Mês · desvio · previsto × desembolsado</span>"
+			                    & "<span class='vs'>Justificativa</span></div>"
+			                    & "<div class='lsb" & " ls " & SWITCH ( TRUE (), _nLs <= 3, "e1", _nLs <= 6, "e2", _nLs <= 9, "e3", _nLs <= 12, "e4", "e5" ) & "' style='--n:" & _nLs & "'>" & _htmlLinhas & "</div></div>"
+			                    & "<div class='rp'><div class='rg'></div>" & "<span class='vs'>" & "Justificativa exigida acima de ±10%" & "</span>" & "<p class='rod'>" & _txtRod & "</p></div>"
+			            )
+			        & "</div>" & [Comum · JS contador tooltip]
+			    )
+			/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+			VAR _odQ =
+			    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+			VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+			/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+			VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+			VAR _mcHtml =
+			    IF (
+			        _mcK = 0,
+			        _saidaHtml,
+			        CONCATENATEX (
+			            GENERATESERIES ( 1, _mcK ),
+			            VAR _mcj = [Value]
+			            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+			            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+			            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+			            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+			            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+			            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+			            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+			            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+			            VAR _mcc = LEN ( _mcsg )
+			            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+			            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+			            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+			            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+			            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+			            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+			            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+			            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+			            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+			            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+			            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+			            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+			            RETURN
+			                _mcantes
+			                    & IF (
+			                        _mcOk,
+			                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+			                            & CONCATENATEX (
+			                                _odQ,
+			                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+			                                UNICHAR ( 10 ),
+			                                [@odk], ASC
+			                            )
+			                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+			                        _mcpre & _mcnum & _mcsuf
+			                    )
+			                    & _mcdepois,
+			            "",
+			            [Value], ASC
+			        )
+			    )
+			RETURN
+			    _mcHtml
+		displayFolder: T2 Análise crítica\Tooltips
+		lineageTag: f5cf33c4-9780-55e2-b792-17f90bc10957
 
 	/// Tooltip de página do item da nota (linha de Itens da nota): as faixas do item como estão no modelo, com a faixa atingida marcada na cor dos pontos, o X do mês, os pontos do item mês a mês na obra em foco e, no rodapé preso ao pé, o que mudou desde o mês anterior. Estados: com dado, sem dado (falta na base / sem dado na planilha), valor fora da faixa válida.
 	measure 'T2 · Tooltip item da nota · HTML' =
@@ -25865,6 +26030,174 @@ table _Medidas
 		displayFolder: T2 Análise crítica\Tooltips
 		lineageTag: 72c4799c-f973-5e18-a225-ffac4145a4b5
 
+	/// Tooltip de página do mês de A nota, mês a mês (obra em foco): a nota e o status no mês, os nove itens da nota com o valor no mês, os pontos (pílula cheio, parcial, zero, sem dado) e a variação contra o mês anterior, e no pé a nota do mês anterior. Primeiro mês do histórico: sem variação.
+	measure 'T2 · Tooltip nota do mês · HTML' =
+			-- 1 · Leituras
+			VAR _mesL = [Mês · longo]
+			VAR _mesAntN = [Mês anterior · nome]
+			VAR _primeiro = [Mês · é o primeiro do histórico] = 1
+			VAR _obra = [Nota · obra em foco]
+			VAR _selo = [Obra em foco · selo]
+			VAR _nota = [Nota · nota final · foco no mês]
+			VAR _st = [Nota · status · foco no mês]
+			VAR _pend = [Nota · pendente · foco no mês]
+			VAR _obt = [Nota · pontos obtidos · foco no mês]
+			VAR _poss = [Nota · pontos possíveis · foco no mês]
+			VAR _notaA = [T2 · Nota do mês · nota no mês anterior · foco no mês]
+			VAR _stA = [T2 · Nota do mês · status no mês anterior · foco no mês]
+			VAR _pendA = [T2 · Nota do mês · pendente no mês anterior · foco no mês]
+			VAR _obtA = [T2 · Nota do mês · obtidos no mês anterior · foco no mês]
+			VAR _possA = [T2 · Nota do mês · possíveis no mês anterior · foco no mês]
+			VAR _itens =
+			    ADDCOLUMNS (
+			        VALUES ( dItemNota[Item] ),
+			        "@ord", [Nota · item · ordem],
+			        "@nome", [Nota · item · nome médio],
+			        "@pts", [Nota · item · pontos · foco no mês],
+			        "@ps", [Nota · item · possíveis · foco no mês],
+			        "@x", [T2 · Nota do mês · item · X · foco no mês],
+			        "@dv", [T2 · Nota do mês · item · variação de pontos · foco no mês]
+			    )
+			VAR _nIt = COUNTROWS ( _itens ) /* lista */
+			-- 2 · Textos
+			VAR _txtSob = "A NOTA, MÊS A MÊS · " & UPPER ( _obra ) & IF ( _selo = "", "", " · " & _selo )
+			VAR _txtDir =
+			    SWITCH (
+			        TRUE (),
+			        _pend = 1, "pendente · " & "⁅" & FORMAT ( _obt, "0.0#", "pt-BR" ) & "⁆" & " de " & "⁅" & FORMAT ( _poss, "0.0#", "pt-BR" ) & "⁆",
+			        ISBLANK ( _nota ), "sem nota no mês",
+			        "nota " & "⁅" & FORMAT ( _nota, "0.0#", "pt-BR" ) & "⁆" & " · " & SWITCH ( TRUE (), _pend = 1, "pendente", ISBLANK ( _st ), "", _st = 2, "crítico", _st = 1, "atenção", "estável" )
+			    )
+			VAR _txtAnt =
+			    SWITCH (
+			        TRUE (),
+			        _primeiro, "primeiro mês do histórico",
+			        _pendA = 1, "pendente · " & "⁅" & FORMAT ( _obtA, "0.0#", "pt-BR" ) & "⁆" & " de " & "⁅" & FORMAT ( _possA, "0.0#", "pt-BR" ) & "⁆",
+			        ISBLANK ( _notaA ), "sem nota",
+			        "nota " & "⁅" & FORMAT ( _notaA, "0.0#", "pt-BR" ) & "⁆" & " · " & SWITCH ( TRUE (), _pendA = 1, "pendente", ISBLANK ( _stA ), "", _stA = 2, "crítico", _stA = 1, "atenção", "estável" )
+			    )
+			VAR _txtRotAnt = IF ( _primeiro, "Antes", "Em " & _mesAntN )
+			VAR _txtBhD = IF ( _primeiro, "Pontos", "Pontos · desde " & _mesAntN )
+			-- 4 · Marcação
+			VAR _htmlLinhas =
+			    CONCATENATEX (
+			        _itens,
+			        VAR _cod = dItemNota[Item]
+			        VAR _pts = [@pts]
+			        VAR _ps = [@ps]
+			        VAR _xA1 = ROUND ( ABS ( [@x] ) * 100, 1 )
+			        VAR _xPct = "⁅" & FORMAT ( _xA1, "0.0", "pt-BR" ) & "⁆" & "%"
+			        VAR _xMes = "⁅" & FORMAT ( ABS ( [@x] ), "0.0", "pt-BR" ) & "⁆" & IF ( ROUND ( ABS ( [@x] ), 1 ) <= 1, " mês", " meses" )
+			        VAR _txtX =
+			            SWITCH (
+			                TRUE (),
+			                ISBLANK ( _pts ), "",
+			                _cod = "custo", "<b class='" & IF ( [@x] < 1, "ng", "" ) & "'>IDC " & "⁅" & FORMAT ( [@x], "0.00", "pt-BR" ) & "⁆" & "</b>",
+			                _cod = "prazo",
+			                    "<b>" & IF ( ROUND ( [@x], 1 ) > 0, "atraso de " & _xMes, IF ( ROUND ( [@x], 1 ) < 0, "adiantada " & _xMes, "em dia" ) ) & "</b>",
+			                _cod = "acidentes", "<b>TF " & "⁅" & FORMAT ( [@x], "0.0", "pt-BR" ) & "⁆" & "</b>",
+			                _cod = "analise", "<b>" & "⁅" & FORMAT ( [@x], "0" ) & "⁆" & " de 3 checagens</b>",
+			                "<b>" & _xPct & "</b>"
+			            )
+			        VAR _kCls = SWITCH ( TRUE (), ISBLANK ( _pts ), "f", _ps = 0, "n", _pts >= _ps, "c", _pts = 0, "z", "p" )
+			        VAR _kTxt =
+			            SWITCH (
+			                TRUE (),
+			                ISBLANK ( _pts ), "sem dado",
+			                _ps = 0, "não conta",
+			                "⁅" & FORMAT ( _pts, "0.0#", "pt-BR" ) & "⁆" & " de " & "⁅" & FORMAT ( _ps, "0.0#", "pt-BR" ) & "⁆"
+			            )
+			        VAR _v = [@dv]
+			        VAR _vR = ROUND ( _v, 2 )
+			        VAR _dTxt =
+			            SWITCH (
+			                TRUE (),
+			                _primeiro || ISBLANK ( _v ), "",
+			                _vR = 0, "=",
+			                IF ( _vR > 0, "+", "−" ) & "⁅" & FORMAT ( ABS ( _v ), "0.0#", "pt-BR" ) & "⁆"
+			            )
+			        VAR _dCls = IF ( ISBLANK ( _v ), "", IF ( _vR < 0, " ng", IF ( _vR = 0, " ig", "" ) ) )
+			        RETURN
+			            "<div class='lin nt2'><span class='n'>" & [@nome] & "</span><span class='x'>" & _txtX & "</span>"
+			                & "<span class='p'><span class='chi chi-" & _kCls & "'><span>" & _kTxt & "</span></span></span>"
+			                & "<span class='dl" & _dCls & "'>" & _dTxt & "</span></div>",
+			        "",
+			        [@ord], ASC
+			    )
+			VAR _saidaHtml =
+			    IF (
+			        NOT ISBLANK ( _obra ),
+			        "<div class='u tt'><div class='cab sobre-preto'><p class='vs sob'>" & _txtSob & "</p>"
+			            & "<div class='tl'><div class='tit'><b>" & _mesL & "</b>" & "</div>"
+			            & "<p class='vs dir'>" & _txtDir & "</p></div></div>"
+			            & IF (
+			                ISBLANK ( _poss ) && ISBLANK ( _nota ),
+			                "<div class='corpo'><p class='vz'>Sem planilha da obra neste mês.</p></div>",
+			                "<div class='corpo crp'><div class='bh'><span class='vs'>Item · valor no mês</span>"
+			                    & "<span class='vs'>" & _txtBhD & "</span></div>"
+			                    & "<div class='lsb" & " ls " & SWITCH ( TRUE (), _nIt <= 3, "e1", _nIt <= 6, "e2", _nIt <= 9, "e3", _nIt <= 12, "e4", "e5" ) & "' style='--n:" & _nIt & "'>" & _htmlLinhas & "</div></div>"
+			                    & "<div class='rp'><div class='rg'></div>" & "<span class='vs'>" & _txtRotAnt & "</span>" & "<p class='rod'>" & _txtAnt & "</p></div>"
+			            )
+			        & "</div>" & [Comum · JS contador tooltip]
+			    )
+			/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+			VAR _odQ =
+			    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+			VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+			/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+			VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+			VAR _mcHtml =
+			    IF (
+			        _mcK = 0,
+			        _saidaHtml,
+			        CONCATENATEX (
+			            GENERATESERIES ( 1, _mcK ),
+			            VAR _mcj = [Value]
+			            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+			            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+			            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+			            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+			            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+			            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+			            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+			            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+			            VAR _mcc = LEN ( _mcsg )
+			            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+			            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+			            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+			            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+			            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+			            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+			            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+			            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+			            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+			            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+			            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+			            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+			            RETURN
+			                _mcantes
+			                    & IF (
+			                        _mcOk,
+			                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+			                            & CONCATENATEX (
+			                                _odQ,
+			                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+			                                UNICHAR ( 10 ),
+			                                [@odk], ASC
+			                            )
+			                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+			                        _mcpre & _mcnum & _mcsuf
+			                    )
+			                    & _mcdepois,
+			            "",
+			            [Value], ASC
+			        )
+			    )
+			RETURN
+			    _mcHtml
+		displayFolder: T2 Análise crítica\Tooltips
+		lineageTag: 6bbf6267-3e0b-5ea8-b3b2-142c96b922f0
+
 	/// CSS dos tooltips v2 da T2 (cartão branco 560, cabeçalho preto com a meta que quebra de linha, linhas de item, degrau e conta, faixa, série de uma só e rodapé preso ao pé; F4: corpo flexível, lista com escala e cascata de entrada). Não depende da CSS de tooltip da T1.
 	measure 'T2 · Tooltip · CSS' =
 			-- 4 · Marcação
@@ -25901,54 +26234,62 @@ table _Medidas
 			    & "e:max(13px,calc(13px * var(--k,1)))}.tt .ls .mk{width:calc(11px * var(--k,1));height:calc(11px * var(--k,1))}.tt .fx.ls .f{font-size:min(14px,max(13px,calc(14px * var(--k,1))))}.tt"
 			    & "{display:flex;flex-direction:column}.tt .cab{flex:none}.tt .corpo{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;padding-bottom:16px}.tt .corpo.crp{padding-bottom:72"
 			    & "px}.tt .corpo>:not(.ls){flex:none}.tt .ls>.lin{height:auto;min-height:0}.tt .corpo .ls>.lin>span{line-height:1.3}.tt .fx.ls{display:grid;grid-auto-rows:minmax(0,1fr);align-content:"
-			    & "stretch}.tt .fx.ls .f{height:auto}.tt .lin.cf{grid-template-columns:20px 210px 120px 1fr}/*contador*/@keyframes tqE0{from{opacity:.35}}@keyframes tqP0{from{opacity:0;transform:scal"
-			    & "e(.5)}}@keyframes tqE1{0%,16.667%{opacity:.35}}@keyframes tqP1{0%,16.667%{opacity:0;transform:scale(.5)}}@keyframes tqE2{0%,28.571%{opacity:.35}}@keyframes tqP2{0%,28.571%{opacity:"
-			    & "0;transform:scale(.5)}}@keyframes tqE3{0%,37.5%{opacity:.35}}@keyframes tqP3{0%,37.5%{opacity:0;transform:scale(.5)}}@keyframes tqE4{0%,44.444%{opacity:.35}}@keyframes tqP4{0%,44.4"
-			    & "44%{opacity:0;transform:scale(.5)}}@keyframes tqE5{0%,50%{opacity:.35}}@keyframes tqP5{0%,50%{opacity:0;transform:scale(.5)}}@keyframes tqE6{0%,54.545%{opacity:.35}}@keyframes tqP6"
-			    & "{0%,54.545%{opacity:0;transform:scale(.5)}}@keyframes tqE7{0%,58.333%{opacity:.35}}@keyframes tqP7{0%,58.333%{opacity:0;transform:scale(.5)}}@keyframes tqE8{0%,61.538%{opacity:.35}"
-			    & "}@keyframes tqP8{0%,61.538%{opacity:0;transform:scale(.5)}}@keyframes tqE9{0%,64.286%{opacity:.35}}@keyframes tqP9{0%,64.286%{opacity:0;transform:scale(.5)}}@keyframes tqE10{0%,66."
-			    & "667%{opacity:.35}}@keyframes tqP10{0%,66.667%{opacity:0;transform:scale(.5)}}@keyframes tqE11{0%,68.75%{opacity:.35}}@keyframes tqP11{0%,68.75%{opacity:0;transform:scale(.5)}}@keyf"
-			    & "rames tqE12{0%,70.588%{opacity:.35}}@keyframes tqP12{0%,70.588%{opacity:0;transform:scale(.5)}}@keyframes tqE13{0%,72.222%{opacity:.35}}@keyframes tqP13{0%,72.222%{opacity:0;transf"
-			    & "orm:scale(.5)}}@keyframes tqE14{0%,73.684%{opacity:.35}}@keyframes tqP14{0%,73.684%{opacity:0;transform:scale(.5)}}@keyframes tqE15{0%,75%{opacity:.35}}@keyframes tqP15{0%,75%{opac"
-			    & "ity:0;transform:scale(.5)}}@keyframes tqE16{0%,76.19%{opacity:.35}}@keyframes tqP16{0%,76.19%{opacity:0;transform:scale(.5)}}:is(.mk,.chi,.chip,.chp,circle,.pend){transform-box:fil"
-			    & "l-box;transform-origin:center}.tt .cab{animation:tqE0 0.2s ease-out}.tt .cab :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP0 0.3s ease-out}.tt .corpo>.bh,.tt .corpo>.sl,.tt .c"
-			    & "orpo>.vs,.tt .corpo>.tx,.tt .corpo>.des,.tt .corpo>.nt,.tt .corpo>.vz,.tt .ser .ms{animation:tqE1 0.24s ease-out}.tt .corpo>.bh :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.sl"
-			    & " :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.vs :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.tx :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.des :is(.mk,.chi,.chip,"
-			    & ".chp,circle,.pend),.tt .corpo>.nt :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.vz :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ser .ms :is(.mk,.chi,.chip,.chp,circle,.pend){anim"
-			    & "ation:tqP1 0.34s ease-out}.tt .ls>:nth-child(1){animation:tqE2 0.28s ease-out}.tt .ls>:nth-child(1) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP2 0.38s ease-out}.tt .ls>:nth"
-			    & "-child(2){animation:tqE3 0.32s ease-out}.tt .ls>:nth-child(2) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP3 0.42s ease-out}.tt .ls>:nth-child(3){animation:tqE4 0.36s ease-ou"
-			    & "t}.tt .ls>:nth-child(3) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP4 0.46s ease-out}.tt .ls>:nth-child(4){animation:tqE5 0.4s ease-out}.tt .ls>:nth-child(4) :is(.mk,.chi,.c"
-			    & "hip,.chp,circle,.pend){animation:tqP5 0.5s ease-out}.tt .ls>:nth-child(5){animation:tqE6 0.44s ease-out}.tt .ls>:nth-child(5) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP6 0"
-			    & ".54s ease-out}.tt .ls>:nth-child(6){animation:tqE7 0.48s ease-out}.tt .ls>:nth-child(6) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP7 0.58s ease-out}.tt .ls>:nth-child(7){an"
-			    & "imation:tqE8 0.52s ease-out}.tt .ls>:nth-child(7) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP8 0.62s ease-out}.tt .ls>:nth-child(8){animation:tqE9 0.56s ease-out}.tt .ls>:n"
-			    & "th-child(8) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP9 0.66s ease-out}.tt .ls>:nth-child(9){animation:tqE10 0.6s ease-out}.tt .ls>:nth-child(9) :is(.mk,.chi,.chip,.chp,ci"
-			    & "rcle,.pend){animation:tqP10 0.7s ease-out}.tt .ls>:nth-child(10){animation:tqE11 0.64s ease-out}.tt .ls>:nth-child(10) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP11 0.74s e"
-			    & "ase-out}.tt .ls>:nth-child(11){animation:tqE12 0.68s ease-out}.tt .ls>:nth-child(11) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP12 0.78s ease-out}.tt .ls>:nth-child(12){ani"
-			    & "mation:tqE13 0.72s ease-out}.tt .ls>:nth-child(12) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP13 0.82s ease-out}.tt .ls>:nth-child(13){animation:tqE14 0.76s ease-out}.tt .l"
-			    & "s>:nth-child(13) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP14 0.86s ease-out}.tt .ls>:nth-child(14){animation:tqE15 0.8s ease-out}.tt .ls>:nth-child(14) :is(.mk,.chi,.chip"
-			    & ",.chp,circle,.pend){animation:tqP15 0.9s ease-out}.tt .rp{animation:tqE16 0.84s ease-out}.tt .rp :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP16 0.94s ease-out}.tqv .tt .cab,"
-			    & ".tqv .tt .cab :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .corpo>.bh,.tqv .tt .corpo>.sl,.tqv .tt .corpo>.vs,.tqv .tt .corpo>.tx,.tqv .tt .corpo>.des,.tqv .tt .corpo>.nt,.tqv .t"
-			    & "t .corpo>.vz,.tqv .tt .ser .ms,.tqv .tt .corpo>.bh :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .corpo>.sl :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .corpo>.vs :is(.mk,.chi,"
-			    & ".chip,.chp,circle,.pend),.tqv .tt .corpo>.tx :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .corpo>.des :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .corpo>.nt :is(.mk,.chi,.chip"
-			    & ",.chp,circle,.pend),.tqv .tt .corpo>.vz :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ser .ms :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(1),.tqv .tt .ls>:nth-c"
-			    & "hild(1) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(2),.tqv .tt .ls>:nth-child(2) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(3),.tqv .tt .ls>:n"
-			    & "th-child(3) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(4),.tqv .tt .ls>:nth-child(4) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(5),.tqv .tt .l"
-			    & "s>:nth-child(5) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(6),.tqv .tt .ls>:nth-child(6) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(7),.tqv .t"
-			    & "t .ls>:nth-child(7) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(8),.tqv .tt .ls>:nth-child(8) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(9),.tq"
-			    & "v .tt .ls>:nth-child(9) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(10),.tqv .tt .ls>:nth-child(10) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child("
-			    & "11),.tqv .tt .ls>:nth-child(11) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(12),.tqv .tt .ls>:nth-child(12) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nt"
-			    & "h-child(13),.tqv .tt .ls>:nth-child(13) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(14),.tqv .tt .ls>:nth-child(14) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt"
-			    & " .rp,.tqv .tt .rp :is(.mk,.chi,.chip,.chp,circle,.pend){animation:none}@media (prefers-reduced-motion:reduce){.tt .cab,.tt .cab :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.bh"
-			    & ",.tt .corpo>.sl,.tt .corpo>.vs,.tt .corpo>.tx,.tt .corpo>.des,.tt .corpo>.nt,.tt .corpo>.vz,.tt .ser .ms,.tt .corpo>.bh :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.sl :is(.mk"
-			    & ",.chi,.chip,.chp,circle,.pend),.tt .corpo>.vs :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.tx :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.des :is(.mk,.chi,.chip,.chp,cir"
-			    & "cle,.pend),.tt .corpo>.nt :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.vz :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ser .ms :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth"
-			    & "-child(1),.tt .ls>:nth-child(1) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(2),.tt .ls>:nth-child(2) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(3),.tt .l"
-			    & "s>:nth-child(3) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(4),.tt .ls>:nth-child(4) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(5),.tt .ls>:nth-child(5) "
-			    & ":is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(6),.tt .ls>:nth-child(6) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(7),.tt .ls>:nth-child(7) :is(.mk,.chi,.ch"
-			    & "ip,.chp,circle,.pend),.tt .ls>:nth-child(8),.tt .ls>:nth-child(8) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(9),.tt .ls>:nth-child(9) :is(.mk,.chi,.chip,.chp,circle,."
-			    & "pend),.tt .ls>:nth-child(10),.tt .ls>:nth-child(10) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(11),.tt .ls>:nth-child(11) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .l"
-			    & "s>:nth-child(12),.tt .ls>:nth-child(12) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(13),.tt .ls>:nth-child(13) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child"
-			    & "(14),.tt .ls>:nth-child(14) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .rp,.tt .rp :is(.mk,.chi,.chip,.chp,circle,.pend){animation:none!important}}/*fim-contador*/ "
+			    & "stretch}.tt .fx.ls .f{height:auto}.tt .lin.cf{grid-template-columns:20px 210px 120px 1fr}.tt .lin.nt2{grid-template-columns:1fr 140px 104px 48px;column-gap:8px}.tt .lin.nt2 .n{font"
+			    & "-weight:600;white-space:nowrap}.tt .lin.nt2 .x{white-space:nowrap}.tt .lin.nt2 .x b{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600}.tt .lin.nt2 .x b.ng{color:#C43737}"
+			    & ".tt .lin.nt2 .p{justify-self:end}.tt .lin.nt2 .dl{text-align:right;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;white-space:nowrap}.tt .lin.nt2 .dl.ng{color:#C43737"
+			    & "}.tt .lin.nt2 .dl.ig{color:#6B6B70}.tt .lin.ds2{grid-template-columns:62px 92px 1fr 128px;column-gap:8px}.tt .lin.ds2 .m{font-weight:600;white-space:nowrap}.tt .lin.ds2 .dv{display"
+			    & ":flex;align-items:center;gap:6px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;white-space:nowrap}.tt .lin.ds2 .rs{white-space:nowrap;color:#3B3B3F}.tt .lin.ds2 .j{j"
+			    & "ustify-self:end;white-space:nowrap;color:#3B3B3F}.tt .corpo>.nt+.bh{margin-top:8px}.tt .ls .lin.nt2 .n{font-size:min(17px,max(13px,calc(15px * var(--k,1))))}.tt .ls .lin.nt2 .x{fon"
+			    & "t-size:min(17px,max(13px,calc(14px * var(--k,1))))}.tt .ls .lin.nt2 .dl{font-size:min(17px,max(13px,calc(15px * var(--k,1))))}.tt .ls .lin.ds2 .m{font-size:min(17px,max(13px,calc(1"
+			    & "5px * var(--k,1))))}.tt .ls .lin.ds2 .dv{font-size:min(17px,max(13px,calc(16px * var(--k,1))))}.tt .ls .lin.ds2 .rs{font-size:min(17px,max(13px,calc(14px * var(--k,1))))}.tt .ls .l"
+			    & "in.ds2 .j{font-size:min(17px,max(13px,calc(14px * var(--k,1))))}/*contador*/@keyframes tqE0{from{opacity:.35}}@keyframes tqP0{from{opacity:0;transform:scale(.5)}}@keyframes tqE1{0%"
+			    & ",16.667%{opacity:.35}}@keyframes tqP1{0%,16.667%{opacity:0;transform:scale(.5)}}@keyframes tqE2{0%,28.571%{opacity:.35}}@keyframes tqP2{0%,28.571%{opacity:0;transform:scale(.5)}}@k"
+			    & "eyframes tqE3{0%,37.5%{opacity:.35}}@keyframes tqP3{0%,37.5%{opacity:0;transform:scale(.5)}}@keyframes tqE4{0%,44.444%{opacity:.35}}@keyframes tqP4{0%,44.444%{opacity:0;transform:s"
+			    & "cale(.5)}}@keyframes tqE5{0%,50%{opacity:.35}}@keyframes tqP5{0%,50%{opacity:0;transform:scale(.5)}}@keyframes tqE6{0%,54.545%{opacity:.35}}@keyframes tqP6{0%,54.545%{opacity:0;tra"
+			    & "nsform:scale(.5)}}@keyframes tqE7{0%,58.333%{opacity:.35}}@keyframes tqP7{0%,58.333%{opacity:0;transform:scale(.5)}}@keyframes tqE8{0%,61.538%{opacity:.35}}@keyframes tqP8{0%,61.53"
+			    & "8%{opacity:0;transform:scale(.5)}}@keyframes tqE9{0%,64.286%{opacity:.35}}@keyframes tqP9{0%,64.286%{opacity:0;transform:scale(.5)}}@keyframes tqE10{0%,66.667%{opacity:.35}}@keyfra"
+			    & "mes tqP10{0%,66.667%{opacity:0;transform:scale(.5)}}@keyframes tqE11{0%,68.75%{opacity:.35}}@keyframes tqP11{0%,68.75%{opacity:0;transform:scale(.5)}}@keyframes tqE12{0%,70.588%{op"
+			    & "acity:.35}}@keyframes tqP12{0%,70.588%{opacity:0;transform:scale(.5)}}@keyframes tqE13{0%,72.222%{opacity:.35}}@keyframes tqP13{0%,72.222%{opacity:0;transform:scale(.5)}}@keyframes"
+			    & " tqE14{0%,73.684%{opacity:.35}}@keyframes tqP14{0%,73.684%{opacity:0;transform:scale(.5)}}@keyframes tqE15{0%,75%{opacity:.35}}@keyframes tqP15{0%,75%{opacity:0;transform:scale(.5)"
+			    & "}}@keyframes tqE16{0%,76.19%{opacity:.35}}@keyframes tqP16{0%,76.19%{opacity:0;transform:scale(.5)}}:is(.mk,.chi,.chip,.chp,circle,.pend){transform-box:fill-box;transform-origin:ce"
+			    & "nter}.tt .cab{animation:tqE0 0.2s ease-out}.tt .cab :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP0 0.3s ease-out}.tt .corpo>.bh,.tt .corpo>.sl,.tt .corpo>.vs,.tt .corpo>.tx,."
+			    & "tt .corpo>.des,.tt .corpo>.nt,.tt .corpo>.vz,.tt .ser .ms{animation:tqE1 0.24s ease-out}.tt .corpo>.bh :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.sl :is(.mk,.chi,.chip,.chp,"
+			    & "circle,.pend),.tt .corpo>.vs :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.tx :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.des :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .c"
+			    & "orpo>.nt :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.vz :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ser .ms :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP1 0.34s ease-out"
+			    & "}.tt .ls>:nth-child(1){animation:tqE2 0.28s ease-out}.tt .ls>:nth-child(1) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP2 0.38s ease-out}.tt .ls>:nth-child(2){animation:tqE3 "
+			    & "0.32s ease-out}.tt .ls>:nth-child(2) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP3 0.42s ease-out}.tt .ls>:nth-child(3){animation:tqE4 0.36s ease-out}.tt .ls>:nth-child(3) :"
+			    & "is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP4 0.46s ease-out}.tt .ls>:nth-child(4){animation:tqE5 0.4s ease-out}.tt .ls>:nth-child(4) :is(.mk,.chi,.chip,.chp,circle,.pend){an"
+			    & "imation:tqP5 0.5s ease-out}.tt .ls>:nth-child(5){animation:tqE6 0.44s ease-out}.tt .ls>:nth-child(5) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP6 0.54s ease-out}.tt .ls>:nt"
+			    & "h-child(6){animation:tqE7 0.48s ease-out}.tt .ls>:nth-child(6) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP7 0.58s ease-out}.tt .ls>:nth-child(7){animation:tqE8 0.52s ease-o"
+			    & "ut}.tt .ls>:nth-child(7) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP8 0.62s ease-out}.tt .ls>:nth-child(8){animation:tqE9 0.56s ease-out}.tt .ls>:nth-child(8) :is(.mk,.chi,"
+			    & ".chip,.chp,circle,.pend){animation:tqP9 0.66s ease-out}.tt .ls>:nth-child(9){animation:tqE10 0.6s ease-out}.tt .ls>:nth-child(9) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP"
+			    & "10 0.7s ease-out}.tt .ls>:nth-child(10){animation:tqE11 0.64s ease-out}.tt .ls>:nth-child(10) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP11 0.74s ease-out}.tt .ls>:nth-chil"
+			    & "d(11){animation:tqE12 0.68s ease-out}.tt .ls>:nth-child(11) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP12 0.78s ease-out}.tt .ls>:nth-child(12){animation:tqE13 0.72s ease-o"
+			    & "ut}.tt .ls>:nth-child(12) :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP13 0.82s ease-out}.tt .ls>:nth-child(13){animation:tqE14 0.76s ease-out}.tt .ls>:nth-child(13) :is(.mk,"
+			    & ".chi,.chip,.chp,circle,.pend){animation:tqP14 0.86s ease-out}.tt .ls>:nth-child(14){animation:tqE15 0.8s ease-out}.tt .ls>:nth-child(14) :is(.mk,.chi,.chip,.chp,circle,.pend){anima"
+			    & "tion:tqP15 0.9s ease-out}.tt .rp{animation:tqE16 0.84s ease-out}.tt .rp :is(.mk,.chi,.chip,.chp,circle,.pend){animation:tqP16 0.94s ease-out}.tqv .tt .cab,.tqv .tt .cab :is(.mk,.ch"
+			    & "i,.chip,.chp,circle,.pend),.tqv .tt .corpo>.bh,.tqv .tt .corpo>.sl,.tqv .tt .corpo>.vs,.tqv .tt .corpo>.tx,.tqv .tt .corpo>.des,.tqv .tt .corpo>.nt,.tqv .tt .corpo>.vz,.tqv .tt .se"
+			    & "r .ms,.tqv .tt .corpo>.bh :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .corpo>.sl :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .corpo>.vs :is(.mk,.chi,.chip,.chp,circle,.pend),"
+			    & ".tqv .tt .corpo>.tx :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .corpo>.des :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .corpo>.nt :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv "
+			    & ".tt .corpo>.vz :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ser .ms :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(1),.tqv .tt .ls>:nth-child(1) :is(.mk,.chi,.chi"
+			    & "p,.chp,circle,.pend),.tqv .tt .ls>:nth-child(2),.tqv .tt .ls>:nth-child(2) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(3),.tqv .tt .ls>:nth-child(3) :is(.mk,.chi,"
+			    & ".chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(4),.tqv .tt .ls>:nth-child(4) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(5),.tqv .tt .ls>:nth-child(5) :is(.mk,."
+			    & "chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(6),.tqv .tt .ls>:nth-child(6) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(7),.tqv .tt .ls>:nth-child(7) :is(."
+			    & "mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(8),.tqv .tt .ls>:nth-child(8) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(9),.tqv .tt .ls>:nth-child(9) :"
+			    & "is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(10),.tqv .tt .ls>:nth-child(10) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(11),.tqv .tt .ls>:nth-chi"
+			    & "ld(11) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(12),.tqv .tt .ls>:nth-child(12) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(13),.tqv .tt .ls>"
+			    & ":nth-child(13) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .ls>:nth-child(14),.tqv .tt .ls>:nth-child(14) :is(.mk,.chi,.chip,.chp,circle,.pend),.tqv .tt .rp,.tqv .tt .rp :is(.mk"
+			    & ",.chi,.chip,.chp,circle,.pend){animation:none}@media (prefers-reduced-motion:reduce){.tt .cab,.tt .cab :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.bh,.tt .corpo>.sl,.tt .corp"
+			    & "o>.vs,.tt .corpo>.tx,.tt .corpo>.des,.tt .corpo>.nt,.tt .corpo>.vz,.tt .ser .ms,.tt .corpo>.bh :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.sl :is(.mk,.chi,.chip,.chp,circle,."
+			    & "pend),.tt .corpo>.vs :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.tx :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.des :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.nt"
+			    & " :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .corpo>.vz :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ser .ms :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(1),.tt .ls>:nth-ch"
+			    & "ild(1) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(2),.tt .ls>:nth-child(2) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(3),.tt .ls>:nth-child(3) :is(.mk,."
+			    & "chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(4),.tt .ls>:nth-child(4) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(5),.tt .ls>:nth-child(5) :is(.mk,.chi,.chip,.chp,c"
+			    & "ircle,.pend),.tt .ls>:nth-child(6),.tt .ls>:nth-child(6) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(7),.tt .ls>:nth-child(7) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt"
+			    & " .ls>:nth-child(8),.tt .ls>:nth-child(8) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(9),.tt .ls>:nth-child(9) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child("
+			    & "10),.tt .ls>:nth-child(10) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(11),.tt .ls>:nth-child(11) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(12),.tt .ls>"
+			    & ":nth-child(12) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(13),.tt .ls>:nth-child(13) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(14),.tt .ls>:nth-child(1"
+			    & "4) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .rp,.tt .rp :is(.mk,.chi,.chip,.chp,circle,.pend){animation:none!important}}/*fim-contador*/ "
 		displayFolder: T2 Análise crítica\Tooltips
 		lineageTag: ddb4c88e-7a24-5b9d-b090-2ae0ccb871dd
 
@@ -26030,6 +26371,89 @@ table _Medidas
 		displayFolder: T2 Análise crítica\Tooltips\Contas
 		lineageTag: a85c84e7-2d97-505b-a668-bf658ffd795a
 
+	/// As faixas do item previsão de caixa como estão no dicionário da nota ('rótulo → pontos', separadas por ' · ').
+	measure 'T2 · Desembolso · faixas da previsão de caixa' =
+			CALCULATE ( [Nota · item · faixas], dItemNota[Item] = "caixa" )
+		displayFolder: T2 Análise crítica\Tooltips\Contas
+		lineageTag: 250b70c0-05d7-5231-9fca-f33f45b2a79e
+
+	/// Desses meses, em quantos a justificativa era exigida (desvio acima de ±10%), na obra em foco (pé do tooltip dos meses anteriores do Desembolso).
+	measure 'T2 · Desembolso · justificativas exigidas antes da referência · foco' =
+			VAR _ref = [Mês de referência]
+			VAR _meses =
+			    FILTER (
+			        ADDCOLUMNS (
+			            ALL ( dMes[Mes] ),
+			            "@ate", [Série · mês até a referência],
+			            "@pv", [Desembolso · previsto no mês · foco no mês],
+			            "@ds", [Desembolso · realizado no mês · foco no mês],
+			            "@e", [Justificativa · exigida · foco no mês],
+			            "@b", [Justificativa · em branco · foco no mês]
+			        ),
+			        [@ate] = 1 && dMes[Mes] < _ref && ( NOT ISBLANK ( [@pv] ) || NOT ISBLANK ( [@ds] ) )
+			    )
+			RETURN
+			    COUNTROWS ( FILTER ( _meses, [@e] = 1 ) ) + 0
+		formatString: 0
+		displayFolder: T2 Análise crítica\Tooltips\Contas
+		lineageTag: 5cfc61ee-eb2d-5db7-96a4-f9aa4cc4bbb4
+
+	/// Desses meses com justificativa exigida, em quantos ela foi preenchida, na obra em foco (pé do tooltip dos meses anteriores do Desembolso).
+	measure 'T2 · Desembolso · justificativas preenchidas antes da referência · foco' =
+			VAR _ref = [Mês de referência]
+			VAR _meses =
+			    FILTER (
+			        ADDCOLUMNS (
+			            ALL ( dMes[Mes] ),
+			            "@ate", [Série · mês até a referência],
+			            "@pv", [Desembolso · previsto no mês · foco no mês],
+			            "@ds", [Desembolso · realizado no mês · foco no mês],
+			            "@e", [Justificativa · exigida · foco no mês],
+			            "@b", [Justificativa · em branco · foco no mês]
+			        ),
+			        [@ate] = 1 && dMes[Mes] < _ref && ( NOT ISBLANK ( [@pv] ) || NOT ISBLANK ( [@ds] ) )
+			    )
+			RETURN
+			    COUNTROWS ( FILTER ( _meses, [@e] = 1 && [@b] <> 1 ) ) + 0
+		formatString: 0
+		displayFolder: T2 Análise crítica\Tooltips\Contas
+		lineageTag: 4c2ae32e-5663-5e8d-af86-2d762342995d
+
+	/// Meses da janela antes do de referência com desembolso previsto ou feito, na obra em foco (pé do tooltip dos meses anteriores do Desembolso).
+	measure 'T2 · Desembolso · meses antes da referência · foco' =
+			VAR _ref = [Mês de referência]
+			VAR _meses =
+			    FILTER (
+			        ADDCOLUMNS (
+			            ALL ( dMes[Mes] ),
+			            "@ate", [Série · mês até a referência],
+			            "@pv", [Desembolso · previsto no mês · foco no mês],
+			            "@ds", [Desembolso · realizado no mês · foco no mês],
+			            "@e", [Justificativa · exigida · foco no mês],
+			            "@b", [Justificativa · em branco · foco no mês]
+			        ),
+			        [@ate] = 1 && dMes[Mes] < _ref && ( NOT ISBLANK ( [@pv] ) || NOT ISBLANK ( [@ds] ) )
+			    )
+			RETURN
+			    COUNTROWS ( _meses ) + 0
+		formatString: 0
+		displayFolder: T2 Análise crítica\Tooltips\Contas
+		lineageTag: 66065b2e-4a1a-5778-b13b-8d213b94394b
+
+	/// [Nota · item · pontos · foco no mês] do item previsão de caixa na obra em foco no mês do eixo (marca de cada mês no tooltip dos meses anteriores do Desembolso).
+	measure 'T2 · Desembolso · pontos caixa · foco no mês' =
+			CALCULATE ( [Nota · item · pontos · foco no mês], dItemNota[Item] = "caixa" )
+		formatString: 0.00
+		displayFolder: T2 Análise crítica\Tooltips\Contas
+		lineageTag: 453995ee-40ab-595e-a5a7-e4740eed3ab7
+
+	/// [Nota · item · possíveis · foco no mês] do item previsão de caixa na obra em foco no mês do eixo (marca de cada mês no tooltip dos meses anteriores do Desembolso).
+	measure 'T2 · Desembolso · possíveis caixa · foco no mês' =
+			CALCULATE ( [Nota · item · possíveis · foco no mês], dItemNota[Item] = "caixa" )
+		formatString: 0.00
+		displayFolder: T2 Análise crítica\Tooltips\Contas
+		lineageTag: 290d042c-adb8-5e80-81e2-3c7a3d02ec42
+
 	/// 1 quando o item da nota da linha (dItemNota) tinha, na obra em foco e no mês anterior ao de referência, valor na base fora da faixa válida; 0 nos demais casos (rodapé do tooltip do item).
 	measure 'T2 · Item da nota · fora da faixa no mês anterior · foco' =
 			VAR _mes = EDATE ( [Mês de referência], -1 )
@@ -26057,6 +26481,79 @@ table _Medidas
 		formatString: 0.00
 		displayFolder: T2 Análise crítica\Tooltips\Contas
 		lineageTag: 82940661-2f24-5c2b-b89f-96b61423dfa5
+
+	/// Os pontos do item da linha (dItemNota) na obra em foco no mês anterior ao do eixo (tooltip do mês de A nota, mês a mês); vazio sem nota no mês anterior.
+	measure 'T2 · Nota do mês · item · pontos no mês anterior · foco no mês' =
+			VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+			RETURN
+			    CALCULATE ( [Nota · item · pontos · foco no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )
+		formatString: 0.00
+		displayFolder: T2 Análise crítica\Tooltips\Contas
+		lineageTag: cfce4c7c-438e-566c-9b91-39172999aaf1
+
+	/// Pontos do item da linha no mês do eixo menos os do mês anterior, na obra em foco; vazio quando um dos dois meses não tem pontos (tooltip do mês de A nota, mês a mês).
+	measure 'T2 · Nota do mês · item · variação de pontos · foco no mês' =
+			VAR _p = [Nota · item · pontos · foco no mês]
+			VAR _a = [T2 · Nota do mês · item · pontos no mês anterior · foco no mês]
+			RETURN
+			    IF ( ISBLANK ( _p ) || ISBLANK ( _a ), BLANK (), _p - _a )
+		formatString: +0.0#;-0.0#;0
+		displayFolder: T2 Análise crítica\Tooltips\Contas
+		lineageTag: 8db9ad01-e348-5ff1-bd85-b423632ca99c
+
+	/// X do item da linha (dItemNota) na obra em foco no mês do eixo: IDC, meses de atraso, fração, taxa ou checagens (tooltip do mês de A nota, mês a mês).
+	measure 'T2 · Nota do mês · item · X · foco no mês' =
+			VAR _obra = [Nota · obra em foco]
+			RETURN
+			    CALCULATE ( [Nota · item · X], dObra[Obra] = _obra )
+		formatString: 0.00
+		displayFolder: T2 Análise crítica\Tooltips\Contas
+		lineageTag: 10710b79-102a-5126-aca1-a7070dc418be
+
+	/// A nota da obra em foco no mês anterior ao do eixo (tooltip do mês de A nota, mês a mês); vazio sem nota no mês anterior.
+	measure 'T2 · Nota do mês · nota no mês anterior · foco no mês' =
+			VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+			RETURN
+			    CALCULATE ( [Nota · nota final · foco no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )
+		formatString: 0.00
+		displayFolder: T2 Análise crítica\Tooltips\Contas
+		lineageTag: 998a67bb-fb48-5c9a-816d-2ae8c3406e58
+
+	/// Os pontos obtidos pela obra em foco no mês anterior ao do eixo (tooltip do mês de A nota, mês a mês); vazio sem nota no mês anterior.
+	measure 'T2 · Nota do mês · obtidos no mês anterior · foco no mês' =
+			VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+			RETURN
+			    CALCULATE ( [Nota · pontos obtidos · foco no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )
+		formatString: 0.00
+		displayFolder: T2 Análise crítica\Tooltips\Contas
+		lineageTag: 03ff468f-2873-511d-bfe9-bea982756317
+
+	/// 1 quando a nota da obra em foco estava pendente no mês anterior ao do eixo (tooltip do mês de A nota, mês a mês); vazio sem nota no mês anterior.
+	measure 'T2 · Nota do mês · pendente no mês anterior · foco no mês' =
+			VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+			RETURN
+			    CALCULATE ( [Nota · pendente · foco no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )
+		formatString: 0
+		displayFolder: T2 Análise crítica\Tooltips\Contas
+		lineageTag: fbb4b0c6-ad98-50b4-8bb0-88174d84e17c
+
+	/// Os pontos possíveis da obra em foco no mês anterior ao do eixo (tooltip do mês de A nota, mês a mês); vazio sem nota no mês anterior.
+	measure 'T2 · Nota do mês · possíveis no mês anterior · foco no mês' =
+			VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+			RETURN
+			    CALCULATE ( [Nota · pontos possíveis · foco no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )
+		formatString: 0.00
+		displayFolder: T2 Análise crítica\Tooltips\Contas
+		lineageTag: a78fd39d-dc0e-5c15-b2a5-b3d55a103634
+
+	/// O status (0 estável · 1 atenção · 2 crítico) da obra em foco no mês anterior ao do eixo (tooltip do mês de A nota, mês a mês); vazio sem nota no mês anterior.
+	measure 'T2 · Nota do mês · status no mês anterior · foco no mês' =
+			VAR _mes = EDATE ( MAX ( dMes[Mes] ), -1 )
+			RETURN
+			    CALCULATE ( [Nota · status · foco no mês], REMOVEFILTERS ( dMes ), dMes[Mes] = _mes )
+		formatString: 0
+		displayFolder: T2 Análise crítica\Tooltips\Contas
+		lineageTag: 27f9422b-ce8b-5494-a7c8-95c17a136648
 
 	/// Passo 1 de 8 do tour da Análise crítica (Esta é a Análise crítica): gestor (pose P1) no canto esquerda, balão de 480 px, ligação ao anel. Só desenha; lê a medida da pose.
 	measure 'T2 · Tour · Passo 01 · HTML' =
@@ -27589,7 +28086,7 @@ table _Medidas
 		displayFolder: T3 Avanço físico\Curva S
 		lineageTag: 56b5546a-9186-5496-aacd-4c208b7f22d8
 
-	/// Uma coluna invisível por mês da série (granularidade dMes[Mes]) sobre a Curva S: é o alvo estável do mouse que abre o tooltip do mês (L012) e mostra a linha-guia no mês. x pela posição na janela; a coluna vai da metade do caminho desde o mês anterior com aba (ou da borda, no primeiro) até a metade do caminho para o seguinte (ou a borda, na referência), então os meses vazios da janela ficam com o mês seguinte; vazio fora da série.
+	/// Uma coluna invisível por mês da série (granularidade dMes[Mes]) sobre a Curva S: é o alvo estável do mouse que abre o tooltip do mês (L012) e mostra a linha-guia no mês; os outros meses ganham o véu branco do destaque comum (hv-camada, Comum · CSS base), que apaga a curva de baixo fora do mês sob o mouse. x pela posição na janela; a coluna vai da metade do caminho desde o mês anterior com aba (ou da borda, no primeiro) até a metade do caminho para o seguinte (ou a borda, na referência), então os meses vazios da janela ficam com o mês seguinte; vazio fora da série.
 	measure 'T3 · Curva S · HTML mês' =
 			-- 1 · Leituras
 			VAR _na = [T3 · Série · mês na série · foco no mês]
@@ -27605,7 +28102,7 @@ table _Medidas
 			RETURN
 			    IF (
 			        _na = 1,
-			        "<div class='u hm' style='width:" & ( _b1 - _b0 ) & "px'><i style='left:" & ( _x - _b0 ) & "px'></i></div>"
+			        "<div class='u hm hv-camada' style='width:" & ( _b1 - _b0 ) & "px'><i style='left:" & ( _x - _b0 ) & "px'></i></div>"
 			    )
 		displayFolder: T3 Avanço físico\Curva S
 		lineageTag: 00b005ca-8a92-5210-a0a0-42cb870d96e1
@@ -38756,6 +39253,18 @@ table _Medidas
 		displayFolder: T5 Canteiro\Qualidade mês a mês
 		lineageTag: 818c5c8a-85cb-56ae-9c10-df327845241e
 
+	/// CSS da camada dos meses da Qualidade (uma entrada por mês: alvo do tooltip).
+	measure 'T5 · Qualidade · CSS mês' =
+			-- 4 · Marcação
+			[Comum · CSS base]
+			    & "#htmlContent{display:flex!important;align-items:stretch;height:100vh;margin:0!important;padding:0!important}.htmlViewerEntry{display:block!important;flex:none;margin:0!important;pa"
+			    & "dding:0!important;height:100vh}.qm{position:relative;height:100vh;cursor:default}.qm .vu{position:absolute;left:0;right:0;top:0;height:274px}.qm .gd{position:absolute;top:14px;heig"
+			    & "ht:248px;width:1px;margin-left:-.5px;background:rgba(11,11,12,.35);opacity:0;transition:opacity .15s}.qm .rg{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;box-sizin"
+			    & "g:border-box;border-radius:50%;border:2px solid #0B0B0C;opacity:0;scale:.6;transition:opacity .15s,scale .15s}.qm:hover .gd,.qm.hover .gd,.htmlViewerEntry.hover .qm .gd{opacity:1}."
+			    & "qm:hover .rg,.qm.hover .rg,.htmlViewerEntry.hover .qm .rg{opacity:1;scale:1}@media (prefers-reduced-motion:reduce){.qm .gd,.qm .rg{transition:none}}"
+		displayFolder: T5 Canteiro\Qualidade mês a mês
+		lineageTag: 64fadedc-0eff-53a6-95a9-2d1579fccb4a
+
 	/// Aprovação na 1.ª inspeção mês a mês na janela (1 a 12 meses), sem granularidade: uma linha fina por obra do recorte (cinza), a obra com a menor aprovação no mês de referência em grafite e a carteira (soma ÷ soma) em preto com os pontos; a meta (o ponto cheio do item 1.ª inspeção) tracejada. Eixo de 100% até a base da escala (T5 · Qualidade · base da escala), grade de 5 em 5 pontos; rótulos finais da carteira e da obra em destaque (afastados quando se encostam). As linhas se desenham da esquerda para a direita.
 	measure 'T5 · Qualidade · HTML gráfico' =
 			-- 1 · Leituras
@@ -38921,6 +39430,32 @@ table _Medidas
 		displayFolder: T5 Canteiro\Qualidade mês a mês
 		lineageTag: 41ae82d4-84db-5699-ae25-af63b54719b8
 
+	/// Uma coluna invisível por mês da janela (granularidade dMes[Mes]) sobre o gráfico de Qualidade, mês a mês: o alvo do mouse que abre o tooltip do mês (ttT5Qua). Na regra comum de hover, os outros meses ganham véu branco; no mês sob o mouse, a linha-guia e o anel no ponto da carteira. A coluna vai do meio-caminho desde o mês anterior (ou x 52, no primeiro) ao meio-caminho para o seguinte (ou x 912, no de referência); vazio fora da janela.
+	measure 'T5 · Qualidade · HTML mês' =
+			-- 1 · Leituras
+			VAR _ate = [Série · mês até a referência]
+			VAR _pj = [Série · posição na janela]
+			VAR _n = [Série · meses até a referência]
+			VAR _v = [Canteiro · aprovação na 1.ª inspeção]
+			VAR _base = [T5 · Qualidade · base da escala]
+			-- 3 · Geometria
+			VAR _passoX = IF ( _n > 1, DIVIDE ( 836, _n - 1 ), 0 ) /* geometria */
+			VAR _escY = DIVIDE ( 248, 1 - _base ) /* geometria */
+			VAR _x = ROUND ( IF ( _n > 1, 64 + ( _pj - 1 ) * _passoX, 900 ), 0 ) -- geometria
+			VAR _b0 = IF ( _pj = 1, 52, ROUND ( 64 + ( _pj - 1.5 ) * _passoX, 0 ) ) -- geometria
+			VAR _b1 = IF ( _pj = _n, 912, ROUND ( 64 + ( _pj - 0.5 ) * _passoX, 0 ) ) -- geometria
+			VAR _y = IF ( NOT ISBLANK ( _v ), ROUND ( 262 - ( _v - _base ) * _escY, 0 ) ) -- geometria
+			-- 4 · Marcação
+			RETURN
+			    IF (
+			        _ate = 1,
+			        "<div class='u qm' style='width:" & ( _b1 - _b0 ) & "px'><i class='hv-camada vu'></i><i class='gd' style='left:" & ( _x - _b0 ) & "px'></i>"
+			            & IF ( NOT ISBLANK ( _y ), "<b class='rg' style='left:" & ( _x - _b0 ) & "px;top:" & _y & "px'></b>" )
+			            & "</div>"
+			    )
+		displayFolder: T5 Canteiro\Qualidade mês a mês
+		lineageTag: 865c1866-3795-5d7d-9f5a-b800e63a3cbb
+
 	/// Subtítulo de Qualidade, mês a mês: o que as linhas mostram e a meta (o ponto cheio do item 1.ª inspeção da nota).
 	measure 'T5 · Qualidade · HTML subtítulo' =
 			-- 1 · Leituras
@@ -38996,6 +39531,22 @@ table _Medidas
 		displayFolder: T5 Canteiro\Qualidade mês a mês
 		lineageTag: 1df5c92f-b4a4-5336-b95a-34506bb1c64f
 
+	/// Obras do recorte com aprovação na 1.ª inspeção no mês do contexto (o mês sob o mouse no tooltip) abaixo do ponto cheio da nota ([Nota · limite inspeção · ponto cheio]); sem dado não conta. Ex. set/26: 3 (JANGADA, POTENGI e REDINHA).
+	measure 'T5 · Inspeção · obras abaixo da meta' =
+			VAR _lim = [Nota · limite inspeção · ponto cheio]
+			RETURN
+			    COUNTROWS (
+			        FILTER (
+			            VALUES ( dObra[Obra] ),
+			            VAR _x = [Canteiro · aprovação na 1.ª inspeção]
+			            RETURN
+			                NOT ISBLANK ( _x ) && _x < _lim
+			        )
+			    ) + 0
+		formatString: 0
+		displayFolder: T5 Canteiro\Qualidade mês a mês\Contas
+		lineageTag: f34de6f7-785d-5c5d-9a42-cde5987f00e0
+
 	/// Piso do eixo da aprovação na 1.ª inspeção (o teto é 100%): 85%, ou menos quando alguma obra do recorte fica abaixo na janela (arredondado para baixo de 5 em 5 pontos, com 1 de folga). Ex. set/26: 85% (o menor é REDINHA em ago/26, 87,5%).
 	measure 'T5 · Qualidade · base da escala' =
 			VAR _ini = [Série · primeiro mês]
@@ -39033,11 +39584,11 @@ table _Medidas
 			-- 4 · Marcação
 			[Comum · CSS base]
 			    & ".htmlViewerEntry{display:block!important;margin:0!important;padding:0!important}.sg{position:relative;height:41px;border-bottom:1px solid #E1E1E1;background:#FFFFFF;transition:back"
-			    & "ground .15s}.sg:hover,.htmlViewerEntry.hover .sg{background:#F7F4EE}.sg .nm{position:absolute;left:14px;top:10px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-s"
-			    & "ize:15px;line-height:20px;white-space:nowrap}.sg .tr{position:absolute;left:116px;top:14px;width:140px;height:12px;background:#EFEFEF}.sg .br{position:absolute;left:0;top:0;height:"
-			    & "12px}.sg .br.s1{background:#C9821F}.sg .br.s2{background:#C43737}.sg .st{position:absolute;top:-5px;width:2px;height:22px;background:#0B0B0C}.sg .v{position:absolute;left:264px;top"
-			    & ":10px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:15px;line-height:20px;white-space:nowrap}.sg .nr{position:absolute;right:14px;top:10px;display:flex;ali"
-			    & "gn-items:center;white-space:nowrap;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:15px;line-height:20px}.sg .nr .mk{margin-right:6px}"
+			    & "ground .15s}.sg:hover,.htmlViewerEntry.hover .sg{background:rgba(233,224,207,.45)}.sg .nm{position:absolute;left:14px;top:10px;font-family:'Barlow U','Segoe UI',sans-serif;font-wei"
+			    & "ght:600;font-size:15px;line-height:20px;white-space:nowrap}.sg .tr{position:absolute;left:116px;top:14px;width:140px;height:12px;background:#EFEFEF}.sg .br{position:absolute;left:0"
+			    & ";top:0;height:12px}.sg .br.s1{background:#C9821F}.sg .br.s2{background:#C43737}.sg .st{position:absolute;top:-5px;width:2px;height:22px;background:#0B0B0C}.sg .v{position:absolute;"
+			    & "left:264px;top:10px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:15px;line-height:20px;white-space:nowrap}.sg .nr{position:absolute;right:14px;top:10px;di"
+			    & "splay:flex;align-items:center;white-space:nowrap;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:15px;line-height:20px}.sg .nr .mk{margin-right:6px}"
 		displayFolder: T5 Canteiro\Segurança por obra
 		lineageTag: 28429d3b-fa56-5fd4-974a-5c779aaedbe1
 
@@ -39236,11 +39787,11 @@ table _Medidas
 			-- 4 · Marcação
 			[Comum · CSS base]
 			    & ".htmlViewerEntry{display:block!important;margin:0!important;padding:0!important}.sp{position:relative;height:35px;border-bottom:1px solid #E1E1E1;background:#FFFFFF;transition:back"
-			    & "ground .15s}.sp:hover,.htmlViewerEntry.hover .sp{background:#F7F4EE}.sp .nm{position:absolute;left:14px;top:7px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-si"
-			    & "ze:15px;line-height:20px;white-space:nowrap}.sp .tr{position:absolute;left:116px;top:17px;width:134px;height:2px;background:#E1E1E1}.sp .mt{position:absolute;top:-8px;width:2px;hei"
-			    & "ght:18px;background:#0B0B0C}.sp .pt{position:absolute;top:-5px;width:12px;height:12px;border-radius:50%;box-sizing:border-box}.sp .pt.s0{background:#A9CDB9;border:1px solid #6E9F85"
-			    & "}.sp .pt.s1{background:#C9821F}.sp .pt.s2{background:#C43737}.sp .pd{position:absolute;left:258px;top:8px;font-size:13px;line-height:18px;color:#3B3B3F;white-space:nowrap}.sp .v{po"
-			    & "sition:absolute;right:14px;top:7px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:15px;line-height:20px;white-space:nowrap}"
+			    & "ground .15s}.sp:hover,.htmlViewerEntry.hover .sp{background:rgba(233,224,207,.45)}.sp .nm{position:absolute;left:14px;top:7px;font-family:'Barlow U','Segoe UI',sans-serif;font-weig"
+			    & "ht:600;font-size:15px;line-height:20px;white-space:nowrap}.sp .tr{position:absolute;left:116px;top:17px;width:134px;height:2px;background:#E1E1E1}.sp .mt{position:absolute;top:-8px"
+			    & ";width:2px;height:18px;background:#0B0B0C}.sp .pt{position:absolute;top:-5px;width:12px;height:12px;border-radius:50%;box-sizing:border-box}.sp .pt.s0{background:#A9CDB9;border:1px"
+			    & " solid #6E9F85}.sp .pt.s1{background:#C9821F}.sp .pt.s2{background:#C43737}.sp .pd{position:absolute;left:258px;top:8px;font-size:13px;line-height:18px;color:#3B3B3F;white-space:no"
+			    & "wrap}.sp .v{position:absolute;right:14px;top:7px;font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:15px;line-height:20px;white-space:nowrap}"
 		displayFolder: T5 Canteiro\Suprimentos por obra
 		lineageTag: 162f74e1-3785-5838-80f3-4fbeef5d24d9
 
@@ -39428,6 +39979,35 @@ table _Medidas
 		displayFolder: T5 Canteiro\Suprimentos por obra\Contas
 		lineageTag: 1ff88876-6d00-55b5-9dda-f1ee5b59170a
 
+	/// Pedidos entregues no prazo e completos da obra (ou do recorte) somados nos meses da janela, do primeiro mês da série ao de referência. Ex. set/26, POTENGI: a soma dos 12 meses de fBaseObra.
+	measure 'T5 · Entregas · pedidos no prazo na janela' =
+			VAR _ini = [Série · primeiro mês]
+			VAR _ref = [Mês de referência]
+			RETURN
+			    CALCULATE ( [Canteiro · pedidos no prazo], REMOVEFILTERS ( dMes ), dMes[Mes] >= _ini && dMes[Mes] <= _ref )
+		formatString: 0
+		displayFolder: T5 Canteiro\Suprimentos por obra\Contas
+		lineageTag: 2cdea7f2-5d30-5f5d-864e-01c9ec08eb45
+
+	/// Pedidos com entrega prevista da obra (ou do recorte) somados nos meses da janela, do primeiro mês da série ao de referência.
+	measure 'T5 · Entregas · pedidos previstos na janela' =
+			VAR _ini = [Série · primeiro mês]
+			VAR _ref = [Mês de referência]
+			RETURN
+			    CALCULATE ( [Canteiro · pedidos previstos], REMOVEFILTERS ( dMes ), dMes[Mes] >= _ini && dMes[Mes] <= _ref )
+		formatString: 0
+		displayFolder: T5 Canteiro\Suprimentos por obra\Contas
+		lineageTag: dc1acc1a-e3c4-5296-b99f-701dc78c9cd8
+
+	/// Entregas no prazo e completas na janela: pedidos no prazo ÷ pedidos previstos, somados do primeiro mês da série ao de referência; vazio sem pedido previsto.
+	measure 'T5 · Entregas · taxa na janela' =
+			VAR _d = [T5 · Entregas · pedidos previstos na janela]
+			RETURN
+			    IF ( _d > 0, DIVIDE ( [T5 · Entregas · pedidos no prazo na janela], _d ) )
+		formatString: 0.00%
+		displayFolder: T5 Canteiro\Suprimentos por obra\Contas
+		lineageTag: c3feb17c-187a-50a2-835f-c290c0e9ada2
+
 	/// Tooltip de página do mês (coluna de Chuva e ritmo): uma obra por linha, da mais chuvosa para a menos, com os dias impraticáveis por chuva (barra creme, escala pelo maior do mês, no mínimo 10) e o executado no mês da obra; no pé, a carteira (dias por obra, em média, e executado ponderado pelo orçamento).
 	measure 'T5 · Tooltip mês · HTML' =
 			-- 1 · Leituras
@@ -39582,7 +40162,373 @@ table _Medidas
 		displayFolder: T5 Canteiro\Tooltips
 		lineageTag: b4e7cec3-830f-5b32-916b-2279c0cb410a
 
-	/// CSS do tooltip de página da T5: o dos tooltips da T4 (tooltips_t4.CSS_T4) mais as linhas de chuva e executado por obra.
+	/// Tooltip de página do mês da Qualidade, mês a mês (camada T5_Qua_Meses): cada obra com base no mês, da menor aprovação na 1.ª inspeção para a maior, com a marca pelos pontos do item, os serviços aprovados de primeira de verificados e a aprovação (vermelha abaixo da meta); no pé, a carteira e quantas obras ficaram abaixo da meta (o ponto cheio do item). O gráfico só tem as linhas: os números de cada obra no mês aparecem só aqui.
+	measure 'T5 · Tooltip qualidade · HTML' =
+			-- 1 · Leituras
+			VAR _mesC = UPPER ( [Mês · rótulo curto] )
+			VAR _mesL = [Mês · longo]
+			VAR _cart = [Canteiro · aprovação na 1.ª inspeção]
+			VAR _apC = [Canteiro · aprovados na 1.ª inspeção]
+			VAR _vfC = [Canteiro · serviços verificados]
+			VAR _lim = [Nota · limite inspeção · ponto cheio]
+			VAR _abx = [T5 · Inspeção · obras abaixo da meta]
+			VAR _obras =
+			    ADDCOLUMNS (
+			        VALUES ( dObra[Obra] ),
+			        "@v", [Canteiro · aprovação na 1.ª inspeção],
+			        "@ap", [Canteiro · aprovados na 1.ª inspeção],
+			        "@vf", [Canteiro · serviços verificados],
+			        "@pt", [Nota · pontos inspeção],
+			        "@ps", [Nota · possíveis · inspeção]
+			    )
+			VAR _com = FILTER ( _obras, NOT ISBLANK ( [@v] ) ) /* lista */
+			VAR _nLs = COUNTROWS ( _com ) /* lista */
+			-- 2 · Textos
+			VAR _tcN = FORMAT ( ABS ( _cart ) * 100, "0.0", "pt-BR" )
+			VAR _tcS = IF ( ROUND ( _cart * 100, 1 ) < 0, "−", "" )
+			VAR _tcTxt = IF ( ISBLANK ( _cart ), "—", _tcS & _tcN & "%" )
+			VAR _tlN = FORMAT ( ABS ( _lim ) * 100, "0", "pt-BR" )
+			VAR _tlS = IF ( ROUND ( _lim * 100, 0 ) < 0, "−", "" )
+			VAR _tlTxt = IF ( ISBLANK ( _lim ), "—", _tlS & _tlN & "%" )
+			VAR _txtAbx = SWITCH ( _abx, 0, "nenhuma obra abaixo", 1, "⁅" & 1 & "⁆" & " obra abaixo", "⁅" & _abx & "⁆" & " obras abaixo" )
+			-- 4 · Marcação
+			VAR _htmlLinhas =
+			    CONCATENATEX (
+			        _com,
+			        VAR _v = [@v]
+			        VAR _cls = IF ( ISBLANK ( [@pt] ), "", IF ( [@pt] >= [@ps], "0", IF ( [@pt] = 0, "2", "1" ) ) )
+			        RETURN
+			            "<div class='q5 qa'>" & IF ( _cls = "", "<i></i>", "<i class='mk mk" & _cls & "'></i>" ) & "<span class='n'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( dObra[Obra], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "</span>"
+			                & "<span class='d'>" & "⁅" & FORMAT ( [@ap], "#,0", "pt-BR" ) & "⁆" & " de " & "⁅" & FORMAT ( [@vf], "#,0", "pt-BR" ) & "⁆" & "</span>"
+			                & "<span class='v" & IF ( _v < _lim, " ng", "" ) & "'>" & "⁅" & FORMAT ( _v * 100, "0.0", "pt-BR" ) & "⁆" & "%</span></div>",
+			        "",
+			        [@v], ASC,
+			        dObra[Obra], ASC
+			    )
+			VAR _saidaHtml =
+			    IF (
+			        NOT ISEMPTY ( _com ),
+			        "<div class='u tt'><div class='cab'><p class='vs'>" & "QUALIDADE, MÊS A MÊS · " & _mesC & "</p>"
+			            & "<div class='lin1'><div class='tit'>" & "<b>" & _mesL & "</b>" & "</div></div></div>"
+			            & "<div class='corpo'><div class='bh'><span class='vs'>APROVAÇÃO NA 1.ª INSPEÇÃO, POR OBRA</span>"
+			            & "<span class='vs'>APROVADOS DE VERIFICADOS</span></div><div class='lsq" & " ls " & SWITCH ( TRUE (), _nLs <= 3, "e1", _nLs <= 6, "e2", _nLs <= 9, "e3", _nLs <= 12, "e4", "e5" ) & "' style='--n:" & _nLs & "'>" & _htmlLinhas & "</div></div>"
+			            & "<div class='pe'><p class='rod'><b>Carteira:</b> " & "⁅" & _tcTxt & "⁆" & " (" & "⁅" & FORMAT ( _apC, "#,0", "pt-BR" ) & "⁆" & " de " & "⁅" & FORMAT ( _vfC, "#,0", "pt-BR" ) & "⁆" & " serviços aprovados de primeira).</p>"
+			            & "<p class='rod'>Meta " & "⁅" & _tlTxt & "⁆" & ", o ponto cheio do item · " & _txtAbx & ".</p></div>"
+			        & "</div>" & [Comum · JS contador tooltip]
+			    )
+			/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+			VAR _odQ =
+			    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+			VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+			/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+			VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+			VAR _mcHtml =
+			    IF (
+			        _mcK = 0,
+			        _saidaHtml,
+			        CONCATENATEX (
+			            GENERATESERIES ( 1, _mcK ),
+			            VAR _mcj = [Value]
+			            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+			            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+			            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+			            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+			            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+			            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+			            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+			            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+			            VAR _mcc = LEN ( _mcsg )
+			            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+			            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+			            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+			            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+			            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+			            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+			            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+			            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+			            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+			            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+			            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+			            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+			            RETURN
+			                _mcantes
+			                    & IF (
+			                        _mcOk,
+			                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+			                            & CONCATENATEX (
+			                                _odQ,
+			                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+			                                UNICHAR ( 10 ),
+			                                [@odk], ASC
+			                            )
+			                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+			                        _mcpre & _mcnum & _mcsuf
+			                    )
+			                    & _mcdepois,
+			            "",
+			            [Value], ASC
+			        )
+			    )
+			RETURN
+			    _mcHtml
+		displayFolder: T5 Canteiro\Tooltips
+		lineageTag: 9d7d8e5a-fb77-564c-956d-d0a0b71af738
+
+	/// Tooltip de página da obra de Segurança por obra (linha sob o mouse): a obra mês a mês na janela, com os acidentes com afastamento do mês e a conformidade NR-18 (conformes de aplicáveis, a marca pelos pontos do item NR-18 no mês); no pé, os acidentes, as HHT e a taxa de gravidade de 12 meses e os pontos dos itens acidentes e NR-18 na nota do mês de referência. A linha já mostra a taxa de frequência de 12 meses e o NR-18 do mês: não se repetem.
+	measure 'T5 · Tooltip segurança · HTML' =
+			-- 1 · Leituras
+			VAR _obra = [Obra · nome]
+			VAR _selo = [Obra · selo]
+			VAR _ini = [Série · primeiro mês]
+			VAR _ref = [Mês de referência]
+			VAR _ac12 = [Canteiro · acidentes 12 meses · ref]
+			VAR _hht = [Canteiro · HHT 12 meses · ref]
+			VAR _tg = [Canteiro · taxa de gravidade (12 meses) · ref]
+			VAR _pta = [Nota · pontos acidentes · ref]
+			VAR _psa = [Nota · possíveis · acidentes · ref]
+			VAR _ptn = [Nota · pontos NR-18 · ref]
+			VAR _psn = [Nota · possíveis · NR-18 · ref]
+			VAR _meses =
+			    ADDCOLUMNS (
+			        VALUES ( dMes[Mes] ),
+			        "@ate", [Série · mês até a referência],
+			        "@rot", [Mês · rótulo curto],
+			        "@ac", [Canteiro · acidentes],
+			        "@nr", [Canteiro · conformidade NR-18],
+			        "@cf", [Canteiro · NR-18 conformes],
+			        "@apl", [Canteiro · NR-18 aplicáveis],
+			        "@pt", [Nota · pontos NR-18],
+			        "@ps", [Nota · possíveis · NR-18]
+			    )
+			VAR _com = FILTER ( _meses, [@ate] = 1 && ( NOT ISBLANK ( [@ac] ) || NOT ISBLANK ( [@nr] ) ) ) /* lista */
+			VAR _nLs = COUNTROWS ( _com ) /* lista */
+			-- 2 · Textos
+			VAR _txtPer = UPPER ( FORMAT ( _ini, "mmm/yy", "pt-BR" ) ) & IF ( _ini = _ref, "", "–" & UPPER ( FORMAT ( _ref, "mmm/yy", "pt-BR" ) ) )
+			VAR _txtRef = FORMAT ( _ref, "mmm/yy", "pt-BR" )
+			VAR _txt12 =
+			    IF (
+			        ISBLANK ( _hht ),
+			        "Sem HHT na base nos 12 meses.",
+			        IF ( _ac12 > 0, "⁅" & FORMAT ( _ac12, "0", "pt-BR" ) & "⁆" & IF ( _ac12 = 1, " acidente", " acidentes" ) & " com afastamento em ", "Nenhum acidente com afastamento em " )
+			            & "⁅" & FORMAT ( _hht, "#,0", "pt-BR" ) & "⁆" & " HHT"
+			            & IF ( _ac12 > 0 && NOT ISBLANK ( _tg ), "; taxa de gravidade " & "⁅" & FORMAT ( _tg, "0.0", "pt-BR" ) & "⁆", "" ) & "."
+			    )
+			VAR _txtPts =
+			    "Na nota de " & _txtRef & ": acidentes " & IF ( ISBLANK ( _pta ), "sem dado", "⁅" & FORMAT ( _pta, "0.##", "pt-BR" ) & "⁆" & " de " & "⁅" & FORMAT ( _psa, "0.##", "pt-BR" ) & "⁆" )
+			        & " · NR-18 " & IF ( ISBLANK ( _ptn ), "sem dado", "⁅" & FORMAT ( _ptn, "0.##", "pt-BR" ) & "⁆" & " de " & "⁅" & FORMAT ( _psn, "0.##", "pt-BR" ) & "⁆" ) & "."
+			-- 4 · Marcação
+			VAR _htmlLinhas =
+			    CONCATENATEX (
+			        _com,
+			        VAR _ac = [@ac]
+			        VAR _nr = [@nr]
+			        VAR _cls = IF ( ISBLANK ( [@pt] ), "", IF ( [@pt] >= [@ps], "0", IF ( [@pt] = 0, "2", "1" ) ) )
+			        VAR _htmlAc =
+			            SWITCH (
+			                TRUE (),
+			                ISBLANK ( _ac ), "<span class='a z'>—</span>",
+			                _ac = 0, "<span class='a z'>sem acidente</span>",
+			                "<span class='a ng'>" & "⁅" & FORMAT ( _ac, "0", "pt-BR" ) & "⁆" & IF ( _ac = 1, " acidente", " acidentes" ) & "</span>"
+			            )
+			        RETURN
+			            "<div class='q5 qs'><span class='n" & IF ( dMes[Mes] = _ref, " ref", "" ) & "'>" & [@rot] & "</span>" & _htmlAc
+			                & "<span class='d'>" & IF ( ISBLANK ( _nr ), "", "⁅" & FORMAT ( [@cf], "#,0", "pt-BR" ) & "⁆" & " de " & "⁅" & FORMAT ( [@apl], "#,0", "pt-BR" ) & "⁆" ) & "</span>"
+			                & IF ( _cls = "", "<i></i>", "<i class='mk mk" & _cls & "'></i>" ) & "<span class='v'>" & IF ( ISBLANK ( _nr ), "—", "⁅" & FORMAT ( _nr * 100, "0.0", "pt-BR" ) & "⁆" & "%" ) & "</span></div>",
+			        "",
+			        dMes[Mes], ASC
+			    )
+			VAR _saidaHtml =
+			    IF (
+			        NOT ISEMPTY ( _com ) && HASONEVALUE ( dObra[Obra] ),
+			        "<div class='u tt'><div class='cab'><p class='vs'>" & "SEGURANÇA POR OBRA · " & _txtPer & "</p>"
+			            & "<div class='lin1'><div class='tit'>" & "<b>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _obra, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "</b>" & IF ( _selo = "" || ISBLANK ( _selo ), "", "<span class='selo " & IF ( _selo = "REAL", "selo-r", "selo-i" ) & "'>" & _selo & "</span>" ) & "</div></div></div>"
+			            & "<div class='corpo'><div class='bh'><span class='vs'>ACIDENTES COM AFASTAMENTO NO MÊS</span>"
+			            & "<span class='vs'>NR-18 · CONFORMES DE APLICÁVEIS</span></div><div class='lsq" & " ls " & SWITCH ( TRUE (), _nLs <= 3, "e1", _nLs <= 6, "e2", _nLs <= 9, "e3", _nLs <= 12, "e4", "e5" ) & "' style='--n:" & _nLs & "'>" & _htmlLinhas & "</div></div>"
+			            & "<div class='pe'><p class='rod'><b>12 meses:</b> " & _txt12 & "</p>"
+			            & "<p class='rod'>" & _txtPts & "</p></div>"
+			        & "</div>" & [Comum · JS contador tooltip]
+			    )
+			/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+			VAR _odQ =
+			    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+			VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+			/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+			VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+			VAR _mcHtml =
+			    IF (
+			        _mcK = 0,
+			        _saidaHtml,
+			        CONCATENATEX (
+			            GENERATESERIES ( 1, _mcK ),
+			            VAR _mcj = [Value]
+			            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+			            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+			            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+			            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+			            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+			            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+			            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+			            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+			            VAR _mcc = LEN ( _mcsg )
+			            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+			            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+			            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+			            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+			            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+			            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+			            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+			            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+			            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+			            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+			            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+			            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+			            RETURN
+			                _mcantes
+			                    & IF (
+			                        _mcOk,
+			                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+			                            & CONCATENATEX (
+			                                _odQ,
+			                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+			                                UNICHAR ( 10 ),
+			                                [@odk], ASC
+			                            )
+			                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+			                        _mcpre & _mcnum & _mcsuf
+			                    )
+			                    & _mcdepois,
+			            "",
+			            [Value], ASC
+			        )
+			    )
+			RETURN
+			    _mcHtml
+		displayFolder: T5 Canteiro\Tooltips
+		lineageTag: c3ec5639-50e8-5d90-93d0-3267291601eb
+
+	/// Tooltip de página da obra de Suprimentos por obra (linha sob o mouse): a obra mês a mês na janela, com os pedidos entregues no prazo e completos de previstos e a taxa (marca pelos pontos do item entregas no mês; vermelha abaixo da meta); no pé, o total da janela e a meta com os pontos do item na nota do mês de referência. A linha já mostra o mês de referência: aqui ele é só a última linha da série.
+	measure 'T5 · Tooltip suprimentos · HTML' =
+			-- 1 · Leituras
+			VAR _obra = [Obra · nome]
+			VAR _selo = [Obra · selo]
+			VAR _ini = [Série · primeiro mês]
+			VAR _ref = [Mês de referência]
+			VAR _lim = [Nota · limite entregas · ponto cheio]
+			VAR _npJ = [T5 · Entregas · pedidos no prazo na janela]
+			VAR _ppJ = [T5 · Entregas · pedidos previstos na janela]
+			VAR _xJ = [T5 · Entregas · taxa na janela]
+			VAR _ptR = [Nota · pontos entregas · ref]
+			VAR _psR = [Nota · possíveis · entregas · ref]
+			VAR _meses =
+			    ADDCOLUMNS (
+			        VALUES ( dMes[Mes] ),
+			        "@ate", [Série · mês até a referência],
+			        "@rot", [Mês · rótulo curto],
+			        "@x", [Canteiro · entregas no prazo],
+			        "@np", [Canteiro · pedidos no prazo],
+			        "@pp", [Canteiro · pedidos previstos],
+			        "@pt", [Nota · pontos entregas],
+			        "@ps", [Nota · possíveis · entregas]
+			    )
+			VAR _com = FILTER ( _meses, [@ate] = 1 && NOT ISBLANK ( [@x] ) ) /* lista */
+			VAR _nLs = COUNTROWS ( _com ) /* lista */
+			-- 2 · Textos
+			VAR _txtPer = UPPER ( FORMAT ( _ini, "mmm/yy", "pt-BR" ) ) & IF ( _ini = _ref, "", "–" & UPPER ( FORMAT ( _ref, "mmm/yy", "pt-BR" ) ) )
+			VAR _txtRef = FORMAT ( _ref, "mmm/yy", "pt-BR" )
+			VAR _tlN = FORMAT ( ABS ( _lim ) * 100, "0", "pt-BR" )
+			VAR _tlS = IF ( ROUND ( _lim * 100, 0 ) < 0, "−", "" )
+			VAR _tlTxt = IF ( ISBLANK ( _lim ), "—", _tlS & _tlN & "%" )
+			VAR _txtJan =
+			    IF (
+			        ISBLANK ( _xJ ),
+			        "Sem pedido previsto na janela.",
+			        "⁅" & FORMAT ( _npJ, "#,0", "pt-BR" ) & "⁆" & " de " & "⁅" & FORMAT ( _ppJ, "#,0", "pt-BR" ) & "⁆" & " pedidos no prazo e completos (" & "⁅" & FORMAT ( _xJ * 100, "0.0", "pt-BR" ) & "⁆" & "%)."
+			    )
+			VAR _txtMeta =
+			    "Meta " & "⁅" & _tlTxt & "⁆" & " · na nota de " & _txtRef & ": entregas " & IF ( ISBLANK ( _ptR ), "sem dado", "⁅" & FORMAT ( _ptR, "0.##", "pt-BR" ) & "⁆" & " de " & "⁅" & FORMAT ( _psR, "0.##", "pt-BR" ) & "⁆" ) & "."
+			-- 4 · Marcação
+			VAR _htmlLinhas =
+			    CONCATENATEX (
+			        _com,
+			        VAR _x = [@x]
+			        VAR _cls = IF ( ISBLANK ( [@pt] ), "", IF ( [@pt] >= [@ps], "0", IF ( [@pt] = 0, "2", "1" ) ) )
+			        RETURN
+			            "<div class='q5 qp'><span class='n" & IF ( dMes[Mes] = _ref, " ref", "" ) & "'>" & [@rot] & "</span>"
+			                & "<span class='d'>" & "⁅" & FORMAT ( [@np], "#,0", "pt-BR" ) & "⁆" & " de " & "⁅" & FORMAT ( [@pp], "#,0", "pt-BR" ) & "⁆" & IF ( [@pp] = 1, " pedido", " pedidos" ) & "</span>"
+			                & IF ( _cls = "", "<i></i>", "<i class='mk mk" & _cls & "'></i>" ) & "<span class='v" & IF ( _x < _lim, " ng", "" ) & "'>" & "⁅" & FORMAT ( _x * 100, "0.0", "pt-BR" ) & "⁆" & "%</span></div>",
+			        "",
+			        dMes[Mes], ASC
+			    )
+			VAR _saidaHtml =
+			    IF (
+			        NOT ISEMPTY ( _com ) && HASONEVALUE ( dObra[Obra] ),
+			        "<div class='u tt'><div class='cab'><p class='vs'>" & "SUPRIMENTOS POR OBRA · " & _txtPer & "</p>"
+			            & "<div class='lin1'><div class='tit'>" & "<b>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _obra, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "</b>" & IF ( _selo = "" || ISBLANK ( _selo ), "", "<span class='selo " & IF ( _selo = "REAL", "selo-r", "selo-i" ) & "'>" & _selo & "</span>" ) & "</div></div></div>"
+			            & "<div class='corpo'><div class='bh'><span class='vs'>PEDIDOS NO PRAZO E COMPLETOS, MÊS A MÊS</span>"
+			            & "<span class='vs'>TAXA</span></div><div class='lsq" & " ls " & SWITCH ( TRUE (), _nLs <= 3, "e1", _nLs <= 6, "e2", _nLs <= 9, "e3", _nLs <= 12, "e4", "e5" ) & "' style='--n:" & _nLs & "'>" & _htmlLinhas & "</div></div>"
+			            & "<div class='pe'><p class='rod'><b>Na janela:</b> " & _txtJan & "</p>"
+			            & "<p class='rod'>" & _txtMeta & "</p></div>"
+			        & "</div>" & [Comum · JS contador tooltip]
+			    )
+			/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
+			VAR _odQ =
+			    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
+			VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
+			/* o motor que ignora a cultura do FORMAT devolve 1.5: aí o núcleo troca ponto e vírgula (decimal sempre vírgula) */
+			VAR _mcEn = FORMAT ( 1.5, "0.0", "pt-BR" ) <> "1,5"
+			VAR _mcHtml =
+			    IF (
+			        _mcK = 0,
+			        _saidaHtml,
+			        CONCATENATEX (
+			            GENERATESERIES ( 1, _mcK ),
+			            VAR _mcj = [Value]
+			            VAR _mca = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁅", UNICHAR ( 57344 ), _mcj ) )
+			            VAR _mcf = FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj ) )
+			            VAR _mcf0 = IF ( _mcj = 1, 0, FIND ( UNICHAR ( 57344 ), SUBSTITUTE ( _saidaHtml, "⁆", UNICHAR ( 57344 ), _mcj - 1 ) ) )
+			            VAR _mcantes = MID ( _saidaHtml, _mcf0 + 1, MAX ( 0, _mca - _mcf0 - 1 ) )
+			            VAR _mcdepois = IF ( _mcj = _mcK, MID ( _saidaHtml, _mcf + 1, LEN ( _saidaHtml ) ), "" )
+			            VAR _mcsg = MID ( _saidaHtml, _mca + 1, MAX ( 0, _mcf - _mca - 1 ) )
+			            VAR _mci1 = SEARCH ( "¦", _mcsg, 1, 0 )
+			            VAR _mci2 = IF ( _mci1 > 0, SEARCH ( "¦", _mcsg, _mci1 + 1, 0 ), 0 )
+			            VAR _mcc = LEN ( _mcsg )
+			            VAR _mcp0 = MINX ( FILTER ( GENERATESERIES ( 1, MAX ( 1, _mcc ) ), CONTAINSSTRING ( "0123456789", MID ( _mcsg, [Value], 1 ) ) && _mcc > 0 ), [Value] ) /* lista */
+			            VAR _mcp1 = MINX ( FILTER ( GENERATESERIES ( MAX ( 1, _mcp0 ), _mcc + 1 ), [Value] > _mcc || NOT CONTAINSSTRING ( "0123456789.,", MID ( _mcsg, [Value], 1 ) ) ), [Value] ) /* lista */
+			            VAR _mcp2 = IF ( _mcp1 - 1 > _mcp0 && CONTAINSSTRING ( ".,", MID ( _mcsg, MAX ( 1, _mcp1 - 1 ), 1 ) ), _mcp1 - 1, _mcp1 )
+			            VAR _mcpre = IF ( _mci2 > 0, LEFT ( _mcsg, MAX ( 0, _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), _mcsg, LEFT ( _mcsg, MAX ( 0, _mcp0 - 1 ) ) ) )
+			            VAR _mcnum0 = IF ( _mci2 > 0, MID ( _mcsg, _mci1 + 1, MAX ( 0, _mci2 - _mci1 - 1 ) ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp0 ), MAX ( 0, _mcp2 - _mcp0 ) ) ) )
+			            VAR _mcnum = IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mcnum0, ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), _mcnum0 )
+			            VAR _mcsuf = IF ( _mci2 > 0, MID ( _mcsg, _mci2 + 1, _mcc ), IF ( ISBLANK ( _mcp0 ), "", MID ( _mcsg, MAX ( 1, _mcp2 ), _mcc ) ) )
+			            VAR _mcS = SUBSTITUTE ( SUBSTITUTE ( _mcnum, ".", "" ), ",", "" )
+			            VAR _mcT = IFERROR ( VALUE ( _mcS ), -1 )
+			            VAR _mcOk = _mcnum <> "" && _mcT >= 2 && FORMAT ( _mcT, REPT ( "0", LEN ( _mcS ) ) ) = _mcS
+			            VAR _mcD = IF ( CONTAINSSTRING ( _mcnum, "," ), LEN ( _mcnum ) - SEARCH ( ",", _mcnum, 1, 0 ), 0 )
+			            VAR _mcM = IF ( CONTAINSSTRING ( _mcnum, "." ), "#,##0", "0" ) & IF ( _mcD > 0, "." & REPT ( "0", _mcD ) )
+			            RETURN
+			                _mcantes
+			                    & IF (
+			                        _mcOk,
+			                        "<o-n>" & _mcpre & "<o-d><o-v>" & _mcnum & "</o-v><o-t aria-hidden='true'>"
+			                            & CONCATENATEX (
+			                                _odQ,
+			                                IF ( [@odk] = 24, _mcnum, IF ( _mcEn, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ), ",", UNICHAR ( 57344 ) ), ".", "," ), UNICHAR ( 57344 ), "." ), FORMAT ( ROUND ( _mcT * [@odf] / 1000, 0 ) / POWER ( 10, _mcD ), _mcM, "pt-BR" ) ) ),
+			                                UNICHAR ( 10 ),
+			                                [@odk], ASC
+			                            )
+			                            & "</o-t></o-d>" & _mcsuf & "</o-n>",
+			                        _mcpre & _mcnum & _mcsuf
+			                    )
+			                    & _mcdepois,
+			            "",
+			            [Value], ASC
+			        )
+			    )
+			RETURN
+			    _mcHtml
+		displayFolder: T5 Canteiro\Tooltips
+		lineageTag: 45d3ea71-7a10-54cf-acd0-80f3c87a20dd
+
+	/// CSS dos tooltips de página da T5: o dos tooltips da T4 (tooltips_t4.CSS_T4), as linhas de chuva e executado por obra e as linhas em grade da qualidade do mês, da segurança e dos suprimentos da obra.
 	measure 'T5 · Tooltip · CSS' =
 			-- 4 · Marcação
 			[Comum · CSS base]
@@ -39661,7 +40607,11 @@ table _Medidas
 			    & "s>:nth-child(9),.tt .ls>:nth-child(9) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(10),.tt .ls>:nth-child(10) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(1"
 			    & "1),.tt .ls>:nth-child(11) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(12),.tt .ls>:nth-child(12) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(13),.tt .ls>:"
 			    & "nth-child(13) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .ls>:nth-child(14),.tt .ls>:nth-child(14) :is(.mk,.chi,.chip,.chp,circle,.pend),.tt .pe,.tt .pe :is(.mk,.chi,.chip,.chp,circ"
-			    & "le,.pend){animation:none!important}}/*fim-contador*/ "
+			    & "le,.pend){animation:none!important}}/*fim-contador*/ .tt .q5{display:grid;align-items:center;column-gap:.6em;white-space:nowrap}.tt .q5>*{min-width:0;line-height:1.25}.tt .q5 .n{fo"
+			    & "nt-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:1.067em}.tt .q5 .d,.tt .q5 .a{font-size:.933em;color:#3B3B3F}.tt .q5 .d{text-align:right}.tt .q5 .a.z{color:#6B"
+			    & "6B70}.tt .q5 .v{font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:1.067em;text-align:right}.tt .q5>i{justify-self:center}.tt .qa{grid-template-columns:1em minm"
+			    & "ax(0,1fr) auto 4.6em}.tt .qs{grid-template-columns:4.4em minmax(0,1fr) auto 1em 4.6em}.tt .qp{grid-template-columns:4.4em minmax(0,1fr) 1em 4.6em}.tt .q5 .n.ref{text-decoration:und"
+			    & "erline;text-underline-offset:3px}.tt .pe .rod b{font-weight:600}.tt .ls .q5{font-size:min(20px,max(13px,calc(15px * var(--k,1))))}"
 		displayFolder: T5 Canteiro\Tooltips
 		lineageTag: 632ecbe3-2e40-5244-9539-04c4e2bdf1b2
 

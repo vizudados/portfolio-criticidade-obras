@@ -79,6 +79,19 @@ trava e status, desde a F3) está em `docs/03-indicadores-e-criticidade.md`; a p
 - **Tour**: mede texto pela tabela `pbi/spec/tour/metricas-fontes.json` (`metricas_fontes.py`), não pela fonte
   instalada. A Barlow está na tabela; a Segoe UI entra quando a sessão local rodar o script no Windows.
 
+### Hover e tooltips em todos os gráficos (02/11/2026)
+- **Destaque comum** (`desenho_comum.HV_CSS`, no `Comum · CSS base`):
+  - O HTML Content desenha cada linha da granularidade como filho direto de `#htmlContent` (`.htmlViewerEntry`) e põe
+    `.hover` nela no mouseover.
+  - Com `:has()`, a entrada sob o mouse fica plena e as outras do mesmo visual caem para 0,45.
+  - Gráfico de um HTML só (curva, linhas, barras do mês) ganha uma camada por cima, com granularidade de mês e a
+    classe `hv-camada`: véu branco nos outros meses e alvo do tooltip. É o caso de `T3_Curva_Meses`, `T5_Qua_Meses` e
+    `T2_Nota_Meses`.
+  - Partes de um HTML só sem granularidade usam `.hv-g`/`.hv-p`.
+  - O mapa da T1 apaga só as células, porque a coluna do 1.º mês leva os nomes das obras.
+- **Tooltips novos:** `ttT2Nota`, `ttT2Des`, `ttT5Qua`, `ttT5Seg` e `ttT5Sup`. O `T2_Des_Html` usa granularidade
+  `dItemNota[Item]` e desenha só na linha do item caixa: com `dMes`, o tooltip chegaria preso ao mês de referência.
+
 ### Fica com a sessão local
 Lia nova e poses; capa nova e vídeo; publicação no workspace Power BI; conferência visual no navegador.
 

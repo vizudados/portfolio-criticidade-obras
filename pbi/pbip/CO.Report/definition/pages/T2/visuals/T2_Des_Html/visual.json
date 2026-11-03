@@ -30,6 +30,24 @@
               "nativeQueryRef": "T2 · Desembolso · HTML"
             }
           ]
+        },
+        "sampling": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dItemNota"
+                    }
+                  },
+                  "Property": "Item"
+                }
+              },
+              "queryRef": "dItemNota.Item",
+              "nativeQueryRef": "Item"
+            }
+          ]
         }
       }
     },
@@ -165,7 +183,21 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Canvas'"
+                }
+              }
+            },
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'ttT2Des'"
                 }
               }
             }

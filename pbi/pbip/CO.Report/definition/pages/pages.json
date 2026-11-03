@@ -13,6 +13,8 @@
     "ttT2Degrau",
     "ttT2Mes",
     "ttT2Indicador",
+    "ttT2Nota",
+    "ttT2Des",
     "ttT3Curva",
     "ttT3Ppc",
     "ttT3Linha",
@@ -20,7 +22,10 @@
     "ttT4Mes",
     "ttT4MesDes",
     "ttT4ObraDes",
-    "ttT5Mes"
+    "ttT5Mes",
+    "ttT5Qua",
+    "ttT5Seg",
+    "ttT5Sup"
   ],
   "activePageName": "Capa"
 }

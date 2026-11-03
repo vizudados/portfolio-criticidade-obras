@@ -1029,3 +1029,151 @@ Depois do merge:
 Integrando este branch em main, as duas pendências entram.
 
 Arquivos: `canal/CANAL.md`.
+
+## 2026-11-02 23:30 · de: local · tipo: retorno
+
+(Registrado pela nuvem.) Pedido do Alisson: hover e tooltips em T1 a T5. Antes de tudo, trocar de histórico: o
+repositório foi recriado em 29/10 e ficou público. Recriar o ramo sobre o main novo (raiz 4a850b4) e, antes de todo
+push, conferir que 6ae708b não é ancestral e que 4a850b4 é.
+
+O pedido: "essa página não está com destaque nos hovers e nem tooltips em todos os gráficos. outro detalhe, o destaque
+de uma parte do gráfico deveria acender mais ela e diminuir a opacidade das outras. [...] ajustar isso no painel
+inteiro."
+
+Entregar:
+- inventário por tela;
+- tooltip em todo gráfico, com o conteúdo do ponto sob o mouse;
+- destaque único numa regra comum;
+- fotos.
+
+Manter `canal/status-f1.txt` com uma linha de estado.
+
+Arquivos: nenhum.
+
+## 2026-11-03 00:01 · de: nuvem · tipo: entrega
+
+Hover e tooltips em todos os gráficos das cinco telas.
+
+**Histórico.**
+- Ramo recriado sobre origin/main, cuja raiz é 4a850b4.
+- Não levei nada do histórico antigo: a árvore estava limpa e o conteúdo já estava no snapshot.
+- Antes de cada push, rodei as duas conferências (`push_seguro`). Saíram sempre FALHOU-OK e OK.
+
+**Como o HTML Content desenha o hover** (lido no código do visual, `pbiviz.json`):
+- cada linha da granularidade é um filho direto de `#htmlContent`, com a classe `htmlViewerEntry`;
+- no `mouseover` o visual põe a classe `hover` nela, e tira no `mouseout`;
+- a folha de estilo vai como veio, sem filtro de CSS nesta versão, então `:has()` vale.
+
+**Destaque comum.** Uma regra só, `desenho_comum.HV_CSS`, no `Comum · CSS base`, que todas as folhas leem.
+- A parte sob o mouse fica com cor e opacidade plenas, e a linha das listas mantém um fundo creme leve.
+- As outras entradas do mesmo visual caem para 0,45. O texto preto fica cerca de #919191, ainda legível.
+- Transição de 0,18 s, sem mexer no layout. Com `prefers-reduced-motion`, sem transição.
+- Saíram os `filter:brightness` que escureciam: mapa da T1, Cascata e IDC mês a mês da T2.
+- **Camadas.** Um gráfico de um HTML só não tem entradas, e um visual não enxerga o outro. A solução foi uma camada
+  invisível por cima, com granularidade de mês e a classe `hv-camada`:
+  - o mês sob o mouse fica limpo, com linha-guia;
+  - os outros meses recebem um véu branco que apaga o gráfico de baixo;
+  - é ela que abre o tooltip do mês;
+  - existe na Curva S (já tinha a camada) e é nova na Qualidade (T5) e na Nota mês a mês (T2).
+- **Mapa da T1.** A coluna do 1.º mês leva os nomes das obras, então ali apagam só as células e o rótulo dos outros
+  meses, e a célula sob o mouse ganha contorno.
+- **Desembolso do mês (T2).** As partes internas (números, barras e justificativa) usam `.hv-g`/`.hv-p`.
+
+**Inventário** (antes → agora; os cartões de KPI ficam como estão).
+
+| Tela | Gráfico ou lista | Hover antes | Hover agora | Tooltip antes | Tooltip agora |
+|---|---|---|---|---|---|
+| T1 | Obras pela nota | fundo creme | obra plena, outras a 0,45 | ttT1Obra | igual |
+| T1 | Onde a carteira perde pontos | fundo creme | dimensão plena, outras a 0,45 | ttT1Indicador | igual |
+| T1 | Como os meses evoluíram (mapa) | células escurecidas | células e rótulo dos outros meses a 0,45; contorno na célula; nomes plenos | ttT1Mes | igual |
+| T2 | Itens da nota | fundo creme | item pleno, outros a 0,45 | ttT2Indicador | igual |
+| T2 | Como o resultado se forma | barra escurecida | degrau pleno, outros a 0,45 | ttT2Degrau | igual |
+| T2 | IDC, mês a mês | barra escurecida | mês pleno, outros a 0,45 | ttT2Mes | igual |
+| T2 | A nota, mês a mês | nenhum | camada `T2_Nota_Meses`: contorno no mês, véu nos outros | nenhum | **ttT2Nota** |
+| T2 | Desembolso do mês | nenhum | partes internas acendem, as outras a 0,45 | nenhum | **ttT2Des** |
+| T3 | Curva S | linha-guia | linha-guia e véu nos outros meses | ttT3Curva | igual |
+| T3 | PPC mês a mês | fundo creme | mês pleno, outros a 0,45 | ttT3Ppc | igual |
+| T3 | Avanço das obras | fundo creme | obra plena, outras a 0,45 | ttT3Avanco | igual |
+| T3 | Linha do tempo das obras | fundo creme | obra plena, outras a 0,45 | ttT3Linha | igual |
+| T4 | Resultado da carteira, mês a mês | fundo creme | mês pleno, outros a 0,45 | ttT4Mes | igual |
+| T4 | Desembolso da carteira | fundo creme | mês pleno, outros a 0,45 | ttT4MesDes | igual |
+| T4 | Obras no mês | fundo creme | obra plena, outras a 0,45 | ttT4ObraDes | igual |
+| T5 | Qualidade, mês a mês | nenhum | camada `T5_Qua_Meses`: linha-guia e anel na carteira, véu nos outros | nenhum | **ttT5Qua** |
+| T5 | Segurança por obra | fundo quase invisível | obra plena com fundo creme, outras a 0,45 | nenhum | **ttT5Seg** |
+| T5 | Chuva e ritmo | fundo creme | mês pleno, outros a 0,45 | ttT5Mes | igual |
+| T5 | Suprimentos por obra | fundo quase invisível | obra plena com fundo creme, outras a 0,45 | nenhum | **ttT5Sup** |
+
+**Tooltips novos.** Todos com o ponto sob o mouse, sem repetir o que o gráfico já mostra, com a `tooltip_lib` (lista
+escalada pela contagem), contador e cascata C5. As contas estão em medidas de conta.
+- **ttT2Nota** (560 × 480), o mês sob o mouse da obra em foco:
+  - nota e status no cabeçalho;
+  - os nove itens, cada um com o valor no mês, a pílula de pontos "x de y" e a variação contra o mês anterior;
+  - no pé, a nota do mês anterior.
+- **ttT2Des** (560 × 500), os meses anteriores ao de referência da obra em foco:
+  - desvio, com a marca da faixa da previsão de caixa;
+  - "previsto × desembolsado";
+  - a justificativa: preenchida, não exigida, em branco ou sem previsto;
+  - no pé, "N de M exigidas preenchidas".
+  - `T2_Des_Html` usa granularidade `dItemNota[Item]` e desenha só na linha do item caixa: é uma entrada só, com o
+    layout igual. Com `dMes`, o tooltip chegaria preso ao mês de referência, e a lista dos meses pediria
+    `REMOVEFILTERS` no desenho.
+- **ttT5Qua** (560 × 440), o mês sob o mouse:
+  - cada obra, da menor aprovação na 1.ª inspeção para a maior, com "aprovados de verificados", o % e a marca pelos
+    pontos do item;
+  - no pé, a carteira e "meta 95% · N obras abaixo".
+- **ttT5Seg** (560 × 500), a obra sob o mouse, mês a mês:
+  - acidentes com afastamento e NR-18 em "conformes de aplicáveis", com a marca e o %;
+  - no pé, os 12 meses (acidentes, HHT e taxa de gravidade) e os pontos dos itens na nota.
+  - Não repete a taxa de frequência, que já está na linha.
+- **ttT5Sup** (560 × 480), a obra sob o mouse, mês a mês:
+  - "N de M pedidos" no prazo e completos, com a marca e a taxa;
+  - no pé, o total da janela e a meta com os pontos do item.
+
+**Fotos** (`canal/provas/hover/`; Chromium headless, CSS real e números do gabarito, mouse numa entrada do meio):
+- **T1:** `hv-t1-01` Obras pela nota · `hv-t1-02` Onde perde pontos · `hv-t1-03` mapa.
+- **T2:**
+  - hover: `t2hv_a_cascata` · `t2hv_a_idc` · `t2hv_a_itens` · `t2hv_b_nota` (camada) · `t2hv_c_desembolso`;
+  - tooltips: `t2hv_d_tooltips` (ttT2Nota em set/26 e mai/26; ttT2Des com 11 e com 2 meses).
+- **T3:** `hv-t3-01` PPC · `hv-t3-02` Avanço · `hv-t3-03` Linha do tempo · `hv-t3-curva` (camada da Curva S,
+  esquemática: a curva de baixo é desenhada à mão).
+- **T4:** `hv-t4-01` Resultado mês a mês · `hv-t4-02` Obras no mês.
+- **T5:**
+  - hover: `t5hv_hover_chuva` · `t5hv_hover_seguranca` · `t5hv_hover_suprimentos` · `t5hv_hover_qualidade`
+    (abr/26) e `t5hv_qualidade_sem_mouse`;
+  - tooltips: `t5hv_tt_qua_7` e `_2` · `t5hv_tt_seg_12` e `_3` · `t5hv_tt_sup_12` e `_2`.
+
+**Montagem.**
+- Geradores regerados sem diferença.
+- `gerar_modelo --sem-tom --aplicar` e `montar_pbip --aplicar`: 5 páginas de tooltip, 2 camadas, `T2_Des_Html`, as
+  listas de Segurança e Suprimentos e a lista de páginas.
+- Lint com 0 ERRO em `pbi/dax` e no `_Medidas.tmdl` (1142 medidas).
+- As camadas novas ficam em z 310, abaixo do tour (7000). Os visuais do tour não mudaram.
+- Nenhum texto do tour mudou, então o `medir_linhas_tour` não precisa rodar.
+- Cascas, capa, dados e régua não foram mexidos.
+
+**O que não consegui provar.**
+- O DAX não roda aqui:
+  - as contas novas do mês anterior (`EDATE`), as da janela da T5 e o filtro de `dItemNota` chegando ao ttT2Des;
+  - `dItemNota` não é cruzado por nenhum visual da T2 hoje. Se um dia for, o Desembolso some.
+- As fotos são prévias com o HTML montado à mão:
+  - números do gabarito e fonte reserva no lugar da Segoe UI;
+  - só `:hover`, sem a classe `.hover` que o visual põe;
+  - sem a corrida e sem a memória do contador.
+- Falta no Power BI:
+  - as camadas alinhadas aos meses da Qualidade e da Nota mês a mês;
+  - o tooltip abrindo na entrada transparente;
+  - o hover com o tour aberto;
+  - o `render_tooltips.py` nos cinco tooltips novos.
+- O "Desembolso da carteira" (T4) não entrou nas fotos: a prévia da T4 não o desenha. Ele segue a mesma regra das
+  colunas da T4.
+- Reticências que ficaram fora destes visuais:
+  - `.it .ln span` (faixa na lista de Itens, T2);
+  - `.dm .js p` (justificativa em até 3 linhas no Desembolso, T2);
+  - `.rod`/`.sob` do CSS dos tooltips da T2. Os textos novos são curtos e não chegam nelas.
+
+Arquivos:
+- `pbi/scripts/desenho_comum.py`, `desenho_t1.py`, `desenho_t2.py`, `desenho_t3.py`, `desenho_t5.py`,
+  `tooltips_t2.py`, `tooltips_t5.py`, `contas_t2.py`, `contas_t5.py`;
+- `paginas/t2.py`, `paginas/t5.py`, `paginas/tt_t2.py`, `paginas/tt_t5.py`;
+- `pbi/dax/`, `pbi/pbip/`, `pbi/spec/relatorio/_gerenciados.json`;
+- `canal/provas/hover/`, `canal/status-f1.txt`, `HANDOFF.md`, `canal/CANAL.md`.
