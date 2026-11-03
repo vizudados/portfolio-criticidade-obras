@@ -1177,3 +1177,110 @@ Arquivos:
 - `paginas/t2.py`, `paginas/t5.py`, `paginas/tt_t2.py`, `paginas/tt_t5.py`;
 - `pbi/dax/`, `pbi/pbip/`, `pbi/spec/relatorio/_gerenciados.json`;
 - `canal/provas/hover/`, `canal/status-f1.txt`, `HANDOFF.md`, `canal/CANAL.md`.
+
+## 2026-11-03 16:30 · de: local · tipo: retorno
+
+(Registrado pela nuvem.) O verso "Como é calculado" dos cartões de KPI da T3 e da T5 tem texto sobre texto e corte.
+Medido no Edge, com o HTML e a folha do modelo publicado, em vários contextos.
+- **T3:** Atraso, Executado, No mês, PPC e Término.
+- **T5:** os cinco cartões.
+- **Frente da Frequência (T5):** "· nenhuma obra acima" duas vezes no mesmo lugar (janela de 3 meses, jan/26).
+- **T1, T2 e T4:** limpos.
+
+Pedido:
+- o verso inteiro em 302 × 140, de preferência numa regra comum;
+- frase mais curta onde não couber, com o antes e o depois no canal;
+- a frente sem mudança e o hover funcionando;
+- fotos.
+
+Sincronizar o ramo com main (9af8dfe) antes.
+
+Arquivos: nenhum.
+
+## 2026-11-03 18:19 · de: nuvem · tipo: entrega
+
+Verso dos cartões de KPI. O ramo foi recriado sobre main (9af8dfe), e as duas conferências deram certo antes de cada
+push.
+
+**Regra comum** (`Comum · CSS cartão`, usada pelos 25 cartões).
+- **Antes:** o verso era todo em posição fixa. A regra ficava em y 36, "DE ONDE VEM" em y 82 e a régua em y 106, as
+  duas `nowrap`. A regra de três linhas caía sobre o resto, e a linha mais larga que o cartão saía cortada.
+- **Agora:** o verso é uma coluna flexível.
+  - "COMO É CALCULADO" e a regra ficam no alto.
+  - "DE ONDE VEM" e a régua ficam presos embaixo, e os dois quebram linha.
+  - A régua quebra entre as faixas, nunca entre a marca e o texto: cada faixa vai num `.it`.
+  - Texto longo usa a classe `.vz` (13/17, o piso).
+- **Hover:** não mudou; a frente sobe e o verso entra.
+- **Frente:** não mudou, exceto a frase da Frequência abaixo.
+- **T1, T2 e T4:**
+  - continuam a 14 px;
+  - só o "Nota da obra" da T2 ganhou `.vz`, porque com quebra de linha a origem ocupa duas linhas;
+  - as réguas da T2 passaram a usar `.it`.
+
+**Frente da Frequência (T5).** "0 acidentes · setor 7,5 · nenhuma obra acima" tem 275 px na Segoe UI, e a linha de
+contexto tem 262, `nowrap` e com reticência. O HTML gera o texto uma vez só (conferido pelo espelho das marcas).
+Explicação provável da duplicação: o corte da linha com a caixa do odômetro nela. Com zero obras acima, a frase agora
+é "nenhuma acima" (243 px).
+
+**Textos que mudaram** (antes → depois).
+- **Réguas da T3 e da T5:** a faixa sai sem o nome da variável, porque a regra já diz qual é. Continua lida do modelo
+  (`SUBSTITUTE` do nome do dicionário NOTA).
+  - Atraso: "atraso ≤ 0,5 mês → 2 · atraso > 3 meses → 0" → "≤ 0,5 mês → 2 · > 3 meses → 0".
+  - NR-18: "conformidade ≥ 95% → 0,5 · conformidade < 85% → 0" → "≥ 95% → 0,5 · < 85% → 0".
+  - Inspeção: "aprovação ≥ 95% → 1 · aprovação < 80% → 0" → "≥ 95% → 1 · < 80% → 0".
+  - Entregas: "entregas ≥ 90% → 0,5 · entregas < 80% → 0" → "≥ 90% → 0,5 · < 80% → 0".
+  - A Frequência mantém "TF = 0 → 0,5 · TF > 7,5 → 0".
+- **T3 · Término projetado:**
+  - regra: "Início + duração prevista ÷ IDP(t), o ritmo de prazo pelo cronograma agregado. Limite: a entrega + 180
+    dias." → "Início + duração ÷ IDP(t), o ritmo do cronograma. Limite: entrega + 180 dias.";
+  - régua: "até a entrega · nos 180 dias · depois deles" → "na entrega · nos 180 dias · depois".
+- **T5 · Sem acidente com afastamento:**
+  - regra: "Meses seguidos sem acidente com afastamento em nenhuma obra, …" → "Meses seguidos sem acidente com
+    afastamento (NBR 14280) em nenhuma obra, …";
+  - origem: "Base complementar · NBR 14280" → "Base complementar".
+- **T5 · Frequência de acidentes:**
+  - regra: "Acidentes com afastamento × 1.000.000 ÷ horas-homem trabalhadas nos 12 meses até o mês, com as obras somadas
+    (NBR 14280). Na nota, por obra:" → "Acidentes com afastamento × 1 milhão ÷ horas-homem em 12 meses, obras somadas
+    (NBR 14280). Na nota, por obra:";
+  - origem: "Base complementar · NBR 14280" → "Base complementar".
+- **T5 · Canteiro conforme NR-18:**
+  - regra: "Itens conformes ÷ itens aplicáveis do checklist NR-18 do mês, com as obras somadas." → "Itens conformes ÷
+    aplicáveis do checklist NR-18 no mês, obras somadas.";
+  - origem: "Base complementar · checklist NR-18" → "Base complementar".
+- **T5 · Aprovação na 1.ª inspeção:**
+  - regra: "Serviços aprovados na primeira verificação (FVS) ÷ serviços verificados no mês, com as obras somadas." →
+    "Serviços aprovados na 1.ª verificação (FVS) ÷ verificados no mês, obras somadas.";
+  - origem: "Base complementar · FVS" → "Base complementar".
+- **T5 · Entregas no prazo e completas:**
+  - regra: "Pedidos entregues no prazo e completos ÷ pedidos com entrega prevista no mês, com as obras somadas." →
+    "Pedidos no prazo e completos ÷ pedidos previstos no mês, obras somadas.";
+  - origem: "Base complementar · pedidos" → "Base complementar".
+- **Sem mudança de texto** (a coluna flexível resolve): T3 Executado ("% executado e % previsto acumulados" quebra em
+  duas linhas), T3 No mês ("Previsto e executado, mês" quebra) e T3 PPC.
+
+**Prova.** Prévia no Chromium com o verso de cada cartão lido do DAX gerado e o CSS real. Nas partes dinâmicas, as
+faixas do dicionário NOTA, as réguas da T1, T2 e T4 como o modelo as escreve e "Soma das 12 obras" na T4.
+- A medição automática olha filho fora do cartão, sobreposição, largura cortada e reticência. Deu 0 defeito nos 25
+  (antes: 13).
+- A fonte daqui é a Inter, que pela tabela de métricas sai cerca de 8% mais larga que a Segoe UI: o que cabe nela
+  cabe na Segoe com folga.
+- Fotos:
+  - `canal/provas/verso/verso-todos.png`: os 25 versos;
+  - `canal/provas/verso/verso-t2-t3-t5.png`: os 12 alterados da T2, T3 e T5, no maior texto.
+
+**Montagem.**
+- Geradores, `gerar_modelo --sem-tom --aplicar` (só o `_Medidas.tmdl`) e `montar_pbip --aplicar` (0 arquivos do
+  relatório mudam).
+- Lint com 0 ERRO em `pbi/dax` e no `_Medidas.tmdl`.
+
+**O que não consegui conferir.**
+- Os versos com a Segoe UI e o hover de verdade no Power BI.
+- A frente da Frequência no contexto de jan/26: o texto encurtado cabe pela tabela da Segoe, mas não vi a duplicação
+  sumir. Se ela continuar com "nenhuma acima", é o odômetro, e a pista seguinte é o `overflow:hidden` da linha de
+  contexto.
+
+Arquivos:
+- `pbi/scripts/desenho_comum.py`, `desenho_t2.py`, `desenho_t3.py`, `desenho_t5.py`;
+- `pbi/dax/` (`Comum · CSS cartão` e os cartões da T2, T3 e T5);
+- `pbi/pbip/CO.SemanticModel/definition/tables/_Medidas.tmdl`, `pbi/spec/relatorio/_gerenciados.json`;
+- `canal/provas/verso/`, `canal/status-f1.txt`, `canal/CANAL.md`.
