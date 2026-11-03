@@ -282,11 +282,16 @@ css("T5 · Segurança · CSS", SEG, "CSS do cabeçalho e das linhas de Seguranç
     "font-weight:600;font-size:15px;line-height:20px;white-space:nowrap}"
     ".sg .nr{position:absolute;right:14px;top:10px;display:flex;align-items:center;white-space:nowrap;"
     "font-family:'Barlow U','Segoe UI',sans-serif;font-weight:600;font-size:15px;line-height:20px}"
-    ".sg .nr .mk{margin-right:6px}")
+    ".sg .nr .mk{margin-right:6px}"
+    # zero acidente (02/11/2026: "a segurança da obra é 0?"): "sem acidente" depois do traço, no lugar da barra e do 0,
+    # e sem a trilha, que acabaria no meio do texto; o traço fica no máximo em 70 px (escala ≥ 2 × setor), então cabe
+    ".sg .tr.z{background:none}"
+    ".sg .sa{position:absolute;top:10px;font-size:14px;line-height:20px;color:#3B3B3F;white-space:nowrap}")
 m("T5 · Segurança · HTML linha", SEG,
   "Uma linha por obra com base no mês de referência (granularidade dObra[Obra], ordem T5 · Segurança · ordem): nome, "
-  "barra da taxa de frequência de 12 meses (cor dos pontos do item acidentes; zero acidente só com a trilha) com o traço "
-  "da média do setor, o valor e a conformidade NR-18 do mês com a marca dos pontos do item NR-18. A barra corre do zero.",
+  "barra da taxa de frequência de 12 meses (cor dos pontos do item acidentes) com o traço da média do setor, o valor "
+  "(taxa zero: 'sem acidente', sem barra nem trilha) e a conformidade NR-18 do mês com a marca dos pontos do item NR-18. "
+  "A barra corre do zero.",
   linhas(
       "-- 1 · Leituras",
       "VAR _obra = [Obra · nome]",
@@ -311,15 +316,18 @@ m("T5 · Segurança · HTML linha", SEG,
       f"VAR _w = IF ( _tf > 0, MAX ( 3, MIN ( {SEG_W}, ROUND ( _tf * _u, 0 ) ) ), 0 ) -- geometria",
       "VAR _xS = ROUND ( _set * _u, 0 ) - 1 -- geometria",
       "VAR _corre = \"' data-rp='width' data-r0-width='0px' data-rd='100'\"",
+      "VAR _sem = NOT ISBLANK ( _tf ) && _tf = 0 -- geometria",
+      f"VAR _xSem = {SEG_X0} + _xS + 10 -- geometria",
       "-- 4 · Marcação",
       "RETURN",
       "    IF (",
       "        NOT ISBLANK ( _pos ),",
       "        \"<div class='u sg'><b class='nm'>\" & _chave & \"</b>\"",
-      "            & \"<span class='tr a-fd'>\" & IF ( _w > 0, \"<i class='br s\" & _clsA & \"' style='width:\" & _w & \"px' \"",
+      "            & \"<span class='tr a-fd\" & IF ( _sem, \" z\" ) & \"'>\" & IF ( _w > 0, \"<i class='br s\" & _clsA & \"' style='width:\" & _w & \"px' \"",
       "                & \"data-rk='\" & _chave & \"|tf\" & _corre & \"></i>\" )",
       "            & \"<i class='st a-pop' style='animation-delay:600ms;left:\" & _xS & \"px'></i></span>\"",
-      "            & \"<span class='v'>\" & IF ( ISBLANK ( _tf ), \"—\", " + C.marca("_ttTxt") + " ) & \"</span>\"",
+      "            & IF ( _sem, \"<span class='sa a-fd' style='left:\" & _xSem & \"px'>sem acidente</span>\",",
+      "                \"<span class='v'>\" & IF ( ISBLANK ( _tf ), \"—\", " + C.marca("_ttTxt") + " ) & \"</span>\" )",
       "            & \"<span class='nr'>\" & IF ( _clsN = \"\", \"\", \"<i class='mk a-pop mk\" & _clsN & \"' \"",
       "                & \"style='animation-delay:400ms'></i>\" ) & IF ( ISBLANK ( _nr ), \"—\", " + C.marca("_tnTxt") + " ) & \"</span>\"",
       "        & \"</div>\" & [Comum · JS contador] & [Comum · JS corrida]",

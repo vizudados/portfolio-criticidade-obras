@@ -54,13 +54,13 @@ def declarar(ctx):
     # ---- Segurança por obra (1460,273 · 400 × 380)
     v.append(lib.visual_html("T5_Seg_Cabecalho", 1460, 305, 400, 56, "T5 · Segurança · HTML cabeçalho",
                              folha_de_estilo="T5 · Cabeçalho · CSS",
-                             alt="Mês de referência, a média do setor e os nomes das colunas de Segurança por obra",
+                             alt="Mês de referência, a média do setor e os nomes das colunas de Acidentes por obra",
                              tab=120))
     v.append(lib.visual_html(
         "T5_Seg_Lista", 1460, 365, 400, 294, "T5 · Segurança · HTML linha", granularidade=("dObra", "Obra"),
         ordenacao=[(lib.campo_medida_expr("T5 · Segurança · ordem"), "Ascending")], tooltips=["T5 · Segurança · ordem"],
         folha_de_estilo="T5 · Segurança · CSS", tooltip_pagina="ttT5Seg",
-        alt="Segurança por obra: taxa de frequência de acidentes em 12 meses com o traço da média do setor e a "
+        alt="Acidentes por obra: taxa de frequência de acidentes em 12 meses com o traço da média do setor e a "
             "conformidade NR-18 do mês, da maior taxa para a menor", tab=121))
     # ---- Chuva e ritmo (352,693 · 1068 × 347)
     v.append(lib.visual_html("T5_Chuva_Subtitulo", 352, 725, 1030, 24, "T5 · Chuva · HTML subtítulo",

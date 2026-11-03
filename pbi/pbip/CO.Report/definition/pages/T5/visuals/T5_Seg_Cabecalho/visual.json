@@ -212,7 +212,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Mês de referência, a média do setor e os nomes das colunas de Segurança por obra'"
+                  "Value": "'Mês de referência, a média do setor e os nomes das colunas de Acidentes por obra'"
                 }
               }
             }

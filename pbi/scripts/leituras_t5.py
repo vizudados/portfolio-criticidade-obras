@@ -275,7 +275,7 @@ desenho(
         "        & " + destaque("_tnrOd", "\"da NR-18 conforme na carteira\""),
         "        & \"</div>\"",
         "RETURN",
-        "    IF ( _n > 0, " + painel("pn-t4p pn-t5p", '"Leitura de Segurança por obra"', "_corpo",
+        "    IF ( _n > 0, " + painel("pn-t4p pn-t5p", '"Leitura de Acidentes por obra"', "_corpo",
                                    "[Comum · JS contador tooltip]") + " )",
     ))
 

@@ -68,7 +68,7 @@ VAR _htmlLinhas =
 VAR _saidaHtml =
     IF (
         NOT ISEMPTY ( _com ) && HASONEVALUE ( dObra[Obra] ),
-        "<div class='u tt'><div class='cab'><p class='vs'>" & "SEGURANÇA POR OBRA · " & _txtPer & "</p>"
+        "<div class='u tt'><div class='cab'><p class='vs'>" & "ACIDENTES POR OBRA · " & _txtPer & "</p>"
             & "<div class='lin1'><div class='tit'>" & "<b>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _obra, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) & "</b>" & IF ( _selo = "" || ISBLANK ( _selo ), "", "<span class='selo " & IF ( _selo = "REAL", "selo-r", "selo-i" ) & "'>" & _selo & "</span>" ) & "</div></div></div>"
             & "<div class='corpo'><div class='bh'><span class='vs'>ACIDENTES COM AFASTAMENTO NO MÊS</span>"
             & "<span class='vs'>NR-18 · CONFORMES DE APLICÁVEIS</span></div><div class='lsq" & " ls " & SWITCH ( TRUE (), _nLs <= 3, "e1", _nLs <= 6, "e2", _nLs <= 9, "e3", _nLs <= 12, "e4", "e5" ) & "' style='--n:" & _nLs & "'>" & _htmlLinhas & "</div></div>"

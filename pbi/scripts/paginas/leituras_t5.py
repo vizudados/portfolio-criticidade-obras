@@ -8,7 +8,7 @@ from leituras_lib import declarar_tela
 
 LEITURAS = [  # (chave, painel, (x, y, w, h) do painel, centro do "?", medida)
     ("Qua", "Qualidade, mês a mês", (352, 273, 1068, 380), (1396, 293), "T5 · Leitura qualidade · HTML"),
-    ("Seg", "Segurança por obra", (1460, 273, 400, 380), (1836, 293), "T5 · Leitura segurança · HTML"),
+    ("Seg", "Acidentes por obra", (1460, 273, 400, 380), (1836, 293), "T5 · Leitura segurança · HTML"),
     ("Chuva", "Chuva e ritmo", (352, 693, 1068, 347), (1396, 713), "T5 · Leitura chuva · HTML"),
     ("Sup", "Suprimentos por obra", (1460, 693, 400, 347), (1836, 713), "T5 · Leitura suprimentos · HTML"),
 ]

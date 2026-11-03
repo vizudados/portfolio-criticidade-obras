@@ -279,7 +279,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Segurança por obra: taxa de frequência de acidentes em 12 meses com o traço da média do setor e a conformidade NR-18 do mês, da maior taxa para a menor'"
+                  "Value": "'Acidentes por obra: taxa de frequência de acidentes em 12 meses com o traço da média do setor e a conformidade NR-18 do mês, da maior taxa para a menor'"
                 }
               }
             }

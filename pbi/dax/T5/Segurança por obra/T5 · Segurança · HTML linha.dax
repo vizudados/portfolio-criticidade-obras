@@ -1,7 +1,7 @@
 /*
 @pasta: T5 Canteiro\Segurança por obra
 @formato: texto
-@descricao: Uma linha por obra com base no mês de referência (granularidade dObra[Obra], ordem T5 · Segurança · ordem): nome, barra da taxa de frequência de 12 meses (cor dos pontos do item acidentes; zero acidente só com a trilha) com o traço da média do setor, o valor e a conformidade NR-18 do mês com a marca dos pontos do item NR-18. A barra corre do zero.
+@descricao: Uma linha por obra com base no mês de referência (granularidade dObra[Obra], ordem T5 · Segurança · ordem): nome, barra da taxa de frequência de 12 meses (cor dos pontos do item acidentes) com o traço da média do setor, o valor (taxa zero: 'sem acidente', sem barra nem trilha) e a conformidade NR-18 do mês com a marca dos pontos do item NR-18. A barra corre do zero.
 @gerado: pbi/scripts/desenho_t5.py
 */
 -- 1 · Leituras
@@ -30,15 +30,18 @@ VAR _u = DIVIDE ( 140, _topo ) -- geometria
 VAR _w = IF ( _tf > 0, MAX ( 3, MIN ( 140, ROUND ( _tf * _u, 0 ) ) ), 0 ) -- geometria
 VAR _xS = ROUND ( _set * _u, 0 ) - 1 -- geometria
 VAR _corre = "' data-rp='width' data-r0-width='0px' data-rd='100'"
+VAR _sem = NOT ISBLANK ( _tf ) && _tf = 0 -- geometria
+VAR _xSem = 116 + _xS + 10 -- geometria
 -- 4 · Marcação
 VAR _saidaHtml =
     IF (
         NOT ISBLANK ( _pos ),
         "<div class='u sg'><b class='nm'>" & _chave & "</b>"
-            & "<span class='tr a-fd'>" & IF ( _w > 0, "<i class='br s" & _clsA & "' style='width:" & _w & "px' "
+            & "<span class='tr a-fd" & IF ( _sem, " z" ) & "'>" & IF ( _w > 0, "<i class='br s" & _clsA & "' style='width:" & _w & "px' "
                 & "data-rk='" & _chave & "|tf" & _corre & "></i>" )
             & "<i class='st a-pop' style='animation-delay:600ms;left:" & _xS & "px'></i></span>"
-            & "<span class='v'>" & IF ( ISBLANK ( _tf ), "—", "⁅" & _ttTxt & "⁆" ) & "</span>"
+            & IF ( _sem, "<span class='sa a-fd' style='left:" & _xSem & "px'>sem acidente</span>",
+                "<span class='v'>" & IF ( ISBLANK ( _tf ), "—", "⁅" & _ttTxt & "⁆" ) & "</span>" )
             & "<span class='nr'>" & IF ( _clsN = "", "", "<i class='mk a-pop mk" & _clsN & "' "
                 & "style='animation-delay:400ms'></i>" ) & IF ( ISBLANK ( _nr ), "—", "⁅" & _tnTxt & "⁆" ) & "</span>"
         & "</div>" & [Comum · JS contador] & [Comum · JS corrida]

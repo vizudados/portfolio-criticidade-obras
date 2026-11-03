@@ -323,7 +323,7 @@ desenho(
         "RETURN",
         "    IF (",
         "        NOT ISEMPTY ( _com ) && HASONEVALUE ( dObra[Obra] ),",
-        cabecalho("\"SEGURANÇA POR OBRA · \" & _txtPer", titulo_obra()),
+        cabecalho("\"ACIDENTES POR OBRA · \" & _txtPer", titulo_obra()),
         "            & \"<div class='corpo'><div class='bh'><span class='vs'>ACIDENTES COM AFASTAMENTO NO MÊS</span>\"",
         "            & \"<span class='vs'>NR-18 · CONFORMES DE APLICÁVEIS</span></div><div class='lsq\" & "
         + TL.atributos("_nLs") + "'>\" & _htmlLinhas & \"</div></div>\"",

@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Leitura de Segurança por obra'"
+                  "Value": "'Leitura de Acidentes por obra'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Leitura de Segurança por obra'"
+                  "Value": "'Leitura de Acidentes por obra'"
                 }
               }
             },
