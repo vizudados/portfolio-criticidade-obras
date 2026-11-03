@@ -26,8 +26,8 @@ VAR _abx = [T3 · Ritmo · abaixo do previsto em toda a série]
 VAR _n = [T3 · Série · meses da obra]
 VAR _pm1 = [T3 · Série · primeiro mês da obra]
 VAR _seg = [T3 · Físico · meses seguidos na faixa · ref]
-VAR _td = [T3 · Físico · tendência da distância]
-VAR _tdd = [T3 · Físico · tendência da distância desde]
+VAR _td = [T3 · Prazo · tendência do atraso]
+VAR _tdd = [T3 · Prazo · tendência do atraso desde]
 VAR _sg = [T3 · Físico · sinal · início da sequência]
 VAR _ld = [T3 · Físico · lado do cronograma · ref]
 VAR _a = [Prazo · atraso (meses) · ref]
@@ -117,7 +117,7 @@ VAR _txtDet =
 VAR _txtTend =
     SWITCH (
         _ld,
-        -1, "; o atraso " & SWITCH ( _td, "cresce", "cresce", "cai", "vem caindo", "oscila" ) & " desde "
+        -1, "; o atraso " & SWITCH ( _td, "cresce", "cresce", "cai", "vem caindo", "estável", "está estável", "oscila" ) & " desde "
             & IF ( _tdd = _jan || YEAR ( _tdd ) <> YEAR ( _ref ), FORMAT ( _tdd, "mmm/yy", "pt-BR" ), FORMAT ( _tdd, "mmmm", "pt-BR" ) ),
         0, IF ( _sg = _pm1 && _n > 1, "; no previsto nos " & SWITCH ( _n, 0, "zero", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _n, "0" ) ) & " meses", "; no previsto desde " & IF ( _sg = _jan || YEAR ( _sg ) <> YEAR ( _ref ), FORMAT ( _sg, "mmm/yy", "pt-BR" ), FORMAT ( _sg, "mmmm", "pt-BR" ) ) ),
         1, IF ( _sg = _pm1 && _n > 1, "; à frente nos " & SWITCH ( _n, 0, "zero", 1, "um", 2, "dois", 3, "três", 4, "quatro", 5, "cinco", 6, "seis", 7, "sete", 8, "oito", 9, "nove", 10, "dez", 11, "onze", 12, "doze", FORMAT ( _n, "0" ) ) & " meses", "; à frente desde " & IF ( _sg = _jan || YEAR ( _sg ) <> YEAR ( _ref ), FORMAT ( _sg, "mmm/yy", "pt-BR" ), FORMAT ( _sg, "mmmm", "pt-BR" ) ) ),

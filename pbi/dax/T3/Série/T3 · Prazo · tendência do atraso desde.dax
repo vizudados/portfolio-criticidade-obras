@@ -1,0 +1,36 @@
+/*
+@pasta: T3 Avanço físico\Série\Contas
+@formato: dd/mm/yyyy
+@descricao: Mês de partida da tendência do atraso: estável, o último mês em que o valor mudou; cresce ou cai, o mês em que a sequência começa; oscila, o primeiro mês da série na janela. 'O atraso cresce desde out/25'.
+@gerado: pbi/scripts/contas_t3.py
+*/
+VAR _ref = [Mês de referência]
+VAR _jan = [Série · primeiro mês]
+VAR _meses =
+    ADDCOLUMNS (
+        FILTER ( ALL ( dMes[Mes] ), dMes[Mes] >= _jan && dMes[Mes] <= _ref ),
+        "@d", VAR _m = dMes[Mes] RETURN CALCULATE ( [Prazo · atraso (meses)], REMOVEFILTERS ( dMes ), dMes[Mes] = _m ),
+        "@a", VAR _m = dMes[Mes] RETURN CALCULATE ( [Prazo · atraso (meses)], REMOVEFILTERS ( dMes ), dMes[Mes] = EDATE ( _m, -1 ) )
+    )
+VAR _serie = FILTER ( _meses, NOT ISBLANK ( [@d] ) )
+VAR _com =
+    ADDCOLUMNS (
+        _serie,
+        "@sg", IF ( ISBLANK ( [@a] ) || dMes[Mes] = _jan, BLANK (), SIGN ( ROUND ( [@d], 1 ) - ROUND ( [@a], 1 ) ) )
+    )
+VAR _sgRef = MAXX ( FILTER ( _com, dMes[Mes] = _ref ), [@sg] )
+VAR _ultMov = MAXX ( FILTER ( _com, NOT ISBLANK ( [@sg] ) && [@sg] <> 0 ), dMes[Mes] )
+VAR _dir = MAXX ( FILTER ( _com, dMes[Mes] = _ultMov ), [@sg] )
+VAR _quebra = MAXX ( FILTER ( _com, ISBLANK ( [@sg] ) || ( [@sg] <> 0 && [@sg] <> _dir ) ), dMes[Mes] )
+VAR _passos = COUNTROWS ( FILTER ( _com, dMes[Mes] > _quebra && NOT ISBLANK ( [@sg] ) && [@sg] <> 0 ) )
+VAR _primeiro = MINX ( _serie, dMes[Mes] )
+RETURN
+    IF (
+        NOT ISBLANK ( _sgRef ),
+        SWITCH (
+            TRUE (),
+            _sgRef = 0, IF ( ISBLANK ( _ultMov ), _primeiro, _ultMov ),
+            _passos >= 2, _quebra,
+            _primeiro
+        )
+    )

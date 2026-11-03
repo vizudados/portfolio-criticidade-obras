@@ -432,6 +432,52 @@ VAR _quebra = MAXX ( FILTER ( _comDelta, ISBLANK ( [@sg] ) || [@sg] <> _sgRef ),
 VAR _passos = DATEDIFF ( _quebra, _ref, MONTH )
 RETURN
     IF ( NOT ISBLANK ( _sgRef ), IF ( _passos >= 2, _quebra, MINX ( _serie, dMes[Mes] ) ) )""")
+# Atraso em meses, com a casa que o gráfico mostra: mês repetido não interrompe a sequência ("0,9 · 0,9 · 1,0" cresce)
+ATRASO_TEND = ("VAR _ref = [Mês de referência]\n"
+               + meses_ate("_ref", [("@d", no_mes("[Prazo · atraso (meses)]")), ("@a", no_mes("[Prazo · atraso (meses)]", -1))])
+               + """
+VAR _serie = FILTER ( _meses, NOT ISBLANK ( [@d] ) )
+VAR _com =
+    ADDCOLUMNS (
+        _serie,
+        "@sg", IF ( ISBLANK ( [@a] ) || dMes[Mes] = _jan, BLANK (), SIGN ( ROUND ( [@d], 1 ) - ROUND ( [@a], 1 ) ) )
+    )
+VAR _sgRef = MAXX ( FILTER ( _com, dMes[Mes] = _ref ), [@sg] )
+VAR _ultMov = MAXX ( FILTER ( _com, NOT ISBLANK ( [@sg] ) && [@sg] <> 0 ), dMes[Mes] )
+VAR _dir = MAXX ( FILTER ( _com, dMes[Mes] = _ultMov ), [@sg] )
+VAR _quebra = MAXX ( FILTER ( _com, ISBLANK ( [@sg] ) || ( [@sg] <> 0 && [@sg] <> _dir ) ), dMes[Mes] )
+VAR _passos = COUNTROWS ( FILTER ( _com, dMes[Mes] > _quebra && NOT ISBLANK ( [@sg] ) && [@sg] <> 0 ) )
+VAR _primeiro = MINX ( _serie, dMes[Mes] )""")
+m("T3 · Prazo · tendência do atraso", P_SERIE, TXT,
+  "Como o atraso em meses (uma casa, como o gráfico) anda até a referência, dentro da janela: cresce ou cai quando ao "
+  "menos dois movimentos seguidos vão no mesmo sentido, mês repetido não interrompe; estável quando a referência repete "
+  "o mês anterior; oscila quando o último movimento inverteu o sentido. Uma obra no contexto.",
+  ATRASO_TEND + """
+RETURN
+    IF (
+        NOT ISBLANK ( _sgRef ),
+        SWITCH (
+            TRUE (),
+            _sgRef = 0, "estável",
+            _passos >= 2 && _dir > 0, "cresce",
+            _passos >= 2 && _dir < 0, "cai",
+            "oscila"
+        )
+    )""", "atraso em meses mês a mês, com uma casa")
+m("T3 · Prazo · tendência do atraso desde", P_SERIE, DATA,
+  "Mês de partida da tendência do atraso: estável, o último mês em que o valor mudou; cresce ou cai, o mês em que a "
+  "sequência começa; oscila, o primeiro mês da série na janela. 'O atraso cresce desde out/25'.",
+  ATRASO_TEND + """
+RETURN
+    IF (
+        NOT ISBLANK ( _sgRef ),
+        SWITCH (
+            TRUE (),
+            _sgRef = 0, IF ( ISBLANK ( _ultMov ), _primeiro, _ultMov ),
+            _passos >= 2, _quebra,
+            _primeiro
+        )
+    )""")
 m("T3 · Físico · lado do cronograma", P_SERIE, INT,
   "Lado do cronograma pelo desvio físico acumulado arredondado a uma casa, como a tela mostra: −1 atrás, 0 no "
   "previsto (previsto igual ao executado na planilha), 1 à frente; vazio sem previsto (JANGADA). Obra do contexto.",
