@@ -480,7 +480,7 @@ desenho(
         "\"LINHA DO TEMPO · OBRA SEM ABA EM \" & _mesCM )",
         "    )",
         "VAR _posC = SEARCH ( \" CONSTRU\", _spe, 1, 0 )",
-        "VAR _txtSpe = IF ( ISBLANK ( _spe ) || _spe = \"—\", \"\", IF ( _posC > 0, LEFT ( _spe, _posC - 1 ), _spe ) & \" SPE · \" )",
+        "VAR _txtSpe = IF ( ISBLANK ( _spe ) || _spe = \"—\", \"\", IF ( _posC > 0, LEFT ( _spe, _posC - 1 ) & \" SPE\", _spe ) & \" · \" )",
         "VAR _txtDir = IF ( _andamento, _txtSpe, \"\" ) & IF ( ISBLANK ( _m2 ), \"\", " + C.marca('FORMAT ( _m2, "#,0", "pt-BR" )') + " & \" M² NBR\" )",
         "VAR _seloUso = IF ( _selo = \"\" || ISBLANK ( _selo ), IF ( _sit = \"A iniciar\", \"cronograma\", \"\" ), _selo )",
         "VAR _txtCod = IF ( ISBLANK ( _cod ) || _cod = \"—\", \"\", _cod )",

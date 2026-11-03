@@ -170,6 +170,8 @@ CSS_F4 = (".tt{display:flex;flex-direction:column}.tt .cab{flex:none}"
           # altura de linha proporcional: com a fonte da faixa e1 (~20 px), a de 21 px fixa cortava o alto e o pé das
           # letras na caixa de overflow escondido do nome
           ".tt .corpo .ls>.lin>span{line-height:1.3}"
+          # a série mês a mês tem altura fixa: o que sobra no corpo fica em volta dela, sem faixa em branco embaixo
+          ".tt .corpo>.ser{margin-block:auto}"
           ".tt .fx.ls{display:grid;grid-auto-rows:minmax(0,1fr);align-content:stretch}.tt .fx.ls .f{height:auto}"
           # conta do mês (página de 620): nome 210 e valor 120 para a escala; o detalhe fica em 14 e cabe inteiro
           ".tt .lin.cf{grid-template-columns:20px 210px 120px 1fr}")

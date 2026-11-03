@@ -9,13 +9,14 @@ flexível e a lista tem flex 1), limitada a n × a altura máxima da linha da fa
 Com poucas linhas, linhas mais altas e fonte maior; com muitas, linhas e fonte menores, até o piso de 13 px:
 
     faixa  linhas   altura máx. da linha   fator da fonte
-    e1     ≤ 3      96                     1,35
-    e2     4–6      64                     1,20
+    e1     ≤ 3      130                    1,35
+    e2     4–6      80                     1,20
     e3     7–9      52                     1,08
     e4     10–12    40                     0,95
     e5     ≥ 13     32                     0,87
 
 O teto é folgado de propósito: a lista quase sempre ocupa o corpo inteiro; ele só impede uma ou duas linhas gigantes.
+Quando sobra espaço mesmo no teto, a lista fica centrada no que restou, sem deixar a sobra toda embaixo.
 
 O fator vale para os corpos de fonte que cada tooltip passa a css_escala (seletor → px de antes), com piso de 13 px.
 
@@ -29,7 +30,7 @@ from __future__ import annotations
 import contador as C
 
 LINHAS_MAX = 14
-FAIXAS = [(3, 1, 96, "1.35"), (6, 2, 64, "1.2"), (9, 3, 52, "1.08"), (12, 4, 40, ".95"), (None, 5, 32, ".87")]
+FAIXAS = [(3, 1, 130, "1.35"), (6, 2, 80, "1.2"), (9, 3, 52, "1.08"), (12, 4, 40, ".95"), (None, 5, 32, ".87")]
 PISO_PX = 13
 
 
@@ -49,7 +50,7 @@ def css_escala(fontes: dict[str, int], grade: bool = False, linha: str = ".tt .l
     display:contents): as linhas viram grid-auto-rows de 1fr; senão é uma coluna flexível com linhas de flex 1."""
     faixas = "".join(f".tt .e{k}{{--k:{f};--hm:{h}px}}" for _l, k, h, f in FAIXAS)
     base = (".tt .corpo{display:flex;flex-direction:column}"
-            ".tt .ls{flex:1 1 auto;min-height:0;max-height:calc(var(--n,9) * var(--hm,36px))}")
+            ".tt .ls{flex:1 1 auto;min-height:0;max-height:calc(var(--n,9) * var(--hm,36px));margin-block:auto}")
     if grade:
         base += ".tt .ls{grid-auto-rows:minmax(0,1fr);align-content:stretch}"
     else:

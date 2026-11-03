@@ -722,7 +722,8 @@ desenho(
         "        \"@tem\", [Obras com análise],",
         "        \"@t\", [Justificativa do desembolso],",
         "        \"@e\", [Justificativa · exigida],",
-        "        \"@b\", [Justificativa · em branco]",
+        "        \"@b\", [Justificativa · em branco],",
+        "        \"@d\", [Desembolso · desvio no mês]",
         "    )",
         "/* histórico: os 5 meses antes da referência, um por linha; os anteriores viram a linha de resumo */",
         "VAR _jusMeses = FILTER ( _jus, [@ate] = 1 && [@tem] > 0 && dMes[Mes] >= EDATE ( _ref, -5 ) && dMes[Mes] < _ref ) "
@@ -744,6 +745,7 @@ desenho(
         "VAR _txtRod =",
         "    SWITCH (",
         "        TRUE (),",
+        "        _ex = 0 && _nAba = 1, \"Dentro de ±10% no único mês: nenhuma justificativa exigida.\",",
         "        _ex = 0, \"Dentro de ±10% nos \" & " + extenso("_nAba", fem=False)
         + " & \" meses: nenhuma justificativa exigida.\",",
         "        _pre = _ex,",
@@ -800,7 +802,8 @@ desenho(
         "                [@b] = 1, \"<span class='chp'><i></i>Em branco · exigida</span>\",",
         "                NOT ISBLANK ( _t ) && _t <> \"\", \"<span class='t'>\" & " + D.esc("_t") + " & \"</span>\",",
         "                ISBLANK ( [@e] ), \"<span class='t ne'>sem previsto no mês</span>\",",
-        "                \"<span class='t ne'>não exigida (dentro de ±10%)</span>\"",
+        "                \"<span class='t ne'>desvio \" & IF ( [@d] < 0, \"" + MENOS + "\", \"+\" ) & FORMAT ( ABS ( [@d] ) * 100, \"0\", \"pt-BR\" ) "
+        "& \"%, dentro de ±10%: não exigida</span>\"",
         "            )",
         "        RETURN",
         "            \"<div class='jl\" & _clsJl & \"'><span class='m'>\" & [@rot] & \"</span>\" & _cel & \"</div>\",",
@@ -818,7 +821,8 @@ desenho(
         "            & \"<div class='rg'></div><div class='bh'><span class='vs'>JUSTIFICATIVA DE \" & _mesCM & \"</span>\"",
         "            & \"<span class='vs'>\" & _txtDirR & \"</span></div><div class='jr'>\" & _htmlRef & \"</div>\"",
         "            & IF (",
-        "                _ex > 0 && _nHist + _rMeses > 0,",
+        # sem nada exigido, a lista também aparece (com o desvio de cada mês): sem ela, metade do tooltip ficava em branco
+        "                _nHist + _rMeses > 0,",
         "                \"<div class='rg'></div><div class='bh'><span class='vs'>NOS MESES ANTERIORES</span>\"",
         "                    & \"<span class='vs'>EXIGIDA ACIMA DE ±10%</span></div><div class='jls\" & " + TL.atributos("_nJl") + "'>\" & _htmlJus & \"</div>\"",
         "            )",
