@@ -1,1 +1,1 @@
-ANDANDO T2 pronta; montando modelo e PBIP, depois a entrada do canal
+PRONTO 9572f83 · hover comum nas cinco telas (parte sob o mouse plena, vizinhas a 0,45, véu nas camadas) e tooltip em todo gráfico (novos: ttT2Nota, ttT2Des, ttT5Qua, ttT5Seg, ttT5Sup); entrada no canal com inventário e fotos em canal/provas/hover
