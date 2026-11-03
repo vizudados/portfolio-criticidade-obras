@@ -621,7 +621,8 @@ desenho(
         "VAR _txtTend =",
         "    SWITCH (",
         "        _ld,",
-        "        -1, \"; o atraso \" & SWITCH ( _td, \"cresce\", \"cresce\", \"cai\", \"vem caindo\", \"estável\", \"está estável\", \"oscila\" ) & \" desde \"",
+        # o rodapé tem uma linha: "; o atraso está estável desde" passava 3 px dela
+        "        -1, SWITCH ( _td, \"cresce\", \"; o atraso cresce\", \"cai\", \"; o atraso vem caindo\", \"estável\", \"; atraso estável\", \"; o atraso oscila\" ) & \" desde \"",
         "            & " + desde("_tdd") + ",",
         "        0, IF ( _sg = _pm1 && _n > 1, \"; no previsto nos \" & " + extenso("_n") + " & \" meses\", \"; no previsto desde \" & "
         + desde("_sg") + " ),",
