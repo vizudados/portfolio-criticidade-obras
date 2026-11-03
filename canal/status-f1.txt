@@ -1,1 +1,1 @@
-ANDANDO versos cabendo nos 25 cartões (prévia na fonte mais larga daqui); montando o modelo e o PBIP
+PRONTO e9025d7 · verso dos 25 cartões em coluna flexível comum (régua e origem quebram linha, 13/17 nos textos longos), réguas da T3/T5 sem o nome da variável, frases mais curtas na T5 e no Término (antes e depois no canal), "nenhuma acima" na frente da Frequência; fotos em canal/provas/verso
