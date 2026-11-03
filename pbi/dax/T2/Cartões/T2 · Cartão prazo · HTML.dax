@@ -57,7 +57,7 @@ VAR _saidaHtml =
             & "<p class='ab vs v1'>COMO É CALCULADO</p>"
             & "<p class='regra'>Meses atrás do cronograma: o executado de hoje é o previsto de quando.</p>"
             & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Planilha e cronograma</span></div>"
-            & "<div class='regua'>" & "<i class='mk mk0'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fx1, "<", "&lt;" ), ">", "&gt;" ) & "</span>" & "<i class='mk mk2'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fx2c, "<", "&lt;" ), ">", "&gt;" ) & "</span>" & "</div>"
+            & "<div class='regua'>" & "<span class='it'><i class='mk mk0'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fx1, "<", "&lt;" ), ">", "&gt;" ) & "</span></span>" & "<span class='it'><i class='mk mk2'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fx2c, "<", "&lt;" ), ">", "&gt;" ) & "</span></span>" & "</div>"
         & "</div>"
     & "</div>" & [Comum · JS contador]
 VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )

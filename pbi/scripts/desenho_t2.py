@@ -122,24 +122,25 @@ def faixa_html(expr: str) -> str:
 # ======================================================================================================== cartões
 def regua(itens) -> str:
     """Expressão DAX da régua do verso. Cada item é (classe da marca, texto): o texto é um literal ou, quando começa
-    com '=', uma expressão DAX (faixas lidas do modelo; nenhum limite da nota fica escrito aqui)."""
+    com '=', uma expressão DAX (faixas lidas do modelo; nenhum limite da nota fica escrito aqui). Cada faixa com a marca
+    num .it (Comum · CSS cartão: a régua quebra entre as faixas, nunca entre a marca e o texto)."""
     partes = []
     for c, t in itens:
         mk = f"<i class='mk {c}'></i>" if c else ""
         if t.startswith("="):
-            partes.append(f"\"{mk}<span>\" & {t[1:]} & \"</span>\"")
+            partes.append(f"\"<span class='it'>{mk}<span>\" & {t[1:]} & \"</span></span>\"")
         else:
-            partes.append(f"\"{mk}<span>{t}</span>\"")
+            partes.append(f"\"<span class='it'>{mk}<span>{t}</span></span>\"")
     return " & ".join(partes)
 
 
 def cartao(chave, eb, leituras_, textos, hero, lado, ctx, regra, origem, regua_itens, escuro=False, anima=(), desc="",
-           hero_p=None, lado_p=None, nome=None):
+           hero_p=None, lado_p=None, nome=None, vz=False):
     """Cartão v2 com flip (frente e verso no mesmo visual; CSS 'T2 · Cartão · CSS'). `eb`, `hero`, `lado` e `ctx` são
     expressões DAX de texto (ctx já com a marca ou o chip em HTML). `hero_p`/`lado_p`: prefixo do formatador cujo sinal
     decide o vermelho (.ng). Verso na geometria comum: "DE ONDE VEM" em y 82 com régua e 106 sem régua."""
     topo_ond = 82 if regua_itens else 106
-    verso = ("\"<div class='lado verso sobre-creme'>\"\n"
+    verso = (f"\"<div class='lado verso sobre-creme{' vz' if vz else ''}'>\"\n"
              "            & \"<p class='ab vs v1'>COMO É CALCULADO</p>\"\n"
              f"            & \"<p class='regra'>{regra}</p>\"\n"
              f"            & \"<div class='ond' style='top:{topo_ond}px'><span class='vs'>DE ONDE VEM</span>"
@@ -209,7 +210,7 @@ cartao(
     "Soma dos nove itens, de 0 a 10; IDC &lt; 0,90 ou atraso &gt; 3 meses: crítica.", "Planilha, base e cronograma",
     [("mk2", "=" + faixa_html("_fxC")), ("mk1", "=" + faixa_html("_fxA")), ("mk0", "=" + faixa_html("_fxE")),
      ("mkm", "pendente")],
-    escuro=True, anima=D.od_num("_odV", "_tn"), nome="T2 · Cartão nota da obra · HTML",
+    escuro=True, anima=D.od_num("_odV", "_tn"), nome="T2 · Cartão nota da obra · HTML", vz=True,
     desc="Cartão 'Nota da obra' da obra em foco no mês de referência (o escuro): a nota e o chip de status (crítico, "
          "atenção, estável; com a trava, o motivo) ou, sem a base completa, pendente com os pontos obtidos de quantos já "
          "dá para calcular. O verso diz a régua e as faixas de status (lidas das medidas). Só lê contas · foco.")

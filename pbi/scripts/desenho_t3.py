@@ -69,16 +69,18 @@ css("T3 · Cartão · CSS", rf"{TELA}\Cartões",
 
 
 def regua(itens: list[tuple[str, str]]) -> str:
-    return "".join(f"<i class='mk {c}'></i><span>{t}</span>" for c, t in itens)
+    """Régua do verso: cada faixa com a marca num .it (Comum · CSS cartão: quebra entre faixas, não dentro de uma)."""
+    return "".join(f"<span class='it'><i class='mk {c}'></i><span>{t}</span></span>" for c, t in itens)
 
 
 def cartao(chave: str, eyebrow: str, leituras: list[tuple[str, str]], textos: list[str], hero: str, lado: str | None,
            ctx: str, regra: str, origem: str, regua_itens: list | None, escuro: bool = False, desc: str = "",
-           anima: list[str] | None = None, hero_ng: str | None = None) -> None:
+           anima: list[str] | None = None, hero_ng: str | None = None, vz: bool = False) -> None:
     """Cartão com flip (o mesmo desenho de desenho_t1.cartao). `eyebrow` é uma expressão DAX de texto (o do 'No mês'
-    traz o mês); `hero`, `lado` e `ctx` são expressões DAX de texto já formatado; `anima` = linhas D.od_*."""
+    traz o mês); `hero`, `lado` e `ctx` são expressões DAX de texto já formatado; `anima` = linhas D.od_*; `vz` = verso
+    com texto longo (13/17, Comum · CSS cartão)."""
     topo_ond = 82 if regua_itens else 106          # verso v2: "DE ONDE VEM" em y 82 com régua, 106 sem
-    verso = ("\"<div class='lado verso sobre-creme'>\"\n"
+    verso = (f"\"<div class='lado verso sobre-creme{' vz' if vz else ''}'>\"\n"
              "            & \"<p class='ab vs v1'>COMO É CALCULADO</p>\"\n"
              f"            & \"<p class='regra'>\" & {D.texto(regra)} & \"</p>\"\n"
              f"            & \"<div class='ond' style='top:{topo_ond}px'><span class='vs'>DE ONDE VEM</span>"
@@ -122,9 +124,17 @@ def marca_item(pts: str, poss: str) -> str:
     return f'IF ( {c} = "", "", "<i class=\'mk mk" & {c} & "\'></i>" )'
 
 
-def faixas_item(cod: str, p: str) -> list[str]:
+def var_item(cod: str) -> str:
+    """O nome da variável nas faixas do item ("atraso", "PPC"), do dicionário NOTA (contas_base, fonte única)."""
+    import contas_base as CB
+    return CB.NOTA_VAR_ITEM.get(cod, CB.NOTA_VAR[CB.nota_item(cod)["unid"]])
+
+
+def faixas_item(cod: str, p: str, curta: bool = False) -> list[str]:
     """VARs {p}1 e {p}N: a primeira e a última faixa do item com os pontos ("atraso ≤ 0,5 mês → 2"); {p}1s e {p}Ns
-    sem os pontos ("atraso ≤ 0,5 mês"). Texto do modelo, < e > escapados para HTML."""
+    sem os pontos ("atraso ≤ 0,5 mês"); com `curta`, também {p}1c e {p}Nc sem o nome da variável ("≤ 0,5 mês → 2"),
+    para a régua do verso caber numa linha (03/11/2026: a regra do verso já diz qual é a variável). Texto do modelo, < e > escapados para
+    HTML."""
     def h(x: str) -> str:
         return f'SUBSTITUTE ( SUBSTITUTE ( {x}, "<", "&lt;" ), ">", "&gt;" )'
 
@@ -133,7 +143,9 @@ def faixas_item(cod: str, p: str) -> list[str]:
     return [f'VAR {p} = SUBSTITUTE ( CALCULATE ( [Nota · item · faixas], dItemNota[Item] = "{cod}" ), " · ", "|" )',
             f'VAR {p}a = PATHITEM ( {p}, 1 )', f'VAR {p}z = PATHITEM ( {p}, PATHLENGTH ( {p} ) )',
             f'VAR {p}1 = {h(p + "a")}', f'VAR {p}N = {h(p + "z")}',
-            f'VAR {p}1s = {h(sem(p + "a"))}', f'VAR {p}Ns = {h(sem(p + "z"))}']
+            f'VAR {p}1s = {h(sem(p + "a"))}', f'VAR {p}Ns = {h(sem(p + "z"))}'] + (
+        [f'VAR {p}1c = {h(f"SUBSTITUTE ( {p}a, \"{var_item(cod)} \", \"\" )")}',
+         f'VAR {p}Nc = {h(f"SUBSTITUTE ( {p}z, \"{var_item(cod)} \", \"\" )")}'] if curta else [])
 
 
 def pts_txt(p: str, pts: str, poss: str) -> list[str]:
@@ -144,6 +156,8 @@ def pts_txt(p: str, pts: str, poss: str) -> list[str]:
 
 # faixas da nota (texto do modelo, "atraso ≤ 0,5 mês → 2") na régua do verso: o primeiro número conta
 REGUA_FX = [("mk0", '" & ' + C.marca("_fx1") + ' & "'), ("mk2", '" & ' + C.marca("_fxN") + ' & "')]
+# a mesma, sem o nome da variável ("≤ 0,5 mês → 2"): o verso do atraso não cabe com "atraso" duas vezes na régua
+REGUA_FX_C = [("mk0", '" & ' + C.marca("_fx1c") + ' & "'), ("mk2", '" & ' + C.marca("_fxNc") + ' & "')]
 
 
 cartao(
@@ -154,12 +168,12 @@ cartao(
      'VAR _taN = FORMAT ( _taA, "0.0", "pt-BR" )', 'VAR _taTxt = IF ( ISBLANK ( _atr ), "—", _taN )',
      'VAR _txtUn = IF ( _taA <= 1, "mês", "meses" )',
      'VAR _txtLado = IF ( ISBLANK ( _atr ), "", IF ( ROUND ( _atr, 1 ) < 0, _txtUn & " à frente", _txtUn ) )']
-    + pts_txt("_tk", "_ptf", "_psf") + faixas_item("prazo", "_fx") + [
+    + pts_txt("_tk", "_ptf", "_psf") + faixas_item("prazo", "_fx", curta=True) + [
         "VAR _txtCtx = IF ( ISBLANK ( _atr ), \"sem curva prevista\", " + marca_item("_ptf", "_psf")
         + " & \"item prazo da nota: \" & _tkTxt )"],
     "_taOd", "_txtLado", "_txtCtx",
     "Meses decorridos menos meses agregados: o executado de hoje é o previsto de quantos meses atrás.",
-    "Planilha e cronograma", REGUA_FX, escuro=True,
+    "Planilha e cronograma", REGUA_FX_C, escuro=True, vz=True,
     desc="Cartão escuro do atraso da obra em foco em meses (cronograma agregado, Lipke), a resposta da pergunta da "
          "tela, com a marca e os pontos do item prazo da nota; o verso traz a regra e a primeira e a última faixa do "
          "item (lidas do modelo). Sem curva prevista: '—'. Só lê contas · foco.",
@@ -210,8 +224,9 @@ cartao(
      "VAR _txtCtx = SWITCH ( TRUE (), ISBLANK ( _ent ), \"sem entrega no cadastro\", ISBLANK ( _proj ), "
      "\"sem curva prevista · entrega \" & _txtEnt, \"<i class='mk mk\" & _sit & \"'></i>entrega \" & _txtEnt & \" · limite \" & _txtTol )"],
     "_txtProj", None, "_txtCtx",
-    "Início + duração prevista ÷ IDP(t), o ritmo de prazo pelo cronograma agregado. Limite: a entrega + 180 dias.",
-    "Cronograma, planilha e cadastro", [("mk0", "até a entrega"), ("mk1", "nos 180 dias"), ("mk2", "depois deles")],
+    "Início + duração ÷ IDP(t), o ritmo do cronograma. Limite: entrega + 180 dias.",
+    "Cronograma, planilha e cadastro", [("mk0", "na entrega"), ("mk1", "nos 180 dias"), ("mk2", "depois")],
+    vz=True,
     desc="Cartão do término projetado da obra em foco (Lipke, IEAC(t)), com a entrega contratual e a entrega com os 180 "
          "dias de tolerância (Lei 4.591/64, art. 43-A) no contexto; a marca diz onde o término projetado cai: até a "
          "entrega, nos 180 dias ou depois deles. Datas não contam. Só lê contas · foco.")

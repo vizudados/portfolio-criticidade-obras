@@ -6029,10 +6029,13 @@ table _Medidas
 			    & "top:40px;display:flex;align-items:baseline;gap:6px;white-space:nowrap}.kc .ctx .mk{margin-right:6px}.kc .hero{font-size:42px;line-height:50px}.kc .lado2{font-size:17px;line-height:"
 			    & "21px;color:#3B3B3F}.kc .ctx{position:absolute;left:20px;top:102px;width:262px;font-size:14px;line-height:19px;color:#3B3B3F;white-space:nowrap;overflow:hidden;text-overflow:ellipsi"
 			    & "s}.kc.escuro .frente .vs{color:#E9E0CF}.kc.escuro .frente .hero{color:#FFFFFF}.kc.escuro .frente .lado2{color:#E9E0CF}.kc.escuro .frente .ctx{color:rgba(233,224,207,.85)}.kc .verso"
-			    & " .v1{left:20px;top:16px}.kc .verso .regra{position:absolute;left:20px;top:36px;width:262px;font-size:14px;line-height:19px;color:#0B0B0C;white-space:normal}.kc .verso .ond{position"
-			    & ":absolute;left:20px;display:flex;align-items:baseline;gap:0;white-space:nowrap}.kc .verso .ond .vs{width:93px;flex:none}.kc .verso .ond span+span{font-size:14px;line-height:19px;co"
-			    & "lor:#0B0B0C}.kc .verso .regua{position:absolute;left:20px;top:106px;display:flex;align-items:center;gap:6px;font-size:14px;line-height:19px;white-space:nowrap;color:#3B3B3F}.kc .ve"
-			    & "rso .regua .mk{margin-left:8px}.kc .verso .regua .mk:first-child{margin-left:0}"
+			    & "{display:flex;flex-direction:column;align-items:stretch;padding:14px 20px 9px;box-sizing:border-box}.kc .verso>*{position:static!important;flex:none;margin:0;max-width:262px}.kc .v"
+			    & "erso .v1{margin-bottom:5px}.kc .verso .regra{font-size:14px;line-height:19px;color:#0B0B0C;white-space:normal}.kc .verso .ond{margin-top:auto;padding-top:5px;display:flex;align-ite"
+			    & "ms:baseline;white-space:normal}.kc .verso .ond .vs{width:93px;flex:none}.kc .verso .ond span+span{flex:1 1 auto;min-width:0;font-size:14px;line-height:19px;color:#0B0B0C}.kc .verso"
+			    & " .regua{margin-top:3px;display:flex;flex-wrap:wrap;align-items:center;column-gap:6px;row-gap:1px;font-size:14px;line-height:19px;white-space:nowrap;color:#3B3B3F}.kc .verso.vz .reg"
+			    & "ra,.kc .verso.vz .ond span+span,.kc .verso.vz .regua{font-size:13px;line-height:17px}.kc .verso .regua .mk{margin-left:4px}.kc .verso .regua .mk:first-child{margin-left:0}.kc .vers"
+			    & "o .regua .it{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;margin-left:4px}.kc .verso .regua .it:first-child{margin-left:0}.kc .verso .regua .it .mk{margin-left"
+			    & ":0}"
 		displayFolder: Comum\Desenho
 		lineageTag: ca1e3d5f-bff5-50c7-a986-9696b0403dae
 
@@ -22631,11 +22634,11 @@ table _Medidas
 			            & "<div class='linha1'><span class='b6 hero'>" & _tnOd & "</span>" & "<span class='b5 lado2'>" & IF ( _pend = 1, "de " & "⁅" & _nPo & "⁆", "" ) & "</span>" & "</div>"
 			            & "<p class='ctx'>" & _txtCtx & "</p>"
 			        & "</div>"
-			        & "<div class='lado verso sobre-creme'>"
+			        & "<div class='lado verso sobre-creme vz'>"
 			            & "<p class='ab vs v1'>COMO É CALCULADO</p>"
 			            & "<p class='regra'>Soma dos nove itens, de 0 a 10; IDC &lt; 0,90 ou atraso &gt; 3 meses: crítica.</p>"
 			            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Planilha, base e cronograma</span></div>"
-			            & "<div class='regua'>" & "<i class='mk mk2'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fxC, "<", "&lt;" ), ">", "&gt;" ) & "</span>" & "<i class='mk mk1'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fxA, "<", "&lt;" ), ">", "&gt;" ) & "</span>" & "<i class='mk mk0'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fxE, "<", "&lt;" ), ">", "&gt;" ) & "</span>" & "<i class='mk mkm'></i><span>pendente</span>" & "</div>"
+			            & "<div class='regua'>" & "<span class='it'><i class='mk mk2'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fxC, "<", "&lt;" ), ">", "&gt;" ) & "</span></span>" & "<span class='it'><i class='mk mk1'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fxA, "<", "&lt;" ), ">", "&gt;" ) & "</span></span>" & "<span class='it'><i class='mk mk0'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fxE, "<", "&lt;" ), ">", "&gt;" ) & "</span></span>" & "<span class='it'><i class='mk mkm'></i><span>pendente</span></span>" & "</div>"
 			        & "</div>"
 			    & "</div>" & [Comum · JS contador]
 			VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
@@ -22748,7 +22751,7 @@ table _Medidas
 			            & "<p class='ab vs v1'>COMO É CALCULADO</p>"
 			            & "<p class='regra'>Meses atrás do cronograma: o executado de hoje é o previsto de quando.</p>"
 			            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Planilha e cronograma</span></div>"
-			            & "<div class='regua'>" & "<i class='mk mk0'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fx1, "<", "&lt;" ), ">", "&gt;" ) & "</span>" & "<i class='mk mk2'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fx2c, "<", "&lt;" ), ">", "&gt;" ) & "</span>" & "</div>"
+			            & "<div class='regua'>" & "<span class='it'><i class='mk mk0'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fx1, "<", "&lt;" ), ">", "&gt;" ) & "</span></span>" & "<span class='it'><i class='mk mk2'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fx2c, "<", "&lt;" ), ">", "&gt;" ) & "</span></span>" & "</div>"
 			        & "</div>"
 			    & "</div>" & [Comum · JS contador]
 			VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
@@ -27340,6 +27343,8 @@ table _Medidas
 			VAR _fxN = SUBSTITUTE ( SUBSTITUTE ( _fxz, "<", "&lt;" ), ">", "&gt;" )
 			VAR _fx1s = SUBSTITUTE ( SUBSTITUTE ( LEFT ( _fxa, SEARCH ( " →", _fxa, 1, LEN ( _fxa ) + 1 ) - 1 ), "<", "&lt;" ), ">", "&gt;" )
 			VAR _fxNs = SUBSTITUTE ( SUBSTITUTE ( LEFT ( _fxz, SEARCH ( " →", _fxz, 1, LEN ( _fxz ) + 1 ) - 1 ), "<", "&lt;" ), ">", "&gt;" )
+			VAR _fx1c = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxa, "atraso ", "" ), "<", "&lt;" ), ">", "&gt;" )
+			VAR _fxNc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxz, "atraso ", "" ), "<", "&lt;" ), ">", "&gt;" )
 			VAR _txtCtx = IF ( ISBLANK ( _atr ), "sem curva prevista", IF ( IF ( ISBLANK ( _ptf ), "", IF ( _ptf >= _psf, "0", IF ( _ptf = 0, "2", "1" ) ) ) = "", "", "<i class='mk mk" & IF ( ISBLANK ( _ptf ), "", IF ( _ptf >= _psf, "0", IF ( _ptf = 0, "2", "1" ) ) ) & "'></i>" ) & "item prazo da nota: " & _tkTxt )
 			/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
 			VAR _odQ =
@@ -27373,11 +27378,11 @@ table _Medidas
 			            & "<div class='linha1'><span class='b6 hero'>" & _taOd & "</span>" & "<span class='b5 lado2'>" & _txtLado & "</span>" & "</div>"
 			            & "<p class='ctx'>" & _txtCtx & "</p>"
 			        & "</div>"
-			        & "<div class='lado verso sobre-creme'>"
+			        & "<div class='lado verso sobre-creme vz'>"
 			            & "<p class='ab vs v1'>COMO É CALCULADO</p>"
 			            & "<p class='regra'>" & "Meses decorridos menos meses agregados: o executado de hoje é o previsto de quantos meses atrás." & "</p>"
 			            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Planilha e cronograma</span></div>"
-			            & "<div class='regua'><i class='mk mk0'></i><span>" & "⁅" & _fx1 & "⁆" & "</span><i class='mk mk2'></i><span>" & "⁅" & _fxN & "⁆" & "</span></div>"
+			            & "<div class='regua'><span class='it'><i class='mk mk0'></i><span>" & "⁅" & _fx1c & "⁆" & "</span></span><span class='it'><i class='mk mk2'></i><span>" & "⁅" & _fxNc & "⁆" & "</span></span></div>"
 			        & "</div>"
 			    & "</div>" & [Comum · JS contador]
 			VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
@@ -27680,7 +27685,7 @@ table _Medidas
 			            & "<p class='ab vs v1'>COMO É CALCULADO</p>"
 			            & "<p class='regra'>" & "Tarefas concluídas ÷ prometidas no plano semanal, na média do mês: o sinal que chega antes do atraso." & "</p>"
 			            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Base complementar</span></div>"
-			            & "<div class='regua'><i class='mk mk0'></i><span>" & "⁅" & _fx1 & "⁆" & "</span><i class='mk mk2'></i><span>" & "⁅" & _fxN & "⁆" & "</span></div>"
+			            & "<div class='regua'><span class='it'><i class='mk mk0'></i><span>" & "⁅" & _fx1 & "⁆" & "</span></span><span class='it'><i class='mk mk2'></i><span>" & "⁅" & _fxN & "⁆" & "</span></span></div>"
 			        & "</div>"
 			    & "</div>" & [Comum · JS contador]
 			VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
@@ -27759,11 +27764,11 @@ table _Medidas
 			            & "<div class='linha1'><span class='b6 hero'>" & _txtProj & "</span>" & "</div>"
 			            & "<p class='ctx'>" & _txtCtx & "</p>"
 			        & "</div>"
-			        & "<div class='lado verso sobre-creme'>"
+			        & "<div class='lado verso sobre-creme vz'>"
 			            & "<p class='ab vs v1'>COMO É CALCULADO</p>"
-			            & "<p class='regra'>" & "Início + duração prevista ÷ IDP(t), o ritmo de prazo pelo cronograma agregado. Limite: a entrega + 180 dias." & "</p>"
+			            & "<p class='regra'>" & "Início + duração ÷ IDP(t), o ritmo do cronograma. Limite: entrega + 180 dias." & "</p>"
 			            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Cronograma, planilha e cadastro</span></div>"
-			            & "<div class='regua'><i class='mk mk0'></i><span>até a entrega</span><i class='mk mk1'></i><span>nos 180 dias</span><i class='mk mk2'></i><span>depois deles</span></div>"
+			            & "<div class='regua'><span class='it'><i class='mk mk0'></i><span>na entrega</span></span><span class='it'><i class='mk mk1'></i><span>nos 180 dias</span></span><span class='it'><i class='mk mk2'></i><span>depois</span></span></div>"
 			        & "</div>"
 			    & "</div>"
 		displayFolder: T3 Avanço físico\Cartões
@@ -37526,7 +37531,7 @@ table _Medidas
 			VAR _txtLado = IF ( ISBLANK ( _n ), "", IF ( _n = 1, "mês", "meses" ) )
 			VAR _txtObras = SUBSTITUTE ( _lst, "|", ", " )
 			VAR _txtCtx = SWITCH ( TRUE (), ISBLANK ( _ini ), "falta na base", ISBLANK ( _ult ), "nenhum desde " & FORMAT ( _ini, "mmm/yy", "pt-BR" ), "o último em " & FORMAT ( _ult, "mmm/yy", "pt-BR" ) & " · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _txtObras, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ) )
-			VAR _txtRegra = "Meses seguidos sem acidente com afastamento em nenhuma obra, depois do último mês com acidente. A base é mensal: não traz o dia."
+			VAR _txtRegra = "Meses seguidos sem acidente com afastamento (NBR 14280) em nenhuma obra, depois do último mês com acidente. A base é mensal: não traz o dia."
 			/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
 			VAR _odQ =
 			    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
@@ -37559,10 +37564,10 @@ table _Medidas
 			            & "<div class='linha1'><span class='b6 hero'>" & _tnOd & "</span>" & "<span class='b5 lado2'>" & _txtLado & "</span>" & "</div>"
 			            & "<p class='ctx'>" & _txtCtx & "</p>"
 			        & "</div>"
-			        & "<div class='lado verso sobre-creme'>"
+			        & "<div class='lado verso sobre-creme vz'>"
 			            & "<p class='ab vs v1'>COMO É CALCULADO</p>"
 			            & "<p class='regra'>" & _txtRegra & "</p>"
-			            & "<div class='ond' style='top:106px'><span class='vs'>DE ONDE VEM</span><span>Base complementar · NBR 14280</span></div>"
+			            & "<div class='ond' style='top:106px'><span class='vs'>DE ONDE VEM</span><span>Base complementar</span></div>"
 			        & "</div>"
 			    & "</div>" & [Comum · JS contador]
 		displayFolder: T5 Canteiro\Cartões
@@ -37583,12 +37588,12 @@ table _Medidas
 			VAR _tlTxt = IF ( ISBLANK ( _lim ), "—", _tlS & _tlN & "%" )
 			VAR _toTxt = IF ( _abx = 0, "nenhuma obra abaixo", IF ( _abx = 1, "1 obra abaixo", "⁅" & _abx & "⁆" & " obras abaixo" ) )
 			VAR _txtCtx = IF ( ISBLANK ( _x ), "falta na base", "meta " & "⁅" & _tlTxt & "⁆" & " · " & _toTxt )
-			VAR _txtRegra = "Pedidos entregues no prazo e completos ÷ pedidos com entrega prevista no mês, com as obras somadas. Na nota, por obra:"
+			VAR _txtRegra = "Pedidos no prazo e completos ÷ pedidos previstos no mês, obras somadas. Na nota, por obra:"
 			VAR _fx = SUBSTITUTE ( CALCULATE ( [Nota · item · faixas], dItemNota[Item] = "entregas" ), " · ", "|" )
 			VAR _fxa = PATHITEM ( _fx, 1 )
 			VAR _fxz = PATHITEM ( _fx, PATHLENGTH ( _fx ) )
-			VAR _fx1 = SUBSTITUTE ( SUBSTITUTE ( _fxa, "<", "&lt;" ), ">", "&gt;" )
-			VAR _fxN = SUBSTITUTE ( SUBSTITUTE ( _fxz, "<", "&lt;" ), ">", "&gt;" )
+			VAR _fx1 = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxa, "entregas ", "" ), "<", "&lt;" ), ">", "&gt;" )
+			VAR _fxN = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxz, "entregas ", "" ), "<", "&lt;" ), ">", "&gt;" )
 			/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
 			VAR _odQ =
 			    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
@@ -37621,11 +37626,11 @@ table _Medidas
 			            & "<div class='linha1'><span class='b6 hero'>" & _txOd & "</span>" & "</div>"
 			            & "<p class='ctx'>" & _txtCtx & "</p>"
 			        & "</div>"
-			        & "<div class='lado verso sobre-creme'>"
+			        & "<div class='lado verso sobre-creme vz'>"
 			            & "<p class='ab vs v1'>COMO É CALCULADO</p>"
 			            & "<p class='regra'>" & _txtRegra & "</p>"
-			            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Base complementar · pedidos</span></div>"
-			            & "<div class='regua'><i class='mk mk0'></i><span>" & _fx1 & "</span><i class='mk mk2'></i><span>" & _fxN & "</span></div>"
+			            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Base complementar</span></div>"
+			            & "<div class='regua'><span class='it'><i class='mk mk0'></i><span>" & _fx1 & "</span></span><span class='it'><i class='mk mk2'></i><span>" & _fxN & "</span></span></div>"
 			        & "</div>"
 			    & "</div>" & [Comum · JS contador]
 			VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
@@ -37697,9 +37702,9 @@ table _Medidas
 			VAR _tsTxt = IF ( ISBLANK ( _set ), "—", _tsN )
 			VAR _a = _ac + 0
 			VAR _txtAc = IF ( _a = 1, "1 acidente", "⁅" & _a & "⁆" & " acidentes" )
-			VAR _txtAcima = IF ( _acima = 0, "nenhuma obra acima", IF ( _acima = 1, "1 obra acima", "⁅" & _acima & "⁆" & " obras acima" ) )
+			VAR _txtAcima = IF ( _acima = 0, "nenhuma acima", IF ( _acima = 1, "1 obra acima", "⁅" & _acima & "⁆" & " obras acima" ) )
 			VAR _txtCtx = IF ( ISBLANK ( _tf ), "falta na base", _txtAc & " · setor " & "⁅" & _tsTxt & "⁆" & " · " & _txtAcima )
-			VAR _txtRegra = "Acidentes com afastamento × 1.000.000 ÷ horas-homem trabalhadas nos 12 meses até o mês, com as obras somadas (NBR 14280). Na nota, por obra:"
+			VAR _txtRegra = "Acidentes com afastamento × 1 milhão ÷ horas-homem em 12 meses, obras somadas (NBR 14280). Na nota, por obra:"
 			VAR _fx = SUBSTITUTE ( CALCULATE ( [Nota · item · faixas], dItemNota[Item] = "acidentes" ), " · ", "|" )
 			VAR _fxa = PATHITEM ( _fx, 1 )
 			VAR _fxz = PATHITEM ( _fx, PATHLENGTH ( _fx ) )
@@ -37737,11 +37742,11 @@ table _Medidas
 			            & "<div class='linha1'><span class='b6 hero'>" & _ttOd & "</span>" & "<span class='b5 lado2'>" & "por milhão de HHT" & "</span>" & "</div>"
 			            & "<p class='ctx'>" & _txtCtx & "</p>"
 			        & "</div>"
-			        & "<div class='lado verso sobre-creme'>"
+			        & "<div class='lado verso sobre-creme vz'>"
 			            & "<p class='ab vs v1'>COMO É CALCULADO</p>"
 			            & "<p class='regra'>" & _txtRegra & "</p>"
-			            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Base complementar · NBR 14280</span></div>"
-			            & "<div class='regua'><i class='mk mk0'></i><span>" & _fx1 & "</span><i class='mk mk2'></i><span>" & _fxN & "</span></div>"
+			            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Base complementar</span></div>"
+			            & "<div class='regua'><span class='it'><i class='mk mk0'></i><span>" & _fx1 & "</span></span><span class='it'><i class='mk mk2'></i><span>" & _fxN & "</span></span></div>"
 			        & "</div>"
 			    & "</div>" & [Comum · JS contador]
 			VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
@@ -37814,12 +37819,12 @@ table _Medidas
 			VAR _tlTxt = IF ( ISBLANK ( _lim ), "—", _tlS & _tlN & "%" )
 			VAR _toTxt = IF ( _abx = 0, "nenhuma obra abaixo", IF ( _abx = 1, "1 obra abaixo", "⁅" & _abx & "⁆" & " obras abaixo" ) )
 			VAR _txtCtx = IF ( ISBLANK ( _x ), "falta na base", "meta " & "⁅" & _tlTxt & "⁆" & " · " & _toTxt )
-			VAR _txtRegra = "Serviços aprovados na primeira verificação (FVS) ÷ serviços verificados no mês, com as obras somadas. Na nota, por obra:"
+			VAR _txtRegra = "Serviços aprovados na 1.ª verificação (FVS) ÷ verificados no mês, obras somadas. Na nota, por obra:"
 			VAR _fx = SUBSTITUTE ( CALCULATE ( [Nota · item · faixas], dItemNota[Item] = "inspecao" ), " · ", "|" )
 			VAR _fxa = PATHITEM ( _fx, 1 )
 			VAR _fxz = PATHITEM ( _fx, PATHLENGTH ( _fx ) )
-			VAR _fx1 = SUBSTITUTE ( SUBSTITUTE ( _fxa, "<", "&lt;" ), ">", "&gt;" )
-			VAR _fxN = SUBSTITUTE ( SUBSTITUTE ( _fxz, "<", "&lt;" ), ">", "&gt;" )
+			VAR _fx1 = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxa, "aprovação ", "" ), "<", "&lt;" ), ">", "&gt;" )
+			VAR _fxN = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxz, "aprovação ", "" ), "<", "&lt;" ), ">", "&gt;" )
 			/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
 			VAR _odQ =
 			    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
@@ -37852,11 +37857,11 @@ table _Medidas
 			            & "<div class='linha1'><span class='b6 hero'>" & _txOd & "</span>" & "</div>"
 			            & "<p class='ctx'>" & _txtCtx & "</p>"
 			        & "</div>"
-			        & "<div class='lado verso sobre-creme'>"
+			        & "<div class='lado verso sobre-creme vz'>"
 			            & "<p class='ab vs v1'>COMO É CALCULADO</p>"
 			            & "<p class='regra'>" & _txtRegra & "</p>"
-			            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Base complementar · FVS</span></div>"
-			            & "<div class='regua'><i class='mk mk0'></i><span>" & _fx1 & "</span><i class='mk mk2'></i><span>" & _fxN & "</span></div>"
+			            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Base complementar</span></div>"
+			            & "<div class='regua'><span class='it'><i class='mk mk0'></i><span>" & _fx1 & "</span></span><span class='it'><i class='mk mk2'></i><span>" & _fxN & "</span></span></div>"
 			        & "</div>"
 			    & "</div>" & [Comum · JS contador]
 			VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )
@@ -37929,12 +37934,12 @@ table _Medidas
 			VAR _tlTxt = IF ( ISBLANK ( _lim ), "—", _tlS & _tlN & "%" )
 			VAR _toTxt = IF ( _abx = 0, "nenhuma obra abaixo", IF ( _abx = 1, "1 obra abaixo", "⁅" & _abx & "⁆" & " obras abaixo" ) )
 			VAR _txtCtx = IF ( ISBLANK ( _x ), "falta na base", "meta " & "⁅" & _tlTxt & "⁆" & " · " & _toTxt )
-			VAR _txtRegra = "Itens conformes ÷ itens aplicáveis do checklist NR-18 do mês, com as obras somadas. Na nota, por obra:"
+			VAR _txtRegra = "Itens conformes ÷ aplicáveis do checklist NR-18 no mês, obras somadas. Na nota, por obra:"
 			VAR _fx = SUBSTITUTE ( CALCULATE ( [Nota · item · faixas], dItemNota[Item] = "nr18" ), " · ", "|" )
 			VAR _fxa = PATHITEM ( _fx, 1 )
 			VAR _fxz = PATHITEM ( _fx, PATHLENGTH ( _fx ) )
-			VAR _fx1 = SUBSTITUTE ( SUBSTITUTE ( _fxa, "<", "&lt;" ), ">", "&gt;" )
-			VAR _fxN = SUBSTITUTE ( SUBSTITUTE ( _fxz, "<", "&lt;" ), ">", "&gt;" )
+			VAR _fx1 = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxa, "conformidade ", "" ), "<", "&lt;" ), ">", "&gt;" )
+			VAR _fxN = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxz, "conformidade ", "" ), "<", "&lt;" ), ">", "&gt;" )
 			/* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
 			VAR _odQ =
 			    SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
@@ -37967,11 +37972,11 @@ table _Medidas
 			            & "<div class='linha1'><span class='b6 hero'>" & _txOd & "</span>" & "</div>"
 			            & "<p class='ctx'>" & _txtCtx & "</p>"
 			        & "</div>"
-			        & "<div class='lado verso sobre-creme'>"
+			        & "<div class='lado verso sobre-creme vz'>"
 			            & "<p class='ab vs v1'>COMO É CALCULADO</p>"
 			            & "<p class='regra'>" & _txtRegra & "</p>"
-			            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Base complementar · checklist NR-18</span></div>"
-			            & "<div class='regua'><i class='mk mk0'></i><span>" & _fx1 & "</span><i class='mk mk2'></i><span>" & _fxN & "</span></div>"
+			            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Base complementar</span></div>"
+			            & "<div class='regua'><span class='it'><i class='mk mk0'></i><span>" & _fx1 & "</span></span><span class='it'><i class='mk mk2'></i><span>" & _fxN & "</span></span></div>"
 			        & "</div>"
 			    & "</div>" & [Comum · JS contador]
 			VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )

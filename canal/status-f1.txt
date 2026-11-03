@@ -1,1 +1,1 @@
-LIDO 9af8dfe · ramo sincronizado com origin/main; tarefa: o verso "Como é calculado" dos cartões de KPI da T3 e da T5 tem que caber inteiro em 302 × 140 (regra comum de coluna flexível, quebra de linha e fonte pela quantidade de texto), sem mudar a frente nem T1, T2 e T4, e o "nenhuma obra acima" duplicado na frente da Frequência (T5)
+ANDANDO versos cabendo nos 25 cartões (prévia na fonte mais larga daqui); montando o modelo e o PBIP

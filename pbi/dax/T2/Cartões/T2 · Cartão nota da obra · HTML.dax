@@ -71,11 +71,11 @@ VAR _saidaHtml =
             & "<div class='linha1'><span class='b6 hero'>" & _tnOd & "</span>" & "<span class='b5 lado2'>" & IF ( _pend = 1, "de " & "⁅" & _nPo & "⁆", "" ) & "</span>" & "</div>"
             & "<p class='ctx'>" & _txtCtx & "</p>"
         & "</div>"
-        & "<div class='lado verso sobre-creme'>"
+        & "<div class='lado verso sobre-creme vz'>"
             & "<p class='ab vs v1'>COMO É CALCULADO</p>"
             & "<p class='regra'>Soma dos nove itens, de 0 a 10; IDC &lt; 0,90 ou atraso &gt; 3 meses: crítica.</p>"
             & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Planilha, base e cronograma</span></div>"
-            & "<div class='regua'>" & "<i class='mk mk2'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fxC, "<", "&lt;" ), ">", "&gt;" ) & "</span>" & "<i class='mk mk1'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fxA, "<", "&lt;" ), ">", "&gt;" ) & "</span>" & "<i class='mk mk0'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fxE, "<", "&lt;" ), ">", "&gt;" ) & "</span>" & "<i class='mk mkm'></i><span>pendente</span>" & "</div>"
+            & "<div class='regua'>" & "<span class='it'><i class='mk mk2'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fxC, "<", "&lt;" ), ">", "&gt;" ) & "</span></span>" & "<span class='it'><i class='mk mk1'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fxA, "<", "&lt;" ), ">", "&gt;" ) & "</span></span>" & "<span class='it'><i class='mk mk0'></i><span>" & SUBSTITUTE ( SUBSTITUTE ( _fxE, "<", "&lt;" ), ">", "&gt;" ) & "</span></span>" & "<span class='it'><i class='mk mkm'></i><span>pendente</span></span>" & "</div>"
         & "</div>"
     & "</div>" & [Comum · JS contador]
 VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )

@@ -17,12 +17,12 @@ VAR _tlS = IF ( ROUND ( _lim * 100, 0 ) < 0, "−", "" )
 VAR _tlTxt = IF ( ISBLANK ( _lim ), "—", _tlS & _tlN & "%" )
 VAR _toTxt = IF ( _abx = 0, "nenhuma obra abaixo", IF ( _abx = 1, "1 obra abaixo", "⁅" & _abx & "⁆" & " obras abaixo" ) )
 VAR _txtCtx = IF ( ISBLANK ( _x ), "falta na base", "meta " & "⁅" & _tlTxt & "⁆" & " · " & _toTxt )
-VAR _txtRegra = "Pedidos entregues no prazo e completos ÷ pedidos com entrega prevista no mês, com as obras somadas. Na nota, por obra:"
+VAR _txtRegra = "Pedidos no prazo e completos ÷ pedidos previstos no mês, obras somadas. Na nota, por obra:"
 VAR _fx = SUBSTITUTE ( CALCULATE ( [Nota · item · faixas], dItemNota[Item] = "entregas" ), " · ", "|" )
 VAR _fxa = PATHITEM ( _fx, 1 )
 VAR _fxz = PATHITEM ( _fx, PATHLENGTH ( _fx ) )
-VAR _fx1 = SUBSTITUTE ( SUBSTITUTE ( _fxa, "<", "&lt;" ), ">", "&gt;" )
-VAR _fxN = SUBSTITUTE ( SUBSTITUTE ( _fxz, "<", "&lt;" ), ">", "&gt;" )
+VAR _fx1 = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxa, "entregas ", "" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _fxN = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxz, "entregas ", "" ), "<", "&lt;" ), ">", "&gt;" )
 /* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
 VAR _odQ =
     SELECTCOLUMNS ( { ( 0, 0 ), ( 1, 120 ), ( 2, 230 ), ( 3, 330 ), ( 4, 421 ), ( 5, 504 ), ( 6, 578 ), ( 7, 645 ), ( 8, 704 ), ( 9, 756 ), ( 10, 802 ), ( 11, 841 ), ( 12, 875 ), ( 13, 904 ), ( 14, 928 ), ( 15, 947 ), ( 16, 963 ), ( 17, 975 ), ( 18, 984 ), ( 19, 991 ), ( 20, 995 ), ( 21, 998 ), ( 22, 999 ), ( 23, 1000 ), ( 24, 1000 ) }, "@odk", [Value1], "@odf", [Value2] )
@@ -55,11 +55,11 @@ VAR _saidaHtml =
             & "<div class='linha1'><span class='b6 hero'>" & _txOd & "</span>" & "</div>"
             & "<p class='ctx'>" & _txtCtx & "</p>"
         & "</div>"
-        & "<div class='lado verso sobre-creme'>"
+        & "<div class='lado verso sobre-creme vz'>"
             & "<p class='ab vs v1'>COMO É CALCULADO</p>"
             & "<p class='regra'>" & _txtRegra & "</p>"
-            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Base complementar · pedidos</span></div>"
-            & "<div class='regua'><i class='mk mk0'></i><span>" & _fx1 & "</span><i class='mk mk2'></i><span>" & _fxN & "</span></div>"
+            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Base complementar</span></div>"
+            & "<div class='regua'><span class='it'><i class='mk mk0'></i><span>" & _fx1 & "</span></span><span class='it'><i class='mk mk2'></i><span>" & _fxN & "</span></span></div>"
         & "</div>"
     & "</div>" & [Comum · JS contador]
 VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )

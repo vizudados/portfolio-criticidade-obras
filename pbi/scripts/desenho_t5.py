@@ -34,6 +34,7 @@ from pathlib import Path
 AQUI = Path(__file__).resolve().parent
 sys.path.insert(0, str(AQUI))
 import contador as C  # noqa: E402
+import contas_base as CB  # noqa: E402
 import desenho_projeto as D  # noqa: E402
 from contas_lib_projeto import Medida, gravar  # noqa: E402
 from desenho_comum import dax_lit  # noqa: E402
@@ -64,13 +65,17 @@ def cls_item(pts: str, poss: str) -> str:
     return f'IF ( ISBLANK ( {pts} ), "", IF ( {pts} >= {poss}, "0", IF ( {pts} = 0, "2", "1" ) ) )'
 
 
-def faixas_item(cod: str, p: str) -> list[str]:
-    """VARs {p}1 e {p}N: a primeira e a última faixa do item com os pontos (texto do modelo, < e > escapados)."""
+def faixas_item(cod: str, p: str, curta: bool = False) -> list[str]:
+    """VARs {p}1 e {p}N: a primeira e a última faixa do item com os pontos (texto do modelo, < e > escapados). `curta`
+    (03/11/2026, verso dos cartões): sem o nome da variável ("≥ 95% → 1"), para a régua caber numa linha; a regra do
+    verso já diz qual é a variável. O nome vem do dicionário NOTA (contas_base, fonte única)."""
     def h(x: str) -> str:
         return f'SUBSTITUTE ( SUBSTITUTE ( {x}, "<", "&lt;" ), ">", "&gt;" )'
+    var = CB.NOTA_VAR_ITEM.get(cod, CB.NOTA_VAR[CB.nota_item(cod)["unid"]])
+    a, z = (f'SUBSTITUTE ( {p}a, "{var} ", "" )', f'SUBSTITUTE ( {p}z, "{var} ", "" )') if curta else (p + "a", p + "z")
     return [f'VAR {p} = SUBSTITUTE ( CALCULATE ( [Nota · item · faixas], dItemNota[Item] = "{cod}" ), " · ", "|" )',
             f'VAR {p}a = PATHITEM ( {p}, 1 )', f'VAR {p}z = PATHITEM ( {p}, PATHLENGTH ( {p} ) )',
-            f'VAR {p}1 = {h(p + "a")}', f'VAR {p}N = {h(p + "z")}']
+            f'VAR {p}1 = {h(a)}', f'VAR {p}N = {h(z)}']
 
 
 def obras_txt(n: str, p: str) -> list[str]:
@@ -87,17 +92,19 @@ css("T5 · Cartões · CSS", CARTOES,
 
 def cartao(chave: str, eb: str, leituras: list[tuple[str, str]], textos: list[str], hero: str, lado: str | None,
            ctx: str, regra: str, origem: str, regua: list | None, anima: list[str], escuro: bool = False,
-           desc: str = "") -> None:
+           desc: str = "", vz: bool = True) -> None:
     """Cartão com flip (o mesmo desenho dos cartões da T3 e da T4): `eb`, `hero`, `lado`, `ctx` e `regra` são
-    expressões DAX de texto já formatado; `regua` = [(classe da marca, texto)], texto pode ter '" & _var & "'."""
+    expressões DAX de texto já formatado; `regua` = [(classe da marca, texto)], texto pode ter '" & _var & "'. `vz`:
+    verso a 13/17 (Comum · CSS cartão; as regras da T5 são longas)."""
     topo_ond = 82 if regua else 106
-    verso = ("\"<div class='lado verso sobre-creme'>\"\n"
+    verso = (f"\"<div class='lado verso sobre-creme{' vz' if vz else ''}'>\"\n"
              "            & \"<p class='ab vs v1'>COMO É CALCULADO</p>\"\n"
              f"            & \"<p class='regra'>\" & {regra} & \"</p>\"\n"
              f"            & \"<div class='ond' style='top:{topo_ond}px'><span class='vs'>DE ONDE VEM</span>"
              f"<span>{origem}</span></div>\"\n")
     if regua:
-        itens = "".join(f"<i class='mk {c}'></i><span>{t}</span>" for c, t in regua)
+        # cada faixa com a marca num .it (Comum · CSS cartão: quebra entre faixas, não dentro de uma)
+        itens = "".join(f"<span class='it'><i class='mk {c}'></i><span>{t}</span></span>" for c, t in regua)
         verso += f"            & \"<div class='regua'>{itens}</div>\"\n"
     verso += "        & \"</div>\""
     lado_html = f" & \"<span class='b5 lado2'>\" & {lado} & \"</span>\"" if lado else ""
@@ -129,9 +136,9 @@ cartao(
         "VAR _txtCtx = SWITCH ( TRUE (), ISBLANK ( _ini ), \"" + "falta na base" + "\", ISBLANK ( _ult ), \"nenhum desde \" "
         "& FORMAT ( _ini, \"mmm/yy\", \"pt-BR\" ), \"o último em \" & FORMAT ( _ult, \"mmm/yy\", \"pt-BR\" ) & \" · \" & "
         + D.esc("_txtObras") + " )",
-        'VAR _txtRegra = "Meses seguidos sem acidente com afastamento em nenhuma obra, depois do último mês com acidente. '
-        'A base é mensal: não traz o dia."'],
-    "_tnOd", "_txtLado", "_txtCtx", "_txtRegra", "Base complementar · NBR 14280", None,
+        'VAR _txtRegra = "Meses seguidos sem acidente com afastamento (NBR 14280) em nenhuma obra, depois do último mês '
+        'com acidente. A base é mensal: não traz o dia."'],
+    "_tnOd", "_txtLado", "_txtCtx", "_txtRegra", "Base complementar", None,
     D.od_num("_n", "_tn"), escuro=True,
     desc="Cartão escuro 'Sem acidente com afastamento' (a resposta de 'o canteiro está seguro?'): meses seguidos sem "
          "acidente com afastamento no recorte, com o último mês com acidente e as obras dele (ou 'nenhum desde' o "
@@ -144,13 +151,15 @@ cartao(
     D.numero("_tf", "_tt") + D.numero("_set", "_ts") + [
         'VAR _a = _ac + 0',
         'VAR _txtAc = IF ( _a = 1, "1 acidente", ' + C.marca("_a") + ' & " acidentes" )',
-        'VAR _txtAcima = IF ( _acima = 0, "nenhuma obra acima", IF ( _acima = 1, "1 obra acima", ' + C.marca("_acima")
+        # "nenhuma acima", não "nenhuma obra acima": com "0 acidentes" a linha passava dos 262 px (275 na Segoe) e o
+        # serviço desenhava o fim duas vezes no mesmo lugar (retorno de 03/11/2026, janela de 3 meses em jan/26)
+        'VAR _txtAcima = IF ( _acima = 0, "nenhuma acima", IF ( _acima = 1, "1 obra acima", ' + C.marca("_acima")
         + ' & " obras acima" ) )',
         "VAR _txtCtx = IF ( ISBLANK ( _tf ), \"falta na base\", _txtAc & \" · setor \" & " + C.marca("_tsTxt")
         + " & \" · \" & _txtAcima )",
-        'VAR _txtRegra = "Acidentes com afastamento × 1.000.000 ÷ horas-homem trabalhadas nos 12 meses até o mês, com as '
-        'obras somadas (NBR 14280). Na nota, por obra:"'] + faixas_item("acidentes", "_fx"),
-    "_ttOd", '"por milhão de HHT"', "_txtCtx", "_txtRegra", "Base complementar · NBR 14280",
+        'VAR _txtRegra = "Acidentes com afastamento × 1 milhão ÷ horas-homem em 12 meses, obras somadas (NBR 14280). '
+        'Na nota, por obra:"'] + faixas_item("acidentes", "_fx"),
+    "_ttOd", '"por milhão de HHT"', "_txtCtx", "_txtRegra", "Base complementar",
     [("mk0", '" & _fx1 & "'), ("mk2", '" & _fxN & "')], D.od_num("_tf", "_tt"),
     desc="Cartão da taxa de frequência de 12 meses da carteira (acidentes com afastamento por milhão de horas-homem), "
          "com os acidentes no período, a média do setor e quantas obras passam dela; o verso traz a regra e a primeira "
@@ -162,27 +171,27 @@ def cartao_pct(chave, eb, x_ref, lim, n_abx, cod, regra, origem, desc):
         chave, f'"{eb}"', [("_x", x_ref), ("_lim", lim), ("_abx", n_abx)],
         D.pct("_x", "_tx") + D.pct("_lim", "_tl", casas=0) + obras_txt("_abx", "_to") + [
             "VAR _txtCtx = IF ( ISBLANK ( _x ), \"falta na base\", \"meta \" & " + C.marca("_tlTxt") + " & \" · \" & _toTxt )",
-            f'VAR _txtRegra = "{regra} Na nota, por obra:"'] + faixas_item(cod, "_fx"),
+            f'VAR _txtRegra = "{regra} Na nota, por obra:"'] + faixas_item(cod, "_fx", curta=True),
         "_txOd", None, "_txtCtx", "_txtRegra", origem, [("mk0", '" & _fx1 & "'), ("mk2", '" & _fxN & "')],
         D.od_pct("_x", "_tx"), desc=desc)
 
 
 cartao_pct("NR-18", "Canteiro conforme NR-18", "Canteiro · conformidade NR-18 · ref", "Nota · limite NR-18 · ponto cheio",
            "T5 · NR-18 · obras abaixo da meta · ref", "nr18",
-           "Itens conformes ÷ itens aplicáveis do checklist NR-18 do mês, com as obras somadas.",
-           "Base complementar · checklist NR-18",
+           "Itens conformes ÷ aplicáveis do checklist NR-18 no mês, obras somadas.",
+           "Base complementar",
            "Cartão da conformidade NR-18 da carteira no mês (soma ÷ soma), com a meta (o ponto cheio do item NR-18 da nota) "
            "e quantas obras ficam abaixo dela; o verso traz a regra e a primeira e a última faixa. Só lê contas.")
 cartao_pct("inspeção", "Aprovação na 1.ª inspeção", "Canteiro · aprovação na 1.ª inspeção · ref",
            "Nota · limite inspeção · ponto cheio", "T5 · Inspeção · obras abaixo da meta · ref", "inspecao",
-           "Serviços aprovados na primeira verificação (FVS) ÷ serviços verificados no mês, com as obras somadas.",
-           "Base complementar · FVS",
+           "Serviços aprovados na 1.ª verificação (FVS) ÷ verificados no mês, obras somadas.",
+           "Base complementar",
            "Cartão da aprovação na 1.ª inspeção da carteira no mês (soma ÷ soma), com a meta (o ponto cheio do item da "
            "nota) e quantas obras ficam abaixo dela; o verso traz a regra e a primeira e a última faixa. Só lê contas.")
 cartao_pct("entregas", "Entregas no prazo e completas", "Canteiro · entregas no prazo · ref",
            "Nota · limite entregas · ponto cheio", "T5 · Entregas · obras abaixo da meta · ref", "entregas",
-           "Pedidos entregues no prazo e completos ÷ pedidos com entrega prevista no mês, com as obras somadas.",
-           "Base complementar · pedidos",
+           "Pedidos no prazo e completos ÷ pedidos previstos no mês, obras somadas.",
+           "Base complementar",
            "Cartão das entregas no prazo e completas da carteira no mês (soma ÷ soma), com a meta (o ponto cheio do item "
            "da nota) e quantas obras ficam abaixo dela; o verso traz a regra e a primeira e a última faixa. Só lê contas.")
 

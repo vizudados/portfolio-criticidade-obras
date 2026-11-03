@@ -22,6 +22,8 @@ VAR _fx1 = SUBSTITUTE ( SUBSTITUTE ( _fxa, "<", "&lt;" ), ">", "&gt;" )
 VAR _fxN = SUBSTITUTE ( SUBSTITUTE ( _fxz, "<", "&lt;" ), ">", "&gt;" )
 VAR _fx1s = SUBSTITUTE ( SUBSTITUTE ( LEFT ( _fxa, SEARCH ( " →", _fxa, 1, LEN ( _fxa ) + 1 ) - 1 ), "<", "&lt;" ), ">", "&gt;" )
 VAR _fxNs = SUBSTITUTE ( SUBSTITUTE ( LEFT ( _fxz, SEARCH ( " →", _fxz, 1, LEN ( _fxz ) + 1 ) - 1 ), "<", "&lt;" ), ">", "&gt;" )
+VAR _fx1c = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxa, "atraso ", "" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _fxNc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fxz, "atraso ", "" ), "<", "&lt;" ), ">", "&gt;" )
 VAR _txtCtx = IF ( ISBLANK ( _atr ), "sem curva prevista", IF ( IF ( ISBLANK ( _ptf ), "", IF ( _ptf >= _psf, "0", IF ( _ptf = 0, "2", "1" ) ) ) = "", "", "<i class='mk mk" & IF ( ISBLANK ( _ptf ), "", IF ( _ptf >= _psf, "0", IF ( _ptf = 0, "2", "1" ) ) ) & "'></i>" ) & "item prazo da nota: " & _tkTxt )
 /* odômetro (spec/contadores-animacoes.md C2): quadro k de 0 a 24, fração f do easing 1−(1−t)³ em milésimos inteiros, a mesma tabela da capa */
 VAR _odQ =
@@ -55,11 +57,11 @@ VAR _saidaHtml =
             & "<div class='linha1'><span class='b6 hero'>" & _taOd & "</span>" & "<span class='b5 lado2'>" & _txtLado & "</span>" & "</div>"
             & "<p class='ctx'>" & _txtCtx & "</p>"
         & "</div>"
-        & "<div class='lado verso sobre-creme'>"
+        & "<div class='lado verso sobre-creme vz'>"
             & "<p class='ab vs v1'>COMO É CALCULADO</p>"
             & "<p class='regra'>" & "Meses decorridos menos meses agregados: o executado de hoje é o previsto de quantos meses atrás." & "</p>"
             & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Planilha e cronograma</span></div>"
-            & "<div class='regua'><i class='mk mk0'></i><span>" & "⁅" & _fx1 & "⁆" & "</span><i class='mk mk2'></i><span>" & "⁅" & _fxN & "⁆" & "</span></div>"
+            & "<div class='regua'><span class='it'><i class='mk mk0'></i><span>" & "⁅" & _fx1c & "⁆" & "</span></span><span class='it'><i class='mk mk2'></i><span>" & "⁅" & _fxNc & "⁆" & "</span></span></div>"
         & "</div>"
     & "</div>" & [Comum · JS contador]
 VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )

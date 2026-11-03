@@ -16,9 +16,9 @@ VAR _tsN = IF ( _set = INT ( _set ), FORMAT ( _set, "0", "pt-BR" ), FORMAT ( _se
 VAR _tsTxt = IF ( ISBLANK ( _set ), "—", _tsN )
 VAR _a = _ac + 0
 VAR _txtAc = IF ( _a = 1, "1 acidente", "⁅" & _a & "⁆" & " acidentes" )
-VAR _txtAcima = IF ( _acima = 0, "nenhuma obra acima", IF ( _acima = 1, "1 obra acima", "⁅" & _acima & "⁆" & " obras acima" ) )
+VAR _txtAcima = IF ( _acima = 0, "nenhuma acima", IF ( _acima = 1, "1 obra acima", "⁅" & _acima & "⁆" & " obras acima" ) )
 VAR _txtCtx = IF ( ISBLANK ( _tf ), "falta na base", _txtAc & " · setor " & "⁅" & _tsTxt & "⁆" & " · " & _txtAcima )
-VAR _txtRegra = "Acidentes com afastamento × 1.000.000 ÷ horas-homem trabalhadas nos 12 meses até o mês, com as obras somadas (NBR 14280). Na nota, por obra:"
+VAR _txtRegra = "Acidentes com afastamento × 1 milhão ÷ horas-homem em 12 meses, obras somadas (NBR 14280). Na nota, por obra:"
 VAR _fx = SUBSTITUTE ( CALCULATE ( [Nota · item · faixas], dItemNota[Item] = "acidentes" ), " · ", "|" )
 VAR _fxa = PATHITEM ( _fx, 1 )
 VAR _fxz = PATHITEM ( _fx, PATHLENGTH ( _fx ) )
@@ -56,11 +56,11 @@ VAR _saidaHtml =
             & "<div class='linha1'><span class='b6 hero'>" & _ttOd & "</span>" & "<span class='b5 lado2'>" & "por milhão de HHT" & "</span>" & "</div>"
             & "<p class='ctx'>" & _txtCtx & "</p>"
         & "</div>"
-        & "<div class='lado verso sobre-creme'>"
+        & "<div class='lado verso sobre-creme vz'>"
             & "<p class='ab vs v1'>COMO É CALCULADO</p>"
             & "<p class='regra'>" & _txtRegra & "</p>"
-            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Base complementar · NBR 14280</span></div>"
-            & "<div class='regua'><i class='mk mk0'></i><span>" & _fx1 & "</span><i class='mk mk2'></i><span>" & _fxN & "</span></div>"
+            & "<div class='ond' style='top:82px'><span class='vs'>DE ONDE VEM</span><span>Base complementar</span></div>"
+            & "<div class='regua'><span class='it'><i class='mk mk0'></i><span>" & _fx1 & "</span></span><span class='it'><i class='mk mk2'></i><span>" & _fxN & "</span></span></div>"
         & "</div>"
     & "</div>" & [Comum · JS contador]
 VAR _mcK = LEN ( _saidaHtml ) - LEN ( SUBSTITUTE ( _saidaHtml, "⁅", "" ) )

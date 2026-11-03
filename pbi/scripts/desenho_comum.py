@@ -198,18 +198,26 @@ CSS_CARTAO = (
     # só a frente é escura; o verso é creme e mantém as cores de texto padrão
     f".kc.escuro .frente .vs{{color:{CREME}}}.kc.escuro .frente .hero{{color:#FFFFFF}}"
     f".kc.escuro .frente .lado2{{color:{CREME}}}.kc.escuro .frente .ctx{{color:rgba(233,224,207,.85)}}"
-    # verso v2 (geometria comum às quatro telas, Figma 07/10/2026): "COMO É CALCULADO" em y 16; regra Segoe 14/19 de
-    # y 36; com régua, "DE ONDE VEM" em y 82 e régua em y 106; sem régua, "DE ONDE VEM" em y 106 (o y da linha de
-    # origem vem do gerador da tela, top inline). Limites da régua são neutros (grafite), nunca .ng
-    ".kc .verso .v1{left:20px;top:16px}"
-    ".kc .verso .regra{position:absolute;left:20px;top:36px;width:262px;font-size:14px;line-height:19px;"
-    "color:#0B0B0C;white-space:normal}"
-    ".kc .verso .ond{position:absolute;left:20px;display:flex;align-items:baseline;gap:0;white-space:nowrap}"
+    # verso (03/11/2026, retorno da sessão local: regra de três linhas por cima de "DE ONDE VEM" e régua cortada à
+    # direita): uma coluna flexível em vez de posições fixas. "COMO É CALCULADO" e a regra no alto; "DE ONDE VEM" e a
+    # régua presos embaixo (margin-top:auto), os dois quebrando linha (a régua entre as faixas, nunca dentro de uma).
+    # O top inline que os geradores ainda escrevem na linha de origem não vale mais (position:static). Texto longo: a
+    # classe .vz no verso (13/17, o piso) e, se nem assim couber, frase mais curta no gerador da tela. Limites da régua
+    # são neutros (grafite), nunca .ng
+    ".kc .verso{display:flex;flex-direction:column;align-items:stretch;padding:14px 20px 9px;box-sizing:border-box}"
+    ".kc .verso>*{position:static!important;flex:none;margin:0;max-width:262px}"
+    ".kc .verso .v1{margin-bottom:5px}"
+    ".kc .verso .regra{font-size:14px;line-height:19px;color:#0B0B0C;white-space:normal}"
+    ".kc .verso .ond{margin-top:auto;padding-top:5px;display:flex;align-items:baseline;white-space:normal}"
     ".kc .verso .ond .vs{width:93px;flex:none}"
-    ".kc .verso .ond span+span{font-size:14px;line-height:19px;color:#0B0B0C}"
-    ".kc .verso .regua{position:absolute;left:20px;top:106px;display:flex;align-items:center;gap:6px;"
+    ".kc .verso .ond span+span{flex:1 1 auto;min-width:0;font-size:14px;line-height:19px;color:#0B0B0C}"
+    ".kc .verso .regua{margin-top:3px;display:flex;flex-wrap:wrap;align-items:center;column-gap:6px;row-gap:1px;"
     f"font-size:14px;line-height:19px;white-space:nowrap;color:{GRAFITE}}}"
-    ".kc .verso .regua .mk{margin-left:8px}.kc .verso .regua .mk:first-child{margin-left:0}"
+    ".kc .verso.vz .regra,.kc .verso.vz .ond span+span,.kc .verso.vz .regua{font-size:13px;line-height:17px}"
+    ".kc .verso .regua .mk{margin-left:4px}.kc .verso .regua .mk:first-child{margin-left:0}"
+    # faixa da régua com a marca num .it só (T2, T3, T5): quebra entre as faixas, nunca entre a marca e o texto
+    ".kc .verso .regua .it{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;margin-left:4px}"
+    ".kc .verso .regua .it:first-child{margin-left:0}.kc .verso .regua .it .mk{margin-left:0}"
 )
 
 
